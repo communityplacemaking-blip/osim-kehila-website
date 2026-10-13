@@ -29,6 +29,7 @@ main:focus{outline:none}
 /* living network */
 .net text{font-family:Assistant,sans-serif;font-weight:800;font-size:23px;fill:#1B2A2F;stroke:#EAF2EF;stroke-width:6px;paint-order:stroke;text-anchor:middle}
 .net .hub text{font-size:30px}
+.net text.place{fill:#8E3F1C;font-size:21px}
 .net line,.net .node{transition:opacity .3s,stroke .3s,stroke-width .3s}
 .net .node{cursor:default}
 .net.focus .mesh line,.net.focus .spokes line{opacity:.15}
@@ -111,48 +112,58 @@ document.addEventListener('DOMContentLoaded',function(){
 <a href="#approach" style="background: #1B2A2F; color: #FFFFFF; text-decoration: none; font-weight: 700; padding: 14px 28px; border-radius: 999px; border: 2px solid #1B2A2F; min-width: 220px; text-align: center">איך אנחנו עובדים</a>
 <a href="#system" style="background: transparent; color: #1B2A2F; text-decoration: none; font-weight: 700; padding: 14px 28px; border-radius: 999px; border: 2px solid #1B2A2F; min-width: 220px; text-align: center">למערכת הדיגיטלית</a>
 </div>
-<div style="flex: 0 1 360px; min-width: 0">
-<svg class="net" viewBox="0 0 520 480" style="width: 100%; max-width: 360px; height: auto; display: block" role="img" aria-label="רשת מחוברת ואורגנית: רעיון, השראה, יוזמה, שיחה, צורך, חגיגה, תושבים, בית ספר ורשות, מחוברים זה לזה ולקהילה">
-<rect x="0" y="0" width="520" height="480" rx="28" fill="#EAF2EF"></rect>
+<div style="flex: 0 1 420px; min-width: 0">
+<svg class="net" viewBox="0 0 600 520" style="width: 100%; max-width: 420px; height: auto; display: block" role="img" aria-label="רשת מחוברת: רעיון, השראה, יוזמה, שיחה, צורך, חגיגה, תושבים, בית ספר ורשות, יחד עם המקומות ארמון הנציב, באר שבע, גבעתיים ורמת גן, וכולם מחוברים לקהילה">
+<rect x="0" y="0" width="600" height="520" rx="28" fill="#EAF2EF"></rect>
 <g class="mesh" stroke="#8DBBAE" stroke-width="1.5" fill="none">
-<line data-a="auth" data-b="celeb" style="--i:0" pathLength="1" x1="452" y1="428" x2="168" y2="322"></line>
-<line data-a="auth" data-b="init" style="--i:1" pathLength="1" x1="452" y1="428" x2="438" y2="158"></line>
-<line data-a="auth" data-b="need" style="--i:2" pathLength="1" x1="452" y1="428" x2="456" y2="306"></line>
-<line data-a="auth" data-b="school" style="--i:3" pathLength="1" x1="452" y1="428" x2="318" y2="404"></line>
-<line data-a="celeb" data-b="res" style="--i:4" pathLength="1" x1="168" y1="322" x2="62" y2="398"></line>
-<line data-a="celeb" data-b="school" style="--i:5" pathLength="1" x1="168" y1="322" x2="318" y2="404"></line>
-<line data-a="celeb" data-b="talk" style="--i:6" pathLength="1" x1="168" y1="322" x2="68" y2="214"></line>
-<line data-a="idea" data-b="init" style="--i:7" pathLength="1" x1="318" y1="66" x2="438" y2="158"></line>
-<line data-a="idea" data-b="insp" style="--i:8" pathLength="1" x1="318" y1="66" x2="118" y2="92"></line>
-<line data-a="idea" data-b="talk" style="--i:9" pathLength="1" x1="318" y1="66" x2="68" y2="214"></line>
-<line data-a="init" data-b="need" style="--i:10" pathLength="1" x1="438" y1="158" x2="456" y2="306"></line>
-<line data-a="init" data-b="res" style="--i:11" pathLength="1" x1="438" y1="158" x2="62" y2="398"></line>
-<line data-a="insp" data-b="need" style="--i:12" pathLength="1" x1="118" y1="92" x2="456" y2="306"></line>
-<line data-a="insp" data-b="talk" style="--i:13" pathLength="1" x1="118" y1="92" x2="68" y2="214"></line>
-<line data-a="need" data-b="school" style="--i:14" pathLength="1" x1="456" y1="306" x2="318" y2="404"></line>
-<line data-a="res" data-b="talk" style="--i:15" pathLength="1" x1="62" y1="398" x2="68" y2="214"></line>
-<line data-a="school" data-b="talk" style="--i:16" pathLength="1" x1="318" y1="404" x2="68" y2="214"></line>
+<line data-a="armon" data-b="bs" style="--i:0" pathLength="1" x1="252" y1="150" x2="436" y2="372"></line>
+<line data-a="armon" data-b="idea" style="--i:1" pathLength="1" x1="252" y1="150" x2="362" y2="62"></line>
+<line data-a="armon" data-b="insp" style="--i:2" pathLength="1" x1="252" y1="150" x2="150" y2="78"></line>
+<line data-a="armon" data-b="talk" style="--i:3" pathLength="1" x1="252" y1="150" x2="66" y2="208"></line>
+<line data-a="auth" data-b="bs" style="--i:4" pathLength="1" x1="536" y1="452" x2="436" y2="372"></line>
+<line data-a="auth" data-b="celeb" style="--i:5" pathLength="1" x1="536" y1="452" x2="212" y2="352"></line>
+<line data-a="auth" data-b="need" style="--i:6" pathLength="1" x1="536" y1="452" x2="548" y2="300"></line>
+<line data-a="auth" data-b="school" style="--i:7" pathLength="1" x1="536" y1="452" x2="348" y2="446"></line>
+<line data-a="bs" data-b="need" style="--i:8" pathLength="1" x1="436" y1="372" x2="548" y2="300"></line>
+<line data-a="bs" data-b="school" style="--i:9" pathLength="1" x1="436" y1="372" x2="348" y2="446"></line>
+<line data-a="celeb" data-b="givat" style="--i:10" pathLength="1" x1="212" y1="352" x2="122" y2="300"></line>
+<line data-a="celeb" data-b="res" style="--i:11" pathLength="1" x1="212" y1="352" x2="66" y2="432"></line>
+<line data-a="celeb" data-b="school" style="--i:12" pathLength="1" x1="212" y1="352" x2="348" y2="446"></line>
+<line data-a="givat" data-b="res" style="--i:13" pathLength="1" x1="122" y1="300" x2="66" y2="432"></line>
+<line data-a="givat" data-b="rg" style="--i:14" pathLength="1" x1="122" y1="300" x2="420" y2="212"></line>
+<line data-a="givat" data-b="talk" style="--i:15" pathLength="1" x1="122" y1="300" x2="66" y2="208"></line>
+<line data-a="idea" data-b="init" style="--i:16" pathLength="1" x1="362" y1="62" x2="508" y2="138"></line>
+<line data-a="idea" data-b="insp" style="--i:17" pathLength="1" x1="362" y1="62" x2="150" y2="78"></line>
+<line data-a="idea" data-b="rg" style="--i:18" pathLength="1" x1="362" y1="62" x2="420" y2="212"></line>
+<line data-a="idea" data-b="talk" style="--i:19" pathLength="1" x1="362" y1="62" x2="66" y2="208"></line>
+<line data-a="init" data-b="need" style="--i:20" pathLength="1" x1="508" y1="138" x2="548" y2="300"></line>
+<line data-a="init" data-b="res" style="--i:21" pathLength="1" x1="508" y1="138" x2="66" y2="432"></line>
+<line data-a="init" data-b="rg" style="--i:22" pathLength="1" x1="508" y1="138" x2="420" y2="212"></line>
+<line data-a="insp" data-b="need" style="--i:23" pathLength="1" x1="150" y1="78" x2="548" y2="300"></line>
+<line data-a="insp" data-b="talk" style="--i:24" pathLength="1" x1="150" y1="78" x2="66" y2="208"></line>
+<line data-a="need" data-b="rg" style="--i:25" pathLength="1" x1="548" y1="300" x2="420" y2="212"></line>
+<line data-a="res" data-b="talk" style="--i:26" pathLength="1" x1="66" y1="432" x2="66" y2="208"></line>
 </g><g class="spokes" stroke="#1B2A2F" stroke-width="1.5" stroke-dasharray="4 6" fill="none">
-<line data-a="c" data-b="celeb" x1="168" y1="322" x2="250" y2="236"></line>
-<line data-a="c" data-b="idea" x1="318" y1="66" x2="250" y2="236"></line>
-<line data-a="c" data-b="init" x1="438" y1="158" x2="250" y2="236"></line>
-<line data-a="c" data-b="insp" x1="118" y1="92" x2="250" y2="236"></line>
-<line data-a="c" data-b="res" x1="62" y1="398" x2="250" y2="236"></line>
-<line data-a="c" data-b="school" x1="318" y1="404" x2="250" y2="236"></line>
-<line data-a="c" data-b="talk" x1="68" y1="214" x2="250" y2="236"></line>
-<line data-a="c" data-b="need" x1="456" y1="306" x2="250" y2="236"></line>
-<line data-a="c" data-b="auth" x1="452" y1="428" x2="250" y2="236"></line>
+<line data-a="c" data-b="armon" x1="252" y1="150" x2="300" y2="262"></line>
+<line data-a="c" data-b="bs" x1="436" y1="372" x2="300" y2="262"></line>
+<line data-a="c" data-b="celeb" x1="212" y1="352" x2="300" y2="262"></line>
+<line data-a="c" data-b="givat" x1="122" y1="300" x2="300" y2="262"></line>
+<line data-a="c" data-b="rg" x1="420" y1="212" x2="300" y2="262"></line>
 </g>
-<g class="node" data-n="idea" style="--d:0.00s"><circle cx="318" cy="66" r="12" fill="#E8743B"></circle><text x="318" y="44">רעיון</text></g>
-<g class="node" data-n="insp" style="--d:0.37s"><circle cx="118" cy="92" r="12" fill="#0F6E68"></circle><text x="118" y="130">השראה</text></g>
-<g class="node" data-n="init" style="--d:0.74s"><circle cx="438" cy="158" r="12" fill="#0F6E68"></circle><text x="438" y="196">יוזמה</text></g>
-<g class="node" data-n="talk" style="--d:1.11s"><circle cx="68" cy="214" r="12" fill="#0F6E68"></circle><text x="68" y="252">שיחה</text></g>
-<g class="node" data-n="need" style="--d:1.48s"><circle cx="456" cy="306" r="12" fill="#E8743B"></circle><text x="456" y="344">צורך</text></g>
-<g class="node" data-n="celeb" style="--d:1.85s"><circle cx="168" cy="322" r="12" fill="#E8743B"></circle><text x="168" y="360">חגיגה</text></g>
-<g class="node" data-n="res" style="--d:2.22s"><circle cx="62" cy="398" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="62" y="436">תושבים</text></g>
-<g class="node" data-n="school" style="--d:2.59s"><circle cx="318" cy="404" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="318" y="442">בית ספר</text></g>
-<g class="node" data-n="auth" style="--d:0.36s"><circle cx="452" cy="428" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="452" y="466">רשות</text></g>
-<g class="node hub" data-n="c"><circle cx="250" cy="236" r="26" fill="#1B2A2F"></circle><circle cx="250" cy="236" r="9" fill="#FBFAF7"></circle><text x="250" y="298" font-size="30">קהילה</text></g>
+<g class="node" data-n="idea" style="--d:0.00s"><circle cx="362" cy="62" r="12" fill="#E8743B"></circle><text x="362" y="40">רעיון</text></g>
+<g class="node" data-n="insp" style="--d:0.37s"><circle cx="150" cy="78" r="12" fill="#0F6E68"></circle><text x="150" y="56">השראה</text></g>
+<g class="node" data-n="init" style="--d:0.74s"><circle cx="508" cy="138" r="12" fill="#0F6E68"></circle><text x="508" y="176">יוזמה</text></g>
+<g class="node" data-n="talk" style="--d:1.11s"><circle cx="66" cy="208" r="12" fill="#0F6E68"></circle><text x="66" y="246">שיחה</text></g>
+<g class="node" data-n="need" style="--d:1.48s"><circle cx="548" cy="300" r="12" fill="#E8743B"></circle><text x="548" y="338">צורך</text></g>
+<g class="node" data-n="celeb" style="--d:1.85s"><circle cx="212" cy="352" r="12" fill="#E8743B"></circle><text x="212" y="390">חגיגה</text></g>
+<g class="node" data-n="res" style="--d:2.22s"><circle cx="66" cy="432" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="66" y="470">תושבים</text></g>
+<g class="node" data-n="school" style="--d:2.59s"><circle cx="348" cy="446" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="348" y="484">בית ספר</text></g>
+<g class="node" data-n="auth" style="--d:0.36s"><circle cx="536" cy="452" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="536" y="490">רשות</text></g>
+<g class="node" data-n="armon" style="--d:0.73s"><path d="M252 164 C 248 156, 240 152, 240 142 A 12 12 0 1 1 264 142 C 264 152, 256 156, 252 164 Z" fill="#B5552B"></path><circle cx="252" cy="142" r="4.5" fill="#FBFAF7"></circle><text class="place" x="252" y="190">ארמון הנציב</text></g>
+<g class="node" data-n="bs" style="--d:1.10s"><path d="M436 386 C 432 378, 424 374, 424 364 A 12 12 0 1 1 448 364 C 448 374, 440 378, 436 386 Z" fill="#B5552B"></path><circle cx="436" cy="364" r="4.5" fill="#FBFAF7"></circle><text class="place" x="436" y="412">באר שבע</text></g>
+<g class="node" data-n="givat" style="--d:1.47s"><path d="M122 314 C 118 306, 110 302, 110 292 A 12 12 0 1 1 134 292 C 134 302, 126 306, 122 314 Z" fill="#B5552B"></path><circle cx="122" cy="292" r="4.5" fill="#FBFAF7"></circle><text class="place" x="122" y="340">גבעתיים</text></g>
+<g class="node" data-n="rg" style="--d:1.84s"><path d="M420 226 C 416 218, 408 214, 408 204 A 12 12 0 1 1 432 204 C 432 214, 424 218, 420 226 Z" fill="#B5552B"></path><circle cx="420" cy="204" r="4.5" fill="#FBFAF7"></circle><text class="place" x="420" y="252">רמת גן</text></g>
+<g class="node hub" data-n="c"><circle cx="300" cy="262" r="26" fill="#1B2A2F"></circle><circle cx="300" cy="262" r="9" fill="#FBFAF7"></circle><text x="300" y="324" font-size="30">קהילה</text></g>
 </svg>
 </div>
 </div>
