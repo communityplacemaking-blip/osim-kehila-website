@@ -13,7 +13,7 @@
 body{margin:0;background:var(--cream);color:var(--ink);font-family:Assistant,sans-serif;font-size:18px;line-height:1.6}
 a{color:var(--burg)}
 h1,h2{font-family:'Secular One',sans-serif;font-weight:400;margin:0;line-height:1.15}
-h2{font-size:clamp(30px,3.4vw,40px)}
+h2{font-size:clamp(26px,2.6vw,34px)}
 p{margin:0}
 .wrap{max-width:1200px;margin:0 auto;padding:0 24px}
 .skip{position:absolute;inset-inline-start:16px;top:-60px;z-index:100;background:var(--pri);color:#fff;padding:12px 18px;border-radius:10px;font-weight:700}
@@ -32,14 +32,16 @@ nav.main a.cta{background:var(--burg);color:#fff;padding:9px 20px;border-radius:
 .btn.must{background:var(--must);color:#1A1A1A}
 .link{font-weight:800;text-decoration:none;color:var(--must)}
 /* hero */
-.hero{padding:32px 0 40px}
+.hero{padding:44px 0 52px;overflow:hidden}
 .hero .row{display:flex;gap:32px;align-items:stretch}
-.quote{flex:0 0 44%;background:var(--pri);color:var(--cream);border-radius:28px;padding:40px 40px 34px;display:flex;flex-direction:column;justify-content:center;gap:18px;position:relative;z-index:2}
-.quote h1{font-size:clamp(34px,3.7vw,52px)}
+.hero .row{position:relative}
+.wash{position:absolute;inset:-34px -60px -34px -40px;width:calc(100% + 100px);height:calc(100% + 68px);z-index:0;pointer-events:none}
+.quote{z-index:2;flex:0 0 42%;color:var(--cream);padding:44px 40px 40px 40px;display:flex;flex-direction:column;justify-content:center;gap:18px;position:relative;z-index:2}
+.quote h1{font-size:clamp(26px,2.6vw,36px);line-height:1.3}
 .quote h1 .l1{color:var(--must)}
 .quote .src{font-size:13px;opacity:.7}
-.quote .lead{font-size:19px;opacity:.92}
-.art{flex:1 1 0;min-width:0;display:flex;align-items:center}
+.quote .lead{font-size:17px;opacity:.9;max-width:30em}
+.art{flex:1 1 0;min-width:0;display:flex;align-items:center;position:relative;z-index:1}
 .overlay .hero .row{align-items:center}
 .overlay .quote{flex-basis:42%;margin-inline-end:-90px;box-shadow:0 24px 60px rgba(0,0,0,.18);border-radius:6px 28px 6px 28px}
 .overlay .art{padding-inline-start:70px}
@@ -73,7 +75,7 @@ nav.main a.cta{background:var(--burg);color:#fff;padding:9px 20px;border-radius:
 .tile.t-proc .tag{background:var(--must);color:#1A1A1A} .tile.t-phys .tag{background:var(--burg)}
 .tile h3{margin:0;font-size:19px;line-height:1.25}
 .tile small{font-weight:700;opacity:.9}
-.tile.has-img{background-size:cover;background-position:center} .tile.has-img::before{content:none}
+.tile.has-img{background-size:cover;background-position:center 30%} .tile.has-img::before{content:none}
 a.tile{text-decoration:none;transition:transform .25s,box-shadow .25s} a.tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.18);color:#fff}
 .tile .go{font-weight:800;font-size:14px;color:var(--must)}
 a.tile .go::after{content:'לצפייה ←'} a.tile[data-place] .go::after{content:'לשוטט במפה ←'}
@@ -115,7 +117,7 @@ footer a{color:var(--cream)}
   .js .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s} .js .reveal.in{opacity:1;transform:none}
 }
 @media (max-width: 900px){
-  .hero .row{flex-direction:column} .quote{flex-basis:auto}
+  .hero .row{flex-direction:column} .wash{display:none} .quote{flex-basis:auto;background:var(--pri);border-radius:28px 10px 34px 12px;padding:30px 26px}
   .overlay .quote{margin-inline-end:0;margin-bottom:-40px} .overlay .art{padding:56px 12px 16px}
   .steps,.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
   .who .wrap{grid-template-columns:1fr}
@@ -132,7 +134,7 @@ document.addEventListener('DOMContentLoaded',function(){
   else{var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.1});els.forEach(function(e){io.observe(e)});}
   Object.keys(PLACE_LINKS).forEach(function(k){var t=document.querySelector('article.tile[data-place="'+k+'"]'),u=PLACE_LINKS[k]; if(!t) return;
     if(!u){t.querySelector('.go').textContent='המפה החיה: בקרוב';return;}
-    var a=document.createElement('a');a.className=t.className+' linked';a.href=u;a.target='_blank';a.rel='noopener';a.dataset.place=k;a.innerHTML=t.innerHTML;
+    var a=document.createElement('a');a.className=t.className+' linked';a.href=u;a.target='_blank';a.rel='noopener';a.dataset.place=k;a.innerHTML=t.innerHTML;if(t.getAttribute('style'))a.setAttribute('style',t.getAttribute('style'));
     a.setAttribute('aria-label',t.querySelector('h3').textContent+': לשוטט במפה (נפתח בלשונית חדשה)');t.replaceWith(a);});
   var net=document.querySelector('.net'); if(!net) return;
   var lines=net.querySelectorAll('line'), nodes=net.querySelectorAll('.node');
@@ -152,6 +154,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </div></header>
 <main id="main" tabindex="-1">
 <section class="hero" id="top"><div class="wrap"><div class="row">
+<svg class="wash" viewBox="0 0 1300 520" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1B2A4A" stop-opacity=".07"></stop><stop offset=".38" stop-color="#1B2A4A" stop-opacity=".16"></stop><stop offset=".52" stop-color="#1B2A4A" stop-opacity=".55"></stop><stop offset=".6" stop-color="#1B2A4A" stop-opacity="1"></stop><stop offset="1" stop-color="#1B2A4A" stop-opacity="1"></stop></linearGradient><filter id="wash-brush" x="-5%" y="-15%" width="110%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="0.003 0.05" numOctaves="3" seed="11" result="n"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter><filter id="wash-streak" x="-5%" y="-15%" width="110%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="0.002 0.12" numOctaves="2" seed="5" result="n"></feTurbulence><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -3 1.75" result="w"></feColorMatrix><feComposite in="w" in2="SourceGraphic" operator="in"></feComposite></filter></defs><g filter="url(#wash-brush)"><path class="wash-p" d="M40 120 C 300 40 700 70 1000 40 C 1150 26 1240 40 1270 90 C 1292 200 1290 330 1266 440 C 1230 488 1120 480 1000 486 C 700 500 330 470 60 440 C 20 380 14 200 40 120 Z" fill="url(#fade)"></path><path d="M40 120 C 300 40 700 70 1000 40 C 1150 26 1240 40 1270 90 C 1292 200 1290 330 1266 440 C 1230 488 1120 480 1000 486 C 700 500 330 470 60 440 C 20 380 14 200 40 120 Z" fill="#fff" opacity=".07" filter="url(#wash-streak)"></path></g></svg>
 <div class="quote">
 <p class="eyebrow" style="color:var(--must)">השתתפות · סיפורים · פעולה</p>
 <h1><span class="l1">צריך קהילה כדי ליצור מקום,</span><br>וצריך מקום כדי ליצור קהילה.</h1>
@@ -160,11 +163,10 @@ document.addEventListener('DOMContentLoaded',function(){
 <a class="link" href="#how">איך אנחנו עובדים ←</a>
 </div>
 <div class="art"><svg class="net" viewBox="0 0 640 380" style="width:100%;height:auto;display:block;overflow:visible" role="img" aria-label="רשת מחוברת: רעיון, השראה, יוזמה, שיחה, צורך, חגיגה, תושבים, בית ספר ורשות, וכולם מחוברים לקהילה">
-<defs><filter id="brush" x="-10%" y="-30%" width="120%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.005 0.06" numOctaves="3" seed="7" result="streak"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="streak" scale="44" xChannelSelector="R" yChannelSelector="G" result="rough"></feDisplacementMap><feTurbulence type="fractalNoise" baseFrequency="0.003 0.11" numOctaves="2" seed="3" result="bristle"></feTurbulence><feColorMatrix in="bristle" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.15" result="gaps"></feColorMatrix><feComposite in="rough" in2="gaps" operator="in"></feComposite></filter></defs>
+<defs><filter id="brush" filterUnits="userSpaceOnUse" x="-120" y="-120" width="880" height="620"><feTurbulence type="fractalNoise" baseFrequency="0.005 0.06" numOctaves="3" seed="7" result="streak"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="streak" scale="44" xChannelSelector="R" yChannelSelector="G" result="rough"></feDisplacementMap><feTurbulence type="fractalNoise" baseFrequency="0.003 0.11" numOctaves="2" seed="3" result="bristle"></feTurbulence><feColorMatrix in="bristle" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.15" result="gaps"></feColorMatrix><feComposite in="rough" in2="gaps" operator="in"></feComposite></filter></defs>
 <g class="brush" filter="url(#brush)" fill="none" stroke-linecap="round">
-<path class="stroke" style="--i:0" pathLength="1" d="M40 92 C 170 40 300 70 410 56 C 500 44 570 60 610 92" stroke="#DCE1EC" stroke-width="190"></path>
-<path class="stroke" style="--i:1" pathLength="1" d="M30 262 C 160 300 270 262 380 276 C 480 290 560 268 612 236" stroke="#EFE2B8" stroke-width="170"></path>
-<path class="stroke" style="--i:2" pathLength="1" d="M380 300 C 450 276 530 284 590 312" stroke="#EBCFD3" stroke-width="96"></path>
+<path class="stroke" style="--i:0" pathLength="1" d="M30 262 C 160 300 270 262 380 276 C 450 286 500 276 540 262" stroke="#EFE2B8" stroke-width="170"></path>
+<path class="stroke" style="--i:1" pathLength="1" d="M360 300 C 420 280 480 286 530 306" stroke="#EBCFD3" stroke-width="90"></path>
 </g><g class="mesh" stroke="#1B2A4A" stroke-opacity=".45" stroke-width="1.5" fill="none">
 <line data-a="auth" data-b="celeb" style="--i:0" pathLength="1" x1="551" y1="319" x2="193" y2="271"></line>
 <line data-a="auth" data-b="init" style="--i:1" pathLength="1" x1="551" y1="319" x2="423" y2="50"></line>
@@ -232,8 +234,8 @@ document.addEventListener('DOMContentLoaded',function(){
 <section class="examples reveal" id="examples"><div class="wrap">
 <div class="head"><div><p class="eyebrow">דוגמאות מהשטח</p><h2>איך זה נראה במציאות</h2></div><a class="more" href="#examples">לעוד דוגמאות ←</a></div>
 <div class="gallery">
-<article class="tile t-dig" data-place="armon"><span class="tag">דיגיטלי</span><div class="cap"><small>ירושלים</small><h3>ארמון הנציב: סיפורי השכונה</h3><span class="go"></span></div></article>
-<article class="tile t-dig" data-place="bs"><span class="tag">דיגיטלי</span><div class="cap"><small>באר שבע · שכונה ט׳</small><h3>מפת החוסן המקומי</h3><span class="go"></span></div></article>
+<article class="tile t-dig has-img" data-place="armon" style="background-image:url(assets/armon-map.jpg)"><span class="tag">דיגיטלי</span><div class="cap"><small>ירושלים</small><h3>ארמון הנציב: סיפורי השכונה</h3><span class="go"></span></div></article>
+<article class="tile t-dig has-img" data-place="bs" style="background-image:url(assets/beer-sheva-map.jpg)"><span class="tag">דיגיטלי</span><div class="cap"><small>באר שבע · שכונה ט׳</small><h3>מפת החוסן המקומי</h3><span class="go"></span></div></article>
 <a class="tile t-phys has-img linked" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener" aria-label="פלייסמייקינג באילת: לצפייה בסרטון (נפתח ביוטיוב)"><span class="tag">פיזי</span><span class="play" aria-hidden="true"></span><div class="cap"><small>אילת · 2018–2021</small><h3>פלייסמייקינג באילת</h3><span class="go"></span></div></a>
 <article class="tile t-dig" data-place="givat"><span class="tag">דיגיטלי</span><div class="cap"><small>גבעתיים</small><h3>המפה השכונתית</h3><span class="go"></span></div></article>
 <article class="tile t-proc"><span class="tag">תהליך</span><div class="cap"><small>באר שבע</small><h3>קהילה אחרי הפגיעה</h3><span class="go"></span></div></article>
