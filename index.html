@@ -27,7 +27,7 @@ main:focus{outline:none}
 :focus-visible{outline:3px solid #E8743B;outline-offset:3px;border-radius:6px}
 @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
 /* living network */
-.net text{font-family:Assistant,sans-serif;font-weight:800;font-size:24px;fill:#1B2A2F;stroke:#EAF2EF;stroke-width:6px;paint-order:stroke;text-anchor:middle}
+.net text{font-family:Assistant,sans-serif;font-weight:800;font-size:23px;fill:#1B2A2F;stroke:#EAF2EF;stroke-width:6px;paint-order:stroke;text-anchor:middle}
 .net .hub text{font-size:30px}
 .net line,.net .node{transition:opacity .3s,stroke .3s,stroke-width .3s}
 .net .node{cursor:default}
@@ -111,42 +111,48 @@ document.addEventListener('DOMContentLoaded',function(){
 <a href="#approach" style="background: #1B2A2F; color: #FFFFFF; text-decoration: none; font-weight: 700; padding: 14px 28px; border-radius: 999px; border: 2px solid #1B2A2F; min-width: 220px; text-align: center">איך אנחנו עובדים</a>
 <a href="#system" style="background: transparent; color: #1B2A2F; text-decoration: none; font-weight: 700; padding: 14px 28px; border-radius: 999px; border: 2px solid #1B2A2F; min-width: 220px; text-align: center">למערכת הדיגיטלית</a>
 </div>
-<div style="flex: 0 1 340px; min-width: 0">
-<svg class="net" viewBox="0 0 520 480" style="width: 100%; max-width: 340px; height: auto; display: block" role="img" aria-label="רשת מחוברת: רעיון, יוזמה, צורך, השראה, תושבים, בית ספר ורשות, כולם מחוברים זה לזה ולקהילה שבמרכז">
+<div style="flex: 0 1 360px; min-width: 0">
+<svg class="net" viewBox="0 0 520 480" style="width: 100%; max-width: 360px; height: auto; display: block" role="img" aria-label="רשת מחוברת ואורגנית: רעיון, השראה, יוזמה, שיחה, צורך, חגיגה, תושבים, בית ספר ורשות, מחוברים זה לזה ולקהילה">
 <rect x="0" y="0" width="520" height="480" rx="28" fill="#EAF2EF"></rect>
-<g class="mesh" stroke="#9FC2B6" stroke-width="1.5" fill="none">
-<line data-a="idea" data-b="init" style="--i:0" pathLength="1" x1="260" y1="62" x2="425" y2="130"></line>
-<line data-a="init" data-b="need" style="--i:1" pathLength="1" x1="425" y1="130" x2="462" y2="292"></line>
-<line data-a="need" data-b="auth" style="--i:2" pathLength="1" x1="462" y1="292" x2="372" y2="420"></line>
-<line data-a="auth" data-b="school" style="--i:3" pathLength="1" x1="372" y1="420" x2="148" y2="420"></line>
-<line data-a="school" data-b="res" style="--i:4" pathLength="1" x1="148" y1="420" x2="58" y2="292"></line>
-<line data-a="res" data-b="insp" style="--i:5" pathLength="1" x1="58" y1="292" x2="95" y2="130"></line>
-<line data-a="insp" data-b="idea" style="--i:6" pathLength="1" x1="95" y1="130" x2="260" y2="62"></line>
-<line data-a="init" data-b="insp" style="--i:7" pathLength="1" x1="425" y1="130" x2="95" y2="130"></line>
-<line data-a="idea" data-b="need" style="--i:8" pathLength="1" x1="260" y1="62" x2="462" y2="292"></line>
-<line data-a="idea" data-b="res" style="--i:9" pathLength="1" x1="260" y1="62" x2="58" y2="292"></line>
-<line data-a="insp" data-b="school" style="--i:10" pathLength="1" x1="95" y1="130" x2="148" y2="420"></line>
-<line data-a="init" data-b="auth" style="--i:11" pathLength="1" x1="425" y1="130" x2="372" y2="420"></line>
-<line data-a="need" data-b="res" style="--i:12" pathLength="1" x1="462" y1="292" x2="58" y2="292"></line>
-<line data-a="school" data-b="init" style="--i:13" pathLength="1" x1="148" y1="420" x2="425" y2="130"></line>
-<line data-a="insp" data-b="auth" style="--i:14" pathLength="1" x1="95" y1="130" x2="372" y2="420"></line>
+<g class="mesh" stroke="#8DBBAE" stroke-width="1.5" fill="none">
+<line data-a="auth" data-b="celeb" style="--i:0" pathLength="1" x1="452" y1="428" x2="168" y2="322"></line>
+<line data-a="auth" data-b="init" style="--i:1" pathLength="1" x1="452" y1="428" x2="438" y2="158"></line>
+<line data-a="auth" data-b="need" style="--i:2" pathLength="1" x1="452" y1="428" x2="456" y2="306"></line>
+<line data-a="auth" data-b="school" style="--i:3" pathLength="1" x1="452" y1="428" x2="318" y2="404"></line>
+<line data-a="celeb" data-b="res" style="--i:4" pathLength="1" x1="168" y1="322" x2="62" y2="398"></line>
+<line data-a="celeb" data-b="school" style="--i:5" pathLength="1" x1="168" y1="322" x2="318" y2="404"></line>
+<line data-a="celeb" data-b="talk" style="--i:6" pathLength="1" x1="168" y1="322" x2="68" y2="214"></line>
+<line data-a="idea" data-b="init" style="--i:7" pathLength="1" x1="318" y1="66" x2="438" y2="158"></line>
+<line data-a="idea" data-b="insp" style="--i:8" pathLength="1" x1="318" y1="66" x2="118" y2="92"></line>
+<line data-a="idea" data-b="talk" style="--i:9" pathLength="1" x1="318" y1="66" x2="68" y2="214"></line>
+<line data-a="init" data-b="need" style="--i:10" pathLength="1" x1="438" y1="158" x2="456" y2="306"></line>
+<line data-a="init" data-b="res" style="--i:11" pathLength="1" x1="438" y1="158" x2="62" y2="398"></line>
+<line data-a="insp" data-b="need" style="--i:12" pathLength="1" x1="118" y1="92" x2="456" y2="306"></line>
+<line data-a="insp" data-b="talk" style="--i:13" pathLength="1" x1="118" y1="92" x2="68" y2="214"></line>
+<line data-a="need" data-b="school" style="--i:14" pathLength="1" x1="456" y1="306" x2="318" y2="404"></line>
+<line data-a="res" data-b="talk" style="--i:15" pathLength="1" x1="62" y1="398" x2="68" y2="214"></line>
+<line data-a="school" data-b="talk" style="--i:16" pathLength="1" x1="318" y1="404" x2="68" y2="214"></line>
 </g><g class="spokes" stroke="#1B2A2F" stroke-width="1.5" stroke-dasharray="4 6" fill="none">
-<line data-a="c" data-b="idea" x1="260" y1="62" x2="260" y2="245"></line>
-<line data-a="c" data-b="init" x1="425" y1="130" x2="260" y2="245"></line>
-<line data-a="c" data-b="need" x1="462" y1="292" x2="260" y2="245"></line>
-<line data-a="c" data-b="auth" x1="372" y1="420" x2="260" y2="245"></line>
-<line data-a="c" data-b="school" x1="148" y1="420" x2="260" y2="245"></line>
-<line data-a="c" data-b="res" x1="58" y1="292" x2="260" y2="245"></line>
-<line data-a="c" data-b="insp" x1="95" y1="130" x2="260" y2="245"></line>
+<line data-a="c" data-b="celeb" x1="168" y1="322" x2="250" y2="236"></line>
+<line data-a="c" data-b="idea" x1="318" y1="66" x2="250" y2="236"></line>
+<line data-a="c" data-b="init" x1="438" y1="158" x2="250" y2="236"></line>
+<line data-a="c" data-b="insp" x1="118" y1="92" x2="250" y2="236"></line>
+<line data-a="c" data-b="res" x1="62" y1="398" x2="250" y2="236"></line>
+<line data-a="c" data-b="school" x1="318" y1="404" x2="250" y2="236"></line>
+<line data-a="c" data-b="talk" x1="68" y1="214" x2="250" y2="236"></line>
+<line data-a="c" data-b="need" x1="456" y1="306" x2="250" y2="236"></line>
+<line data-a="c" data-b="auth" x1="452" y1="428" x2="250" y2="236"></line>
 </g>
-<g class="node" data-n="idea" style="--d:0.00s"><circle cx="260" cy="62" r="13" fill="#E8743B"></circle><text x="260" y="38">רעיון</text></g>
-<g class="node" data-n="init" style="--d:0.45s"><circle cx="425" cy="130" r="13" fill="#0F6E68"></circle><text x="425" y="170">יוזמה</text></g>
-<g class="node" data-n="need" style="--d:0.90s"><circle cx="462" cy="292" r="13" fill="#E8743B"></circle><text x="462" y="332">צורך</text></g>
-<g class="node" data-n="auth" style="--d:1.35s"><circle cx="372" cy="420" r="13" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="372" y="462">רשות</text></g>
-<g class="node" data-n="school" style="--d:1.80s"><circle cx="148" cy="420" r="13" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="148" y="462">בית ספר</text></g>
-<g class="node" data-n="res" style="--d:2.25s"><circle cx="58" cy="292" r="13" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="58" y="332">תושבים</text></g>
-<g class="node" data-n="insp" style="--d:2.70s"><circle cx="95" cy="130" r="13" fill="#0F6E68"></circle><text x="95" y="170">השראה</text></g>
-<g class="node hub" data-n="c"><circle cx="260" cy="245" r="26" fill="#1B2A2F"></circle><circle cx="260" cy="245" r="9" fill="#FBFAF7"></circle><text x="260" y="306" font-size="30">קהילה</text></g>
+<g class="node" data-n="idea" style="--d:0.00s"><circle cx="318" cy="66" r="12" fill="#E8743B"></circle><text x="318" y="44">רעיון</text></g>
+<g class="node" data-n="insp" style="--d:0.37s"><circle cx="118" cy="92" r="12" fill="#0F6E68"></circle><text x="118" y="130">השראה</text></g>
+<g class="node" data-n="init" style="--d:0.74s"><circle cx="438" cy="158" r="12" fill="#0F6E68"></circle><text x="438" y="196">יוזמה</text></g>
+<g class="node" data-n="talk" style="--d:1.11s"><circle cx="68" cy="214" r="12" fill="#0F6E68"></circle><text x="68" y="252">שיחה</text></g>
+<g class="node" data-n="need" style="--d:1.48s"><circle cx="456" cy="306" r="12" fill="#E8743B"></circle><text x="456" y="344">צורך</text></g>
+<g class="node" data-n="celeb" style="--d:1.85s"><circle cx="168" cy="322" r="12" fill="#E8743B"></circle><text x="168" y="360">חגיגה</text></g>
+<g class="node" data-n="res" style="--d:2.22s"><circle cx="62" cy="398" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="62" y="436">תושבים</text></g>
+<g class="node" data-n="school" style="--d:2.59s"><circle cx="318" cy="404" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="318" y="442">בית ספר</text></g>
+<g class="node" data-n="auth" style="--d:0.36s"><circle cx="452" cy="428" r="12" fill="#FBFAF7" stroke="#1B2A2F" stroke-width="3"></circle><text x="452" y="466">רשות</text></g>
+<g class="node hub" data-n="c"><circle cx="250" cy="236" r="26" fill="#1B2A2F"></circle><circle cx="250" cy="236" r="9" fill="#FBFAF7"></circle><text x="250" y="298" font-size="30">קהילה</text></g>
 </svg>
 </div>
 </div>
@@ -178,22 +184,22 @@ document.addEventListener('DOMContentLoaded',function(){
 <p style="margin: 0; color: #33444A">אנחנו משלבים חשיבה קהילתית, תהליכי השתתפות, הנחיה, יצירה וכלים דיגיטליים. זה לא מסלול קבוע אלא מסגרת שמתאימה את עצמה לכל קהילה.</p>
 </div>
 <div class="steps" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
-<div class="step" style="--i:0; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+<div class="step" style="--i:0; background: #E3F1EC; border: none; border-top: 5px solid #0F6E68; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
 <span style="font-family: 'Secular One', sans-serif; font-size: 30px; color: #0F6E68">01</span>
 <h3 style="margin: 0; font-size: 22px">מקום וסיפורים</h3>
 <p style="margin: 0; color: #4A5A5F; font-size: 17px">שוטטות, הקשבה ומיפוי של מה שכבר קיים.</p>
 </div>
-<div class="step" style="--i:1; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+<div class="step" style="--i:1; background: #FCEBDF; border: none; border-top: 5px solid #E8743B; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
 <span style="font-family: 'Secular One', sans-serif; font-size: 30px; color: #0F6E68">02</span>
 <h3 style="margin: 0; font-size: 22px">זהות ושייכות</h3>
 <p style="margin: 0; color: #4A5A5F; font-size: 17px">הידע המקומי הופך לסיפור משותף שאנשים מזדהים איתו.</p>
 </div>
-<div class="step" style="--i:2; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+<div class="step" style="--i:2; background: #E3F1EC; border: none; border-top: 5px solid #0F6E68; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
 <span style="font-family: 'Secular One', sans-serif; font-size: 30px; color: #0F6E68">03</span>
 <h3 style="margin: 0; font-size: 22px">השתתפות</h3>
 <p style="margin: 0; color: #4A5A5F; font-size: 17px">מפגשים, קפה עולם ונציגות מקומית שמזמינים את כולם פנימה.</p>
 </div>
-<div class="step" style="--i:3; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
+<div class="step" style="--i:3; background: #FCEBDF; border: none; border-top: 5px solid #E8743B; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 6px">
 <span style="font-family: 'Secular One', sans-serif; font-size: 30px; color: #E8743B">04</span>
 <h3 style="margin: 0; font-size: 22px">פעולה משותפת</h3>
 <p style="margin: 0; color: #4A5A5F; font-size: 17px">יוזמות שהקהילה מובילה, עם ליווי וכלים שנשארים אחרינו.</p>
@@ -202,7 +208,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </section>
 
 <!-- Digital system -->
-<section class="reveal" id="system" style="background: #EAF2EF">
+<section class="reveal" id="system" style="background: #CFE7DF">
 <div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
 <div style="flex: 1 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
 <p style="margin: 0; font-weight: 700; color: #0F6E68; letter-spacing: 0.08em; font-size: 16px">המוצר הדיגיטלי</p>
@@ -239,7 +245,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px">
 <article class="card" style="--i:0; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
-<div style="height: 170px; background: #CFE3DC; display: flex; align-items: center; justify-content: center; color: #33444A; font-weight: 600">[תמונה מהפרויקט]</div>
+<div style="height: 170px; background: #0F6E68; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 600">[תמונה מהפרויקט]</div>
 <div style="padding: 24px; display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 14px; font-weight: 700; color: #0F6E68">ירושלים · מערכת דיגיטלית</span>
 <h3 style="margin: 0; font-size: 24px">ארמון הנציב: סיפורי השכונה</h3>
@@ -247,7 +253,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </div>
 </article>
 <article class="card" style="--i:1; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
-<div style="height: 170px; background: #F6DCCB; display: flex; align-items: center; justify-content: center; color: #33444A; font-weight: 600">[תמונה מהפרויקט]</div>
+<div style="height: 170px; background: #E8743B; display: flex; align-items: center; justify-content: center; color: #1B2A2F; font-weight: 600">[תמונה מהפרויקט]</div>
 <div style="padding: 24px; display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 14px; font-weight: 700; color: #B4501E">באר שבע · הנחיה ונציגות</span>
 <h3 style="margin: 0; font-size: 24px">באר שבע: קהילה אחרי הפגיעה</h3>
@@ -255,7 +261,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </div>
 </article>
 <article class="card" style="--i:2; background: #FFFFFF; border: 1px solid #E4E0D6; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
-<div style="height: 170px; background: #E4E0D6; display: flex; align-items: center; justify-content: center; color: #33444A; font-weight: 600">[תמונה מהפרויקט]</div>
+<div style="height: 170px; background: #1B2A2F; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-weight: 600">[תמונה מהפרויקט]</div>
 <div style="padding: 24px; display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 14px; font-weight: 700; color: #0F6E68">אילת · 2018–2021</span>
 <h3 style="margin: 0; font-size: 24px">אילת: [שם הפרויקט]</h3>
@@ -266,7 +272,7 @@ document.addEventListener('DOMContentLoaded',function(){
 </section>
 
 <!-- Tools -->
-<section class="reveal" id="tools" style="background: #FFFFFF; border-top: 1px solid #E4E0D6; border-bottom: 1px solid #E4E0D6">
+<section class="reveal" id="tools" style="background: #FCE6D5">
 <div style="max-width: 1240px; margin: 0 auto; padding: 56px 24px; display: flex; flex-wrap: wrap; gap: 48px">
 <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 12px">
 <p style="margin: 0; font-weight: 700; color: #0F6E68; letter-spacing: 0.08em; font-size: 16px">כלים ותהליכים</p>
@@ -274,13 +280,13 @@ document.addEventListener('DOMContentLoaded',function(){
 <p style="margin: 0; color: #33444A">כל כלי עומד בפני עצמו, וכולם יחד בונים תהליך קהילתי שמתאים לכם.</p>
 </div>
 <div style="flex: 2 1 520px; min-width: 0; display: flex; flex-wrap: wrap; gap: 12px; align-content: flex-start">
-<span style="padding: 12px 20px; border-radius: 999px; background: #EAF2EF; font-weight: 700">קפה עולם</span>
-<span style="padding: 12px 20px; border-radius: 999px; background: #EAF2EF; font-weight: 700">שוטטות</span>
-<span style="padding: 12px 20px; border-radius: 999px; background: #EAF2EF; font-weight: 700">סיפור ומיפוי קהילתי</span>
-<span style="padding: 12px 20px; border-radius: 999px; background: #FBEBDF; font-weight: 700">הכשרת מובילים ונציגים מקומיים</span>
-<span style="padding: 12px 20px; border-radius: 999px; background: #FBEBDF; font-weight: 700">שיתוף ציבור</span>
-<span style="padding: 12px 20px; border-radius: 999px; background: #EAF2EF; font-weight: 700">עושים מקום (Placemaking)</span>
-<span style="padding: 12px 20px; border-radius: 999px; background: #FBEBDF; font-weight: 700">תכנון והנחיה של תהליכים קהילתיים</span>
+<span style="padding: 12px 20px; border-radius: 999px; background: #0F6E68; color: #FFFFFF; font-weight: 700">קפה עולם</span>
+<span style="padding: 12px 20px; border-radius: 999px; background: #0F6E68; color: #FFFFFF; font-weight: 700">שוטטות</span>
+<span style="padding: 12px 20px; border-radius: 999px; background: #0F6E68; color: #FFFFFF; font-weight: 700">סיפור ומיפוי קהילתי</span>
+<span style="padding: 12px 20px; border-radius: 999px; background: #FFFFFF; color: #B4501E; border: 2px solid #E8743B; font-weight: 700">הכשרת מובילים ונציגים מקומיים</span>
+<span style="padding: 12px 20px; border-radius: 999px; background: #FFFFFF; color: #B4501E; border: 2px solid #E8743B; font-weight: 700">שיתוף ציבור</span>
+<span style="padding: 12px 20px; border-radius: 999px; background: #0F6E68; color: #FFFFFF; font-weight: 700">עושים מקום (Placemaking)</span>
+<span style="padding: 12px 20px; border-radius: 999px; background: #FFFFFF; color: #B4501E; border: 2px solid #E8743B; font-weight: 700">תכנון והנחיה של תהליכים קהילתיים</span>
 <span style="padding: 12px 20px; border-radius: 999px; background: #1B2A2F; color: #FBFAF7; font-weight: 700">הטמעת מערכת עושים קהילה</span>
 </div>
 </div>
@@ -290,10 +296,10 @@ document.addEventListener('DOMContentLoaded',function(){
 <section class="reveal" style="max-width: 1240px; margin: 0 auto; padding: 56px 24px; display: flex; flex-direction: column; gap: 32px">
 <h2 style="margin: 0; font-family: 'Secular One', sans-serif; font-weight: 400; font-size: 40px">למי זה מתאים</h2>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px">
-<div style="padding: 24px; border-radius: 16px; border: 1px solid #E4E0D6; background: #FFFFFF"><h3 style="margin: 0 0 6px; font-size: 20px">רשויות מקומיות</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך לרשות]</p></div>
-<div style="padding: 24px; border-radius: 16px; border: 1px solid #E4E0D6; background: #FFFFFF"><h3 style="margin: 0 0 6px; font-size: 20px">שכונות וקהילות</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך לקהילה]</p></div>
-<div style="padding: 24px; border-radius: 16px; border: 1px solid #E4E0D6; background: #FFFFFF"><h3 style="margin: 0 0 6px; font-size: 20px">עמותות וקרנות</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך לארגון]</p></div>
-<div style="padding: 24px; border-radius: 16px; border: 1px solid #E4E0D6; background: #FFFFFF"><h3 style="margin: 0 0 6px; font-size: 20px">חינוך ואקדמיה</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך למוסד]</p></div>
+<div style="padding: 24px; border-radius: 16px; background: #E3F1EC; border-top: 5px solid #0F6E68"><h3 style="margin: 0 0 6px; font-size: 20px">רשויות מקומיות</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך לרשות]</p></div>
+<div style="padding: 24px; border-radius: 16px; background: #FCEBDF; border-top: 5px solid #E8743B"><h3 style="margin: 0 0 6px; font-size: 20px">שכונות וקהילות</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך לקהילה]</p></div>
+<div style="padding: 24px; border-radius: 16px; background: #E3F1EC; border-top: 5px solid #0F6E68"><h3 style="margin: 0 0 6px; font-size: 20px">עמותות וקרנות</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך לארגון]</p></div>
+<div style="padding: 24px; border-radius: 16px; background: #FCEBDF; border-top: 5px solid #E8743B"><h3 style="margin: 0 0 6px; font-size: 20px">חינוך ואקדמיה</h3><p style="margin: 0; color: #4A5A5F; font-size: 16px">[משפט אחד על הערך למוסד]</p></div>
 </div>
 </section>
 
