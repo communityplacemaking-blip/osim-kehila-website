@@ -1,0 +1,1137 @@
+{
+  "schemaVersion": 1,
+  "_readme": "נתוני מפת החוסן המקומי - שכונה ט׳, באר שבע. קובץ סטטי ונפרד מכל נתוני הייצור (אין קשר ל-genially.db ולא לטבלאות הקהילה). כל פריט מצביע על מקור (sources) ועל רמת אימות (verificationLevels). אין בקובץ קואורדינטות גיאוגרפיות, כתובות או פרטי קשר: מיקום על המפה (mapPosition) הוא מיקום להמחשה בלבד על האיור, ואינו מייצג מקום אמיתי. להחלפה בנתונים מאומתים: לערוך את הקובץ הזה בלבד. כדי לסווג פריט שממתין לסיווג - למלא layers (למשל [\"planned\"]) ולהוסיף mapPosition. שכבות המפה: מה קיים, מה בתכנון (כולל רעיונות תושבים שמחפשים מענה, מסומנים sourceGroup=residents-ideas והסטטוס המקורי נשמר), ארגז הכלים (רשומות toolbox עם מיקום סימון להמחשה). resilience: מידע תמיכה וחירום — רק מה שסופק ואומת.",
+  "neighborhood": {
+    "id": "beer-sheva-t",
+    "name": "שכונה ט׳",
+    "city": "באר שבע",
+    "title": "מפת החוסן המקומי",
+    "tagline": "מגלים את הכוחות בשכונה. מתחברים, יוזמים יחד.",
+    "positionNote": "מיקומי הסימונים על המפה להמחשה בלבד — אין כאן כתובות או מיקומים מאומתים.",
+    "positionNoteShort": "מיקומי הסימונים להמחשה בלבד"
+  },
+  "mapImage": {
+    "src": "neighborhoods/beer-sheva-t-map.jpg",
+    "width": 1000,
+    "height": 930,
+    "alt": "איור להמחשה של שכונה ט׳ ושל קו הרקיע של באר שבע, לא מפה גיאוגרפית",
+    "note": "איור הרפרנס שהעבירה בעלת הפרויקט (12.10.2026), אחרי הסרת הסימונים, התוויות ופאנל השכבות שהיו מצוירים בו. הסימונים על המפה מגיעים רק מהנתונים.",
+    "boundary": [
+      [
+        214,
+        28
+      ],
+      [
+        348,
+        50
+      ],
+      [
+        422,
+        99
+      ],
+      [
+        417,
+        127
+      ],
+      [
+        631,
+        189
+      ],
+      [
+        706,
+        288
+      ],
+      [
+        785,
+        328
+      ],
+      [
+        850,
+        462
+      ],
+      [
+        875,
+        452
+      ],
+      [
+        914,
+        487
+      ],
+      [
+        835,
+        552
+      ],
+      [
+        636,
+        684
+      ],
+      [
+        239,
+        606
+      ],
+      [
+        80,
+        502
+      ],
+      [
+        10,
+        422
+      ],
+      [
+        60,
+        328
+      ],
+      [
+        119,
+        169
+      ]
+    ]
+  },
+  "layers": [
+    {
+      "id": "existing",
+      "label": "מה קיים",
+      "hint": "פעילויות, שירותים ויוזמות שפועלים בשכונה, לפי החומר שמסרו בעל הפרויקט ורכזת הקהילה",
+      "emptyNote": "טרם אומתו פריטים פעילים לשכבה זו"
+    },
+    {
+      "id": "planned",
+      "label": "מה בתכנון",
+      "hint": "יוזמות בפיתוח, ורעיונות של תושבים שמחפשים מענה בדרך למימוש",
+      "emptyNote": "אין פריטים בשכבה זו"
+    },
+    {
+      "id": "toolbox",
+      "label": "ארגז הכלים",
+      "hint": "תוכניות, מקומות ושותפים שהוזכרו בחומר ויכולים לעזור ליוזמות לקרות",
+      "emptyNote": "אין פריטים בשכבה זו"
+    }
+  ],
+  "verificationLevels": {
+    "source_stated": "מנוסח כפי שמופיע בחומר המקור",
+    "partly_legible": "חלק מהניסוח בחומר המקור אינו קריא — ממתין לאימות",
+    "title_only": "בחומר המקור מופיע השם בלבד",
+    "owner_message_only": "נמסר בהודעה בלבד — בלי תיאור וסטטוס",
+    "date_only": "נמסר תאריך בלבד — פרטים חסרים",
+    "owner_stated": "נמסר בהודעת בעל הפרויקט, בניסוחו"
+  },
+  "sources": {
+    "moran-dayan-project-list": {
+      "label": "רשימת הפרויקטים והיוזמות — אינפוגרפיקה שהעבירה מורן דעי, רכזת הקהילה",
+      "kind": "coordinator_material",
+      "note": "חומר מקור בתמונה בלבד. בחלק מהשורות הטקסט בתמונה אינו קריא; שורות כאלה לא הועתקו וסומנו לאימות."
+    },
+    "owner-message-2026-10-12": {
+      "label": "הודעת בעל הפרויקט, 12.10.2026",
+      "kind": "project_owner_message",
+      "note": "נמסרו שם הפרויקט ושם המוביל/ה בלבד."
+    },
+    "owner-brief-2026-10-12": {
+      "label": "בריף הפרויקט מבעל הפרויקט, 12.10.2026",
+      "kind": "project_owner_brief",
+      "note": "מועד המפגש הקהילתי."
+    },
+    "owner-message-2026-10-12-update": {
+      "label": "הבהרות בעל הפרויקט, 12.10.2026 (אחר הצהריים)",
+      "kind": "project_owner_message",
+      "note": "הבהרות לשלושה פריטים: שם קורס ההנדיוומן, תיאור הנחיית ההורים, וסטטוס סדנת הפוטותרפיה."
+    }
+  },
+  "items": [
+    {
+      "id": "bst-wall-of-hope",
+      "title": "קיר של תקווה",
+      "icon": "wall",
+      "layers": [
+        "existing"
+      ],
+      "status": {
+        "code": "received_response",
+        "label": "קיבל מענה במסגרת ״חושבים עושים״"
+      },
+      "summary": "יוזמה של תושבת פעילה: יצירת קיר פסיפס עם הודעות וטקסטי השראה, בפעילות משותפת של נוער ובני הגיל השלישי.",
+      "needs": [
+        "מקום מתאים לקיר — טרם נקבע"
+      ],
+      "partners": [],
+      "nextAction": "חשיבה על המקום שבו כדאי למקם את הקיר",
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 64.2,
+        "y": 28.33,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "יוזמות שקיבלו מענה במסגרת ״חושבים עושים״ (1)",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "בתמונה מופיע ״ובני שלישי״ — הושלם ל״ובני הגיל השלישי״, לאימות.",
+          "מיקום הקיר טרם נקבע — זו שאלה פתוחה בחומר המקור.",
+          "הועבר לשכבת ״מה קיים״ לפי הנחיית בעל הפרויקט (12.10.2026): יוזמות שקיבלו מענה הן חלק ממה שקיים בשכונה."
+        ]
+      },
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-wall-of-hope.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-handywoman-course",
+      "title": "קורס הנדיוומן - אשת שיפוצים",
+      "icon": "spark",
+      "layers": [
+        "existing"
+      ],
+      "status": {
+        "code": "received_response",
+        "label": "קיבל מענה במסגרת ״חושבים עושים״"
+      },
+      "summary": null,
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 77.5,
+        "y": 54.84,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "יוזמות שקיבלו מענה במסגרת ״חושבים עושים״ (2)",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "השם אושר על ידי בעל הפרויקט (12.10.2026): ״הנדיוומן - אשת שיפוצים״. בתמונת המקור הוא נראה ״קורס הגדיוומן״, ובבריף הראשוני הופיע בטעות כ״קורס הג'ודו״.",
+          "שורת התיאור בתמונה אינה קריאה ולכן לא הועתקה.",
+          "הועבר לשכבת ״מה קיים״ לפי הנחיית בעל הפרויקט (12.10.2026): יוזמות שקיבלו מענה הן חלק ממה שקיים בשכונה."
+        ],
+        "nameConfirmedBy": "owner-message-2026-10-12-update"
+      },
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-handywoman-course.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-self-defense-course",
+      "title": "קורס הגנה עצמית",
+      "icon": "shield",
+      "layers": [
+        "existing"
+      ],
+      "status": {
+        "code": "received_response",
+        "label": "קיבל מענה במסגרת ״חושבים עושים״"
+      },
+      "summary": "קורס לנשים ולנערות.",
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 68.0,
+        "y": 64.52,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "יוזמות שקיבלו מענה במסגרת ״חושבים עושים״ (3)",
+        "verification": "source_stated",
+        "reviewNotes": [
+          "הועבר לשכבת ״מה קיים״ לפי הנחיית בעל הפרויקט (12.10.2026): יוזמות שקיבלו מענה הן חלק ממה שקיים בשכונה."
+        ]
+      },
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-self-defense-course.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-early-childhood",
+      "title": "פעילות קבועה לגיל הרך",
+      "aliases": [
+        "פעילות לגיל הרך"
+      ],
+      "icon": "family",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": "שגרה לאימהות וילדים קטנים.",
+      "needs": [],
+      "partners": [
+        "טיפת חלב — אפשרות לשיתוף פעולה, כפי שמופיע בחומר"
+      ],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 22.52,
+        "y": 14.38,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (1)",
+        "verification": "source_stated",
+        "reviewNotes": []
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-early-childhood.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-health-promotion",
+      "title": "פעילויות לקידום בריאות",
+      "aliases": [
+        "פעילות לקידום בריאות"
+      ],
+      "sourceReading": "פעילזות לקידום בריאות",
+      "icon": "pulse",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": null,
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 44.53,
+        "y": 18.47,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (2)",
+        "verification": "title_only",
+        "reviewNotes": [
+          "בתמונה הכותרת כתובה בעיוות (״פעילזות״); נוסחה לפי רשימת הפריטים בבריף. אין תיאור בחומר המקור."
+        ]
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-health-promotion.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-elderly-routine",
+      "title": "שגרה לגיל השלישי",
+      "icon": "elders",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": null,
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 13.26,
+        "y": 48.08,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (3)",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "שלוש שורות התיאור בתמונה אינן קריאות (נראים בהן רמזים לגוף שעובד עם קשישים, למועדון שכונתי ולשעה) — לא הועתקו."
+        ]
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-elderly-routine.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-give-and-take-fair",
+      "title": "יריד תן וקח",
+      "icon": "gift",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": "אולי בסוף השנה — שיתוף פעולה בבתי הספר.",
+      "needs": [],
+      "partners": [
+        "בתי הספר — שיתוף פעולה, כפי שמופיע בחומר"
+      ],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 66.88,
+        "y": 43.1,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (4)",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "בתמונה: ״אולי בסוף פשנה״ — נקרא כ״בסוף השנה״, לאימות."
+        ]
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-give-and-take-fair.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-postnatal-prep",
+      "title": "הכנה לאימהות אחרי לידה",
+      "icon": "baby",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": "פעילות לגיל הרך / ספורט עגלות.",
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 32.1,
+        "y": 48.01,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (5)",
+        "verification": "source_stated",
+        "reviewNotes": []
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-postnatal-prep.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-youth",
+      "title": "נוער",
+      "aliases": [
+        "פעילות נוער"
+      ],
+      "icon": "youth",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": "סדנאות שונות ומעניינות לנוער.",
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 22.64,
+        "y": 36.91,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (6)",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "שתי נקודות נוספות בתמונה אינן קריאות (נראה שאחת מהן מזכירה הצעה קיימת וחיבור הנוער בשכונה) — לא הועתקו."
+        ]
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-youth.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-in-our-yard",
+      "title": "פרויקט ״אצלנו בחצר״",
+      "sourceReading": "אצלינו בחצר",
+      "icon": "house",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": null,
+      "needs": [],
+      "partners": [],
+      "nextAction": "לבדוק את האפשרות — בחומר המקור: ״אפשר לבדוק״",
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 22.36,
+        "y": 59.52,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (7)",
+        "verification": "source_stated",
+        "reviewNotes": [
+          "בתמונה הכותרת כתובה ״אצלינו בחצר״; נוסחה ״אצלנו בחצר״ לפי רשימת הפריטים בבריף."
+        ]
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-in-our-yard.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-golden-guards",
+      "title": "משמרות זהב",
+      "icon": "medal",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": null,
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 57.5,
+        "y": 54.3,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (8)",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "שורת התיאור בתמונה אינה קריאה (נראה שמוזכרים בה בתי ספר) — לא הועתקה."
+        ]
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-golden-guards.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-second-hand-closet",
+      "title": "ארון יד שנייה",
+      "icon": "hanger",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "seeking_response",
+        "label": "עדיין מחפש מענה"
+      },
+      "summary": "ארון שבו יהיו בגדי יד שנייה באיכות טובה.",
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 35.86,
+        "y": 63.52,
+        "basis": "illustrative"
+      },
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "section": "רעיונות שעלו ועדיין מחפשים מענה (9)",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "בחומר נראה שהוצע שהארון ייבנה על ידי הנוער, אך הניסוח (כולל מי שהציע) אינו קריא ולכן לא הועתק."
+        ]
+      },
+      "sourceGroup": "residents-ideas",
+      "image": {
+        "src": "neighborhoods/beer-sheva-t-img/bst-second-hand-closet.png",
+        "alt": "",
+        "note": "האיור של היוזמה מתוך האינפוגרפיקה של רכזת הקהילה"
+      }
+    },
+    {
+      "id": "bst-parent-guidance",
+      "title": "הנחיית הורים",
+      "icon": "spark",
+      "layers": [],
+      "status": {
+        "code": "status_unconfirmed",
+        "label": "הסטטוס ממתין לאישור"
+      },
+      "summary": "מפגש והעמקה עם הורים בהתמודדות, במקום שבו הם נמצאים.",
+      "people": [
+        {
+          "label": "מוביל/ת",
+          "name": "יאיר"
+        }
+      ],
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": null,
+      "provenance": {
+        "sourceId": "owner-message-2026-10-12-update",
+        "section": "הוספה לרשימה על ידי בעל הפרויקט",
+        "verification": "owner_stated",
+        "reviewNotes": [
+          "התיאור נמסר בהודעת בעל הפרויקט. עדיין לא ידוע אם מדובר בפעילות קיימת, בתכנון או בצורך — נדרש סיווג לשכבה (מלאו layers בקובץ הנתונים).",
+          "חסרים: מועד, מקום ושם משפחה, ואישור שהשם יוצג בפומבי."
+        ]
+      }
+    },
+    {
+      "id": "bst-phototherapy-workshop",
+      "title": "סדנת פוטותרפיה",
+      "icon": "spark",
+      "layers": [
+        "planned"
+      ],
+      "status": {
+        "code": "in_development",
+        "label": "בשלב פיתוח"
+      },
+      "summary": "בשילוב ארץ עיר. בשלב פיתוח, וניצול תקציבי סוף שנה.",
+      "people": [
+        {
+          "label": "מובילה",
+          "name": "מורן סיסו"
+        }
+      ],
+      "needs": [],
+      "partners": [],
+      "nextAction": null,
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": null,
+      "provenance": {
+        "sourceId": "owner-message-2026-10-12-update",
+        "section": "הוספה לרשימה על ידי בעל הפרויקט",
+        "verification": "owner_stated",
+        "reviewNotes": [
+          "הסיווג ל״מה בתכנון״ אושר על ידי בעל הפרויקט (12.10.2026) על סמך הניסוח ״בשלב פיתוח״.",
+          "״ארץ עיר״ נשמרת כפי שנמסרה (״בשילוב ארץ עיר״) ואינה מוצגת כשותפה מאומתת עד לבירור: לא ברור אם היא שותפה, גוף מממן או מסגרת.",
+          "הניסוח ״ניצול תקציבי סוף שנה״ נשמר כפי שנמסר; אין פרטי תקציב.",
+          "אין סימון על המפה עד שיאומת המיקום. הפריט מופיע ברשימת ״מה בתכנון״ עם ״מיקום: טרם אומת״.",
+          "חסרים: מועד, מקום, ואישור שהשם יוצג בפומבי. לא להתבלבל עם מורן דעי, רכזת הקהילה."
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "ev-community-meeting-2026-11-11",
+      "title": "מפגש קהילתי",
+      "process": null,
+      "dateText": "11.11.2026",
+      "isoDate": "2026-11-11",
+      "yearInferred": false,
+      "time": null,
+      "description": null,
+      "locationLabel": null,
+      "provenance": {
+        "sourceId": "owner-brief-2026-10-12",
+        "verification": "date_only",
+        "reviewNotes": [
+          "שעה, מקום ופרטי המפגש חסרים.",
+          "לאשר שהמפגש מתפרסם ברשימה זו."
+        ]
+      }
+    },
+    {
+      "id": "ev-mobilim-1",
+      "title": "מפגש ראשון עם נוער",
+      "process": "mobilim-ba-shchuna",
+      "dateText": "20.07",
+      "weekdayText": "יום ראשון",
+      "hebrewDateText": "כ״ד תמוז",
+      "isoDate": "2026-07-20",
+      "yearInferred": true,
+      "time": null,
+      "description": "הצפת צרכים ורעיונות קהילתיים.",
+      "locationLabel": null,
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "בתמונה מופיע שם הקבוצה בגרשיים (״מאריעיר״) והוא אינו קריא — לא הועתק.",
+          "יום השבוע והתאריך העברי אינם תואמים ל-20.07.2026 (יום שני) — לאמת.",
+          "השנה אינה מצוינת בחומר; הוסקה מההקשר."
+        ]
+      }
+    },
+    {
+      "id": "ev-mobilim-2",
+      "title": "מפגש שני",
+      "process": "mobilim-ba-shchuna",
+      "dateText": "11.08",
+      "weekdayText": "יום שלישי",
+      "hebrewDateText": "כ״ח אב",
+      "isoDate": "2026-08-11",
+      "yearInferred": true,
+      "time": null,
+      "description": "בניית הפרויקט, הכנסת רעיונות ואישור רעיונות.",
+      "locationLabel": null,
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "שורה אחת בתמונה (על שליחת הצגה) אינה קריאה — לא הועתקה.",
+          "השנה אינה מצוינת בחומר; הוסקה מהתאמת יום השבוע והתאריך העברי."
+        ]
+      }
+    },
+    {
+      "id": "ev-mobilim-3",
+      "title": "מפגש שלישי ואירוע סיכום",
+      "process": "mobilim-ba-shchuna",
+      "dateText": "16.09",
+      "weekdayText": "יום רביעי",
+      "hebrewDateText": "ה׳ תשרי",
+      "isoDate": "2026-09-16",
+      "yearInferred": true,
+      "time": "18:00",
+      "description": "מפגש שלישי ואירוע סיכום.",
+      "locationLabel": null,
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "בתמונה שורות נוספות על האירוע (שם מקום ואורח) אינן קריאות באופן ודאי ולא הועתקו.",
+          "בתמונה מוזכר גם אירוע למפוני השכונה בגן אביגדור ״בסוף״ המפגש, ובמקום אחר מופיע לו התאריך 03.09 — לאמת.",
+          "השנה אינה מצוינת בחומר; הוסקה מהתאמת יום השבוע והתאריך העברי."
+        ]
+      }
+    },
+    {
+      "id": "ev-evacuees-celebration",
+      "title": "אירוע חגיגי לתושבי השכונה המפונים",
+      "process": null,
+      "dateText": "03.09",
+      "isoDate": "2026-09-03",
+      "yearInferred": true,
+      "time": null,
+      "description": null,
+      "locationLabel": "גן אביגדור (כפי שמופיע בחומר המקור)",
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "source_stated",
+        "reviewNotes": [
+          "בחומר המקור הוא מוצג כ״יוזמה נוספת״ שתתקיים ב-03.09; המועד חלף ואין אישור שהאירוע התקיים.",
+          "השנה אינה מצוינת בחומר; הוסקה מההקשר."
+        ]
+      }
+    }
+  ],
+  "toolboxGroups": [
+    {
+      "id": "programs",
+      "label": "תוכניות ומימון"
+    },
+    {
+      "id": "calls",
+      "label": "קולות קוראים ומענקים"
+    },
+    {
+      "id": "municipal",
+      "label": "תמיכה עירונית"
+    },
+    {
+      "id": "places",
+      "label": "מקומות ומתקנים"
+    },
+    {
+      "id": "equipment",
+      "label": "ציוד"
+    },
+    {
+      "id": "organizations",
+      "label": "ארגונים ושותפים אפשריים"
+    }
+  ],
+  "toolbox": [
+    {
+      "id": "tb-mobilim-ba-shchuna",
+      "group": "programs",
+      "title": "מובילים בשכונה",
+      "summary": "פרויקט עם תקציב של 40,000 ₪ לעד שלושה פרויקטים קהילתיים.",
+      "facts": [
+        {
+          "label": "תקציב הפרויקט",
+          "value": "40,000 ₪"
+        },
+        {
+          "label": "היקף",
+          "value": "עד 3 פרויקטים קהילתיים"
+        }
+      ],
+      "conditions": [
+        "תהליכי ומתמשך",
+        "לא פרויקט פיזי בלבד",
+        "לא אירוע חד־פעמי",
+        "יש לנצל את הכסף",
+        "להגיש חשבוניות עד נובמבר"
+      ],
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "partly_legible",
+        "reviewNotes": [
+          "נוסח התנאים לפי התמונה; השורה ״תהליכי ומתמשך״ אינה קריאה במלואה — לאימות מול הרכזת.",
+          "לאשר אם ההגשה עדיין פתוחה ומה השלבים הבאים."
+        ]
+      },
+      "icon": "coins",
+      "status": {
+        "code": "availability_unverified",
+        "label": "זמינות ותנאים טרם אומתו"
+      },
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 50.62,
+        "y": 32.03,
+        "basis": "illustrative"
+      }
+    },
+    {
+      "id": "tb-hoshvim-osim",
+      "group": "programs",
+      "title": "חושבים עושים",
+      "summary": "המסגרת שבה יוזמות קיבלו מענה, לפי החומר.",
+      "facts": [],
+      "conditions": [],
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "title_only",
+        "reviewNotes": [
+          "חסרים: מי מפעיל, תנאי השתתפות ואופן הפנייה."
+        ]
+      },
+      "icon": "bulb",
+      "status": {
+        "code": "availability_unverified",
+        "label": "זמינות ותנאים טרם אומתו"
+      },
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 32.58,
+        "y": 26.31,
+        "basis": "illustrative"
+      }
+    },
+    {
+      "id": "tb-gan-avigdor",
+      "group": "places",
+      "title": "גן אביגדור",
+      "summary": "מקום שבו הוזכר אירוע לתושבי השכונה המפונים.",
+      "facts": [],
+      "conditions": [],
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "title_only",
+        "reviewNotes": [
+          "חסרים: מיקום מדויק ואישור לשימוש במקום."
+        ]
+      },
+      "icon": "tree",
+      "status": {
+        "code": "availability_unverified",
+        "label": "זמינות ותנאים טרם אומתו"
+      },
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 49.57,
+        "y": 66.56,
+        "basis": "illustrative"
+      }
+    },
+    {
+      "id": "tb-tipat-halav",
+      "group": "organizations",
+      "title": "טיפת חלב",
+      "summary": "הוזכרה כשותפה אפשרית לפעילות קבועה לגיל הרך.",
+      "facts": [],
+      "conditions": [],
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "title_only",
+        "reviewNotes": [
+          "חסר אישור של הגוף לשיתוף פעולה; לא נרשמו פרטי קשר."
+        ]
+      },
+      "icon": "bottle",
+      "status": {
+        "code": "availability_unverified",
+        "label": "זמינות ותנאים טרם אומתו"
+      },
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 13.3,
+        "y": 25.7,
+        "basis": "illustrative"
+      }
+    },
+    {
+      "id": "tb-schools",
+      "group": "organizations",
+      "title": "בתי הספר",
+      "summary": "הוזכרו כשותפים אפשריים ליריד תן וקח.",
+      "facts": [],
+      "conditions": [],
+      "provenance": {
+        "sourceId": "moran-dayan-project-list",
+        "verification": "title_only",
+        "reviewNotes": [
+          "חסר מי מבתי הספר, ואישור לשיתוף פעולה."
+        ]
+      },
+      "icon": "school",
+      "status": {
+        "code": "availability_unverified",
+        "label": "זמינות ותנאים טרם אומתו"
+      },
+      "location": {
+        "verified": false,
+        "label": null
+      },
+      "mapPosition": {
+        "x": 45.87,
+        "y": 50.75,
+        "basis": "illustrative"
+      }
+    }
+  ],
+  "resilience": {
+    "groups": [
+      {
+        "id": "routine",
+        "label": "תמיכה בשגרה",
+        "hint": "שירותי קהילה, רווחה, בריאות וסיוע שאומתו",
+        "emptyNote": "טרם סופק מידע מאומת על שירותי תמיכה בשגרה בשכונה",
+        "image": "neighborhoods/beer-sheva-t-res-routine.jpg"
+      },
+      {
+        "id": "emergency",
+        "label": "מענים בחירום",
+        "hint": "מידע לחירום, שירותים רלוונטיים, סיוע קהילתי ועזרה הדדית",
+        "emptyNote": "טרם סופק מידע מאומת על מענים בחירום בשכונה",
+        "image": "neighborhoods/beer-sheva-t-res-emergency.jpg"
+      }
+    ],
+    "entries": [],
+    "imageNote": "איורי האריחים נחתכו מאיור הרפרנס שהעבירה בעלת הפרויקט (12.10.2026). הם איורים בלבד ואינם מציגים שירות או מקום אמיתי."
+  },
+  "toolboxGuide": {
+    "title": "שבע שאלות לתכנון יוזמה",
+    "lead": "לכל שאלה יש כלי שעוזר לענות עליה. אפשר להתחיל מכל שאלה.",
+    "source": "מבנה השאלות והכלים לפי הנחיית בעל הפרויקט (12.10.2026).",
+    "questions": [
+      {
+        "id": "why",
+        "q": "למה?",
+        "prompt": "מה הערך המוביל שלי?",
+        "tools": [
+          {
+            "t": "הערך המוביל",
+            "d": "כתבו במשפט אחד איזה ערך מניע אתכם ביוזמה הזו."
+          }
+        ],
+        "toolboxRefs": [],
+        "draft": false
+      },
+      {
+        "id": "who",
+        "q": "מי?",
+        "prompt": "את מי אני מזמין, ולמי היוזמה מיועדת?",
+        "tools": [
+          {
+            "t": "מי מוזמן ולמי",
+            "d": "רשמו למי היוזמה מיועדת ואת מי תזמינו להשתתף ולעזור."
+          }
+        ],
+        "toolboxRefs": [
+          "tb-tipat-halav",
+          "tb-schools"
+        ],
+        "refsLabel": "שותפים אפשריים שהוזכרו בחומר",
+        "draft": false
+      },
+      {
+        "id": "what",
+        "q": "מה?",
+        "prompt": "נסחו את הכוונה או המטרה.",
+        "tools": [
+          {
+            "t": "הכוונה והמטרה",
+            "d": "מה תרצו שיקרה בעקבות היוזמה? נסחו את זה בקצרה."
+          }
+        ],
+        "toolboxRefs": [],
+        "draft": false
+      },
+      {
+        "id": "how",
+        "q": "איך?",
+        "prompt": "באיזו שיטה נעבוד יחד?",
+        "tools": [
+          {
+            "t": "קפה עולמי (World Café)",
+            "d": "שיחות בשולחנות קטנים בכמה סבבים. המשתתפים עוברים בין השולחנות ומחברים בין הרעיונות."
+          },
+          {
+            "t": "מרחב פתוח (Open Space)",
+            "d": "המשתתפים מציעים בעצמם את נושאי השיחה ובוחרים לאיזו קבוצה להצטרף."
+          },
+          {
+            "t": "פצ׳ה קוצ׳ה (Pecha Kucha)",
+            "d": "הצגה קצרה: 20 שקפים, 20 שניות לכל שקף. מתאים לשתף הרבה רעיונות בערב אחד."
+          }
+        ],
+        "toolboxRefs": [],
+        "draft": false
+      },
+      {
+        "id": "where",
+        "q": "איפה?",
+        "prompt": "מצאו מקומות וחדרים שאפשר להשתמש בהם.",
+        "tools": [
+          {
+            "t": "בתי הספר בשכונה",
+            "d": "בתי הספר בשכונה הם מקום אפשרי למפגשים ולפעילות."
+          },
+          {
+            "t": "מיזם עוגן עם חממת יזמים",
+            "d": "מרחב קהילתי בשכונה שמארח חממת יזמים. השם המדויק יעודכן."
+          }
+        ],
+        "toolboxRefs": [
+          "tb-gan-avigdor",
+          "tb-schools"
+        ],
+        "refsLabel": "מקומות שהוזכרו בחומר",
+        "pending": "רשימת חדרים ומקומות זמינים בשכונה ממתינה לרכזת הקהילה.",
+        "draft": false
+      },
+      {
+        "id": "when",
+        "q": "מתי?",
+        "prompt": "מתי זה קורה, כמה פעמים ועד מתי?",
+        "tools": [
+          {
+            "t": "לוח זמנים",
+            "d": "פעם אחת או מפגש קבוע? קבעו תאריך התחלה ותאריך יעד."
+          }
+        ],
+        "toolboxRefs": [],
+        "links": [
+          "now"
+        ],
+        "draft": false
+      },
+      {
+        "id": "howmuch",
+        "q": "כמה?",
+        "prompt": "כמה אנשים, כמה כסף ואילו משאבים צריך?",
+        "tools": [
+          {
+            "t": "תקציב ומשאבים",
+            "d": "רשמו כמה משתתפים אתם מצפים, מה צריך לקנות או להשאיל, ומאיפה יגיע המימון."
+          }
+        ],
+        "toolboxRefs": [
+          "tb-mobilim-ba-shchuna"
+        ],
+        "refsLabel": "מימון שהוזכר בחומר",
+        "draft": false
+      }
+    ]
+  }
+}
