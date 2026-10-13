@@ -69,7 +69,7 @@ nav.main a.cta{background:var(--burg);color:#fff;padding:9px 20px;border-radius:
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .tile{position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:var(--tint);display:flex;flex-direction:column;justify-content:flex-end;padding:16px;color:#fff}
 .tile::before{content:'[תמונה]';position:absolute;top:42%;left:0;right:0;text-align:center;color:var(--muted);font-weight:600;font-size:14px}
-.tile.t-proc{background:#E8D9C4} .tile.t-phys{background:#EBCFD3}
+.tile.t-proc{background:#E8D9C4} .tile.t-phys{background:#E3A877}
 .tile .cap{position:relative;background:linear-gradient(transparent,rgba(0,0,0,.55));margin:-16px;padding:40px 16px 14px}
 .tile .tag{position:absolute;top:12px;inset-inline-start:12px;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:800;background:var(--pri);color:#fff}
 .tile.t-proc .tag{background:var(--must);color:#1A1A1A} .tile.t-phys .tag{background:var(--burg)}
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <defs><filter id="brush" filterUnits="userSpaceOnUse" x="-120" y="-120" width="880" height="620"><feTurbulence type="fractalNoise" baseFrequency="0.005 0.06" numOctaves="3" seed="7" result="streak"></feTurbulence><feDisplacementMap in="SourceGraphic" in2="streak" scale="44" xChannelSelector="R" yChannelSelector="G" result="rough"></feDisplacementMap><feTurbulence type="fractalNoise" baseFrequency="0.003 0.11" numOctaves="2" seed="3" result="bristle"></feTurbulence><feColorMatrix in="bristle" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.15" result="gaps"></feColorMatrix><feComposite in="rough" in2="gaps" operator="in"></feComposite></filter></defs>
 <g class="brush" filter="url(#brush)" fill="none" stroke-linecap="round">
 <path class="stroke" style="--i:0" pathLength="1" d="M30 262 C 160 300 270 262 380 276 C 450 286 500 276 540 262" stroke="#EFE2B8" stroke-width="170"></path>
-<path class="stroke" style="--i:1" pathLength="1" d="M360 300 C 420 280 480 286 530 306" stroke="#EBCFD3" stroke-width="90"></path>
+<path class="stroke" style="--i:1" pathLength="1" d="M360 300 C 420 280 480 286 530 306" stroke="#E3A877" stroke-width="90"></path>
 </g><g class="mesh" stroke="#1B2A4A" stroke-opacity=".45" stroke-width="1.5" fill="none">
 <line data-a="auth" data-b="celeb" style="--i:0" pathLength="1" x1="551" y1="319" x2="193" y2="271"></line>
 <line data-a="auth" data-b="init" style="--i:1" pathLength="1" x1="551" y1="319" x2="423" y2="50"></line>
