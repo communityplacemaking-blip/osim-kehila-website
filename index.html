@@ -73,6 +73,25 @@ document.addEventListener('DOMContentLoaded',function(){
   net.addEventListener('touchend',function(){setTimeout(off,1200)});
 });
 </script>
+<script>
+/* Live tools per place: fill a URL to make its pin open the live map */
+var PLACE_LINKS={armon:'',bs:'',givat:'',rg:''};
+document.addEventListener('DOMContentLoaded',function(){
+  Object.keys(PLACE_LINKS).forEach(function(k){
+    var g=document.querySelector('.net .node[data-n="'+k+'"]'); if(!g) return;
+    var name=g.querySelector('text').textContent, url=PLACE_LINKS[k];
+    var t=document.createElementNS('http://www.w3.org/2000/svg','title');
+    if(url){
+      var a=document.createElementNS('http://www.w3.org/2000/svg','a');
+      a.setAttribute('href',url); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener');
+      a.setAttribute('aria-label','לכלי החי של '+name+' (נפתח בלשונית חדשה)');
+      g.parentNode.insertBefore(a,g); a.appendChild(g); g.style.cursor='pointer';
+      t.textContent='לכלי החי של '+name;
+    } else { t.textContent=name+': בקרוב'; }
+    g.insertBefore(t,g.firstChild);
+  });
+});
+</script>
 </head>
 <body>
 <a class="skip" href="#main">דלג לתוכן הראשי</a>
