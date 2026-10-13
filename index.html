@@ -61,7 +61,9 @@ nav.main a.cta{background:var(--burg);color:#fff;padding:9px 20px;border-radius:
 .system .eyebrow{color:var(--must)}
 .system ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-weight:600;font-size:16px}
 .system li::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--must);margin-inline-end:8px}
-.shot{flex:1 1 380px;min-height:220px;border-radius:18px;border:2px dashed rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;opacity:.8;font-weight:600}
+.shot{flex:1 1 380px;position:relative;display:block;border-radius:20px;overflow:hidden;height:340px;box-shadow:0 20px 50px rgba(0,0,0,.3);text-decoration:none;transition:transform .25s} .shot:hover{transform:translateY(-3px)}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:center 4%;display:block}
+.shot span{position:absolute;bottom:14px;inset-inline-start:14px;background:var(--must);color:#1A1A1A;font-weight:800;padding:8px 16px;border-radius:999px;font-size:15px}
 /* gallery */
 .examples{padding:44px 0}
 .examples .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px;margin-bottom:20px}
@@ -228,7 +230,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <ul><li>מפה שכונתית מאוירת</li><li>סיפורים וזיכרון קהילתי</li><li>אנשים ונכסים קהילתיים</li><li>יוזמות והתנדבות</li><li>הגשת רעיונות מהתושבים</li><li>לשכונות, בתי ספר וארגונים</li></ul>
 <div><a class="btn must" href="#contact">מערכת לקהילה שלכם</a></div>
 </div>
-<div class="shot">[צילום מסך של המפה המאוירת, ארמון הנציב]</div>
+<a class="shot" href="https://osim-kehila-production.up.railway.app/anchor-map" target="_blank" rel="noopener" aria-label="מפת ארמון הנציב: לשוטט במפה החיה (נפתח בלשונית חדשה)"><img src="assets/armon-map.webp" alt="המפה המאוירת של ארמון הנציב" loading="lazy"><span>לשוטט במפה החיה של ארמון הנציב ←</span></a>
 </div></section>
 
 <section class="examples reveal" id="examples"><div class="wrap">
@@ -236,10 +238,10 @@ document.addEventListener('DOMContentLoaded',function(){
 <div class="gallery">
 <article class="tile t-dig has-img" data-place="armon" style="background-image:url(assets/armon-map.jpg)"><span class="tag">דיגיטלי</span><div class="cap"><small>ירושלים</small><h3>ארמון הנציב: סיפורי השכונה</h3><span class="go"></span></div></article>
 <article class="tile t-dig has-img" data-place="bs" style="background-image:url(assets/beer-sheva-map.jpg)"><span class="tag">דיגיטלי</span><div class="cap"><small>באר שבע · שכונה ט׳</small><h3>מפת החוסן המקומי</h3><span class="go"></span></div></article>
-<a class="tile t-phys has-img linked" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener" aria-label="פלייסמייקינג באילת: לצפייה בסרטון (נפתח ביוטיוב)"><span class="tag">פיזי</span><span class="play" aria-hidden="true"></span><div class="cap"><small>אילת · 2018–2021</small><h3>פלייסמייקינג באילת</h3><span class="go"></span></div></a>
 <article class="tile t-dig" data-place="givat"><span class="tag">דיגיטלי</span><div class="cap"><small>גבעתיים</small><h3>המפה השכונתית</h3><span class="go"></span></div></article>
 <article class="tile t-proc"><span class="tag">תהליך</span><div class="cap"><small>באר שבע</small><h3>קהילה אחרי הפגיעה</h3><span class="go"></span></div></article>
 <article class="tile t-dig" data-place="rg"><span class="tag">דיגיטלי</span><div class="cap"><small>רמת גן</small><h3>[שם הפרויקט]</h3><span class="go"></span></div></article>
+<a class="tile t-phys has-img linked" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener" aria-label="פלייסמייקינג באילת: לצפייה בסרטון (נפתח ביוטיוב)"><span class="tag">פיזי</span><span class="play" aria-hidden="true"></span><div class="cap"><small>אילת · 2018–2021</small><h3>פלייסמייקינג באילת</h3><span class="go"></span></div></a>
 </div></div></section>
 
 <section class="who reveal"><div class="wrap">
