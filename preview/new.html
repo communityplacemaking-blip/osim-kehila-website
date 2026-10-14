@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>עושים קהילה | Community Making</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="עושים קהילה: מתודולוגיה וכלים דיגיטליים לפיתוח קהילה מבוססת מקום. מחברים בין אנשים, מקומות, סיפורים ויוזמות.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F2D4A;--must:#D4A72C;--cream:#F7F2E8;--grey:#E6EBF0;--muted:#4D5E70}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--navy);font-family:Heebo,sans-serif;font-weight:300;font-size:18px;line-height:1.65}
+a{color:var(--navy)}
+h1,h2,h3{font-weight:300;margin:0;line-height:1.2}
+h2{font-size:clamp(28px,2.8vw,38px)}
+b,strong{font-weight:500}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.skip{position:absolute;inset-inline-start:16px;top:-60px;z-index:100;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px}
+.skip:focus{top:12px} main:focus{outline:none}
+:focus-visible{outline:2px solid var(--navy);outline-offset:3px;border-radius:6px}
+.eyebrow{font-weight:400;letter-spacing:.06em;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:28px;height:2px;background:var(--must)}
+header{border-bottom:1px solid var(--grey);background:#fff}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy)}
+.logo b{font-weight:300;font-size:27px;display:block;line-height:1}
+.logo small{font-size:9.5px;letter-spacing:.34em;font-weight:400;color:var(--navy);display:block;margin-top:5px}
+nav.main{display:flex;flex-wrap:wrap;gap:4px 26px;font-weight:400;font-size:16px;align-items:center}
+nav.main a{color:var(--navy);text-decoration:none;padding:8px 0}
+nav.main a:hover{box-shadow:inset 0 -2px 0 var(--must)}
+nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:999px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:400;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:17px}
+.btn.solid{background:var(--navy);color:#fff}
+.btn.line{border:1px solid var(--navy);color:var(--navy)}
+.btn:hover{transform:translateY(-1px)}
+.hl{background:linear-gradient(transparent 68%,rgba(212,167,44,.55) 68%,rgba(212,167,44,.55) 92%,transparent 92%)}
+/* hero */
+.hero{padding:52px 0 56px}
+.hero .row{display:flex;gap:44px;align-items:center}
+.hero .txt{flex:0 0 46%;display:flex;flex-direction:column;gap:20px}
+.hero h1{font-size:clamp(32px,3.6vw,50px);line-height:1.25}
+.words{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:16px;letter-spacing:.04em;color:var(--muted)}
+.words span+span::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--must);margin-inline-end:14px;vertical-align:middle}
+.hero .lead{font-size:19px;color:var(--muted);max-width:30em}
+.hero .ctas{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.art{flex:1 1 0;min-width:0}
+/* approach */
+.how{background:var(--cream);padding:52px 0}
+.how .wrap{display:flex;flex-direction:column;gap:30px}
+.how .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:end}
+.how blockquote{margin:0;font-size:19px;color:var(--muted);max-width:28em;border-inline-start:2px solid var(--must);padding-inline-start:16px}
+.pillars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.pillar{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.pillar i{width:76px;height:76px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--navy);box-shadow:0 0 0 1px var(--grey)}
+.pillar h3{font-size:20px;font-weight:400}
+.pillar p{font-size:15.5px;color:var(--muted)}
+/* system */
+.system{background:var(--navy);color:#fff}
+.system .wrap{display:flex;flex-wrap:wrap;gap:44px;align-items:center;padding-top:52px;padding-bottom:52px}
+.system .txt{flex:1 1 420px;display:flex;flex-direction:column;gap:16px}
+.system .eyebrow{color:#C9D3DE}
+.system ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:16.5px}
+.system li::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--must);margin-inline-end:9px;vertical-align:middle}
+.system .btn.must{background:var(--must);color:var(--navy);align-self:flex-start;font-weight:500}
+.shot{flex:1 1 400px;position:relative;display:block;border-radius:18px;overflow:hidden;height:350px;text-decoration:none;background:#fff}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:center 4%;display:block}
+.shot span{position:absolute;bottom:14px;inset-inline-start:14px;background:#fff;color:var(--navy);font-weight:500;padding:8px 16px;border-radius:999px;font-size:15px;box-shadow:0 0 0 1px var(--grey)}
+/* gallery */
+.examples{padding:52px 0}
+.examples .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:12px;margin-bottom:22px}
+.more{text-decoration:none;border:1px solid var(--navy);padding:8px 20px;border-radius:999px;font-size:16px}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.tile{display:flex;flex-direction:column;border:1px solid var(--grey);border-radius:16px;overflow:hidden;background:#fff;color:var(--navy);text-decoration:none}
+.tile .img{aspect-ratio:16/9;background:var(--cream) center 25%/cover no-repeat;position:relative;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px}
+.tile .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
+.tile small{color:var(--muted);font-size:14px}
+.tile h3{font-size:19px;font-weight:400}
+.tile .status{position:absolute;top:10px;inset-inline-start:10px;background:#fff;color:var(--navy);font-size:13px;padding:3px 11px;border-radius:999px;box-shadow:0 0 0 1px var(--grey)}
+.tile .status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--must);margin-inline-end:6px;vertical-align:middle}
+.tile .go{font-size:15px;font-weight:400;box-shadow:inset 0 -1px 0 var(--must);align-self:flex-start;margin-top:4px}
+a.tile{transition:box-shadow .25s,transform .25s} a.tile:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(15,45,74,.10)}
+.tile .play{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.92);position:relative}
+.tile .play::after{content:'';position:absolute;top:17px;left:21px;border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent var(--navy)}
+/* who */
+.who{padding:0 0 52px}
+.who .wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.who h2{font-size:28px;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{padding:7px 16px;border-radius:999px;font-size:16px;border:1px solid var(--grey);background:#fff}
+/* contact */
+.contact{background:var(--cream)}
+.contact .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;padding-top:40px;padding-bottom:40px}
+.contact h2{font-size:36px}
+.contact form{display:flex;flex-wrap:wrap;gap:10px;flex:1 1 560px;justify-content:flex-end}
+.contact input{font:inherit;padding:11px 16px;border-radius:999px;border:1px solid #CBD5DF;background:#fff;min-width:0;flex:1 1 160px;color:var(--navy)}
+.contact button{font:inherit;font-weight:400;background:var(--navy);color:#fff;border:none;border-radius:999px;padding:11px 30px;cursor:pointer}
+footer{background:var(--navy);color:#fff;font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:22px;padding-bottom:22px}
+footer a{color:#fff}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ribbon{background:var(--navy);color:#fff;text-align:center;font-size:14px;padding:6px}
+/* network */
+.net text{font-family:Heebo,sans-serif;font-weight:400;font-size:15px;fill:var(--navy);stroke:#fff;stroke-width:5px;paint-order:stroke;text-anchor:middle}
+.net .hub text{font-size:18px;font-weight:500}
+.net line,.net .node{transition:opacity .3s,stroke-width .3s}
+.net.focus line{opacity:.15} .net.focus .node{opacity:.35}
+.net.focus line.on{opacity:1;stroke-width:2px} .net.focus .node.on{opacity:1}
+@media (prefers-reduced-motion: no-preference){
+  .net .mesh line{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.2s ease-out forwards;animation-delay:calc(var(--i)*50ms)}
+  .net .node circle{transform-box:fill-box;transform-origin:center;animation:pulse 3.6s ease-in-out infinite;animation-delay:var(--d,0s)}
+  @keyframes draw{to{stroke-dashoffset:0}} @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+  .js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s} .js .reveal.in{opacity:1;transform:none}
+}
+@media (max-width: 900px){
+  .hero .row{flex-direction:column} .hero .txt{flex-basis:auto}
+  .pillars{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .who .wrap{grid-template-columns:1fr}
+  .net text{font-size:20px} .net .hub text{font-size:24px}
+}
+@media (max-width: 520px){ .gallery{grid-template-columns:1fr} .pillars{grid-template-columns:repeat(2,minmax(0,1fr))} .system ul{grid-template-columns:1fr} nav.main a:not(.cta){display:none} }
+</style>
+<script>var PLACE_LINKS={armon:'https://osim-kehila-production.up.railway.app/anchor-map',bs:'../maps/beer-sheva/',givat:'',rg:''};
+document.documentElement.classList.add('js');
+document.addEventListener('DOMContentLoaded',function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});}
+  else{var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}})},{threshold:.1});els.forEach(function(e){io.observe(e)});}
+  Object.keys(PLACE_LINKS).forEach(function(k){var t=document.querySelector('article.tile[data-place="'+k+'"]'),u=PLACE_LINKS[k]; if(!t) return;
+    if(!u){t.querySelector('.go').textContent='המפה החיה: בקרוב';return;}
+    var a=document.createElement('a');a.className=t.className+' linked';a.href=u;a.target='_blank';a.rel='noopener';a.dataset.place=k;a.innerHTML=t.innerHTML;
+    a.querySelector('.go').textContent='לשוטט במפה החיה ←';
+    a.setAttribute('aria-label',t.querySelector('h3').textContent+': לשוטט במפה החיה (נפתח בלשונית חדשה)');t.replaceWith(a);});
+  var net=document.querySelector('.net'); if(!net) return;
+  var lines=net.querySelectorAll('line'), nodes=net.querySelectorAll('.node');
+  function on(id){net.classList.add('focus');var L={};L[id]=1;
+    lines.forEach(function(l){var h=l.dataset.a===id||l.dataset.b===id;l.classList.toggle('on',h);if(h){L[l.dataset.a]=1;L[l.dataset.b]=1;}});
+    nodes.forEach(function(n){n.classList.toggle('on',!!L[n.dataset.n])});}
+  function off(){net.classList.remove('focus');lines.forEach(function(l){l.classList.remove('on')});nodes.forEach(function(n){n.classList.remove('on')});}
+  nodes.forEach(function(n){n.addEventListener('mouseenter',function(){on(n.dataset.n)});n.addEventListener('mouseleave',off);n.addEventListener('touchstart',function(){on(n.dataset.n)},{passive:true});});
+  net.addEventListener('touchend',function(){setTimeout(off,1200)});
+});</script>
+</head>
+<body>
+<div class="ribbon">תצוגה מקדימה: הכיוון החדש (לא האתר החי)</div>
+<a class="skip" href="#main">דלג לתוכן הראשי</a>
+<header><div class="wrap">
+<a class="logo" href="#top" aria-label="עושים קהילה, לראש העמוד"><svg width="46" height="46" viewBox="0 0 124 124" aria-hidden="true"><g stroke="#0F2D4A" stroke-width="2.2" stroke-linecap="round" fill="none"><line x1="22" y1="40" x2="80" y2="16"></line><line x1="22" y1="40" x2="108" y2="62"></line><line x1="22" y1="40" x2="52" y2="104"></line><line x1="80" y1="16" x2="108" y2="62"></line><line x1="80" y1="16" x2="52" y2="104"></line><line x1="108" y1="62" x2="96" y2="104"></line><line x1="52" y1="104" x2="96" y2="104"></line></g><circle cx="22" cy="40" r="7" fill="#0F2D4A"></circle><circle cx="80" cy="16" r="9" fill="#D4A72C"></circle><circle cx="108" cy="62" r="10" fill="#EADFC4"></circle><circle cx="52" cy="104" r="11" fill="#D4A72C"></circle><circle cx="96" cy="104" r="5" fill="#0F2D4A"></circle></svg><span><b>עושים קהילה</b><small dir="ltr">COMMUNITY MAKING</small></span></a>
+<nav class="main" aria-label="ניווט ראשי"><a href="#how">הגישה שלנו</a><a href="#system">המערכת הדיגיטלית</a><a href="#examples">דוגמאות</a><a class="cta" href="#contact">בואו נעשה קהילה</a></nav>
+</div></header>
+<main id="main" tabindex="-1">
+<section class="hero" id="top"><div class="wrap"><div class="row">
+<div class="txt">
+<p class="words" aria-label="אנשים, מקום, סיפורים, יוזמות, פעולה"><span>אנשים</span><span>מקום</span><span>סיפורים</span><span>יוזמות</span><span>פעולה</span></p>
+<h1>המפה מציירת את <span class="hl">המקום</span>.<br>הקהילה נותנת לו <span class="hl">משמעות</span>.</h1>
+<p class="lead">מתודולוגיה וכלים דיגיטליים לפיתוח קהילה מבוססת מקום. אנחנו עוזרים למקום לגלות את האנשים, הסיפורים והיוזמות שכבר פועלים בו, ולחבר ביניהם.</p>
+<div class="ctas"><a class="btn line" href="#how">איך אנחנו עובדים ←</a><a class="btn solid" href="#system">למערכת הדיגיטלית</a></div>
+</div>
+<div class="art"><svg class="net" viewBox="0 0 640 380" style="width:100%;height:auto;display:block;overflow:visible" role="img" aria-label="רשת הדדית: תושבים, בית ספר, רשות, עסקים, יוזמה, רעיון, סיפור ומקום, כולם מחוברים זה לזה ולקהילה">
+<g class="mesh" stroke="#0F2D4A" stroke-opacity=".55" stroke-width="1.1" fill="none" stroke-linecap="round">
+<line data-a="auth" data-b="idea" style="--i:0" pathLength="1" x1="560" y1="230" x2="560" y2="110"></line>
+<line data-a="auth" data-b="place" style="--i:1" pathLength="1" x1="560" y1="230" x2="400" y2="320"></line>
+<line data-a="auth" data-b="school" style="--i:2" pathLength="1" x1="560" y1="230" x2="470" y2="70"></line>
+<line data-a="auth" data-b="story" style="--i:3" pathLength="1" x1="560" y1="230" x2="80" y2="250"></line>
+<line data-a="biz" data-b="idea" style="--i:4" pathLength="1" x1="180" y1="330" x2="560" y2="110"></line>
+<line data-a="biz" data-b="place" style="--i:5" pathLength="1" x1="180" y1="330" x2="400" y2="320"></line>
+<line data-a="biz" data-b="story" style="--i:6" pathLength="1" x1="180" y1="330" x2="80" y2="250"></line>
+<line data-a="idea" data-b="school" style="--i:7" pathLength="1" x1="560" y1="110" x2="470" y2="70"></line>
+<line data-a="init" data-b="place" style="--i:8" pathLength="1" x1="250" y1="40" x2="400" y2="320"></line>
+<line data-a="init" data-b="res" style="--i:9" pathLength="1" x1="250" y1="40" x2="120" y2="90"></line>
+<line data-a="init" data-b="school" style="--i:10" pathLength="1" x1="250" y1="40" x2="470" y2="70"></line>
+<line data-a="res" data-b="school" style="--i:11" pathLength="1" x1="120" y1="90" x2="470" y2="70"></line>
+<line data-a="res" data-b="story" style="--i:12" pathLength="1" x1="120" y1="90" x2="80" y2="250"></line>
+</g><g class="spokes" stroke="#D4A72C" stroke-width="1.2" fill="none">
+<line data-a="c" data-b="res" x1="120" y1="90" x2="320" y2="190"></line>
+<line data-a="c" data-b="school" x1="470" y1="70" x2="320" y2="190"></line>
+<line data-a="c" data-b="auth" x1="560" y1="230" x2="320" y2="190"></line>
+<line data-a="c" data-b="init" x1="250" y1="40" x2="320" y2="190"></line>
+<line data-a="c" data-b="story" x1="80" y1="250" x2="320" y2="190"></line>
+<line data-a="c" data-b="place" x1="400" y1="320" x2="320" y2="190"></line>
+<line data-a="c" data-b="biz" x1="180" y1="330" x2="320" y2="190"></line>
+<line data-a="c" data-b="idea" x1="560" y1="110" x2="320" y2="190"></line>
+</g>
+<g class="node" data-n="res" style="--d:0.00s"><circle cx="120" cy="90" r="9" fill="#D4A72C"></circle><text x="120" y="72">תושבים</text></g>
+<g class="node" data-n="school" style="--d:0.41s"><circle cx="470" cy="70" r="9" fill="#0F2D4A"></circle><text x="470" y="52">בית ספר</text></g>
+<g class="node" data-n="auth" style="--d:0.82s"><circle cx="560" cy="230" r="9" fill="#D4A72C"></circle><text x="560" y="260">רשות</text></g>
+<g class="node" data-n="init" style="--d:1.23s"><circle cx="250" cy="40" r="9" fill="#EADFC4"></circle><text x="250" y="22">יוזמה</text></g>
+<g class="node" data-n="story" style="--d:1.64s"><circle cx="80" cy="250" r="9" fill="#0F2D4A"></circle><text x="80" y="280">סיפור</text></g>
+<g class="node" data-n="place" style="--d:2.05s"><circle cx="400" cy="320" r="9" fill="#D4A72C"></circle><text x="400" y="350">מקום</text></g>
+<g class="node" data-n="biz" style="--d:2.46s"><circle cx="180" cy="330" r="9" fill="#EADFC4"></circle><text x="180" y="360">עסקים</text></g>
+<g class="node" data-n="idea" style="--d:0.27s"><circle cx="560" cy="110" r="9" fill="#0F2D4A"></circle><text x="560" y="92">רעיון</text></g>
+<g class="node hub" data-n="c"><circle cx="320" cy="190" r="22" fill="#fff" stroke="#0F2D4A" stroke-width="1.2"></circle><circle cx="320" cy="190" r="10" fill="#D4A72C"></circle><text x="320" y="238">קהילה</text></g></svg></div>
+</div></div></section>
+
+<section class="how reveal" id="how"><div class="wrap">
+<div class="top"><div><p class="eyebrow">הגישה שלנו</p><h2>מהמקום ומהסיפורים שלו, אל זהות ושייכות קהילתית</h2></div>
+<blockquote>"צריך קהילה כדי ליצור מקום, וצריך מקום כדי ליצור קהילה."</blockquote></div>
+<div class="pillars">
+<div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/></svg></i><h3>מקום</h3><p>שוטטות, הקשבה ומיפוי של מה שכבר קיים.</p></div>
+<div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="2.6"/><circle cx="5.5" cy="10" r="2"/><circle cx="18.5" cy="10" r="2"/><path d="M7.5 19a4.5 4.5 0 0 1 9 0M2 18.5a3.6 3.6 0 0 1 5-3.2M22 18.5a3.6 3.6 0 0 0-5-3.2"/></svg></i><h3>אנשים</h3><p>תושבים, ארגונים ועסקים שמכירים זה את זה.</p></div>
+<div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6c3-1.3 6-1.3 9 .6 3-1.9 6-1.9 9-.6v12c-3-1.3-6-1.3-9 .6-3-1.9-6-1.9-9-.6z"/><path d="M12 6.6v12"/></svg></i><h3>סיפורים</h3><p>הידע המקומי הופך לסיפור משותף.</p></div>
+<div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17h6M10 20h4M12 3a6 6 0 0 0-3.6 10.8c.6.5.9 1.2.9 2V16h5.4v-.2c0-.8.3-1.5.9-2A6 6 0 0 0 12 3z"/></svg></i><h3>יוזמות</h3><p>מפגשים, קפה עולם ורעיונות מהתושבים.</p></div>
+<div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-9M12 12c0-4 3-6.5 7-6.5 0 4-3 6.5-7 6.5zM12 14c0-3.2-2.4-5.2-5.6-5.2 0 3.2 2.4 5.2 5.6 5.2z"/></svg></i><h3>פעולה</h3><p>יוזמות שהקהילה מובילה, עם כלים שנשארים.</p></div>
+</div></div></section>
+
+<section class="system reveal" id="system"><div class="wrap">
+<div class="txt">
+<p class="eyebrow">המערכת הדיגיטלית</p>
+<h2>מערכת עושים קהילה</h2>
+<p>מערכת דיגיטלית שמחברת בין אנשים, מקום, סיפורים ויוזמות, והופכת ידע מקומי לתשתית של קהילה פעילה.</p>
+<ul><li>מפה שכונתית מאוירת</li><li>סיפורים וזיכרון קהילתי</li><li>אנשים ונכסים קהילתיים</li><li>יוזמות והתנדבות</li><li>הגשת רעיונות מהתושבים</li><li>לשכונות, בתי ספר וארגונים</li></ul>
+<a class="btn must" href="#contact">מערכת לקהילה שלכם</a>
+</div>
+<a class="shot" href="https://osim-kehila-production.up.railway.app/anchor-map" target="_blank" rel="noopener" aria-label="מפת ארמון הנציב: לשוטט במפה החיה (נפתח בלשונית חדשה)"><img src="../assets/armon-map.webp" alt="המפה המאוירת של ארמון הנציב" loading="lazy"><span>לשוטט במפה החיה של ארמון הנציב ←</span></a>
+</div></section>
+
+<section class="examples reveal" id="examples"><div class="wrap">
+<div class="head"><div><p class="eyebrow">דוגמאות מהשטח</p><h2>איך זה נראה במציאות</h2></div><a class="more" href="#examples">לעוד דוגמאות ←</a></div>
+<div class="gallery">
+<article class="tile" data-place="armon"><div class="img" style="background-image:url(../assets/armon-map.jpg)"><span class="status">מפה חיה</span></div><div class="body"><small>ירושלים</small><h3>ארמון הנציב: סיפורי השכונה</h3><span class="go"></span></div></article>
+<article class="tile" data-place="bs"><div class="img" style="background-image:url(../assets/beer-sheva-map.jpg)"><span class="status">אב־טיפוס</span></div><div class="body"><small>באר שבע · שכונה ט׳</small><h3>מפת החוסן המקומי</h3><span class="go"></span></div></article>
+<article class="tile" data-place="givat"><div class="img"><span class="status">אב־טיפוס</span>[תמונה מהשטח]</div><div class="body"><small>גבעתיים</small><h3>המפה השכונתית</h3><span class="go"></span></div></article>
+<article class="tile"><div class="img"><span class="status">תהליך</span>[תמונה מהשטח]</div><div class="body"><small>באר שבע</small><h3>קהילה אחרי הפגיעה</h3><span class="go"></span></div></article>
+<article class="tile" data-place="rg"><div class="img"><span class="status">בתהליך</span>[תמונה מהשטח]</div><div class="body"><small>רמת גן</small><h3>[שם הפרויקט]</h3><span class="go"></span></div></article>
+<a class="tile linked" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener" aria-label="פלייסמייקינג באילת: לצפייה בסרטון (נפתח ביוטיוב)"><div class="img" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)"><span class="status">פרויקט עבר</span><span class="play" aria-hidden="true"></span></div><div class="body"><small>אילת · 2018–2021</small><h3>פלייסמייקינג באילת</h3><span class="go">לצפייה בסרטון ←</span></div></a>
+</div></div></section>
+
+<section class="who reveal"><div class="wrap">
+<div><h2>למי זה מתאים</h2><div class="chips"><span>רשויות מקומיות</span><span>שכונות וקהילות</span><span>עמותות וקרנות</span><span>חינוך ואקדמיה</span><span>תאגידים וחברות</span></div></div>
+<div><h2>כלים ותהליכים</h2><div class="chips"><span>קפה עולם</span><span>שוטטות</span><span>סיפור ומיפוי קהילתי</span><span>שיתוף ציבור</span><span>עושים מקום (Placemaking)</span><span>הכשרת מובילים מקומיים</span><span>הטמעת מערכת עושים קהילה</span></div></div>
+</div></section>
+
+<section class="contact" id="contact"><div class="wrap">
+<h2>בואו נעשה קהילה</h2>
+<form action="mailto:communityplacemaking@gmail.com" method="post" enctype="text/plain">
+<label class="sr" for="f-name">שם</label><input id="f-name" name="name" autocomplete="name" placeholder="שם" required>
+<label class="sr" for="f-contact">אימייל או טלפון</label><input id="f-contact" name="contact" autocomplete="email" placeholder="אימייל או טלפון" required>
+<label class="sr" for="f-msg">במה נוכל לעזור?</label><input id="f-msg" name="message" placeholder="במה נוכל לעזור?" style="flex-basis:240px">
+<button type="submit">שליחה</button>
+</form>
+</div></section>
+</main>
+<footer><div class="wrap"><span>עושים קהילה · Community Making</span>
+<nav aria-label="קישורים בתחתית העמוד" style="display:flex;flex-wrap:wrap;gap:6px 18px"><a href="https://www.facebook.com/communityplacemaking/">פייסבוק</a><a href="https://www.instagram.com/communityplacemaking/">אינסטגרם</a><a href="mailto:communityplacemaking@gmail.com">communityplacemaking@gmail.com</a><a href="../accessibility.html">הצהרת נגישות</a></nav>
+</div></footer>
+</body></html>
