@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מכוונים את התהליך | עושים קהילה</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F2D4A;--must:#D4A72C;--cream:#F7F2E8;--grey:#E6EBF0;--muted:#4D5E70;--warm:#9A4E2C;--sand:#F2E6D2}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--navy);font-family:Heebo,sans-serif;font-weight:300;font-size:18px;line-height:1.65}
+a{color:var(--navy)}
+h1,h2,h3{font-weight:300;margin:0;line-height:1.2}
+b,strong{font-weight:500}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--navy);outline-offset:3px;border-radius:6px}
+.eyebrow{font-weight:400;letter-spacing:.06em;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:28px;height:2px;background:var(--warm)}
+header{border-bottom:1px solid var(--grey);background:#fff}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy)}
+.logo b{font-weight:300;font-size:27px;display:block;line-height:1}
+.logo small{font-size:9.5px;letter-spacing:.34em;font-weight:400;display:block;margin-top:5px}
+.back{font-size:16px;font-weight:400;text-decoration:none;padding:8px 0}
+.back:hover{box-shadow:inset 0 -2px 0 var(--must)}
+.note{background:var(--sand);font-size:14.5px;font-weight:400;color:var(--warm);text-align:center;padding:7px 16px}
+
+.intro{padding:44px 0 18px;position:relative;overflow:hidden}
+.intro h1{font-size:clamp(30px,3.4vw,44px);margin:12px 0 10px}
+.intro p.lead{max-width:640px;color:var(--muted);font-size:19px}
+.intro svg.deco{position:absolute;left:-30px;top:0;width:420px;opacity:.55;pointer-events:none}
+
+.tool{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:36px;align-items:start;padding:18px 0 64px}
+
+/* console */
+.console{position:sticky;top:16px;background:var(--cream);border-radius:22px;padding:26px 26px 22px}
+.console h2{font-size:19px;font-weight:500;margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
+.console h2 .n{font-size:14px;font-weight:400;color:var(--warm)}
+.needs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:26px;border:0;padding:0}
+.needs legend{padding:0;margin-bottom:12px;width:100%}
+.need{position:relative}
+.need input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.need span{display:block;border:1px solid #d6cdb8;background:#fff;border-radius:14px;padding:10px 14px;font-size:16px;font-weight:400;line-height:1.3;cursor:pointer;transition:all .2s}
+.need span small{display:block;font-size:13px;font-weight:300;color:var(--muted);margin-top:2px}
+.need input:checked+span{background:var(--navy);color:#fff;border-color:var(--navy)}
+.need input:checked+span small{color:#cfd9e3}
+.need input:focus-visible+span{outline:2px solid var(--warm);outline-offset:2px}
+
+.mixer{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ch{display:flex;flex-direction:column}
+.ch h3{font-size:16px;font-weight:500;line-height:1.25;min-height:40px}
+.ch .q{font-size:13px;color:var(--muted);margin:2px 0 12px;min-height:38px;line-height:1.4}
+.fbody{display:flex;gap:8px;align-items:stretch}
+.fader{position:relative;width:40px;height:236px;flex:0 0 40px}
+.fader input{position:absolute;left:50%;top:50%;width:236px;height:40px;margin:0;transform:translate(-50%,-50%) rotate(-90deg);background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.fader input::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--warm) 0 var(--p),#ddd3bf var(--p))}
+.fader input::-moz-range-track{height:6px;border-radius:6px;background:#ddd3bf}
+.fader input::-moz-range-progress{height:6px;border-radius:6px;background:var(--warm)}
+.fader input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9px;border-radius:50%;background:#fff;border:2px solid var(--navy);box-shadow:0 0 0 4px rgba(212,167,44,.35)}
+.fader input::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--navy);box-shadow:0 0 0 4px rgba(212,167,44,.35)}
+.fader input:focus-visible{outline:none}
+.fader input:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px var(--warm)}
+.ticks{position:relative;flex:1;list-style:none;margin:0;padding:0}
+.ticks li{position:absolute;inset-inline-start:0;transform:translateY(50%);font-size:13.5px;line-height:1.15;color:#8a8577;cursor:pointer;transition:color .2s}
+.ticks li::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#cbbfa5;margin-inline-end:6px;vertical-align:middle}
+.ticks li.on{color:var(--navy);font-weight:500}
+.ticks li.on::before{background:var(--warm)}
+.cur{display:none}
+
+/* result */
+.result h2{font-size:clamp(24px,2.4vw,30px);font-weight:500;margin:8px 0 6px}
+.result .sub{color:var(--muted);font-size:17px;max-width:620px}
+.pathbox{margin:18px 0 8px;border:1px solid var(--grey);border-radius:22px;padding:10px 8px 4px;background:#fff}
+.pathbox svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;color:var(--muted);margin:10px 4px 18px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-inline-end:7px;vertical-align:-1px}
+.lg-g{background:var(--warm)} .lg-d{border:2px solid var(--navy);background:#fff} .lg-o{border:1.5px dashed #9aa6b2} .lg-x{background:#c9d1da}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:start;padding:12px 14px;border-radius:14px;background:#fff;border:1px solid var(--grey);transition:opacity .3s}
+.steps .num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:500}
+.steps .g .num{background:var(--warm);color:#fff}
+.steps .d .num{border:2px solid var(--navy);color:var(--navy)}
+.steps .o .num{border:1.5px dashed #9aa6b2;color:#7b8794}
+.steps .x .num{background:#c9d1da;color:#fff}
+.steps b{display:block;font-size:16.5px;line-height:1.3}
+.steps p{font-size:14.5px;color:var(--muted);line-height:1.45;margin-top:2px}
+.steps .tag{font-size:12.5px;font-weight:400;border-radius:999px;padding:3px 10px;white-space:nowrap;align-self:center}
+.steps .g .tag{background:#f3e6df;color:var(--warm)}
+.steps .d .tag{background:var(--grey);color:var(--navy)}
+.steps .o .tag{border:1px dashed #9aa6b2;color:#5f6c79}
+.steps .x{opacity:.55;background:#fafbfc}
+.steps .x .tag{background:none;color:#7b8794}
+.steps li.entry{border-color:var(--must);box-shadow:0 0 0 2px rgba(212,167,44,.35)}
+.hint{margin:14px 0 0;padding:12px 16px;border-inline-start:3px solid var(--must);background:#fbf7ec;border-radius:0 12px 12px 0;font-size:15.5px}
+.hint:empty{display:none}
+
+.pack{margin:4px 0 22px;background:var(--navy);color:#fff;border-radius:22px;padding:26px 28px;position:relative;overflow:hidden}
+.pack .eyebrow{color:#cfd9e3}
+.pack h3{font-size:clamp(26px,2.6vw,34px);margin:8px 0 4px;font-weight:300}
+.pack h3 .hl{position:relative;z-index:0;padding:0 .1em}
+.pack h3 .hl::before{content:'';position:absolute;z-index:-1;inset:.82em -.05em .02em -.05em;background:var(--must);border-radius:.1em .25em .12em .22em;transform:rotate(-1.5deg) skewX(-6deg)}
+.pack p.desc{color:#dfe6ee;font-size:16.5px;max-width:560px}
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:18px 0 18px}
+.tiers div{border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:8px 10px;font-size:13.5px;line-height:1.3;color:#b8c5d3;transition:all .25s}
+.tiers div b{display:block;font-size:14.5px;color:#e8eef4;font-weight:400}
+.tiers div.on{background:#fff;color:var(--navy);border-color:#fff}
+.tiers div.on b{color:var(--navy);font-weight:500}
+.facts{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:15px;color:#dfe6ee;margin-bottom:20px}
+.facts b{color:#fff}
+.price{font-size:14px;color:#b8c5d3;margin-bottom:18px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:400;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:17px}
+.btn.light{background:#fff;color:var(--navy)}
+.btn.light:hover{background:var(--must)}
+.pack svg.net{position:absolute;left:-50px;top:-50px;width:190px;opacity:.16;pointer-events:none}
+
+footer{border-top:1px solid var(--grey);padding:22px 0;font-size:14px;color:var(--muted)}
+
+@media (max-width:900px){
+  .tool{grid-template-columns:1fr;gap:26px}
+  .console{padding:22px 18px;position:static}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  .wrap{padding:0 16px}
+  .needs{grid-template-columns:1fr 1fr}
+  .need span{font-size:15px;padding:9px 11px}
+  .mixer{grid-template-columns:1fr;gap:18px}
+  .ch h3,.ch .q{min-height:0}
+  .ch .q{margin-bottom:6px}
+  .fbody{flex-direction:column;gap:2px}
+  .fader{width:100%;height:40px;flex:none}
+  .fader input{position:static;width:100%;transform:none}
+  .ticks{display:none}
+  .cur{display:block;font-size:15px;font-weight:500;color:var(--warm)}
+  .tiers{grid-template-columns:1fr 1fr}
+  .pathbox{display:none}
+  .legend{margin-top:14px}
+  .steps li{grid-template-columns:30px 1fr;}
+  .steps .tag{grid-column:2;justify-self:start}
+  .pack{padding:22px 18px}
+  .logo b{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<a class="logo" href="../" aria-label="עושים קהילה, לדף הבית"><svg width="46" height="46" viewBox="0 0 124 124" aria-hidden="true"><g stroke="#0F2D4A" stroke-width="2.2" stroke-linecap="round" fill="none"><line x1="22" y1="40" x2="80" y2="16"/><line x1="22" y1="40" x2="108" y2="62"/><line x1="22" y1="40" x2="52" y2="104"/><line x1="80" y1="16" x2="108" y2="62"/><line x1="80" y1="16" x2="52" y2="104"/><line x1="108" y1="62" x2="96" y2="104"/><line x1="52" y1="104" x2="96" y2="104"/></g><circle cx="22" cy="40" r="7" fill="#0F2D4A"/><circle cx="80" cy="16" r="9" fill="#D4A72C"/><circle cx="108" cy="62" r="10" fill="#EADFC4"/><circle cx="52" cy="104" r="11" fill="#D4A72C"/><circle cx="96" cy="104" r="5" fill="#0F2D4A"/></svg><span><b>עושים קהילה</b><small dir="ltr">COMMUNITY MAKING</small></span></a>
+<a class="back" href="../">חזרה לדף הבית</a>
+</div></header>
+<div class="note">תצוגה מקדימה לרעיון. שמות המסלולים והשלבים זמניים, והמחירים עוד לא מחוברים.</div>
+
+<main>
+<section class="intro"><div class="wrap">
+<svg class="deco" viewBox="0 0 420 220" aria-hidden="true"><g fill="none" stroke="#9A4E2C" stroke-width="1" opacity=".55"><path d="M40 60 Q120 20 190 70"/><path d="M190 70 Q250 120 330 90"/><path d="M190 70 Q170 140 240 180"/><path d="M40 60 Q60 150 140 160"/><path d="M140 160 Q190 190 240 180"/><path d="M330 90 Q380 140 360 190"/></g><g fill="#D4A72C"><circle cx="40" cy="60" r="5"/><circle cx="240" cy="180" r="6"/></g><g fill="#0F2D4A"><circle cx="190" cy="70" r="4"/><circle cx="330" cy="90" r="3"/><circle cx="140" cy="160" r="3.5"/><circle cx="360" cy="190" r="2.5"/></g></svg>
+<p class="eyebrow">באיזה שלב אתם מצטרפים?</p>
+<h1>מכוונים את התהליך למקום שלכם</h1>
+<p class="lead">בחרו מה המקום צריך והזיזו את שלושת המתגים. נראה לכם איפה אתם נכנסים לתהליך, אילו שלבים נעשה יחד בשטח ואילו יעבדו דיגיטלית, ואיזה מסלול מתאים.</p>
+</div></section>
+
+<div class="wrap tool">
+<form class="console" id="console" onsubmit="return false" aria-label="כיוון התהליך">
+  <fieldset class="needs">
+    <legend><h2><span class="n">1</span>מה המקום צריך עכשיו?</h2></legend>
+    <label class="need"><input type="radio" name="need" value="community" checked><span>בניית קהילה<small>לחבר אנשים שגרים יחד</small></span></label>
+    <label class="need"><input type="radio" name="need" value="story"><span>סיפור מקומי וזהות<small>לגלות ולספר את המקום</small></span></label>
+    <label class="need"><input type="radio" name="need" value="resilience"><span>בניית חוסן<small>משאבים ועזרה הדדית</small></span></label>
+    <label class="need"><input type="radio" name="need" value="marketing"><span>נראות ושיווק למקום<small>עסקים, מבקרים ותדמית</small></span></label>
+  </fieldset>
+  <h2><span class="n">2</span>מכוונים</h2>
+  <div class="mixer" id="mixer"></div>
+</form>
+
+<section class="result" aria-live="polite">
+  <p class="eyebrow">המסלול שלכם</p>
+  <h2 id="rTitle"></h2>
+  <p class="sub" id="rSub"></p>
+  <div class="pathbox"><svg id="path" viewBox="0 0 700 190" role="img" aria-label="מסלול התהליך"></svg></div>
+  <div class="legend"><span><i class="lg-g"></i>יחד בשטח, בהנחיה שלנו</span><span><i class="lg-d"></i>דיגיטלי, בקצב שלכם</span><span><i class="lg-o"></i>אפשר להוסיף</span><span><i class="lg-x"></i>כבר קיים אצלכם</span></div>
+  <div class="pack">
+    <svg class="net" viewBox="0 0 260 200" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="1.2"><path d="M30 40 Q90 10 140 60"/><path d="M140 60 Q200 100 230 160"/><path d="M30 40 Q40 120 110 150"/><path d="M110 150 Q170 170 230 160"/><path d="M140 60 Q110 100 110 150"/></g><g fill="#D4A72C"><circle cx="30" cy="40" r="6"/><circle cx="110" cy="150" r="7"/></g><g fill="#fff"><circle cx="140" cy="60" r="4"/><circle cx="230" cy="160" r="4"/></g></svg>
+    <p class="eyebrow">המסלול המומלץ</p>
+    <h3 id="pName"></h3>
+    <p class="desc" id="pDesc"></p>
+    <div class="tiers" id="tiers"></div>
+    <div class="facts" id="facts"></div>
+    <p class="price">מחיר: לפי מסלולי התמחור, יחובר בהמשך.</p>
+    <a class="btn light" id="cta" href="#">לשיחת התאמה עם הבחירות שלי</a>
+  </div>
+  <h2 style="font-size:20px;margin:6px 0 10px">השלבים, אחד אחד</h2>
+  <ol class="steps" id="steps"></ol>
+  <p class="hint" id="hint"></p>
+
+</section>
+</div>
+</main>
+<footer><div class="wrap">עושים קהילה · COMMUNITY MAKING · <a href="mailto:communityplacemaking@gmail.com">communityplacemaking@gmail.com</a></div></footer>
+
+<script>
+const NEEDS={
+  community:{t:'בניית קהילה',seq:['listen','gather','assets','map','leaders','action','grow']},
+  story:{t:'סיפור מקומי וזהות',seq:['listen','stories','map','launch','grow']},
+  resilience:{t:'בניית חוסן',seq:['listen','assets','network','leaders','map','grow']},
+  marketing:{t:'נראות ושיווק למקום',seq:['stories','assets','map','launch','grow']}
+};
+/* skip: community state at which the stage already exists; minG: guidance level from which we run it with you; alt: the digital version below that */
+const ST={
+  listen:{t:'הקשבה ושוטטות',d:'יוצאים לשטח, מקשיבים ומגלים מה כבר קיים במקום.',skip:3,minG:2,alt:['שאלון פתיחה מקוון','שאלות קצרות לתושבים, בלי מפגש.']},
+  gather:{t:'מפגש פתיחה בסגנון קפה עולם',d:'שיחה משתפת שמחברת בין אנשים ומעלה רעיונות.',skip:2,minG:1,alt:['סקר שיתוף מקוון','הצבעה ורעיונות דרך טופס דיגיטלי.']},
+  assets:{t:'מיפוי נכסים ומשאבים',d:'סדנה שבה מסמנים אנשים, מקומות, ידע ומשאבים.',skip:4,minG:2,alt:['טופס איסוף בהתאמה','כל אחד.ת מוסיפים נכסים ומשאבים ישירות למערכת.'],mk:'מיפוי עסקים ונקודות עניין'},
+  stories:{t:'איסוף סיפורים',d:'מפגשים וראיונות שבהם נאספים סיפורי המקום.',skip:4,minG:2,alt:['איסוף סיפורים דיגיטלי','כפתור "יש לי משהו לשתף" ותבנית סיפור.']},
+  network:{t:'רשת עזרה הדדית',d:'מחברים בין מי שצריך לבין מי שיכול לעזור.',skip:4,minG:2},
+  leaders:{t:'הכשרת נציגים מקומיים',d:'קבוצה מקומית לומדת להוביל ולהמשיך את התהליך.',skip:2,minG:3},
+  action:{t:'יוזמה משותפת במרחב',d:'פעולה אחת בשטח שהקהילה מתכננת ומבצעת יחד.',skip:3,minG:3,alt:['ערכת כלים ליוזמה עצמאית','מדריך קצר ליוזמה ראשונה, בלי ליווי.'],altMin:1},
+  map:{t:'הקמת המפה החיה',d:'מערכת עושים קהילה בהתאמה למקום: מפה, סיפורים ויוזמות.',fixed:'d'},
+  launch:{t:'אירוע השקה בשטח',d:'מציגים את המפה לקהילה ומזמינים להצטרף.',minG:2,alt:['ערכת השקה לרשתות','פוסטים ותבניות לשיתוף המפה.']},
+  grow:{t:'הקהילה ממשיכה למלא',d:'המפה נשארת במקום ומתעדכנת על ידי הקהילה.',fixed:'d',g4:['ליווי מתמשך','מפגשי המשך ועדכון המפה יחד איתנו.']}
+};
+const CH=[
+  {id:'state',h:'איפה הקהילה היום?',q:'כמה כבר קיים במקום',v:1,stops:['מתחילים מאפס','יש אנשים, אין חיבור','יש קבוצה מובילה','יש יוזמות שקורות','יש תוכן, חסר כלי']},
+  {id:'guide',h:'כמה ליווי?',q:'מדיגיטלי לגמרי ועד תהליך מלא איתנו',v:2,stops:['דיגיטלי בלבד','התנעה קצרה','ליווי בצמתים','תהליך מונחה','ליווי מלא ומתמשך']},
+  {id:'scale',h:'באיזה היקף?',q:'גודל המקום שעובדים בו',v:2,stops:['ארגון או מוסד','קהילה או מתחם','שכונה','עיר']}
+];
+const TIERS=[
+  {n:'הכלי',s:'מערכת בהתאמה',d:'המערכת הדיגיטלית מותאמת למקום שלכם, ואתם מובילים את המילוי והשימוש.'},
+  {n:'כלי והתנעה',s:'מפגש או שניים',d:'המערכת בהתאמה, יחד עם התנעה בשטח שמביאה את האנשים הראשונים.'},
+  {n:'תהליך מלווה',s:'תהליך מלא',d:'תהליך קהילתי משתף בהנחיה שלנו, שמסתיים במפה חיה וביוזמה שקורית.'},
+  {n:'שותפות מתמשכת',s:'ליווי לאורך זמן',d:'ליווי מתמשך, הכשרת מובילים מקומיים והמשך עבודה על המפה יחד.'}
+];
+const SCALE=['קבוצה אחת בארגון','קהילה אחת','שכונה אחת','כמה שכונות, עם מפה משותפת'];
+const val={state:1,guide:2,scale:2};
+
+const mixer=document.getElementById('mixer');
+CH.forEach(c=>{
+  val[c.id]=c.v;
+  const n=c.stops.length-1;
+  const ticks=c.stops.map((s,i)=>`<li data-i="${i}" style="bottom:calc(12px + (100% - 24px) * ${i/n})">${s}</li>`).join('');
+  mixer.insertAdjacentHTML('beforeend',`<div class="ch"><h3 id="h-${c.id}">${c.h}</h3><p class="q">${c.q}</p>
+  <div class="fbody"><div class="fader"><input dir="ltr" type="range" min="0" max="${n}" step="1" value="${c.v}" id="${c.id}" aria-labelledby="h-${c.id}"></div>
+  <ul class="ticks" aria-hidden="true">${ticks}</ul><span class="cur" id="cur-${c.id}"></span></div></div>`);
+});
+document.querySelectorAll('.fader input').forEach(inp=>{
+  inp.addEventListener('input',()=>{val[inp.id]=+inp.value;render()});
+});
+document.querySelectorAll('.ticks li').forEach(li=>li.addEventListener('click',()=>{
+  const inp=li.closest('.fbody').querySelector('input');inp.value=li.dataset.i;val[inp.id]=+inp.value;render();
+}));
+document.querySelectorAll('input[name=need]').forEach(r=>r.addEventListener('change',render));
+
+function plan(){
+  const need=document.querySelector('input[name=need]:checked').value;
+  const s=val.state,g=val.guide;
+  return NEEDS[need].seq.map(id=>{
+    const st=ST[id];let t=st.t,d=st.d,m;
+    if(need==='marketing'&&st.mk)t=st.mk;
+    if(st.skip!==undefined&&s>=st.skip)m='x';
+    else if(st.fixed){m=st.fixed;if(id==='grow'&&g>=4){m='g';[t,d]=st.g4}if(id==='map'&&g===0)d='המערכת מוקמת בהתאמה למקום, ואתם ממלאים אותה בתוכן.';}
+    else if(g>=st.minG)m='g';
+    else if(st.alt&&g>=(st.altMin||0)){m='d';[t,d]=st.alt}
+    else m='o';
+    return {id,t,d,m};
+  });
+}
+
+function render(){
+  CH.forEach(c=>{
+    const inp=document.getElementById(c.id),n=c.stops.length-1;
+    inp.style.setProperty('--p',(val[c.id]/n*100)+'%');
+    inp.setAttribute('aria-valuetext',c.stops[val[c.id]]);
+    inp.closest('.ch').querySelectorAll('.ticks li').forEach(li=>li.classList.toggle('on',+li.dataset.i===val[c.id]));
+    document.getElementById('cur-'+c.id).textContent=c.stops[val[c.id]];
+  });
+  const need=document.querySelector('input[name=need]:checked').value;
+  const steps=plan();
+  const entry=steps.findIndex(x=>x.m!=='x');
+  const tier=[0,1,1,2,3][val.guide];
+  const nG=steps.filter(x=>x.m==='g').length,nD=steps.filter(x=>x.m==='d').length;
+
+  document.getElementById('rTitle').textContent=NEEDS[need].t+': מצטרפים בשלב '+(entry+1);
+  document.getElementById('rSub').textContent=entry>0
+    ?`את ${entry===1?'השלב הראשון':entry+' השלבים הראשונים'} כבר יש לכם, ולכן מתחילים מ"${steps[entry].t}".`
+    :'מתחילים מההתחלה, כי ההיכרות עם המקום היא הבסיס לכל השאר.';
+
+  const tagTxt={g:'יחד בשטח',d:'דיגיטלי',o:'אפשר להוסיף',x:'כבר קיים'};
+  document.getElementById('steps').innerHTML=steps.map((x,i)=>`<li class="${x.m}${i===entry?' entry':''}"><span class="num">${x.m==='x'?'✓':i+1}</span><div><b>${x.t}</b><p>${x.d}</p></div><span class="tag">${i===entry?'כאן מצטרפים · ':''}${tagTxt[x.m]}</span></li>`).join('');
+
+  drawPath(steps,entry);
+
+  let hint='';
+  if(val.state<=1&&val.guide<=1)hint='המלצה שלנו: כשמתחילים כמעט מאפס, כדאי להתחיל בהקשבה בשטח לפני הכלי. אנחנו מקשיבים לפני שמציעים פתרון. הזיזו את "כמה ליווי?" ל"ליווי בצמתים" כדי לראות את ההבדל.';
+  else if(val.state>=4&&val.guide>=3)hint='כבר יש לכם תוכן וקהילה פעילה, אז ייתכן שמסלול קל יותר יספיק. נשמח לבדוק את זה איתכם בשיחה.';
+  else if(steps.some(x=>x.m==='o'))hint='שלבים שמסומנים "אפשר להוסיף" נעשים רק בליווי. אפשר לצרף אותם גם למסלול קל יותר.';
+  document.getElementById('hint').textContent=hint;
+
+  const T=TIERS[tier];
+  document.getElementById('pName').innerHTML=`<span class="hl">${T.n}</span>`;
+  document.getElementById('pDesc').textContent=T.d;
+  document.getElementById('tiers').innerHTML=TIERS.map((t,i)=>`<div class="${i===tier?'on':''}"><b>${t.n}</b>${t.s}</div>`).join('');
+  document.getElementById('facts').innerHTML=`<span>שלבים יחד בשטח: <b>${nG}</b></span><span>שלבים דיגיטליים: <b>${nD}</b></span><span>היקף: <b>${SCALE[val.scale]}</b></span>`;
+
+  const body=['שלום, מילאתי את מכוון התהליך באתר:',
+    'צורך: '+NEEDS[need].t,
+    'מצב הקהילה: '+CH[0].stops[val.state],
+    'ליווי: '+CH[1].stops[val.guide],
+    'היקף: '+CH[2].stops[val.scale],
+    'מסלול מומלץ: '+T.n,
+    'נשמח לשיחת התאמה.'].join('\n');
+  document.getElementById('cta').href='mailto:communityplacemaking@gmail.com?subject='+encodeURIComponent('שיחת התאמה: '+T.n)+'&body='+encodeURIComponent(body);
+}
+
+function drawPath(steps,entry){
+  const W=700,H=190,n=steps.length,pad=56;
+  const pts=steps.map((_,i)=>{
+    const x=W-pad-(W-2*pad)*(n===1?0:i/(n-1));
+    const y=78+Math.sin(i*1.25+0.4)*30;
+    return [x,y];
+  });
+  let seg='';
+  for(let i=0;i<n-1;i++){
+    const [x1,y1]=pts[i],[x2,y2]=pts[i+1],mx=(x1+x2)/2,bend=(i%2?-1:1)*26;
+    const done=i<entry;
+    seg+=`<path d="M${x1} ${y1} Q${mx} ${(y1+y2)/2+bend} ${x2} ${y2}" fill="none" stroke="${done?'#c9d1da':'#0F2D4A'}" stroke-width="${done?1.5:1.6}" ${done?'stroke-dasharray="4 5"':''}/>`;
+  }
+  const col={g:['#9A4E2C','#9A4E2C'],d:['#fff','#0F2D4A'],o:['#fff','#9aa6b2'],x:['#c9d1da','#c9d1da']};
+  let nodes='';
+  steps.forEach((s,i)=>{
+    const [x,y]=pts[i],[f,st]=col[s.m],r=s.id==='map'?15:12;
+    if(i===entry)nodes+=`<circle cx="${x}" cy="${y}" r="${r+9}" fill="none" stroke="#D4A72C" stroke-width="2.5"><animate attributeName="r" values="${r+6};${r+11};${r+6}" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;.45;1" dur="2.4s" repeatCount="indefinite"/></circle>
+      <text x="${x}" y="${y-r-16}" text-anchor="middle" font-size="13" font-weight="500" fill="#9A4E2C">כאן מצטרפים</text>`;
+    nodes+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}" stroke="${st}" stroke-width="${s.m==='o'?1.5:2}" ${s.m==='o'?'stroke-dasharray="3 3"':''}/>`;
+    nodes+=`<text x="${x}" y="${y+4.5}" text-anchor="middle" font-size="12" font-weight="500" fill="${s.m==='g'||s.m==='x'?'#fff':'#0F2D4A'}">${s.m==='x'?'✓':i+1}</text>`;
+    const words=s.t.split(' '),lines=[];let cur='';
+    words.forEach(w=>{if((cur+' '+w).trim().length>13&&cur){lines.push(cur);cur=w}else cur=(cur+' '+w).trim()});lines.push(cur);
+    lines.slice(0,3).forEach((l,j)=>nodes+=`<text x="${x}" y="${y+r+18+j*15}" text-anchor="middle" font-size="12.5" fill="${s.m==='x'?'#9aa6b2':'#0F2D4A'}">${l}</text>`);
+  });
+  document.getElementById('path').innerHTML=`<g font-family="Heebo,sans-serif">${seg}${nodes}</g>`;
+}
+render();
+</script>
+</body>
+</html>
