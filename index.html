@@ -96,7 +96,8 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .tile .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
 .tile small{color:var(--muted);font-size:14px}
 .tile h3{font-size:19px;font-weight:500}
-.tile .status{position:absolute;top:10px;inset-inline-start:10px;background:#fff;color:var(--navy);font-size:13px;padding:3px 11px;border-radius:999px;box-shadow:0 0 0 1px var(--grey)}
+.tile .img iframe{position:absolute;top:0;left:0;width:200%;height:200%;border:0;transform:scale(.5);transform-origin:0 0;pointer-events:none;background:transparent}
+.tile .img{overflow:hidden}.tile .status{z-index:1;position:absolute;top:10px;inset-inline-start:10px;background:#fff;color:var(--navy);font-size:13px;padding:3px 11px;border-radius:999px;box-shadow:0 0 0 1px var(--grey)}
 .tile .status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--warm);margin-inline-end:6px;vertical-align:middle}
 .tile .go{font-size:15px;font-weight:400;box-shadow:inset 0 -1px 0 var(--must);align-self:flex-start;margin-top:4px}
 a.tile{transition:box-shadow .25s,transform .25s} a.tile:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(15,45,74,.10)}
@@ -156,6 +157,7 @@ document.addEventListener('DOMContentLoaded',function(){
     if(!u){t.querySelector('.go').textContent='המפה החיה: בקרוב';return;}
     var a=document.createElement('a');a.className=t.className+' linked';a.href=u;a.target='_blank';a.rel='noopener';a.dataset.place=k;a.innerHTML=t.innerHTML;
     a.querySelector('.go').textContent='לשוטט במפה החיה ←';
+    var f=document.createElement('iframe');f.src=u;f.loading='lazy';f.tabIndex=-1;f.setAttribute('aria-hidden','true');f.title='';a.querySelector('.img').appendChild(f);
     a.setAttribute('aria-label',t.querySelector('h3').textContent+': לשוטט במפה החיה (נפתח בלשונית חדשה)');t.replaceWith(a);});
   var net=document.querySelector('.net'); if(!net) return;
   var lines=net.querySelectorAll('path.t'), nodes=net.querySelectorAll('.node');
@@ -1414,7 +1416,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <article class="tile" data-place="givat"><div class="img" style="background-image:url(assets/givatayim-map.jpg?v=20261018)"><span class="status">אב־טיפוס</span></div><div class="body"><small>גבעתיים</small><h3>מפת הקהילה העירונית</h3><span class="go"></span></div></article>
 <article class="tile"><div class="img"><span class="status">תהליך</span>[תמונה מהשטח]</div><div class="body"><small>באר שבע</small><h3>קהילה אחרי הפגיעה</h3><span class="go"></span></div></article>
 <article class="tile" data-place="rg"><div class="img" style="background-image:url(assets/ramat-gan-map.jpg?v=20261018)"><span class="status">אב־טיפוס</span></div><div class="body"><small>רמת גן</small><h3>מפת המשפחות</h3><span class="go"></span></div></article>
-<a class="tile linked" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener" aria-label="פלייסמייקינג באילת: לצפייה בסרטון (נפתח ביוטיוב)"><div class="img" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)"><span class="status">פרויקט עבר</span><span class="play" aria-hidden="true"></span></div><div class="body"><small>אילת · 2018–2021</small><h3>פלייסמייקינג באילת</h3><span class="go">לצפייה בסרטון ←</span></div></a>
+<a class="tile linked" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener" aria-label="Placemaking Eilat: לצפייה בסרטון (נפתח ביוטיוב)"><div class="img" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)"><span class="status">פרויקט עבר</span><span class="play" aria-hidden="true"></span></div><div class="body"><small>אילת · 2018–2021</small><h3 dir="ltr">Placemaking Eilat</h3><span class="go">לצפייה בסרטון ←</span></div></a>
 </div></div></section>
 
 <section class="who reveal"><svg class="bgnet" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" style="display:block;overflow:visible">
