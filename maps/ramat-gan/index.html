@@ -2188,7 +2188,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rgp-again { padding: 0 20px; }
 
 </style>
-<div class="rg-preview-bar">אב-טיפוס בפיתוח · כל התוכן לדוגמה ולא אומת · השיתוף, ההצטרפות וההרשמה עוד לא פעילים</div>
+<div class="rg-preview-bar">אב-טיפוס בפיתוח · כל התוכן לדוגמה ולא אומת · הצעות נשלחות במייל לצוות עושים קהילה</div>
 <div id="root" dir="rtl" lang="he">טוען...</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
@@ -4507,6 +4507,53 @@ if (!window.OSIM_EMBED) ReactDOM.createRoot(document.getElementById('root')).ren
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.RgTime = api;
 })(typeof window !== 'undefined' ? window : this);
+
+</script>
+<script>/* עמוד סטטי בלבד (אתר עושים קהילה): "יש לי משהו להציע" פותח מייל מוכן לצוות עושים קהילה.
+   אין שרת ואין שמירה בדף: ההצעה יוצאת מתוכנת המייל של המציע, ושום הצעה לא מופיעה במפה. */
+(function () {
+  var MAIL = 'osimkehilanet@gmail.com';
+  var KINDS = [['idea', 'רעיון'], ['initiative', 'יוזמה'], ['event', 'אירוע'], ['place', 'מקום']];
+  var EMPTY = { kind: 'idea', title: '', details: '', where: '', contact: '' };
+  function Panel(props) {
+    var f = useState(EMPTY), form = f[0], setForm = f[1];
+    var er = useState(''), err = er[0], setErr = er[1];
+    var sn = useState(false), sent = sn[0], setSent = sn[1];
+    var set = function (k) { return function (e) { var v = e.target.value; setForm(function (o) { var n = Object.assign({}, o); n[k] = v; return n; }); }; };
+    var kindLabel = (KINDS.find(function (k) { return k[0] === form.kind; }) || KINDS[0])[1];
+    var href = function () {
+      var body = ['סוג: ' + kindLabel, 'כותרת: ' + form.title.trim(), form.details.trim() ? 'פרטים: ' + form.details.trim() : '',
+        form.where.trim() ? 'איפה: ' + form.where.trim() : '', form.contact.trim() ? 'איך לחזור אליי: ' + form.contact.trim() : '',
+        '', 'נשלח מהמפה של רמת גן (אב-טיפוס)'].filter(function (x, i) { return x || i > 4; }).join('\n');
+      return 'mailto:' + MAIL + '?subject=' + encodeURIComponent('הצעה למפת רמת גן: ' + form.title.trim().slice(0, 80)) + '&body=' + encodeURIComponent(body);
+    };
+    var submit = function (e) {
+      e.preventDefault();
+      if (!form.title.trim()) { setErr('כתבו כותרת קצרה, כדי שנדע במה מדובר.'); return; }
+      setErr(''); window.location.href = href(); setSent(true);
+    };
+    var field = function (id, label, input) { return h('label', { className: 'rgp-field', htmlFor: id }, h('span', null, label), input); };
+    var body = sent
+      ? h('div', null,
+          h('p', { className: 'rg-card-text', 'data-role': 'share-sent' }, 'נפתח מייל מוכן לצוות עושים קהילה. כדי שההצעה תגיע, צריך ללחוץ "שליחה" בתוכנת המייל. היא תיבדק לפני שתופיע במפה.'),
+          h('p', { className: 'rgp-note' }, 'המייל לא נפתח? אפשר לכתוב ישירות אל ', h('bdi', null, h('a', { href: 'mailto:' + MAIL, dir: 'ltr' }, MAIL))),
+          h('button', { type: 'button', className: 'rgp-again', onClick: function () { setForm(EMPTY); setSent(false); } }, 'להציע עוד משהו'))
+      : h('form', { className: 'rgp-form', onSubmit: submit, noValidate: true },
+          h('div', { className: 'rgp-kinds', role: 'radiogroup', 'aria-label': 'מה תרצו להציע?' }, KINDS.map(function (k) {
+            return h('button', { key: k[0], type: 'button', role: 'radio', 'aria-checked': form.kind === k[0], className: 'rgp-kind-btn' + (form.kind === k[0] ? ' is-on' : ''), onClick: function () { setForm(Object.assign({}, form, { kind: k[0] })); } }, k[1]);
+          })),
+          field('rgp-title', 'כותרת', h('input', { id: 'rgp-title', value: form.title, onChange: set('title'), maxLength: 120, placeholder: 'למשל: שעת סיפור בגינה הקהילתית' })),
+          field('rgp-details', 'פרטים', h('textarea', { id: 'rgp-details', value: form.details, onChange: set('details'), maxLength: 1500, rows: 4, placeholder: 'מה, למי זה מתאים, ומתי' })),
+          field('rgp-where', 'איפה (לא חובה)', h('input', { id: 'rgp-where', value: form.where, onChange: set('where'), maxLength: 120, placeholder: 'שכונה, רחוב או מקום' })),
+          field('rgp-contact', 'איך לחזור אליכם (לא חובה)', h('input', { id: 'rgp-contact', value: form.contact, onChange: set('contact'), maxLength: 120, placeholder: 'שם, טלפון או מייל' })),
+          err ? h('p', { className: 'rgp-err', role: 'alert' }, err) : null,
+          h('p', { className: 'rgp-note' }, 'הלחיצה פותחת מייל מוכן אל צוות עושים קהילה, ושולחים אותו מתוכנת המייל שלכם. ההצעה נבדקת ולא מתפרסמת אוטומטית.'),
+          h('button', { type: 'submit', className: 'am-btn' }, 'המשך לשליחה במייל'));
+    return h(RgSheet, { label: 'יש לי משהו להציע', onClose: props.onClose },
+      h('div', { className: 'am-creators-title' }, 'יש לי משהו להציע'), body);
+  }
+  window.RG_SHARE_INBOX = { Panel: Panel };
+})();
 
 </script>
 <script>/* ramat-gan.js - אב-טיפוס מפת המשפחות של רמת גן (/ramat-gan), בעיצוב הסקיצה של רמת גן.
