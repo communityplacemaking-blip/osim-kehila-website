@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>מפת משמעות · דמו להתחדשות עירונית</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F2D4A; --must:#D4A72C; --warm:#9A4E2C; --muted:#4D5E70;
+  --cream:#F7F2E8; --sand:#F2E6D2; --grey:#E6EBF0; --bg:#FFFFFF;
+  --park:#DCE6D2; --parkLine:#9DB58A; --sea:#E3ECF2; --line:#C9D2DB;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--navy);font-family:Heebo,Arial,sans-serif;font-weight:300}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;border-bottom:1px solid var(--grey)}
+header h1{margin:0;font-size:20px;font-weight:500}
+header p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.badge{font-size:12px;border:1px solid var(--must);color:var(--warm);border-radius:999px;padding:4px 10px;white-space:nowrap}
+main{display:grid;grid-template-columns:340px 1fr;min-height:calc(100vh - 70px)}
+aside{border-left:1px solid var(--grey);padding:18px 18px 24px;overflow:auto;max-height:calc(100vh - 70px)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.stat{background:var(--cream);border-radius:10px;padding:10px 8px;text-align:center}
+.stat b{display:block;font-size:22px;font-weight:500}
+.stat span{font-size:12px;color:var(--muted)}
+h2{font-size:15px;font-weight:500;margin:18px 0 8px}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed="false"]{opacity:.45}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.card{border:1px solid var(--grey);border-radius:12px;padding:14px;margin-top:14px;background:#fff}
+.card h3{margin:0 0 4px;font-size:17px;font-weight:500}
+.card .sub{color:var(--muted);font-size:13px;margin-bottom:10px}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 10px;font-size:14px}
+.card dt{color:var(--muted)}
+.card dd{margin:0}
+.near{list-style:none;padding:0;margin:6px 0 0;font-size:14px}
+.near li{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--grey);cursor:pointer}
+.near li:last-child{border-bottom:0}
+.near small{color:var(--muted)}
+.hint{color:var(--muted);font-size:14px;line-height:1.6}
+.list{list-style:none;padding:0;margin:0;font-size:14px}
+.list li{display:flex;align-items:center;gap:8px;padding:6px 4px;border-radius:6px;cursor:pointer}
+.list li:hover,.list li.on{background:var(--cream)}
+.list small{color:var(--muted);margin-inline-start:auto}
+.mapwrap{position:relative;overflow:hidden;background:var(--bg)}
+svg{overflow:visible;width:100%;height:100%;display:block;max-height:calc(100vh - 70px)}
+.bld{cursor:pointer;transition:r .15s}
+.anc{cursor:pointer}
+.anc text,.lbl{font-family:Heebo,Arial,sans-serif}
+.legend{position:absolute;bottom:12px;left:12px;background:rgba(255,255,255,.92);border:1px solid var(--grey);border-radius:10px;padding:8px 12px;font-size:12px;color:var(--muted);max-width:280px;line-height:1.5}
+footer{font-size:12px;color:var(--muted);padding:10px 20px;border-top:1px solid var(--grey)}
+@media (max-width:820px){
+  main{grid-template-columns:1fr}
+  aside{order:2;border-left:0;border-top:1px solid var(--grey);max-height:none}
+  .mapwrap{order:1}
+  svg{height:auto;max-height:none}
+  header{flex-wrap:wrap;padding:12px 16px}
+  .legend{display:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>הבניינים שלנו, בתוך העיר שאנשים זוכרים</h1>
+    <p>מפת משמעות לחברת התחדשות עירונית · דוגמה על בסיס הפרויקטים של אקו סיטי בתל אביב ובגבעתיים</p>
+  </div>
+  <span class="badge">דמו של עושים קהילה</span>
+</header>
+<main>
+  <aside>
+    <div class="stats" id="stats"></div>
+    <h2>מה רואים במפה</h2>
+    <div class="filters" id="filters"></div>
+    <div id="detail"><div class="card"><p class="hint">לחצו על בניין כדי לראות מה קרוב אליו, או על עוגן עירוני כדי לראות אילו בניינים נמצאים סביבו. העוגנים מוגדלים לפי המשקל שלהם בזיכרון של העיר, לא לפי הגודל האמיתי.</p></div></div>
+    <h2>כל הבניינים</h2>
+    <ul class="list" id="list"></ul>
+  </aside>
+  <div class="mapwrap">
+    <svg id="map" role="img" aria-label="מפת משמעות של צפון תל אביב וגבעתיים עם עוגנים עירוניים ובניינים"></svg>
+    <div class="legend">המפה מאוירת: הכיוונים נכונים, הקנה מידה לא. מיקומי הבניינים משוערים לפי הכתובת ולא אומתו.</div>
+  </div>
+</main>
+<footer>מקור הבניינים: האתר הציבורי של אקו סיטי (דף "הבניינים שלנו" ודפי הפרויקטים בשיווק), אוקטובר 2026. סטטוס נקבע לפי שנת האכלוס המופיעה באתר. זמני הליכה בקירוב.</footer>
+
+<script>
+(function(){
+var C={navy:'#0F2D4A',must:'#D4A72C',warm:'#9A4E2C',muted:'#4D5E70',park:'#DCE6D2',parkLine:'#9DB58A',sea:'#E3ECF2',line:'#C9D2DB',sand:'#F2E6D2'};
+var STATUS={
+  live:{label:'מאוכלסים',color:C.navy},
+  sale:{label:'עכשיו בשיווק',color:C.warm}
+};
+/* מיקומים משוערים לפי הכתובת, לא אומתו */
+var B=[
+ {n:'ברנדיס 10',c:'תל אביב',y:2022,u:19,a:'בר אוריין אדריכלים',lat:32.0932,lng:34.7826},
+ {n:'יעקב מוזיר 10',c:'תל אביב',y:2024,u:21,a:'HQ Architects',lat:32.0951,lng:34.7962},
+ {n:'בילטמור 5',c:'תל אביב',y:2024,u:22,a:'ADMA',lat:32.0889,lng:34.7826},
+ {n:'פייבל 16',c:'תל אביב',y:2020,u:15,a:'החדר אדריכלים',lat:32.0862,lng:34.7878},
+ {n:'בני דן 50',c:'תל אביב',y:2022,u:21,a:'ADMA',lat:32.0956,lng:34.7898},
+ {n:'אנטוקולסקי 21',c:'תל אביב',y:2022,u:12,a:'MAOZ PRICE',lat:32.0871,lng:34.7801},
+ {n:'גולומב 25-27',c:'גבעתיים',y:2024,u:28,a:'ADMA',lat:32.0748,lng:34.8086},
+ {n:'הכנסת 35-37',c:'גבעתיים',y:2024,u:23,a:'בר אוריין אדריכלים',lat:32.0683,lng:34.8121},
+ {n:'קרית יוסף 15',c:'גבעתיים',y:2025,u:28,a:'גרוסברד וינציגסטר אדריכלות',lat:32.0641,lng:34.8098},
+ {n:'אוסישקין 38',c:'תל אביב',y:2022,u:17,a:'אתגר נול',lat:32.0917,lng:34.7798},
+ {n:'איתמר בן אבי 5-7',c:'תל אביב',y:2021,u:19,a:'ADMA',lat:32.0838,lng:34.7838},
+ {n:'שלומציון המלכה 8',c:'תל אביב',y:2020,u:18,a:'ADMA',lat:32.0851,lng:34.7812},
+ {n:'שטרוק 3',c:'תל אביב',y:2020,u:10,a:'החדר אדריכלים',lat:32.0903,lng:34.7843},
+ {n:'מינץ 8',c:'תל אביב',y:2023,u:24,a:'ADMA',lat:32.0897,lng:34.7922},
+ {n:'שלמה המלך 93',c:'תל אביב',y:2018,u:21,a:'החדר אדריכלים',lat:32.0829,lng:34.7806},
+ {n:'רמברנדט 18',c:'תל אביב',y:2025,u:20,a:'גרוסברד וינציגסטר אדריכלות',lat:32.0772,lng:34.7768},
+ {n:'גליצנשטיין 8',c:'תל אביב',y:2020,u:15,a:'ADMA',lat:32.0906,lng:34.7788},
+ {n:'בני דן 20-22',c:'תל אביב',y:null,u:null,a:null,lat:32.0942,lng:34.7838,s:'sale',note:'שני בנייני בוטיק על פארק הירקון'},
+ {n:'בני דן 54-56',c:'תל אביב',y:2028,u:null,a:null,lat:32.0960,lng:34.7921,s:'sale',note:'8 קומות, פארק הירקון מתחיל ממש כאן'},
+ {n:'שילה 7',c:'תל אביב',y:null,u:21,a:null,lat:32.0801,lng:34.7836,s:'sale',note:'בניין בוטיק בלב העיר, ליד כיכר רבין'},
+ {n:'פייבל 3',c:'תל אביב',y:null,u:null,a:null,lat:32.0856,lng:34.7894,s:'sale',note:'7 קומות, ליד ארלוזורוב וכיכר המדינה'}
+];
+B.forEach(function(b,i){b.id='b'+i; if(!b.s) b.s='live';});
+
+/* עוגנים: w = משקל בזיכרון העירוני (בחירה עיצובית) */
+var A=[
+ {n:'פארק הירקון',w:5,lat:32.0985,lng:34.8010,t:'הריאה הירוקה של העיר. ריצה, אופניים ופיקניק בשבת'},
+ {n:'נמל תל אביב',w:4,lat:32.0975,lng:34.7740,t:'טיילת, שוק האיכרים ושקיעה על הים'},
+ {n:'כיכר רבין',w:5,lat:32.0809,lng:34.7810,t:'הכיכר של העיר: הפגנות, חגיגות, ספרים בשבוע הספר'},
+ {n:'כיכר המדינה',w:3,lat:32.0870,lng:34.7905,t:'טבעת ירוקה בתוך הצפון הישן, מקום של כלבים וילדים'},
+ {n:'כיכר דיזנגוף',w:3,lat:32.0779,lng:34.7742,t:'המזרקה, שוק העתיקות בימי שלישי ושישי'},
+ {n:'מוזיאון תל אביב',w:3,lat:32.0773,lng:34.7867,t:'אמנות, הספרייה והרחבה של שאול המלך'},
+ {n:'רכבת סבידור מרכז',w:3,lat:32.0838,lng:34.7982,t:'השער לעיר: רכבת, אוטובוסים ונתיב איילון'},
+ {n:'גן מאיר',w:2,lat:32.0742,lng:34.7737,t:'גינה שכונתית שקטה בלב העיר'},
+ {n:'בבלי והירקון',w:2,lat:32.0948,lng:34.7975,t:'שכונה ירוקה בין הפארק לנמיר'},
+ {n:'גבעת קוזלובסקי',w:3,lat:32.0745,lng:34.8152,t:'הנקודה הגבוהה בגבעתיים, תצפית על כל העיר'},
+ {n:'רחוב כצנלסון',w:3,lat:32.0710,lng:34.8108,t:'הרחוב הראשי של גבעתיים: קפה, חנויות ומפגשים'},
+ {n:'קניון גבעתיים',w:2,lat:32.0665,lng:34.8072,t:'קניות, קולנוע ופגישות של אחר הצהריים'},
+ {n:'שוק הכרמל',w:3,lat:32.0688,lng:34.7690,t:'צבעים, ריחות ודוכנים מהבוקר'}
+];
+A.forEach(function(a,i){a.id='a'+i;});
+
+/* הטלה פשוטה */
+var LNG0=34.759,LNG1=34.824,LAT0=32.059,LAT1=32.104,K=20000,CS=Math.cos(32.08*Math.PI/180);
+function px(lng){return (lng-LNG0)*K*CS;}
+function py(lat){return (LAT1-lat)*K;}
+var W=px(LNG1),H=py(LAT0);
+function meters(a,b){var dx=(a.lng-b.lng)*111320*CS,dy=(a.lat-b.lat)*110540;return Math.sqrt(dx*dx+dy*dy);}
+function walk(m){var min=Math.max(1,Math.round(m*1.25/80));return min<=25?min+' דק׳ הליכה':'כ־'+Math.round(min/5)*5+' דק׳ הליכה';}
+
+/* קווים מעוגלים (Catmull-Rom) */
+function curve(pts){
+  var p=pts.map(function(q){return [px(q[1]),py(q[0])];}),d='M'+p[0][0].toFixed(1)+','+p[0][1].toFixed(1);
+  for(var i=0;i<p.length-1;i++){
+    var p0=p[i-1]||p[i],p1=p[i],p2=p[i+1],p3=p[i+2]||p2;
+    d+=' C'+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+','+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+' '+(p2[0]-(p3[0]-p1[0])/6).toFixed(1)+','+(p2[1]-(p3[1]-p1[1])/6).toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+  }
+  return d;
+}
+var NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent,text){if(typeof parent==="string"){text=parent;parent=null;}var e=document.createElementNS(NS,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;(parent||svg).appendChild(e);return e;}
+
+var svg=document.getElementById('map');
+svg.setAttribute('viewBox','0 0 '+W.toFixed(0)+' '+H.toFixed(0));
+svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+
+/* ים */
+var coast=[[32.104,34.7778],[32.100,34.7738],[32.096,34.7722],[32.090,34.7712],[32.084,34.7694],[32.078,34.7672],[32.072,34.7650],[32.066,34.7632],[32.059,34.7610]];
+el('path',{d:curve(coast)+' L-700,'+H.toFixed(0)+' L-700,0 Z',fill:C.sea});
+el('path',{d:curve(coast),fill:'none',stroke:'#B9CBD8','stroke-width':2});
+el('text',{x:px(34.7625),y:py(32.0850),'font-size':20,fill:'#7F9AAE',class:'lbl','font-weight':300,'text-anchor':'middle'},'הים התיכון');
+
+/* גבעתיים: אזור רך */
+el('path',{d:curve([[32.0795,34.8030],[32.0790,34.8150],[32.0745,34.8235],[32.0640,34.8225],[32.0595,34.8150],[32.0612,34.8040],[32.0700,34.8015],[32.0795,34.8030]])+' Z',fill:C.sand,opacity:.55});
+
+/* פארק הירקון */
+el('path',{d:curve([[32.1030,34.7800],[32.1035,34.7900],[32.1040,34.8040],[32.1040,34.8200],[32.0975,34.8200],[32.0960,34.8080],[32.0965,34.7960],[32.0975,34.7860],[32.0990,34.7790],[32.1030,34.7800]])+' Z',fill:C.park,opacity:.9});
+/* נחל הירקון */
+el('path',{d:curve([[32.1005,34.7745],[32.1002,34.7830],[32.0995,34.7920],[32.1003,34.8010],[32.0992,34.8100],[32.1000,34.8200]]),fill:'none',stroke:'#8FB3C9','stroke-width':5,'stroke-linecap':'round'});
+el('text',{x:px(34.8150),y:py(32.1018),'font-size':13,fill:'#5F8299',class:'lbl'},'נחל הירקון');
+
+/* איילון */
+el('path',{d:curve([[32.104,34.8072],[32.096,34.8038],[32.088,34.8005],[32.080,34.7985],[32.072,34.7955],[32.059,34.7930]]),fill:'none',stroke:'#E3E6EA','stroke-width':12,'stroke-linecap':'round'});
+el('text',{x:px(34.7972),y:py(32.0640),'font-size':12,fill:C.muted,class:'lbl',transform:'rotate(-78 '+px(34.7972)+' '+py(32.0640)+')'},'איילון');
+
+/* רחובות ראשיים */
+var streets=[
+ {n:'אבן גבירול',p:[[32.0960,34.7860],[32.0880,34.7832],[32.0800,34.7815],[32.0720,34.7808]],lx:[32.0935,34.7850]},
+ {n:'דיזנגוף',p:[[32.0960,34.7790],[32.0880,34.7765],[32.0800,34.7745],[32.0740,34.7740]],lx:[32.0850,34.7757]},
+ {n:'ארלוזורוב',p:[[32.0890,34.7710],[32.0870,34.7800],[32.0848,34.7890],[32.0838,34.7975]],lx:[32.0878,34.7745]},
+ {n:'נמיר',p:[[32.1000,34.7925],[32.0920,34.7900],[32.0850,34.7905],[32.0780,34.7900]],lx:[32.0800,34.7900]},
+ {n:'ז׳בוטינסקי',p:[[32.0910,34.7720],[32.0890,34.7820],[32.0880,34.7900]],lx:null},
+ {n:'כצנלסון',p:[[32.0745,34.8055],[32.0712,34.8110],[32.0680,34.8165]],lx:null}
+];
+streets.forEach(function(s){
+  el('path',{d:curve(s.p),fill:'none',stroke:C.line,'stroke-width':1.6,'stroke-linecap':'round'});
+  if(s.lx) el('text',{x:px(s.lx[1])-4,y:py(s.lx[0]),'font-size':11,fill:'#93A0AD',class:'lbl'},s.n);
+});
+
+/* שמות אזורים */
+[['הצפון הישן',32.0915,34.7765],['לב העיר',32.0715,34.7840],['גבעתיים',32.0700,34.8185],['פארק הירקון',32.1020,34.7950]].forEach(function(r){
+  el('text',{x:px(r[2]),y:py(r[1]),'font-size':r[0]==='גבעתיים'?20:15,fill:'#A9B4BE','font-weight':500,class:'lbl','text-anchor':'middle','letter-spacing':'1'},r[0]);
+});
+
+/* קווי משמעות: חוטים מעוגלים בין בניין לעוגן הקרוב */
+var threads=el('g',{id:'threads'});
+var anchorsG=el('g',{id:'anchors'});
+var bldG=el('g',{id:'buildings'});
+
+A.forEach(function(a){
+  var r=7+a.w*4.2;
+  var g=el('g',{class:'anc','data-id':a.id,tabindex:0,role:'button','aria-label':a.n},anchorsG);
+  el('circle',{cx:px(a.lng),cy:py(a.lat),r:r+5,fill:C.must,opacity:.12},g);
+  el('circle',{cx:px(a.lng),cy:py(a.lat),r:r,fill:'#fff',stroke:C.must,'stroke-width':1.6},g);
+  el('circle',{cx:px(a.lng),cy:py(a.lat),r:3,fill:C.must},g);
+  el('text',{x:px(a.lng),y:py(a.lat)+r+14,'font-size':12+a.w,'text-anchor':'middle',fill:C.navy,'font-weight':500,'paint-order':'stroke',stroke:'#fff','stroke-width':4},g).textContent=a.n;
+  a.r=r;
+});
+B.forEach(function(b){
+  var g=el('g',{class:'bld','data-id':b.id,tabindex:0,role:'button','aria-label':b.n},bldG);
+  if(b.s==='sale') el('circle',{cx:px(b.lng),cy:py(b.lat),r:12,fill:'none',stroke:C.warm,'stroke-width':1,opacity:.5},g);
+  el('rect',{x:px(b.lng)-6,y:py(b.lat)-6,width:12,height:12,rx:3,fill:STATUS[b.s].color,stroke:'#fff','stroke-width':1.5,transform:'rotate(45 '+px(b.lng)+' '+py(b.lat)+')'},g);
+  b.g=g;
+});
+
+function nearest(b,k){return A.map(function(a){return {a:a,m:meters(a,b)};}).sort(function(x,y){return x.m-y.m;}).slice(0,k);}
+function bldsNear(a,k){return B.filter(visible).map(function(b){return {b:b,m:meters(a,b)};}).sort(function(x,y){return x.m-y.m;}).slice(0,k);}
+
+function drawThreads(pairs){
+  threads.innerHTML='';
+  pairs.forEach(function(p){
+    var x1=px(p[0].lng),y1=py(p[0].lat),x2=px(p[1].lng),y2=py(p[1].lat);
+    var mx=(x1+x2)/2+(y2-y1)*0.18,my=(y1+y2)/2-(x2-x1)*0.18;
+    el('path',{d:'M'+x1+','+y1+' Q'+mx+','+my+' '+x2+','+y2,fill:'none',stroke:C.must,'stroke-width':1.6,'stroke-dasharray':'2 5','stroke-linecap':'round'},threads);
+  });
+}
+
+var on={live:true,sale:true,anchors:true};
+function visible(b){return on[b.s];}
+
+function render(){
+  B.forEach(function(b){b.g.style.display=visible(b)?'':'none';});
+  anchorsG.style.display=on.anchors?'':'none';
+  var vis=B.filter(visible),units=vis.reduce(function(s,b){return s+(b.u||0);},0),cities={};
+  vis.forEach(function(b){cities[b.c]=1;});
+  document.getElementById('stats').innerHTML=
+    '<div class="stat"><b>'+vis.length+'</b><span>בניינים</span></div>'+
+    '<div class="stat"><b>'+units+'</b><span>דירות ידועות</span></div>'+
+    '<div class="stat"><b>'+Object.keys(cities).length+'</b><span>ערים</span></div>';
+  var list=document.getElementById('list');list.innerHTML='';
+  vis.slice().sort(function(a,b){return a.c===b.c?a.n.localeCompare(b.n,'he'):a.c.localeCompare(b.c,'he');}).forEach(function(b){
+    var li=document.createElement('li');li.dataset.id=b.id;
+    li.innerHTML='<span class="dot" style="background:'+STATUS[b.s].color+'"></span>'+b.n+'<small>'+b.c+'</small>';
+    li.onclick=function(){showB(b);};
+    list.appendChild(li);
+  });
+}
+
+function filters(){
+  var f=document.getElementById('filters');
+  [['live',STATUS.live.label,C.navy],['sale',STATUS.sale.label,C.warm],['anchors','עוגנים עירוניים',C.must]].forEach(function(d){
+    var b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed','true');
+    b.innerHTML='<span class="dot" style="background:'+d[2]+'"></span>'+d[1];
+    b.onclick=function(){on[d[0]]=!on[d[0]];b.setAttribute('aria-pressed',on[d[0]]);render();threads.innerHTML='';};
+    f.appendChild(b);
+  });
+}
+
+function highlight(id){
+  document.querySelectorAll('.list li').forEach(function(li){li.classList.toggle('on',li.dataset.id===id);});
+  B.forEach(function(b){b.g.style.opacity=(!id||b.id===id||id[0]==='a')?1:.35;});
+}
+
+function showB(b){
+  var near=nearest(b,3);
+  drawThreads(near.map(function(n){return [b,n.a];}));
+  highlight(b.id);
+  var rows='';
+  rows+='<dt>סטטוס</dt><dd>'+STATUS[b.s].label+'</dd>';
+  if(b.y) rows+='<dt>'+(b.s==='sale'?'אכלוס צפוי':'אכלוס')+'</dt><dd>'+b.y+'</dd>';
+  if(b.u) rows+='<dt>דירות</dt><dd>'+b.u+'</dd>';
+  if(b.a) rows+='<dt>אדריכלות</dt><dd>'+b.a+'</dd>';
+  document.getElementById('detail').innerHTML='<div class="card"><h3>'+b.n+'</h3><div class="sub">'+b.c+(b.note?' · '+b.note:'')+'</div><dl>'+rows+'</dl>'+
+   '<b style="font-weight:500;font-size:14px">מה קרוב לבית</b><ul class="near">'+near.map(function(n){return '<li data-a="'+n.a.id+'"><span>'+n.a.n+'</span><small>'+walk(n.m)+'</small></li>';}).join('')+'</ul></div>';
+  document.querySelectorAll('#detail [data-a]').forEach(function(li){li.onclick=function(){showA(A.find(function(a){return a.id===li.dataset.a;}));};});
+}
+function showA(a){
+  var near=bldsNear(a,4);
+  drawThreads(near.map(function(n){return [n.b,a];}));
+  highlight(a.id);
+  document.getElementById('detail').innerHTML='<div class="card"><h3>'+a.n+'</h3><div class="sub">'+a.t+'</div>'+
+   '<b style="font-weight:500;font-size:14px">הבניינים הקרובים</b><ul class="near">'+near.map(function(n){return '<li data-b="'+n.b.id+'"><span>'+n.b.n+'</span><small>'+walk(n.m)+'</small></li>';}).join('')+'</ul></div>';
+  document.querySelectorAll('#detail [data-b]').forEach(function(li){li.onclick=function(){showB(B.find(function(b){return b.id===li.dataset.b;}));};});
+}
+
+svg.addEventListener('click',function(e){
+  var g=e.target.closest('.bld,.anc');
+  if(!g){threads.innerHTML='';highlight(null);return;}
+  var id=g.getAttribute('data-id');
+  if(id[0]==='b') showB(B.find(function(b){return b.id===id;})); else showA(A.find(function(a){return a.id===id;}));
+});
+svg.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){var g=e.target.closest('.bld,.anc');if(g){e.preventDefault();g.dispatchEvent(new MouseEvent('click',{bubbles:true}));}}});
+
+filters();render();
+})();
+</script>
+</body>
+</html>
