@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>מפת משמעות · דמו להתחדשות עירונית</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 /* פלטה לפי האתר של אקו סיטי */
@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-family:Heebo,Arial,sans-serif}
-.serif{font-family:"Frank Ruhl Libre",Heebo,serif}
+.serif{font-family:Rubik,Heebo,sans-serif;font-weight:500}
 
 /* פריסה: פאנל בימין, מפה בשמאל */
 .panel{position:fixed;top:0;right:0;bottom:0;width:var(--panel);background:var(--cream);z-index:600;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(22,49,49,.12)}
@@ -29,12 +29,13 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .head{background:var(--teal);color:#fff;padding:22px 22px 16px;position:relative;overflow:hidden}
 .head::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 22px);pointer-events:none}
 .kicker{font-size:11.5px;letter-spacing:.22em;color:var(--gold-2);font-weight:500}
-.head h1{margin:6px 0 4px;font-size:27px;line-height:1.15;font-weight:700}
+.head h1{margin:8px 0 6px;font-size:30px;line-height:1.2;font-weight:500;letter-spacing:-.005em}
+.head h1 span{display:block}
 .head p{margin:0;font-size:14px;font-weight:300;opacity:.85}
 .stats{display:flex;gap:0;margin-top:16px;border-top:1px solid rgba(255,255,255,.15);padding-top:12px}
 .stat{flex:1;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
 .stat:last-child{border-left:0}
-.stat b{display:block;font-size:24px;font-weight:700;color:var(--gold-2);font-family:"Frank Ruhl Libre",serif}
+.stat b{display:block;font-size:24px;font-weight:500;color:var(--gold-2);font-family:Rubik,Heebo,sans-serif}
 .stat span{font-size:11.5px;opacity:.8}
 .filters{display:flex;gap:6px;padding:12px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;background:var(--cream)}
 .chip{border:1px solid var(--line);background:#fff;color:var(--teal);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
@@ -63,7 +64,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .leaflet-control-attribution{font-size:10px;background:rgba(255,249,245,.8)!important}
 
 /* שמות הערים כסימן מים */
-.city{font-family:"Frank Ruhl Libre",serif;font-size:58px;font-weight:700;color:var(--teal);opacity:.10;white-space:nowrap;pointer-events:none;transform:translate(-50%,-50%);letter-spacing:.05em}
+.city{font-family:Rubik,Heebo,sans-serif;font-size:58px;font-weight:500;color:var(--teal);opacity:.10;white-space:nowrap;pointer-events:none;transform:translate(-50%,-50%);letter-spacing:.05em}
 
 /* סיכת פרויקט עם תמונה */
 .pin{position:absolute;left:0;top:0;transform:translate(-50%,-100%);cursor:pointer;transition:transform .2s;animation:drop .6s cubic-bezier(.2,1.4,.4,1) backwards}
@@ -106,7 +107,8 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .motif{pointer-events:none;transform:translate(-50%,-50%)}
 .motif svg{display:block;width:var(--s,70px);height:auto;overflow:visible;fill:none;stroke:#1E3F3F;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .zlow .motif svg{width:calc(var(--s,70px)*.7)}
-.motif .mc{font-family:"Frank Ruhl Libre",serif;font-style:italic;font-size:12px;color:var(--teal);opacity:.75;text-align:center;white-space:nowrap;margin-top:1px}
+.zlow .motif.big svg{width:calc(var(--s,70px)*.85)}
+.motif .mc{font-family:Rubik,Heebo,sans-serif;font-size:11.5px;color:var(--teal);opacity:.75;text-align:center;white-space:nowrap;margin-top:1px}
 .zlow .motif .mc{display:none}
 .anc.dim{opacity:.35}
 .thread{stroke-dasharray:2 7;animation:flow 1.1s linear infinite}
@@ -121,7 +123,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .gal .sl.on{opacity:1}
 .gal::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(14,32,32,.8),rgba(14,32,32,0) 55%);pointer-events:none}
 .gal .ttl{position:absolute;bottom:16px;right:22px;left:22px;color:#fff;z-index:2}
-.gal h2{margin:0;font-size:34px;font-weight:700;line-height:1.05}
+.gal h2{margin:0;font-size:32px;font-weight:500;line-height:1.1}
 .gal .c{font-size:14px;opacity:.9}
 .gal .nav{position:absolute;top:50%;z-index:3;width:36px;height:36px;margin-top:-18px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--teal);font-size:18px;cursor:pointer}
 .gal .prev{right:12px}.gal .next{left:12px}
@@ -138,7 +140,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .lead{font-size:16.5px;line-height:1.6;margin:0 0 14px}
 .facts{display:flex;gap:8px;margin-bottom:6px}
 .fact{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px;text-align:center}
-.fact b{display:block;font-size:19px;color:var(--teal);font-family:"Frank Ruhl Libre",serif}
+.fact b{display:block;font-size:19px;font-weight:500;color:var(--teal);font-family:Rubik,Heebo,sans-serif}
 .fact span{font-size:11.5px;color:var(--muted)}
 h3{font-size:14px;margin:18px 0 6px;color:var(--teal)}
 .near{list-style:none;margin:0;padding:0}
@@ -166,7 +168,7 @@ form.leadf input{width:100%;margin-bottom:8px;border:1px solid var(--line);borde
   #map{right:0;bottom:auto;height:58vh}
   .panel{top:58vh;box-shadow:0 -8px 24px rgba(22,49,49,.15);border-radius:18px 18px 0 0;overflow:hidden}
   .head{padding:14px 16px 10px}
-  .head h1{font-size:20px}.head p{display:none}
+  .head h1{font-size:21px}.head h1 span{display:inline}.head p{display:none}
   .stats{margin-top:8px;padding-top:8px}.stat b{font-size:19px}
   .filters{padding:8px 14px}
   .grid{grid-template-columns:1fr 1fr;padding:10px 12px}
@@ -181,7 +183,7 @@ form.leadf input{width:100%;margin-bottom:8px;border:1px solid var(--line);borde
 <section class="panel">
   <header class="head">
     <div class="kicker">ECO CITY · בית. עיר. סביבה.</div>
-    <h1 class="serif">הפרויקטים שלנו, בתוך העיר שאוהבים</h1>
+    <h1 class="serif"><span>הפרויקטים שלנו, </span><span>בתוך העיר שאוהבים</span></h1>
     <p>כל בניין ליד המקומות שעושים את השכונה. בחרו פרויקט על המפה או ברשימה.</p>
     <div class="stats" id="stats"></div>
   </header>
@@ -317,6 +319,8 @@ map.on('zoomend',hoods);
 /* מוטיבים עירוניים מאוירים, בהשראת מפות עיר מצוירות: הים, החוף, בית הקפה, הבאוהאוס, השדרה והפארק.
    קישוט בלבד: כל מוטיב יושב באזור שלו, לא בכתובת מדויקת */
 var MOTIF={
+ hipster:'<g><circle cx="78" cy="96" r="15" fill="none"/><circle cx="128" cy="96" r="15" fill="none"/><path d="M78 96l14-24h26l10 24M92 72l12 24h-26M104 96l14-24M88 66h10M114 64c4-4 9-4 12 0"/><path d="M124 64h14l-2 12h-12z" fill="#C59A3C"/><path d="M124 64h14l-2 12h-12z"/><path d="M126 60c2-4 6-6 9-3M130 58c0-4 2-6 5-5" stroke="#5E8C74"/><path d="M40 82l-3 26M52 82l3 26" stroke="#3A5E7A" stroke-width="7"/><path d="M36 100h6M51 100h6" stroke="#FFF9F5" stroke-width="3"/><path d="M30 110h12v-4h-9zM54 110h12l-3-4h-9z" fill="#FFF9F5"/><path d="M34 50c0-8 6-12 12-12s12 4 12 12v34H34z" fill="#FFF9F5"/><path d="M34 56h24M34 63h24M34 70h24M34 77h24" stroke="#C59A3C" stroke-width="2.2"/><path d="M34 50c0-8 6-12 12-12s12 4 12 12v34H34z"/><path d="M58 50c6 4 8 10 8 16" /><path d="M34 52c-5 6-6 14-4 20"/><path d="M63 62h7l-1 9h-5z" fill="#FFF9F5"/><path d="M63 62h7l-1 9h-5z"/><path d="M62 62h9"/><path d="M26 70h10v12H26z" fill="#DCF2FD"/><path d="M26 70h10v12H26zM28 70c0-5 6-5 6 0"/><circle cx="46" cy="27" r="10" fill="#F2D6BD"/><circle cx="46" cy="27" r="10"/><path d="M37 29c1 9 17 9 18 0c-2 3-6 4-9 4s-7-1-9-4z" fill="#5A3B2A"/><path d="M36 23c2-7 18-8 20 0c-5-3-14-3-20 0z" fill="#5A3B2A"/><circle cx="46" cy="14" r="4" fill="#5A3B2A"/><circle cx="42" cy="25" r="3.2" fill="none" stroke-width="1.8"/><circle cx="50.5" cy="25" r="3.2" fill="none" stroke-width="1.8"/><path d="M45.2 25h2.1"/></g>',
+ couple:'<g><path d="M8 10h144l-8 14H16z" fill="#1E3F3F"/><path d="M30 10l-4 14M52 10l-2 14M74 10v14M96 10l2 14M118 10l4 14M140 10l4 14" stroke="#FFF9F5" stroke-width="5"/><path d="M16 24c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0"/><ellipse cx="80" cy="78" rx="20" ry="4" fill="#FFF9F5"/><ellipse cx="80" cy="78" rx="20" ry="4"/><path d="M80 82v26M70 110h20"/><path d="M70 70h7v7h-7zM84 70h7v7h-7z" fill="#FFF9F5"/><path d="M70 70h7v7h-7zM84 70h7v7h-7z"/><path d="M73 66c0-2 2-2 2-4M87 66c0-2 2-2 2-4" opacity=".6"/><path d="M76 76c2-3 8-3 10 0" stroke="#C59A3C" stroke-width="3"/><path d="M22 110V84h18M22 92h22M40 84v26" /><path d="M32 52c0-6 4-9 9-9s9 3 9 9l2 34H30z" fill="#E7B84A"/><path d="M32 52c0-6 4-9 9-9s9 3 9 9l2 34H30z"/><path d="M50 60c6 4 12 8 20 10"/><path d="M34 86h22l2 22M40 86l0 22" stroke="#1E3F3F" stroke-width="6"/><circle cx="41" cy="33" r="8.5" fill="#F2D6BD"/><circle cx="41" cy="33" r="8.5"/><path d="M33 31c0-8 16-9 17 0c-4-3-11-3-17 0z" fill="#B5532E"/><circle cx="39" cy="23" r="4.5" fill="#B5532E"/><path d="M44 35c1 1 3 1 4 0"/><path d="M138 110V84h-18M138 92h-22M120 84v26"/><path d="M108 52c0-6 4-9 9-9s9 3 9 9l2 34h-22z" fill="#DCF2FD"/><path d="M108 52c0-6 4-9 9-9s9 3 9 9l2 34h-22z"/><path d="M108 60c-6 3-12 7-18 10"/><path d="M126 86h-22l-2 22M120 86v22" stroke="#3A5E7A" stroke-width="6"/><circle cx="117" cy="33" r="8.5" fill="#E2B897"/><circle cx="117" cy="33" r="8.5"/><path d="M108 30c0-7 17-7 18 0z" fill="#C59A3C"/><path d="M108 30c0-7 17-7 18 0zM108 30h-6"/><path d="M109 33h6M118 33h6" stroke-width="3.5"/><path d="M90 106c0-6 6-8 12-8s9 2 10 6h4l2-4 4 2-3 5c0 3-2 5-6 5H92z" fill="#FFF9F5"/><path d="M90 106c0-6 6-8 12-8s9 2 10 6h4l2-4 4 2-3 5c0 3-2 5-6 5H92zM90 106l-4-4"/><path d="M2 112h156"/></g>',
  umbrella:'<path d="M8 30C12 14 52 14 56 30" fill="#FFF9F5"/><path d="M8 30c4-3 9-3 12 0c4-3 9-3 12 0c4-3 9-3 12 0c4-3 9-3 12 0"/><path d="M20 30C22 18 28 15 32 15M44 30C42 18 36 15 32 15" stroke="#C59A3C" stroke-width="5" opacity=".75"/><path d="M8 30C12 14 52 14 56 30"/><path d="M32 15v45"/><path d="M14 62h36l-4-8H18z" fill="#DCF2FD"/><path d="M2 70c5-4 9-4 14 0s9 4 14 0 9-4 14 0 9 4 14 0"/>',
  matkot:'<ellipse cx="18" cy="22" rx="10" ry="12" fill="#C59A3C" opacity=".85" transform="rotate(-25 18 22)"/><ellipse cx="18" cy="22" rx="10" ry="12" transform="rotate(-25 18 22)"/><path d="M23 33l6 13"/><ellipse cx="54" cy="26" rx="10" ry="12" fill="#FFF9F5" transform="rotate(25 54 26)"/><ellipse cx="54" cy="26" rx="10" ry="12" transform="rotate(25 54 26)"/><path d="M49 37l-6 13"/><circle cx="36" cy="10" r="3.5" fill="#1E3F3F"/><path d="M28 14c2-3 4-4 6-4" stroke-dasharray="2 3"/>',
  sail:'<path d="M34 6v44"/><path d="M34 8L56 46H34z" fill="#FFF9F5"/><path d="M32 14L14 46h18z" fill="#C59A3C" opacity=".8"/><path d="M32 14L14 46h18z"/><path d="M10 52h48l-7 9H17z" fill="#1E3F3F"/><path d="M2 68c5-3 9-3 14 0s9 3 14 0 9-3 14 0 9 3 14 0"/>',
@@ -335,16 +339,16 @@ var MOTIF={
  ['palms',32.0805,34.7695,62,''],
  ['sail',32.0960,34.7590,66,''],
  ['waves',32.0700,34.7590,62,''],
- ['cafe',32.0872,34.7768,72,'בית קפה בצפון הישן'],
+ ['couple',32.0925,34.8005,150,'בוקר בבית קפה',160],
  ['boulevard',32.0655,34.7790,62,'שדרות רוטשילד'],
  ['bauhaus',32.0690,34.7718,70,'העיר הלבנה'],
- ['bike',32.1003,34.7960,60,''],
+ ['hipster',32.0672,34.7945,130,'רוכבים בעיר',150],
  ['row',32.1015,34.8075,62,'שיט בירקון'],
  ['bench',32.0790,34.8125,60,'פארק המכתש']
 ].forEach(function(m){
   var w=warp(m[1],m[2]);
   L.marker(w,{pane:'motif',interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:[0,0],
-    html:'<div class="motif" style="--s:'+m[3]+'px"><svg viewBox="0 0 72 72" aria-hidden="true">'+MOTIF[m[0]]+'</svg>'+(m[4]?'<div class="mc">'+m[4]+'</div>':'')+'</div>'})}).addTo(map);
+    html:'<div class="motif'+(m[5]?' big':'')+'" style="--s:'+m[3]+'px"><svg viewBox="0 0 '+(m[5]||72)+' '+(m[5]?120:72)+'" aria-hidden="true">'+MOTIF[m[0]]+'</svg>'+(m[4]?'<div class="mc">'+m[4]+'</div>':'')+'</div>'})}).addTo(map);
 });
 
 var threads=L.layerGroup().addTo(map);
