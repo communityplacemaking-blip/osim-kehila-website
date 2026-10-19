@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מכוון התהליך | עושים קהילה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F2D4A;--must:#D4A72C;--cream:#F7F2E8;--grey:#E6EBF0;--muted:#4D5E70;--warm:#9A4E2C;--sand:#F2E6D2}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--navy);font-family:Heebo,sans-serif;font-weight:300;font-size:18px;line-height:1.6}
+a{color:var(--navy)}
+h1,h2,h3{font-weight:300;margin:0;line-height:1.2}
+b,strong{font-weight:500}
+p{margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:2px solid var(--navy);outline-offset:3px;border-radius:6px}
+.eyebrow{font-weight:400;letter-spacing:.06em;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:28px;height:1.5px;background:var(--warm)}
+header{border-bottom:1px solid var(--grey);background:#fff}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy)}
+.logo b{font-weight:300;font-size:27px;display:block;line-height:1}
+.logo small{font-size:9.5px;letter-spacing:.34em;font-weight:400;display:block;margin-top:5px}
+.back{font-size:16px;font-weight:400;text-decoration:none;padding:8px 0}
+.note{background:var(--sand);font-size:14.5px;font-weight:400;color:var(--warm);text-align:center;padding:7px 16px}
+
+.intro{padding:40px 0 14px}
+.intro h1{font-size:clamp(30px,3.4vw,42px);margin:12px 0 10px}
+.intro p.lead{max-width:640px;color:var(--muted);font-size:19px}
+
+.tool{display:grid;grid-template-columns:minmax(0,500px) minmax(0,1fr);gap:36px;align-items:start;padding:18px 0 56px}
+.console{background:var(--cream);border-radius:22px;padding:26px}
+.console h2{font-size:19px;font-weight:500;margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
+.console h2 .n{font-size:14px;font-weight:400;color:var(--warm)}
+.chips{border:0;padding:0;margin:0 0 26px;display:flex;flex-wrap:wrap;gap:8px}
+.chips legend{padding:0;width:100%}
+.chip{position:relative}.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:block;border:1px solid #d6cdb8;background:#fff;border-radius:999px;padding:7px 16px;font-size:16px;cursor:pointer}
+.chip input:checked+span{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip input:focus-visible+span{outline:2px solid var(--warm);outline-offset:2px}
+.mixer{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ch{display:flex;flex-direction:column}
+.ch h3{font-size:16px;font-weight:500;line-height:1.25}
+.ch .q{font-size:13px;color:var(--muted);margin:2px 0 12px;line-height:1.35;min-height:36px}
+.fbody{display:flex;gap:8px;align-items:stretch}
+.fader{position:relative;width:40px;height:236px;flex:0 0 40px}
+.fader input{position:absolute;left:50%;top:50%;width:236px;height:40px;margin:0;transform:translate(-50%,-50%) rotate(-90deg);background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.fader input::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(to right,var(--warm) 0 var(--p),#ddd3bf var(--p))}
+.fader input::-moz-range-track{height:6px;border-radius:6px;background:#ddd3bf}
+.fader input::-moz-range-progress{height:6px;border-radius:6px;background:var(--warm)}
+.fader input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9px;border-radius:50%;background:#fff;border:2px solid var(--navy);box-shadow:0 0 0 4px rgba(212,167,44,.35)}
+.fader input::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--navy);box-shadow:0 0 0 4px rgba(212,167,44,.35)}
+.fader input:focus-visible{outline:none}
+.fader input:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px var(--warm)}
+.ticks{position:relative;flex:1;list-style:none;margin:0;padding:0}
+.ticks li{position:absolute;inset-inline-start:0;transform:translateY(50%);font-size:13.5px;line-height:1.15;color:#8a8577;cursor:pointer;transition:color .2s}
+.ticks li::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#cbbfa5;margin-inline-end:6px;vertical-align:middle}
+.ticks li.on{color:var(--navy);font-weight:500}
+.ticks li.on::before{background:var(--warm)}
+.cur{display:none}
+
+.result h2{font-size:clamp(26px,2.6vw,34px);margin:8px 0 6px}
+.result .sub{color:var(--muted);font-size:17px;max-width:600px;min-height:54px}
+.grid{display:grid;grid-template-columns:auto 1fr 1fr;gap:8px;margin:20px 0 22px;align-items:stretch}
+.grid .ax{font-size:13px;color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center}
+.grid .ax.side{writing-mode:vertical-rl;transform:rotate(180deg);padding:0 2px}
+.prod{border:1px solid var(--grey);border-radius:16px;padding:14px 16px;background:#fff;transition:all .25s;opacity:.55}
+.prod b{display:block;font-size:16.5px;font-weight:500;line-height:1.3}
+.prod span{display:block;font-size:14px;color:var(--muted);line-height:1.4;margin-top:3px}
+.prod.on{opacity:1;background:var(--navy);border-color:var(--navy);color:#fff}
+.prod.on span{color:#cfd9e3}
+.prod.half{opacity:1;border-color:var(--navy)}
+.proc{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px;counter-reset:s}
+.proc li{counter-increment:s;display:flex;gap:12px;align-items:baseline;font-size:17px}
+.proc li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--warm);color:var(--warm);font-size:13px;font-weight:500;display:grid;place-items:center;transform:translateY(5px)}
+.meta{font-size:15px;color:var(--muted);margin-bottom:6px}
+.style{font-size:15px;color:var(--warm);margin:4px 0 20px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:400;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:17px;background:var(--navy);color:#fff}
+.btn:hover{background:var(--warm)}
+.price{font-size:14.5px;color:var(--muted);margin-top:10px}
+footer{border-top:1px solid var(--grey);padding:22px 0;font-size:14px;color:var(--muted)}
+@media (max-width:900px){.tool{grid-template-columns:1fr;gap:28px}}
+@media (max-width:560px){
+  body{font-size:17px}.wrap{padding:0 16px}.console{padding:22px 16px}
+  .mixer{grid-template-columns:1fr;gap:18px}.ch .q{min-height:0;margin-bottom:6px}
+  .fbody{flex-direction:column;gap:2px}.fader{width:100%;height:40px;flex:none}
+  .fader input{position:static;width:100%;transform:none}.ticks{display:none}
+  .cur{display:block;font-size:15px;font-weight:500;color:var(--warm)}
+  .grid{grid-template-columns:1fr 1fr}.grid .ax{display:none}
+  .logo b{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<a class="logo" href="../" aria-label="עושים קהילה, לדף הבית"><svg width="46" height="46" viewBox="0 0 124 124" aria-hidden="true"><g stroke="#0F2D4A" stroke-width="2.2" stroke-linecap="round" fill="none"><line x1="22" y1="40" x2="80" y2="16"/><line x1="22" y1="40" x2="108" y2="62"/><line x1="22" y1="40" x2="52" y2="104"/><line x1="80" y1="16" x2="108" y2="62"/><line x1="80" y1="16" x2="52" y2="104"/><line x1="108" y1="62" x2="96" y2="104"/><line x1="52" y1="104" x2="96" y2="104"/></g><circle cx="22" cy="40" r="7" fill="#0F2D4A"/><circle cx="80" cy="16" r="9" fill="#D4A72C"/><circle cx="108" cy="62" r="10" fill="#EADFC4"/><circle cx="52" cy="104" r="11" fill="#D4A72C"/><circle cx="96" cy="104" r="5" fill="#0F2D4A"/></svg><span><b>עושים קהילה</b><small dir="ltr">COMMUNITY MAKING</small></span></a>
+<a class="back" href="../">חזרה לדף הבית</a>
+</div></header>
+<main>
+<section class="intro"><div class="wrap">
+<p class="eyebrow">עצבו לעצמכם</p>
+<h1>איזו מפה מתאימה לכם?</h1>
+<p class="lead">ספרו מי אתם, הזיזו שלושה כפתורים, ותראו איזה מוצר ואיזה תהליך אנחנו מציעים.</p>
+</div></section>
+<div class="wrap tool">
+<form class="console" id="console" onsubmit="return false" aria-label="מכוון התהליך">
+  <fieldset class="chips"><legend><h2><span class="n">1</span>מי אתם?</h2></legend>
+    <label class="chip"><input type="radio" name="who" value="neighborhood" checked><span>שכונה או קהילה</span></label><label class="chip"><input type="radio" name="who" value="city"><span>עיר או רשות</span></label><label class="chip"><input type="radio" name="who" value="org"><span>ארגון או מוסד</span></label><label class="chip"><input type="radio" name="who" value="company"><span>חברה או עסק</span></label>
+  </fieldset>
+  <h2><span class="n">2</span>כוונו את התהליך</h2>
+  <div class="mixer" id="mixer"></div>
+</form>
+<section class="result" aria-live="polite">
+  <p class="eyebrow">המוצר שמתאים לכם</p>
+  <h2 id="rTitle"></h2>
+  <p class="sub" id="rSub"></p>
+  <div class="grid" aria-hidden="true">
+    <span class="ax"></span><span class="ax">עסקי</span><span class="ax">קהילתי</span>
+    <span class="ax side">כלי מוכן</span><div class="prod" id="p1"></div><div class="prod" id="p3"></div>
+    <span class="ax side">תהליך מלווה</span><div class="prod" id="p2"></div><div class="prod" id="p4"></div>
+  </div>
+  <p class="eyebrow" style="margin-bottom:12px">התהליך המוצע</p>
+  <ol class="proc" id="proc"></ol>
+  <p class="meta" id="meta"></p>
+  <p class="style">בכל אחד מהמוצרים אפשר לבחור גם סגנון "כמו שזוכרים": המקומות החשובים גדלים לפי המשמעות שלהם, כמו במפת רמת גן.</p>
+  <a class="btn" id="cta" href="#">לבקשת הצעה</a>
+  <p class="price">הצעת המחיר נבנית אחרי שיחה קצרה, לפי הצורך וההיקף.</p>
+</section>
+</div>
+</main>
+<footer><div class="wrap">עושים קהילה · COMMUNITY MAKING · <a href="mailto:osimkehilanet@gmail.com">osimkehilanet@gmail.com</a></div></footer>
+<script>
+const MAIL='osimkehilanet@gmail.com';
+const WHO={neighborhood:{t:'שכונה או קהילה',g:4},city:{t:'עיר או רשות',g:3},org:{t:'ארגון או מוסד',g:2},company:{t:'חברה או עסק',g:0}};
+const CH=[
+  {id:'goal',h:'מה המטרה?',q:'מעסקי ועד קהילתי',stops:['עסקית','בעיקר עסקית','גם וגם','בעיקר קהילתית','קהילתית']},
+  {id:'lead',h:'כמה ליווי?',q:'מכלי מוכן ועד תהליך מלווה',stops:['כלי מוכן','כלי ועזרה בהתחלה','כלי ומפגש התנעה','בעיקר תהליך','תהליך מלווה']},
+  {id:'scale',h:'מה ההיקף?',q:'ממקום אחד ועד אזור',stops:['מקום או סניף','מתחם','שכונה','עיר','אזור או ארצי']}];
+const val={goal:4,lead:2,scale:2};
+let goalTouched=false;
+const P={
+  p1:{t:'מפת פריסה',d:'השירותים, הסניפים או המתחם שלכם, במפה מעניינת ללקוחות או לעובדים.',
+      s:['שיחת אפיון: מה להראות ולמי','איסוף הנתונים שכבר יש לכם','עיצוב המפה והקמתה']},
+  p2:{t:'מפת ערך לארגון',d:'הערכים, הנכסים והקשרים של הארגון, במפה שמספרת מה מייחד אותו.',
+      s:['שיחת אפיון','סדנה: ערכים, נכסים וקשרים','איסוף סיפורים מהשטח','עיצוב המפה והקמתה']},
+  p3:{t:'מפה קהילתית חיה',d:'מפה של המקום, שהקהילה ממלאת ומעדכנת בעצמה.',
+      s:['שיחת אפיון','הקמת המפה בהתאמה למקום','הקהילה ממלאת וממשיכה לעדכן']},
+  p4:{t:'תהליך קהילתי מלא',d:'הקשבה, מפגשים וסיפורים, שמובילים למפה וליוזמה משותפת.',
+      s:['הקשבה בשטח','מפגשים ואיסוף סיפורים','הקמת המפה','יוזמה משותפת במרחב']}};
+const MIX={
+  ready:{t:'מפה משותפת לעסקים ולקהילה',d:'מפה אחת שמציגה את מה שהעסקים מציעים לצד מה שחשוב לקהילה.',
+      s:['שיחת אפיון','איסוף נתונים עסקיים וקהילתיים','הקמת המפה','העסקים והקהילה ממשיכים לעדכן']},
+  guided:{t:'תהליך משותף לעסקים ולקהילה',d:'עסקים וקהילה מגלים יחד מה חשוב במקום, ובונים מזה מפה ויוזמה.',
+      s:['הקשבה לאנשים ולארגונים','מפגש משותף לעסקים ולקהילה','הקמת המפה','יוזמה משותפת במרחב']}};
+const $=q=>document.querySelector(q);
+const mixer=$('#mixer');
+CH.forEach(c=>{
+  const n=c.stops.length-1;
+  const ticks=c.stops.map((s,i)=>`<li data-i="${i}" style="bottom:calc(12px + (100% - 24px) * ${i/n})">${s}</li>`).join('');
+  mixer.insertAdjacentHTML('beforeend',`<div class="ch"><h3 id="h-${c.id}">${c.h}</h3><p class="q">${c.q}</p>
+  <div class="fbody"><div class="fader"><input dir="ltr" type="range" min="0" max="${n}" step="1" value="${val[c.id]}" id="${c.id}" aria-labelledby="h-${c.id}"></div>
+  <ul class="ticks" aria-hidden="true">${ticks}</ul><span class="cur" id="cur-${c.id}"></span></div></div>`);
+});
+const set=(id,v)=>{val[id]=v;$('#'+id).value=v;if(id==='goal')goalTouched=true;render()};
+document.querySelectorAll('.fader input').forEach(inp=>inp.addEventListener('input',()=>set(inp.id,+inp.value)));
+document.querySelectorAll('.ticks li').forEach(li=>li.addEventListener('click',()=>set(li.closest('.fbody').querySelector('input').id,+li.dataset.i)));
+document.querySelectorAll('input[name=who]').forEach(r=>r.addEventListener('change',()=>{
+  if(!goalTouched){val.goal=WHO[r.value].g;$('#goal').value=val.goal}render()}));
+
+function render(){
+  CH.forEach(c=>{
+    const inp=$('#'+c.id),n=c.stops.length-1;
+    inp.style.setProperty('--p',(val[c.id]/n*100)+'%');
+    inp.setAttribute('aria-valuetext',c.stops[val[c.id]]);
+    inp.closest('.ch').querySelectorAll('.ticks li').forEach(li=>li.classList.toggle('on',+li.dataset.i===val[c.id]));
+    $('#cur-'+c.id).textContent=c.stops[val[c.id]];
+  });
+  const g=val.goal,l=val.lead,guided=l>=3;
+  const side=g<=1?'biz':g>=3?'comm':'mix';
+  const ids=side==='biz'?[guided?'p2':'p1']:side==='comm'?[guided?'p4':'p3']:(guided?['p2','p4']:['p1','p3']);
+  ['p1','p2','p3','p4'].forEach(k=>{const e=$('#'+k);e.innerHTML=`<b>${P[k].t}</b><span>${P[k].d}</span>`;
+    e.className='prod'+(ids.includes(k)?(ids.length>1?' half':' on'):'')});
+  const pr=side==='mix'?MIX[guided?'guided':'ready']:P[ids[0]];
+  let steps=pr.s.slice();
+  if(l===2)steps.splice(steps.length-1,0,'מפגש התנעה עם האנשים שישתמשו במפה');
+  if(l===1)steps.push('עזרה בהתחלה: הדרכה קצרה והכוונה');
+  $('#rTitle').textContent=pr.t;
+  $('#rSub').textContent=pr.d;
+  $('#proc').innerHTML=steps.map(x=>`<li>${x}</li>`).join('');
+  const who=WHO[$('input[name=who]:checked').value].t;
+  $('#meta').textContent=`${who} · מטרה ${CH[0].stops[g]} · היקף: ${CH[2].stops[val.scale]}`;
+  const body=['שלום, מילאנו את המכוון באתר:','מי אנחנו: '+who,'המטרה: '+CH[0].stops[g],'ליווי: '+CH[1].stops[l],'היקף: '+CH[2].stops[val.scale],
+    'המוצר שהוצע: '+pr.t,'התהליך: '+steps.join(' | '),'','נשמח לקבל הצעה.'].join('\n');
+  $('#cta').href=`mailto:${MAIL}?subject=${encodeURIComponent('בקשת הצעה: '+pr.t)}&body=${encodeURIComponent(body)}`;
+}
+render();
+</script>
+</body>
+</html>
