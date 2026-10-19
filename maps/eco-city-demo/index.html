@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>מפת משמעות · דמו להתחדשות עירונית</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <style>
 /* פלטה לפי האתר של אקו סיטי */
@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-family:Heebo,Arial,sans-serif}
-.serif{font-family:"Frank Ruhl Libre",Heebo,serif}
+.serif{font-family:Rubik,Heebo,sans-serif;font-weight:500}
 
 /* פריסה: פאנל בימין, מפה בשמאל */
 .panel{position:fixed;top:0;right:0;bottom:0;width:var(--panel);background:var(--cream);z-index:600;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(22,49,49,.12)}
@@ -29,12 +29,13 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .head{background:var(--teal);color:#fff;padding:22px 22px 16px;position:relative;overflow:hidden}
 .head::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 22px);pointer-events:none}
 .kicker{font-size:11.5px;letter-spacing:.22em;color:var(--gold-2);font-weight:500}
-.head h1{margin:6px 0 4px;font-size:27px;line-height:1.15;font-weight:700}
+.head h1{margin:8px 0 6px;font-size:30px;line-height:1.2;font-weight:500;letter-spacing:-.005em}
+.head h1 span{display:block}
 .head p{margin:0;font-size:14px;font-weight:300;opacity:.85}
 .stats{display:flex;gap:0;margin-top:16px;border-top:1px solid rgba(255,255,255,.15);padding-top:12px}
 .stat{flex:1;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
 .stat:last-child{border-left:0}
-.stat b{display:block;font-size:24px;font-weight:700;color:var(--gold-2);font-family:"Frank Ruhl Libre",serif}
+.stat b{display:block;font-size:24px;font-weight:500;color:var(--gold-2);font-family:Rubik,Heebo,sans-serif}
 .stat span{font-size:11.5px;opacity:.8}
 .filters{display:flex;gap:6px;padding:12px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;background:var(--cream)}
 .chip{border:1px solid var(--line);background:#fff;color:var(--teal);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
@@ -63,7 +64,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .leaflet-control-attribution{font-size:10px;background:rgba(255,249,245,.8)!important}
 
 /* שמות הערים כסימן מים */
-.city{font-family:"Frank Ruhl Libre",serif;font-size:58px;font-weight:700;color:var(--teal);opacity:.10;white-space:nowrap;pointer-events:none;transform:translate(-50%,-50%);letter-spacing:.05em}
+.city{font-family:Rubik,Heebo,sans-serif;font-size:58px;font-weight:500;color:var(--teal);opacity:.10;white-space:nowrap;pointer-events:none;transform:translate(-50%,-50%);letter-spacing:.05em}
 
 /* סיכת פרויקט עם תמונה */
 .pin{position:absolute;left:0;top:0;transform:translate(-50%,-100%);cursor:pointer;transition:transform .2s;animation:drop .6s cubic-bezier(.2,1.4,.4,1) backwards}
@@ -86,13 +87,29 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .bld:hover,.bld.on{background:var(--gold)}
 .bld.dim{opacity:.35}
 
-/* עוגנים */
+/* עוגנים: עיגול עם תמונת המקום, ועיגולי משיכה דקים סביבו (כמו האיורים העגולים במפת רמת גן) */
 .anc{display:flex;flex-direction:column;align-items:center;cursor:pointer}
-.anc .ring{border-radius:50%;background:var(--cream);display:grid;place-items:center;border:1.5px solid var(--gold);box-shadow:0 3px 10px rgba(22,49,49,.18)}
-.anc svg{width:56%;height:56%;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.anc .an{margin-top:5px;font-size:12px;font-weight:700;color:var(--teal);white-space:nowrap;text-shadow:0 0 3px var(--cream),0 0 3px var(--cream),0 0 6px var(--cream)}
+.anc .disc{position:relative;border-radius:50%;background:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--gold),0 6px 16px rgba(22,49,49,.28);transition:transform .2s}
+.anc:hover .disc{transform:scale(1.08)}
+.anc .disc img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.anc .disc.has>svg{display:none}
+.anc .disc>svg{width:50%;height:50%;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.anc .halo{position:absolute;left:50%;top:50%;border-radius:50%;border:1px dashed rgba(197,154,60,.75);transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(circle,rgba(197,154,60,.10),rgba(197,154,60,0) 70%)}
+.anc .halo.h2{border:1px solid rgba(197,154,60,.35);background:none;animation:pull 3.2s ease-out infinite}
+@keyframes pull{0%{opacity:.9;transform:translate(-50%,-50%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-50%) scale(.72)}}
+.anc .bdg{position:absolute;bottom:-4px;left:-4px;width:24px;height:24px;border-radius:50%;background:var(--teal);border:2px solid #fff;display:grid;place-items:center;z-index:2}
+.anc .bdg svg{width:14px;height:14px;stroke:var(--gold-2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.anc .an{position:relative;margin-top:7px;font-size:12.5px;font-weight:700;color:var(--teal);white-space:nowrap;background:rgba(255,249,245,.94);border-radius:999px;padding:1px 9px;box-shadow:0 1px 4px rgba(22,49,49,.15)}
 .zlow .anc .an{display:none}
-.zlow .anc .ring{transform:scale(.75)}
+.zlow .anc .disc{transform:scale(.72)}
+.zlow .anc .halo{display:none}
+/* מוטיבים עירוניים מאוירים: קישוט בלבד, לא לחיצים */
+.motif{pointer-events:none;transform:translate(-50%,-50%)}
+.motif svg{display:block;width:var(--s,70px);height:auto;overflow:visible;fill:none;stroke:#1E3F3F;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.zlow .motif svg{width:calc(var(--s,70px)*.7)}
+.zlow .motif.big svg{width:calc(var(--s,70px)*.85)}
+.motif .mc{font-family:Rubik,Heebo,sans-serif;font-size:11.5px;color:var(--teal);opacity:.75;text-align:center;white-space:nowrap;margin-top:1px}
+.zlow .motif .mc{display:none}
 .anc.dim{opacity:.35}
 .thread{stroke-dasharray:2 7;animation:flow 1.1s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-18}}
@@ -106,7 +123,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .gal .sl.on{opacity:1}
 .gal::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(14,32,32,.8),rgba(14,32,32,0) 55%);pointer-events:none}
 .gal .ttl{position:absolute;bottom:16px;right:22px;left:22px;color:#fff;z-index:2}
-.gal h2{margin:0;font-size:34px;font-weight:700;line-height:1.05}
+.gal h2{margin:0;font-size:32px;font-weight:500;line-height:1.1}
 .gal .c{font-size:14px;opacity:.9}
 .gal .nav{position:absolute;top:50%;z-index:3;width:36px;height:36px;margin-top:-18px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--teal);font-size:18px;cursor:pointer}
 .gal .prev{right:12px}.gal .next{left:12px}
@@ -123,7 +140,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .lead{font-size:16.5px;line-height:1.6;margin:0 0 14px}
 .facts{display:flex;gap:8px;margin-bottom:6px}
 .fact{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px;text-align:center}
-.fact b{display:block;font-size:19px;color:var(--teal);font-family:"Frank Ruhl Libre",serif}
+.fact b{display:block;font-size:19px;font-weight:500;color:var(--teal);font-family:Rubik,Heebo,sans-serif}
 .fact span{font-size:11.5px;color:var(--muted)}
 h3{font-size:14px;margin:18px 0 6px;color:var(--teal)}
 .near{list-style:none;margin:0;padding:0}
@@ -151,7 +168,7 @@ form.leadf input{width:100%;margin-bottom:8px;border:1px solid var(--line);borde
   #map{right:0;bottom:auto;height:58vh}
   .panel{top:58vh;box-shadow:0 -8px 24px rgba(22,49,49,.15);border-radius:18px 18px 0 0;overflow:hidden}
   .head{padding:14px 16px 10px}
-  .head h1{font-size:20px}.head p{display:none}
+  .head h1{font-size:21px}.head h1 span{display:inline}.head p{display:none}
   .stats{margin-top:8px;padding-top:8px}.stat b{font-size:19px}
   .filters{padding:8px 14px}
   .grid{grid-template-columns:1fr 1fr;padding:10px 12px}
@@ -166,7 +183,7 @@ form.leadf input{width:100%;margin-bottom:8px;border:1px solid var(--line);borde
 <section class="panel">
   <header class="head">
     <div class="kicker">ECO CITY · בית. עיר. סביבה.</div>
-    <h1 class="serif">הפרויקטים שלנו, בתוך העיר שאוהבים</h1>
+    <h1 class="serif"><span>הפרויקטים שלנו, </span><span>בתוך העיר שאוהבים</span></h1>
     <p>כל בניין ליד המקומות שעושים את השכונה. בחרו פרויקט על המפה או ברשימה.</p>
     <div class="stats" id="stats"></div>
   </header>
@@ -199,21 +216,26 @@ var IC={
  home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>'
 };
 function svg(k){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>';}
+/* תמונות העוגנים מ-Wikimedia Commons. אם קובץ לא נטען עוברים לחלופה, ואם אין, נשאר האייקון */
+window.nextPhoto=nextPhoto;
+function nextPhoto(el){var a=A[+el.dataset.a],k=+el.dataset.k+1;if(a.ph[k]){el.dataset.k=k;el.src=photo(a.ph[k],240);}else{var b=el.parentNode.querySelector('.bdg');if(b)b.remove();el.parentNode.classList.remove('has');el.remove();}}
+document.addEventListener('load',function(e){var el=e.target;if(el.tagName==='IMG'&&el.dataset.a!=null)A[+el.dataset.a].ok=+el.dataset.k;},true);
+function photo(f,w){return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/^File:/,''))+'?width='+w;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
 /* עוגנים עירוניים, מיקומים מאומתים. w = משקל בזיכרון העירוני (בחירה עיצובית) */
 var A=[
- {n:'כיכר רבין',k:'square',w:5,lat:32.080610,lng:34.780590,t:'הכיכר של העיר'},
- {n:'פארק הירקון',k:'park',w:5,lat:32.098007,lng:34.788297,t:'הריאה הירוקה של העיר'},
- {n:'הבימה',k:'theater',w:4,lat:32.072650,lng:34.779450,t:'התיאטרון הלאומי וכיכר התרבות'},
- {n:'דיזנגוף סנטר',k:'bag',w:4,lat:32.075350,lng:34.775200,t:'הקניון הראשון של העיר'},
- {n:'עזריאלי',k:'towers',w:4,lat:32.074303,lng:34.791692,t:'קו הרקיע של העיר'},
- {n:'נמל תל אביב',k:'port',w:4,lat:32.099069,lng:34.775343,t:'טיילת, שוק האיכרים ושקיעה על הים'},
+ {n:'כיכר רבין',ph:['Rabin-square-tel-aviv-april-2014.jpg', 'RabinSquare.jpg'],k:'square',w:5,lat:32.080610,lng:34.780590,t:'הכיכר של העיר'},
+ {n:'פארק הירקון',ph:['Yarkon Park Tel Aviv 2019.jpg', 'PikiWiki Israel 15306 Tel-Aviv - Yarkon park.jpg'],k:'park',w:5,lat:32.098007,lng:34.788297,t:'הריאה הירוקה של העיר'},
+ {n:'הבימה',ph:['Habima Theatre building-Tel Aviv.jpg', 'Habima Theatre (cropped).jpg'],k:'theater',w:4,lat:32.072650,lng:34.779450,t:'התיאטרון הלאומי וכיכר התרבות'},
+ {n:'דיזנגוף סנטר',ph:['Dizengoff Center - Tel Aviv, Israel - panoramio.jpg', 'Dizengof Center Tel Aviv.jpg'],k:'bag',w:4,lat:32.075350,lng:34.775200,t:'הקניון הראשון של העיר'},
+ {n:'עזריאלי',ph:['Azrieli Towers, Tel Aviv.jpg', 'Israel Tel Aviv - Azrieli towers.jpg'],k:'towers',w:4,lat:32.074303,lng:34.791692,t:'קו הרקיע של העיר'},
+ {n:'נמל תל אביב',ph:['Namal tel aviv.JPG', 'Old Port in Tel Aviv.jpg'],k:'port',w:4,lat:32.099069,lng:34.775343,t:'טיילת, שוק האיכרים ושקיעה על הים'},
  {n:'כיכר המדינה',k:'ring',w:3,lat:32.086769,lng:34.789763,t:'טבעת ירוקה בצפון הישן'},
- {n:'כיכר דיזנגוף',k:'fountain',w:3,lat:32.077837,lng:34.774539,t:'המזרקה ושוק העתיקות'},
- {n:'מוזיאון תל אביב',k:'museum',w:3,lat:32.077299,lng:34.785627,t:'אמנות, ספרייה ורחבה עירונית'},
- {n:'רכבת סבידור מרכז',k:'train',w:2,lat:32.083487,lng:34.797137,t:'רכבת, הקו הסגול ונתיבי איילון'},
- {n:'גבעת קוזלובסקי',k:'hill',w:3,lat:32.071354,lng:34.816575,t:'תצפית על כל העיר מגבעתיים'},
+ {n:'כיכר דיזנגוף',ph:['Fire and Water Fountain - Dizengoff Square - Kikar Dizengoff - Tel Aviv (4025020229).jpg', 'Dizengoff Square Fountain.jpg'],k:'fountain',w:3,lat:32.077837,lng:34.774539,t:'המזרקה ושוק העתיקות'},
+ {n:'מוזיאון תל אביב',ph:['Tel Aviv Museum of Art - Israel, March 2024 37.jpg'],k:'museum',w:3,lat:32.077299,lng:34.785627,t:'אמנות, ספרייה ורחבה עירונית'},
+ {n:'רכבת סבידור מרכז',ph:['Israel Tel Aviv Savidor station.jpg', 'Tel Aviv Central Savidor train station רכבת סבידור מרכז (9).JPG'],k:'train',w:2,lat:32.083487,lng:34.797137,t:'רכבת, הקו הסגול ונתיבי איילון'},
+ {n:'גבעת קוזלובסקי',ph:['Givatayim-Observatory.jpg'],k:'hill',w:3,lat:32.071354,lng:34.816575,t:'תצפית על כל העיר מגבעתיים'},
  {n:'רחוב כצנלסון',k:'cafe',w:3,lat:32.075303,lng:34.810700,t:'הרחוב הראשי של גבעתיים'}
 ];
 
@@ -254,7 +276,7 @@ L.control.zoom({position:'bottomleft'}).addTo(map);
    וכל עוגן מותח את המרחב סביבו לפי המשקל שלו, כמו יריעת גומי. הכיוונים נשמרים, הגדלים מספרים מה חשוב.
    המרחקים ("דקות הליכה") מחושבים תמיד מהמיקום האמיתי. */
 map.attributionControl.setPrefix(false);
-map.attributionControl.addAttribution('גבולות: OpenStreetMap, israel-municipalities-polygons · שכונות תל אביב: שרטוט סכמטי');
+map.attributionControl.addAttribution('גבולות: OpenStreetMap, israel-municipalities-polygons · שכונות תל אביב: שרטוט סכמטי · תמונות העוגנים: Wikimedia Commons');
 var W=A.map(function(a){return {lat:a.lat,lng:a.lng,w:.16*a.w,r:200+80*a.w};}),KX=94300,KY=110540;
 function warp(lat,lng){var dx=0,dy=0;W.forEach(function(a){var ex=(lng-a.lng)*KX,ey=(lat-a.lat)*KY,g=a.w*Math.exp(-(ex*ex+ey*ey)/(a.r*a.r));dx+=ex*g;dy+=ey*g;});return [lat+dy/KY,lng+dx/KX];}
 function dens(r){var o=[];for(var i=0;i<r.length;i++){o.push(r[i]);var q=r[i+1];if(!q)break;var n=Math.floor(Math.hypot(q[0]-r[i][0],q[1]-r[i][1])/.0004);for(var k=1;k<n;k++)o.push([r[i][0]+(q[0]-r[i][0])*k/n,r[i][1]+(q[1]-r[i][1])*k/n]);}return o;}
@@ -269,6 +291,7 @@ function wgeom(g){
 P.concat(A).forEach(function(p){p.rlat=p.lat;p.rlng=p.lng;var w=warp(p.lat,p.lng);p.lat=w[0];p.lng=w[1];});
 var TONES=['#F6EEE3','#EAF2EF','#F3E7D6','#E6F0F3','#F5EAE2'];
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
+map.createPane('motif');map.getPane('motif').style.zIndex=380;map.getPane('motif').style.pointerEvents='none';
 var hoodLayer=null,hoodLabels=L.layerGroup();
 fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
   gj.features.forEach(function(f){f.geometry=wgeom(f.geometry);});
@@ -293,13 +316,51 @@ map.on('zoomend',hoods);
   L.marker(w,{interactive:false,keyboard:false,zIndexOffset:-2000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="city">'+c[0]+'</div>'})}).addTo(map);
 });
 
+/* מוטיבים עירוניים מאוירים, בהשראת מפות עיר מצוירות: הים, החוף, בית הקפה, הבאוהאוס, השדרה והפארק.
+   קישוט בלבד: כל מוטיב יושב באזור שלו, לא בכתובת מדויקת */
+var MOTIF={
+ hipster:'<g><circle cx="78" cy="96" r="15" fill="none"/><circle cx="128" cy="96" r="15" fill="none"/><path d="M78 96l14-24h26l10 24M92 72l12 24h-26M104 96l14-24M88 66h10M114 64c4-4 9-4 12 0"/><path d="M124 64h14l-2 12h-12z" fill="#C59A3C"/><path d="M124 64h14l-2 12h-12z"/><path d="M126 60c2-4 6-6 9-3M130 58c0-4 2-6 5-5" stroke="#5E8C74"/><path d="M40 82l-3 26M52 82l3 26" stroke="#3A5E7A" stroke-width="7"/><path d="M36 100h6M51 100h6" stroke="#FFF9F5" stroke-width="3"/><path d="M30 110h12v-4h-9zM54 110h12l-3-4h-9z" fill="#FFF9F5"/><path d="M34 50c0-8 6-12 12-12s12 4 12 12v34H34z" fill="#FFF9F5"/><path d="M34 56h24M34 63h24M34 70h24M34 77h24" stroke="#C59A3C" stroke-width="2.2"/><path d="M34 50c0-8 6-12 12-12s12 4 12 12v34H34z"/><path d="M58 50c6 4 8 10 8 16" /><path d="M34 52c-5 6-6 14-4 20"/><path d="M63 62h7l-1 9h-5z" fill="#FFF9F5"/><path d="M63 62h7l-1 9h-5z"/><path d="M62 62h9"/><path d="M26 70h10v12H26z" fill="#DCF2FD"/><path d="M26 70h10v12H26zM28 70c0-5 6-5 6 0"/><circle cx="46" cy="27" r="10" fill="#F2D6BD"/><circle cx="46" cy="27" r="10"/><path d="M37 29c1 9 17 9 18 0c-2 3-6 4-9 4s-7-1-9-4z" fill="#5A3B2A"/><path d="M36 23c2-7 18-8 20 0c-5-3-14-3-20 0z" fill="#5A3B2A"/><circle cx="46" cy="14" r="4" fill="#5A3B2A"/><circle cx="42" cy="25" r="3.2" fill="none" stroke-width="1.8"/><circle cx="50.5" cy="25" r="3.2" fill="none" stroke-width="1.8"/><path d="M45.2 25h2.1"/></g>',
+ couple:'<g><path d="M8 10h144l-8 14H16z" fill="#1E3F3F"/><path d="M30 10l-4 14M52 10l-2 14M74 10v14M96 10l2 14M118 10l4 14M140 10l4 14" stroke="#FFF9F5" stroke-width="5"/><path d="M16 24c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0c0 4 6 4 6 0"/><ellipse cx="80" cy="78" rx="20" ry="4" fill="#FFF9F5"/><ellipse cx="80" cy="78" rx="20" ry="4"/><path d="M80 82v26M70 110h20"/><path d="M70 70h7v7h-7zM84 70h7v7h-7z" fill="#FFF9F5"/><path d="M70 70h7v7h-7zM84 70h7v7h-7z"/><path d="M73 66c0-2 2-2 2-4M87 66c0-2 2-2 2-4" opacity=".6"/><path d="M76 76c2-3 8-3 10 0" stroke="#C59A3C" stroke-width="3"/><path d="M22 110V84h18M22 92h22M40 84v26" /><path d="M32 52c0-6 4-9 9-9s9 3 9 9l2 34H30z" fill="#E7B84A"/><path d="M32 52c0-6 4-9 9-9s9 3 9 9l2 34H30z"/><path d="M50 60c6 4 12 8 20 10"/><path d="M34 86h22l2 22M40 86l0 22" stroke="#1E3F3F" stroke-width="6"/><circle cx="41" cy="33" r="8.5" fill="#F2D6BD"/><circle cx="41" cy="33" r="8.5"/><path d="M33 31c0-8 16-9 17 0c-4-3-11-3-17 0z" fill="#B5532E"/><circle cx="39" cy="23" r="4.5" fill="#B5532E"/><path d="M44 35c1 1 3 1 4 0"/><path d="M138 110V84h-18M138 92h-22M120 84v26"/><path d="M108 52c0-6 4-9 9-9s9 3 9 9l2 34h-22z" fill="#DCF2FD"/><path d="M108 52c0-6 4-9 9-9s9 3 9 9l2 34h-22z"/><path d="M108 60c-6 3-12 7-18 10"/><path d="M126 86h-22l-2 22M120 86v22" stroke="#3A5E7A" stroke-width="6"/><circle cx="117" cy="33" r="8.5" fill="#E2B897"/><circle cx="117" cy="33" r="8.5"/><path d="M108 30c0-7 17-7 18 0z" fill="#C59A3C"/><path d="M108 30c0-7 17-7 18 0zM108 30h-6"/><path d="M109 33h6M118 33h6" stroke-width="3.5"/><path d="M90 106c0-6 6-8 12-8s9 2 10 6h4l2-4 4 2-3 5c0 3-2 5-6 5H92z" fill="#FFF9F5"/><path d="M90 106c0-6 6-8 12-8s9 2 10 6h4l2-4 4 2-3 5c0 3-2 5-6 5H92zM90 106l-4-4"/><path d="M2 112h156"/></g>',
+ umbrella:'<path d="M8 30C12 14 52 14 56 30" fill="#FFF9F5"/><path d="M8 30c4-3 9-3 12 0c4-3 9-3 12 0c4-3 9-3 12 0c4-3 9-3 12 0"/><path d="M20 30C22 18 28 15 32 15M44 30C42 18 36 15 32 15" stroke="#C59A3C" stroke-width="5" opacity=".75"/><path d="M8 30C12 14 52 14 56 30"/><path d="M32 15v45"/><path d="M14 62h36l-4-8H18z" fill="#DCF2FD"/><path d="M2 70c5-4 9-4 14 0s9 4 14 0 9-4 14 0 9 4 14 0"/>',
+ matkot:'<ellipse cx="18" cy="22" rx="10" ry="12" fill="#C59A3C" opacity=".85" transform="rotate(-25 18 22)"/><ellipse cx="18" cy="22" rx="10" ry="12" transform="rotate(-25 18 22)"/><path d="M23 33l6 13"/><ellipse cx="54" cy="26" rx="10" ry="12" fill="#FFF9F5" transform="rotate(25 54 26)"/><ellipse cx="54" cy="26" rx="10" ry="12" transform="rotate(25 54 26)"/><path d="M49 37l-6 13"/><circle cx="36" cy="10" r="3.5" fill="#1E3F3F"/><path d="M28 14c2-3 4-4 6-4" stroke-dasharray="2 3"/>',
+ sail:'<path d="M34 6v44"/><path d="M34 8L56 46H34z" fill="#FFF9F5"/><path d="M32 14L14 46h18z" fill="#C59A3C" opacity=".8"/><path d="M32 14L14 46h18z"/><path d="M10 52h48l-7 9H17z" fill="#1E3F3F"/><path d="M2 68c5-3 9-3 14 0s9 3 14 0 9-3 14 0 9 3 14 0"/>',
+ waves:'<path d="M4 30c6-10 14-10 20 0s14 10 20 0 14-10 20 0"/><path d="M14 44c6-8 12-8 18 0s12 8 18 0" opacity=".6"/><path d="M40 14c4-8 14-10 20-2-6-2-10 0-12 6" fill="#DCF2FD"/>',
+ palms:'<path d="M20 64C22 46 22 34 18 22M46 64C44 48 44 38 48 28"/><path d="M18 22c-8-4-14 0-16 6 6-4 11-4 16-6zM18 22c-2-8-10-10-15-8 6 1 11 4 15 8zM18 22c4-8 12-9 17-5-6 0-12 2-17 5zM18 22c8-1 13 4 14 10-4-5-9-8-14-10z" fill="#9FC8B4"/><path d="M48 28c-7-5-14-2-16 4 6-3 11-3 16-4zM48 28c-1-8 6-12 12-10-6 2-10 5-12 10zM48 28c7-3 13 1 15 7-5-4-10-6-15-7z" fill="#9FC8B4"/><path d="M4 66h58"/>',
+ cafe:'<path d="M6 18h60l-5 10H11z" fill="#C59A3C" opacity=".85"/><path d="M6 18h60l-5 10H11z"/><path d="M16 28c0 3 4 3 4 0c0 3 4 3 4 0c0 3 4 3 4 0c0 3 4 3 4 0c0 3 4 3 4 0c0 3 4 3 4 0c0 3 4 3 4 0c0 3 4 3 4 0c0 3 4 3 4 0"/><path d="M28 50h16M36 50v14M30 64h12"/><ellipse cx="36" cy="49" rx="11" ry="2.5" fill="#FFF9F5"/><path d="M33 44h6v5h-6z" fill="#FFF9F5"/><path d="M34 41c0-2 2-2 2-4M37 41c0-2 2-2 2-4" opacity=".6"/><path d="M14 64V48h8M22 54H12M60 64V48h-8M52 54h10"/>',
+ bauhaus:'<path d="M8 64V22h38v42z" fill="#FFF9F5"/><path d="M46 30h10a8 8 0 0 1 8 8v26H46" fill="#FFF9F5"/><path d="M8 64h58"/><path d="M14 30h26M14 40h26M14 50h26" stroke-width="3" stroke="#DCF2FD"/><path d="M14 30h26M14 40h26M14 50h26"/><path d="M46 40h18M46 50h18"/><path d="M24 64v-8h8v8"/><path d="M5 22h44"/>',
+ boulevard:'<path d="M2 64h68"/><circle cx="16" cy="26" r="12" fill="#9FC8B4"/><circle cx="16" cy="26" r="12"/><path d="M16 38v26"/><circle cx="52" cy="22" r="13" fill="#9FC8B4"/><circle cx="52" cy="22" r="13"/><path d="M52 35v29"/><path d="M26 52h16M28 52v6M40 52v6M26 48h16" stroke="#1E3F3F"/><path d="M28 64l3-8M44 64l-3-8" opacity="0"/>',
+ bike:'<circle cx="16" cy="44" r="11"/><circle cx="54" cy="44" r="11"/><path d="M16 44l12-18h18l8 18M28 26l8 18h-20M36 44l10-18M24 22h8M44 20h7" /><circle cx="36" cy="44" r="2" fill="#1E3F3F"/><path d="M40 26h10" stroke="#C59A3C" stroke-width="3"/>',
+ row:'<path d="M4 42h60l-8 10H12z" fill="#C59A3C" opacity=".85"/><path d="M4 42h60l-8 10H12z"/><circle cx="34" cy="26" r="5" fill="#FFF9F5"/><path d="M34 31v11M34 35l-14 10M34 35l16 2 6 14"/><path d="M2 60c6-3 10-3 16 0s10 3 16 0 10-3 16 0 10 3 16 0"/>',
+ bench:'<circle cx="46" cy="22" r="16" fill="#9FC8B4"/><circle cx="46" cy="22" r="16"/><path d="M46 38v26"/><path d="M6 46h30M8 52h26M10 52v12M32 52v12M8 46v-8h26v8"/><path d="M2 64h66"/>'
+};
+[
+ ['umbrella',32.0850,34.7672,72,'חוף גורדון'],
+ ['matkot',32.0770,34.7650,62,'מטקות'],
+ ['palms',32.0805,34.7695,62,''],
+ ['sail',32.0960,34.7590,66,''],
+ ['waves',32.0700,34.7590,62,''],
+ ['couple',32.0925,34.8005,150,'בוקר בבית קפה',160],
+ ['boulevard',32.0655,34.7790,62,'שדרות רוטשילד'],
+ ['bauhaus',32.0690,34.7718,70,'העיר הלבנה'],
+ ['hipster',32.0672,34.7945,130,'רוכבים בעיר',150],
+ ['row',32.1015,34.8075,62,'שיט בירקון'],
+ ['bench',32.0790,34.8125,60,'פארק המכתש']
+].forEach(function(m){
+  var w=warp(m[1],m[2]);
+  L.marker(w,{pane:'motif',interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:[0,0],
+    html:'<div class="motif'+(m[5]?' big':'')+'" style="--s:'+m[3]+'px"><svg viewBox="0 0 '+(m[5]||72)+' '+(m[5]?120:72)+'" aria-hidden="true">'+MOTIF[m[0]]+'</svg>'+(m[4]?'<div class="mc">'+m[4]+'</div>':'')+'</div>'})}).addTo(map);
+});
+
 var threads=L.layerGroup().addTo(map);
 var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup().addTo(map),anc:L.layerGroup().addTo(map)};
 
 A.forEach(function(a,i){
-  a.id=i;var d=26+a.w*7;
+  a.id=i;var d=34+a.w*7,h1=Math.round(d*1.75),h2=Math.round(d*2.4);
+  var img=a.ph?'<img src="'+esc(photo(a.ph[0],240))+'" alt="" loading="lazy" data-a="'+i+'" data-k="0" onerror="nextPhoto(this)">':'';
   L.marker([a.lat,a.lng],{title:a.n,zIndexOffset:-500,icon:L.divIcon({className:'',iconSize:[d,d],iconAnchor:[d/2,d/2],
-    html:'<div class="anc" data-a="'+i+'"><div class="ring" style="width:'+d+'px;height:'+d+'px">'+svg(a.k)+'</div><div class="an">'+a.n+'</div></div>'})})
+    html:'<div class="anc" data-a="'+i+'"><div class="disc'+(img?' has':'')+'" style="width:'+d+'px;height:'+d+'px">'+
+      '<span class="halo" style="width:'+h1+'px;height:'+h1+'px"></span><span class="halo h2" style="width:'+h2+'px;height:'+h2+'px;animation-delay:'+(i*.27)+'s"></span>'+
+      svg(a.k)+img+(img?'<span class="bdg">'+svg(a.k)+'</span>':'')+'</div><div class="an">'+a.n+'</div></div>'})})
    .on('click',function(){showA(a);}).addTo(layers.anc);
 });
 function pinHtml(p,extra){return '<div class="pin" data-p="'+p.id+'" style="animation-delay:'+(p.id*45)+'ms"><div class="ph" style="background-image:url(\''+esc(p.thumb)+'\')"></div><div class="nm">'+esc(p.n)+'</div>'+(extra||'')+'</div>';}
@@ -439,8 +500,8 @@ function showA(a){
   var near=nearP(a,5);
   threads.clearLayers();near.forEach(function(n){arc(n.p,a).addTo(threads);});
   mark(-1,near.map(function(n){return n.p.id;}));
-  det.innerHTML='<div class="gal ill">'+svg(a.k)+'<button class="back">→ כל הפרויקטים</button><div class="ttl"><h2 class="serif">'+a.n+'</h2><div class="c">'+a.t+'</div></div></div>'+
-   '<div class="dbody"><h3>הבניינים של אקו סיטי סביב '+a.n+'</h3><ul class="near">'+near.map(function(n){return '<li data-gp="'+n.p.id+'"><span class="ic">'+svg('home')+'</span>'+esc(n.p.n)+(n.p.s==='sale'?' · <b style="color:var(--gold)">בשיווק</b>':'')+'<small>'+walk(n.m)+'</small></li>';}).join('')+'</ul></div>';
+  det.innerHTML='<div class="gal ill">'+svg(a.k)+(a.ok!=null?'<div class="sl on" style="background-image:url(\''+esc(photo(a.ph[a.ok],900))+'\')"></div>':'')+'<button class="back">→ כל הפרויקטים</button><div class="ttl"><h2 class="serif">'+a.n+'</h2><div class="c">'+a.t+'</div></div></div>'+
+   '<div class="dbody"><h3>הבניינים של אקו סיטי סביב '+a.n+'</h3><ul class="near">'+near.map(function(n){return '<li data-gp="'+n.p.id+'"><span class="ic">'+svg('home')+'</span>'+esc(n.p.n)+(n.p.s==='sale'?' · <b style="color:var(--gold)">בשיווק</b>':'')+'<small>'+walk(n.m)+'</small></li>';}).join('')+'</ul>'+(a.ok!=null?'<div class="src">תמונה: <a href="https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(a.ph[a.ok])+'" target="_blank" rel="noopener">Wikimedia Commons</a> (צלם ורישיון בעמוד הקובץ)</div>':'')+'</div>';
   bindD();clearInterval(timer);
   det.classList.add('open');det.scrollTop=0;
   fly(a);
