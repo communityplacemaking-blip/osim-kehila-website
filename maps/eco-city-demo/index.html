@@ -24,7 +24,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 
 /* פריסה: פאנל בימין, מפה בשמאל */
 .panel{position:fixed;top:0;right:0;bottom:0;width:var(--panel);background:var(--cream);z-index:600;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(22,49,49,.12)}
-#map{position:fixed;top:0;bottom:0;left:0;right:var(--panel);background:#EFE8DE}
+#map{position:fixed;top:0;bottom:0;left:0;right:var(--panel);background:#ECE6DC}
 
 .head{background:var(--teal);color:#fff;padding:22px 22px 16px;position:relative;overflow:hidden}
 .head::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 22px);pointer-events:none}
@@ -57,10 +57,9 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .credit{font-size:11px;color:var(--muted);padding:10px 22px;border-top:1px solid var(--line);background:var(--cream)}
 .credit b{color:var(--teal);font-weight:500}
 
-/* מפת הרקע מושתקת לגוון חם */
-.leaflet-tile-pane .base{filter:sepia(.32) saturate(.75) brightness(1.02) contrast(.95)}
-.leaflet-tile-pane .labels{opacity:.6}
-.leaflet-container{font-family:Heebo,Arial,sans-serif;background:#EFE8DE}
+/* מפת משמעות: רקע מאויר בלי אריחים */
+.hood{transform:translate(-50%,-50%);font-size:12px;font-weight:500;color:#5E6B6A;white-space:nowrap;letter-spacing:.02em;text-shadow:0 0 3px #FFF9F5,0 0 3px #FFF9F5;pointer-events:none}
+.leaflet-container{font-family:Heebo,Arial,sans-serif;background:#ECE6DC}
 .leaflet-control-attribution{font-size:10px;background:rgba(255,249,245,.8)!important}
 
 /* שמות הערים כסימן מים */
@@ -196,6 +195,7 @@ var IC={
  bag:'<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
  towers:'<rect x="4" y="6" width="5" height="15"/><rect x="10" y="3" width="5" height="18"/><rect x="16" y="9" width="4" height="12"/>',
  boulevard:'<path d="M4 21V3M20 21V3"/><circle cx="8" cy="8" r="2"/><circle cx="16" cy="13" r="2"/><path d="M8 10v3M16 15v3"/>',
+ theater:'<path d="M4 4h16v6a8 8 0 0 1-16 0z"/><path d="M8 9h.01M16 9h.01"/><path d="M9 13c1.5 1.5 4.5 1.5 6 0"/>',
  home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>'
 };
 function svg(k){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>';}
@@ -203,22 +203,18 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 
 /* עוגנים עירוניים, מיקומים מאומתים. w = משקל בזיכרון העירוני (בחירה עיצובית) */
 var A=[
- {n:'פארק הירקון',k:'park',w:5,lat:32.098007,lng:34.788297,t:'הריאה הירוקה של העיר'},
- {n:'נמל תל אביב',k:'port',w:4,lat:32.099069,lng:34.775343,t:'טיילת, שוק האיכרים ושקיעה על הים'},
  {n:'כיכר רבין',k:'square',w:5,lat:32.080610,lng:34.780590,t:'הכיכר של העיר'},
+ {n:'פארק הירקון',k:'park',w:5,lat:32.098007,lng:34.788297,t:'הריאה הירוקה של העיר'},
+ {n:'הבימה',k:'theater',w:4,lat:32.072650,lng:34.779450,t:'התיאטרון הלאומי וכיכר התרבות'},
+ {n:'דיזנגוף סנטר',k:'bag',w:4,lat:32.075350,lng:34.775200,t:'הקניון הראשון של העיר'},
+ {n:'עזריאלי',k:'towers',w:4,lat:32.074303,lng:34.791692,t:'קו הרקיע של העיר'},
+ {n:'נמל תל אביב',k:'port',w:4,lat:32.099069,lng:34.775343,t:'טיילת, שוק האיכרים ושקיעה על הים'},
  {n:'כיכר המדינה',k:'ring',w:3,lat:32.086769,lng:34.789763,t:'טבעת ירוקה בצפון הישן'},
  {n:'כיכר דיזנגוף',k:'fountain',w:3,lat:32.077837,lng:34.774539,t:'המזרקה ושוק העתיקות'},
  {n:'מוזיאון תל אביב',k:'museum',w:3,lat:32.077299,lng:34.785627,t:'אמנות, ספרייה ורחבה עירונית'},
- {n:'רכבת סבידור מרכז',k:'train',w:3,lat:32.083487,lng:34.797137,t:'רכבת, הקו הסגול ונתיבי איילון'},
- {n:'גן מאיר',k:'bench',w:2,lat:32.073105,lng:34.773114,t:'גינה שקטה בלב העיר'},
- {n:'שוק הכרמל',k:'market',w:3,lat:32.068667,lng:34.766898,t:'צבעים, ריחות ודוכנים'},
- {n:'גן העצמאות',k:'park',w:2,lat:32.091455,lng:34.771674,t:'גן מול הים, שקיעה ודשא'},
- {n:'כיכר מסריק',k:'bench',w:2,lat:32.078408,lng:34.778455,t:'כיכר שכונתית עם בתי קפה וילדים'},
- {n:'שדרות רוטשילד',k:'boulevard',w:3,lat:32.067088,lng:34.777803,t:'השדרה של תל אביב'},
- {n:'עזריאלי',k:'towers',w:3,lat:32.074303,lng:34.791692,t:'קו הרקיע של העיר'},
+ {n:'רכבת סבידור מרכז',k:'train',w:2,lat:32.083487,lng:34.797137,t:'רכבת, הקו הסגול ונתיבי איילון'},
  {n:'גבעת קוזלובסקי',k:'hill',w:3,lat:32.071354,lng:34.816575,t:'תצפית על כל העיר מגבעתיים'},
- {n:'רחוב כצנלסון',k:'cafe',w:3,lat:32.075303,lng:34.810700,t:'הרחוב הראשי של גבעתיים'},
- {n:'קניון גבעתיים',k:'bag',w:2,lat:32.066809,lng:34.808731,t:'קניות, קולנוע ומפגשים'}
+ {n:'רחוב כצנלסון',k:'cafe',w:3,lat:32.075303,lng:34.810700,t:'הרחוב הראשי של גבעתיים'}
 ];
 
 /* פרויקטים בשיווק. מקור: דפי הפרויקטים באתר אקו סיטי. מיקום: גיאוקוד לפי מספר בית */
@@ -252,22 +248,56 @@ L0.forEach(function(p){p.s='live';P.push(p);});
 P.forEach(function(p,i){p.id=i;});
 
 /* מפה */
-var map=L.map('map',{zoomControl:false,zoomSnap:.25,minZoom:12,maxZoom:18});
+var map=L.map('map',{zoomControl:false,zoomSnap:.25,minZoom:12,maxZoom:16.5});
 L.control.zoom({position:'bottomleft'}).addTo(map);
-var ATT='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png',{className:'base',attribution:ATT,subdomains:'abcd',maxZoom:19}).addTo(map);
-map.createPane('labels');map.getPane('labels').style.zIndex=350;map.getPane('labels').style.pointerEvents='none';
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png',{className:'labels',pane:'labels',subdomains:'abcd',maxZoom:19}).addTo(map);
+/* מפת משמעות, כמו מפת רמת גן: בלי אריחים. גבולות הערים ו"פאזל" השכונות מ-geo.json (build-geo.py),
+   וכל עוגן מותח את המרחב סביבו לפי המשקל שלו, כמו יריעת גומי. הכיוונים נשמרים, הגדלים מספרים מה חשוב.
+   המרחקים ("דקות הליכה") מחושבים תמיד מהמיקום האמיתי. */
+map.attributionControl.setPrefix(false);
+map.attributionControl.addAttribution('גבולות: OpenStreetMap, israel-municipalities-polygons · שכונות תל אביב: שרטוט סכמטי');
+var W=A.map(function(a){return {lat:a.lat,lng:a.lng,w:.16*a.w,r:200+80*a.w};}),KX=94300,KY=110540;
+function warp(lat,lng){var dx=0,dy=0;W.forEach(function(a){var ex=(lng-a.lng)*KX,ey=(lat-a.lat)*KY,g=a.w*Math.exp(-(ex*ex+ey*ey)/(a.r*a.r));dx+=ex*g;dy+=ey*g;});return [lat+dy/KY,lng+dx/KX];}
+function dens(r){var o=[];for(var i=0;i<r.length;i++){o.push(r[i]);var q=r[i+1];if(!q)break;var n=Math.floor(Math.hypot(q[0]-r[i][0],q[1]-r[i][1])/.0004);for(var k=1;k<n;k++)o.push([r[i][0]+(q[0]-r[i][0])*k/n,r[i][1]+(q[1]-r[i][1])*k/n]);}return o;}
+function wring(r){return dens(r).map(function(c){var w=warp(c[1],c[0]);return [w[1],w[0]];});}
+function wgeom(g){
+  if(g.type==='LineString')return {type:g.type,coordinates:wring(g.coordinates)};
+  if(g.type==='MultiLineString')return {type:g.type,coordinates:g.coordinates.map(wring)};
+  if(g.type==='Polygon')return {type:g.type,coordinates:g.coordinates.map(wring)};
+  if(g.type==='MultiPolygon')return {type:g.type,coordinates:g.coordinates.map(function(p){return p.map(wring);})};
+  return g;
+}
+P.concat(A).forEach(function(p){p.rlat=p.lat;p.rlng=p.lng;var w=warp(p.lat,p.lng);p.lat=w[0];p.lng=w[1];});
+var TONES=['#F6EEE3','#EAF2EF','#F3E7D6','#E6F0F3','#F5EAE2'];
+map.createPane('geo');map.getPane('geo').style.zIndex=250;
+var hoodLayer=null,hoodLabels=L.layerGroup();
+fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
+  gj.features.forEach(function(f){f.geometry=wgeom(f.geometry);});
+  var by=function(k){return {type:'FeatureCollection',features:gj.features.filter(function(f){return f.properties.kind===k;})};};
+  L.geoJSON(by('sea'),{pane:'geo',interactive:false,style:{stroke:false,fillColor:'#DCF2FD',fillOpacity:1}}).addTo(map);
+  L.geoJSON(by('city'),{pane:'geo',interactive:false,style:function(f){var c=f.properties.context;
+    return {color:'#1E3F3F',weight:c?1:1.8,opacity:c?.35:.85,dashArray:c?'4 5':null,fillColor:c?'#F1EAE0':'#FFF9F5',fillOpacity:1};}}).addTo(map);
+  var i=0;hoodLayer=L.geoJSON(by('hood'),{pane:'geo',interactive:false,style:function(f){
+    return {color:'#1E3F3F',weight:.9,opacity:.45,dashArray:'3 4',fillColor:f.properties.park?'#DCEBD6':TONES[(i++)%TONES.length],fillOpacity:1};}}).addTo(map);
+  L.geoJSON(by('river'),{pane:'geo',interactive:false,style:{color:'#BFE3F5',weight:7,opacity:1,lineCap:'round'}}).addTo(map);
+  by('hood').features.forEach(function(f){var c=warp(f.properties.center[0],f.properties.center[1]);
+    L.marker(c,{interactive:false,keyboard:false,zIndexOffset:-3000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="hood">'+esc(f.properties.name)+'</div>'})}).addTo(hoodLabels);});
+  hoods();
+});
+function hoods(){if(!hoodLayer)return;var z=map.getZoom(),show=z>=14;
+  hoodLayer.setStyle(function(f){return {opacity:show?.45:0,fillOpacity:show||f.properties.park?1:0};});
+  if(show)hoodLabels.addTo(map);else map.removeLayer(hoodLabels);}
+map.on('zoomend',hoods);
 
-[['תל אביב',32.0745,34.7790],['גבעתיים',32.0712,34.8125]].forEach(function(c){
-  L.marker([c[1],c[2]],{interactive:false,keyboard:false,zIndexOffset:-2000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="city">'+c[0]+'</div>'})}).addTo(map);
+[['תל אביב-יפו',32.0745,34.7790],['גבעתיים',32.0705,34.8125],['רמת גן',32.0830,34.8250]].forEach(function(c){
+  var w=warp(c[1],c[2]);
+  L.marker(w,{interactive:false,keyboard:false,zIndexOffset:-2000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="city">'+c[0]+'</div>'})}).addTo(map);
 });
 
 var threads=L.layerGroup().addTo(map);
 var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup().addTo(map),anc:L.layerGroup().addTo(map)};
 
 A.forEach(function(a,i){
-  a.id=i;var d=22+a.w*5;
+  a.id=i;var d=26+a.w*7;
   L.marker([a.lat,a.lng],{title:a.n,zIndexOffset:-500,icon:L.divIcon({className:'',iconSize:[d,d],iconAnchor:[d/2,d/2],
     html:'<div class="anc" data-a="'+i+'"><div class="ring" style="width:'+d+'px;height:'+d+'px">'+svg(a.k)+'</div><div class="an">'+a.n+'</div></div>'})})
    .on('click',function(){showA(a);}).addTo(layers.anc);
@@ -309,7 +339,7 @@ function layout(){
     }
     var first=g.m[0].p,st=L.marker(center,{zIndexOffset:1100,title:g.m.map(function(it){return it.p.n;}).join(' · '),
       icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="pin stack" data-s="'+stacks.length+'"><div class="ph" style="background-image:url(\''+esc(first.thumb)+'\')"></div><span class="cnt">'+g.m.length+'</span><div class="nm">'+g.m.length+' פרויקטים</div></div>'})})
-      .on('click',function(){map.flyToBounds(L.latLngBounds(g.m.map(function(it){return [it.p.lat,it.p.lng];})).pad(.5),{maxZoom:17,duration:.7});})
+      .on('click',function(){map.flyToBounds(L.latLngBounds(g.m.map(function(it){return [it.p.lat,it.p.lng];})).pad(.5),{maxZoom:16,duration:.7});})
       .addTo(layers.sale);
     g.m.forEach(function(it){it.p.stack=st;});
     stacks.push(st);
@@ -319,7 +349,7 @@ function layout(){
 function pinEl(p){var m=p.s==='sale'&&p.stack?p.stack:p.m,e=m.getElement&&m.getElement();return e&&e.querySelector('.pin,.bld');}
 
 /* מרחקים */
-function meters(p,q){var dx=(p.lng-q.lng)*94300,dy=(p.lat-q.lat)*110540;return Math.sqrt(dx*dx+dy*dy);}
+function meters(p,q){var dx=(p.rlng-q.rlng)*94300,dy=(p.rlat-q.rlat)*110540;return Math.sqrt(dx*dx+dy*dy);}
 function walk(m){return Math.max(1,Math.round(m*1.3/80))+' דק׳ הליכה';}
 function nearA(p,k){return A.map(function(a){return {a:a,m:meters(a,p)};}).sort(function(x,y){return x.m-y.m;}).slice(0,k);}
 function nearP(a,k){return P.filter(function(p){return on[p.s];}).map(function(p){return {p:p,m:meters(a,p)};}).sort(function(x,y){return x.m-y.m;}).slice(0,k);}
