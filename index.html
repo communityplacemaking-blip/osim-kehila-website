@@ -82,6 +82,7 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .system .btn.must{background:var(--must);color:var(--navy);align-self:flex-start;font-weight:500}
 .shot{flex:1 1 400px;position:relative;display:block;border-radius:18px;overflow:hidden;height:350px;text-decoration:none;background:#fff}
 .shot img{width:100%;height:100%;object-fit:cover;object-position:center 4%;display:block}
+.shot.live{height:460px;border:1px solid var(--grey)}.shot.live iframe{width:100%;height:100%;border:0;display:block}.livewrap{flex:1 1 400px;display:flex;flex-direction:column;gap:10px}.livewrap .shot{flex:none;width:100%}.livewrap a.full{color:#fff;font-size:15px;font-weight:400;text-decoration:none;align-self:flex-start}.livewrap a.full:hover{color:var(--must)}
 .shot span{position:absolute;bottom:14px;inset-inline-start:14px;background:#fff;color:var(--navy);font-weight:500;padding:8px 16px;border-radius:999px;font-size:15px;box-shadow:0 0 0 1px var(--grey)}
 /* gallery */
 .examples{padding:52px 0}
@@ -2725,7 +2726,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <ul><li>מפה שכונתית מאוירת</li><li>סיפורים וזיכרון קהילתי</li><li>אנשים ונכסים קהילתיים</li><li>יוזמות והתנדבות</li><li>הגשת רעיונות מהתושבים</li><li>לשכונות, בתי ספר וארגונים</li></ul>
 <a class="btn must" href="#contact">מערכת לקהילה שלכם</a>
 </div>
-<a class="shot" href="https://osim-kehila-production.up.railway.app/anchor-map" target="_blank" rel="noopener" aria-label="מפת ארמון הנציב: לשוטט במפה החיה (נפתח בלשונית חדשה)"><img src="assets/armon-map.webp?v=20261014" alt="המפה המאוירת של ארמון הנציב" loading="lazy"><span>לשוטט במפה החיה של ארמון הנציב ←</span></a>
+<div class="livewrap"><div class="shot live"><iframe src="https://osim-kehila-production.up.railway.app/anchor-map" title="המפה החיה של ארמון הנציב" loading="lazy" allow="geolocation; fullscreen"></iframe></div><a class="full" href="https://osim-kehila-production.up.railway.app/anchor-map" target="_blank" rel="noopener">המפה החיה של ארמון הנציב · לפתוח במסך מלא ←</a></div>
 </div></section>
 
 <section class="design reveal" id="design"><div class="wrap"><div><p class="eyebrow">עצבו לעצמכם</p><h2>איזו מפה מתאימה לכם?</h2><p class="t">ספרו מי אתם, הזיזו שלושה כפתורים, ותראו איזה מוצר ואיזה תהליך אנחנו מציעים. להצעת מחיר פונים אלינו.</p></div><a class="go" href="configurator/">למכוון התהליך</a></div></section>
