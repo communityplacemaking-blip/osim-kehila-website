@@ -46,15 +46,15 @@ html, body { margin: 0; }
 body { font-family: "Segoe UI", "Arial Hebrew", Arial, system-ui, sans-serif; background: var(--paper); color: var(--ink); direction: rtl; }
 .am-app { --map-gutter: 16px; --map-vgap: 24px; margin: 0 auto; padding: 24px var(--map-gutter) 44px; }
 /* גודל המפה: הגדול ביותר שנכנס בחלון כולו - גם ברוחב (width: 100% פחות השוליים
-   בצדדים) וגם בגובה (גובה החלון פחות --map-vgap), לפי יחס מסגרת התצוגה 1196x1090
-   (החלק של האיור 1223x1286 שבו נמצאת השכונה - ראו MAP_FRAME ב-anchor-map.js).
-   המפה צרה וגבוהה, ולכן במסכי מחשב רגילים הגובה הוא הגבול: אז היא תופסת כמעט
+   בצדדים) וגם בגובה (גובה החלון פחות --map-vgap), לפי יחס האיור 1273x991
+   (map-background-ref.webp - ראו STAGE_FIT ב-anchor-map.js).
+   במסכי מחשב רגילים הגובה הוא הגבול: אז היא תופסת כמעט
    את כל הגובה ומתמרכזת, והחלק התחתון (המצפן, קנה המידה, "עושים קהילה") תמיד
    בתוך החלון. dvh: גובה החלון הנראה בפועל בדפדפני מובייל. רצפה 320px.
    רק max-width - היחס נשמר, ונקודות העוגן (ב-%) נשארות מיושרות. */
-.am-map-stage { position: relative; width: 100%; margin: 0 auto; max-width: max(320px, calc((100vh - var(--map-vgap)) * 1196 / 1090)); }
+.am-map-stage { position: relative; width: 100%; margin: 0 auto; max-width: max(320px, calc((100vh - var(--map-vgap)) * 1273 / 991)); }
 @supports (height: 100dvh) {
-  .am-map-stage { max-width: max(320px, calc((100dvh - var(--map-vgap)) * 1196 / 1090)); }
+  .am-map-stage { max-width: max(320px, calc((100dvh - var(--map-vgap)) * 1273 / 991)); }
 }
 /* דסקטופ: המפה ממורכזת אנכית ואופקית בחלון, עם 12px מעל ומתחת, בלי גלילת-עמוד.
    במובייל-לאורך הרוחב הוא הגבול והפריסה צמודה למעלה (שוליים צרים יותר). */
@@ -62,7 +62,7 @@ body { font-family: "Segoe UI", "Arial Hebrew", Arial, system-ui, sans-serif; ba
   .am-app { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 0; padding-bottom: 0; }
 }
 @media (max-width: 640px) {
-  .am-app { --map-gutter: 10px; padding-top: 16px; padding-bottom: 120px; } /* מקום ל"עושים קהילה", לכפתור השיתוף ולקו-הרקיע מתחת למפה */
+  .am-app { --map-gutter: 10px; padding-top: 16px; padding-bottom: 90px; } /* מקום ל"עושים קהילה", לכפתור השיתוף ולקו-הרקיע מתחת למפה */
 }
 .am-map-stage img.base-photo { width: 100%; display: block; border-radius: 12px; }
 
@@ -444,8 +444,27 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
 @media (max-width: 640px) {
   .am-hotspot--icon { --am-icon-d: 30px; width: max(44px, min(48px, 13%)); }
 }
+/* מעבר עם העכבר (או פוקוס מהמקלדת): האייקון גדל והשם שלו מופיע מעליו בתווית קטנה.
+   הכפתור עולה מעל השכנים כדי שהתווית לא תוסתר. בטלפון אין hover - נגיעה פותחת את הכרטיס. */
+.am-hotspot--icon .am-hotspot-icon { transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, transform 0.18s ease; }
+.am-hotspot-name {
+  position: absolute; left: 50%; bottom: calc(50% + var(--am-icon-d) * 0.72 + 4px);
+  transform: translate(-50%, 4px); opacity: 0; pointer-events: none; white-space: nowrap;
+  padding: 3px 10px; border-radius: 999px; background: #fffdf6; color: #1b2a4a;
+  border: 1px solid rgba(27, 42, 74, 0.22); box-shadow: 0 2px 8px rgba(27, 42, 74, 0.18);
+  font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1.3;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.am-hotspot--icon:focus-visible { z-index: 7; }
+.am-hotspot--icon:focus-visible .am-hotspot-icon { transform: scale(1.4); }
+.am-hotspot--icon:focus-visible .am-hotspot-name { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: hover) {
+  .am-hotspot--icon:hover { z-index: 7; }
+  .am-hotspot--icon:hover .am-hotspot-icon { transform: scale(1.4); }
+  .am-hotspot--icon:hover .am-hotspot-name { opacity: 1; transform: translate(-50%, 0); }
+}
 @media (prefers-reduced-motion: reduce) {
-  .am-hotspot--icon .am-hotspot-icon { transition: none; }
+  .am-hotspot--icon .am-hotspot-icon, .am-hotspot-name { transition: none; }
 }
 
 /* ===== מקרא המפה - פאנל HTML קריא מעל המקרא הקטן המצויר בפינה השמאלית-עליונה.
@@ -456,7 +475,7 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
    הטקסט: Heebo 14px במשקל רגיל (400), כמו שאר טקסט הממשק. */
 .am-map-stage { container-type: inline-size; }
 .am-map-legend {
-  position: absolute; left: 1.2%; top: 1.6%; width: 14%; height: 29%;
+  position: absolute; left: 1.2%; top: 1.5%; width: 14%; height: 26.7%;
   display: flex; flex-direction: column; justify-content: space-evenly;
   padding: 0.4cqw 0.5cqw; box-sizing: border-box;
   background: rgb(248, 243, 231); border: 1px solid rgba(185, 160, 108, 0.45); border-radius: 1.4cqw;
@@ -486,7 +505,7 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
    הפאנל מתרחב אל השמיים הריקים משמאל ומעל (x 0.5%, y 1.5%) - הקצה הימני נשאר
    16.7%, צמוד לקו-המתאר - עם נקודת-צבע וריווח קטנים יותר, כך שרוב הרוחב לטקסט. */
 @container (min-width: 421px) and (max-width: 560px) {
-  .am-map-legend { left: 0.5%; top: 1.2%; width: 14.7%; height: 29.5%; font-size: 13.5px; padding: 2px 2px; }
+  .am-map-legend { left: 0.5%; top: 1.2%; width: 14.7%; height: 27.2%; font-size: 13.5px; padding: 2px 2px; }
   .am-map-legend-item { gap: 3px; padding: 1px 0; }
   .am-map-legend-label { line-height: 1.08; }
   .am-map-legend-swatch { width: 7px; height: 7px; box-shadow: none; }
@@ -504,21 +523,31 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
    הכפתור עצמו 28px (אזור-מגע), הנקודה הנראית 10px + טבעת פעימה עדינה. ===== */
 .am-brand { position: absolute; left: 26.574%; top: 88.958%; width: 39.984%; height: auto; pointer-events: none; user-select: none; }
 .am-legend-dot {
-  position: absolute; transform: translate(-50%, -50%);
-  width: 28px; height: 28px; padding: 0; background: none; border: none; border-radius: 50%; cursor: pointer;
+  position: absolute; transform: translate(-50%, -50%); z-index: 2;
+  padding: 0.32em 1.3em; border: 1px solid rgba(255, 253, 246, 0.6); border-radius: 999px; background: #1f4e8c; color: #fffdf6;
+  font-family: inherit; font-size: clamp(10px, calc(var(--map-w, 800px) * 0.0125), 14px); font-weight: 600; line-height: 1.25; white-space: nowrap; cursor: pointer;
+  box-shadow: 0 2px 0 #163a69, 0 4px 10px rgba(31, 78, 140, 0.3);
+  animation: am-pulse-blue 2.4s ease-out infinite;
+  transition: background 0.12s ease, transform 0.12s ease;
 }
-.am-legend-dot::before, .am-legend-dot::after {
-  content: ''; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px;
-  border-radius: 50%; background: #1f4e8c;
+.am-legend-dot:hover, .am-legend-dot:focus-visible { background: #183f73; }
+.am-legend-dot:active { transform: translate(-50%, calc(-50% + 1px)); }
+.am-legend-dot:focus-visible { outline: 3px solid rgba(31, 78, 140, 0.4); outline-offset: 2px; }
+/* הבהוב עדין: טבעת שמתרחבת ונעלמת סביב הכפתור (כחול ל"עושים קהילה", כתום לשיתוף) */
+@keyframes am-pulse-blue {
+  0% { box-shadow: 0 2px 0 #163a69, 0 4px 10px rgba(31, 78, 140, 0.3), 0 0 0 0 rgba(31, 78, 140, 0.55); }
+  70%, 100% { box-shadow: 0 2px 0 #163a69, 0 4px 10px rgba(31, 78, 140, 0.3), 0 0 0 10px rgba(31, 78, 140, 0); }
 }
-.am-legend-dot::after { animation: am-legend-pulse 2.4s ease-out infinite; }
-.am-legend-dot:hover::before, .am-legend-dot:focus-visible::before { transform: scale(1.25); }
-@keyframes am-legend-pulse {
-  0% { transform: scale(1); opacity: 0.55; }
-  70%, 100% { transform: scale(2.6); opacity: 0; }
+@keyframes am-pulse-green {
+  0% { box-shadow: 0 2px 0 #2a5420, 0 4px 10px rgba(43, 38, 32, 0.24), 0 0 0 0 rgba(63, 122, 46, 0.55); }
+  70%, 100% { box-shadow: 0 2px 0 #2a5420, 0 4px 10px rgba(43, 38, 32, 0.24), 0 0 0 10px rgba(63, 122, 46, 0); }
+}
+@keyframes am-pulse-orange {
+  0% { box-shadow: 0 2px 0 #7d4129, 0 4px 10px rgba(43, 38, 32, 0.24), 0 0 0 0 rgba(166, 90, 57, 0.55); }
+  70%, 100% { box-shadow: 0 2px 0 #7d4129, 0 4px 10px rgba(43, 38, 32, 0.24), 0 0 0 10px rgba(166, 90, 57, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .am-legend-dot::after { animation: none; opacity: 0; }
+  .am-legend-dot, .am-share-fab { animation: none; }
 }
 
 /* ===== Rich Place Panel (מינהל קהילתי / מרכז הספורט / המרכז המסחרי) - אותו .am-card,
@@ -746,6 +775,16 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
 .am-now-note { margin-top: 10px; font-size: var(--fs-meta); line-height: 1.5; color: var(--ink-soft); text-align: center; }
 .am-now-community { display: block; width: fit-content; margin: 8px auto 0; padding: 4px 6px; font-size: var(--fs-meta); color: var(--terracotta); text-decoration: none; }
 .am-now-community:hover, .am-now-community:focus-visible { text-decoration: underline; }
+/* "יש לי משהו לשתף" בחלון "מה קורה עכשיו": כרטיס ירוק-בהיר אחד מתחת לרשימה */
+.am-now-share {
+  display: flex; align-items: center; gap: 12px; width: 100%; margin: 12px 0 0; padding: 12px 14px;
+  border: 1.5px solid #3f7a2e; border-radius: 14px; background: #f1f7ec; color: var(--ink);
+  font-family: inherit; text-align: right; cursor: pointer;
+}
+.am-now-share:hover, .am-now-share:focus-visible { background: #e4f0db; outline: none; }
+.am-now-share-plus { flex: none; width: 30px; height: 30px; border-radius: 50%; background: #3f7a2e; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 20px; line-height: 1; }
+.am-now-share-title { display: block; font-size: var(--fs-item); font-weight: 700; color: #33652a; }
+.am-now-share-sub { display: block; font-size: var(--fs-meta); color: var(--ink-soft); margin-top: 2px; }
 @media (max-width: 640px) { .am-now-community { min-height: 32px; display: flex; align-items: center; } }
 .am-now-detail .am-creators-title { line-height: 1.5; }
 
@@ -1085,20 +1124,19 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
 /* המקרא נשאר מעל שכבת הקהילה - אפשר לעבור שכבה גם כשהיא פתוחה */
 .am-community-layer ~ .am-map-legend { z-index: 6; }
 
-/* ===== "יש לי משהו לשתף" - כפתור קטן בתוך המפה, בפינה הימנית-התחתונה, באזור
-   הפנוי שבין קו המתאר של השכונה לקו-הרקיע המשורבט (שכבת HTML; האיור הנעול לא משתנה). הגודל נגזר מרוחב המפה (--map-w),
-   בערך כגודל הכותרת "עושים קהילה", כך שהוא קטן ביחד עם המפה. הפאנל עצמו משתמש
-   בשפה של am-creators-panel / am-flow הקיימים. ===== */
+/* ===== "יש לי משהו לשתף" - כפתור קטן ומהבהב (כתום) בתוך המפה, מימין למעלה מתחת לכותרת
+   "ארמון הנציב" (שכבת HTML; האיור לא משתנה). הגודל נגזר מרוחב המפה (--map-w), בפרופורציה
+   לכותרת, כך שהוא קטן ביחד עם המפה. הפאנל עצמו משתמש בשפה של am-creators-panel / am-flow הקיימים. ===== */
 .am-share-fab {
   /* גוון הטרקוטה של כפתורי הפעולה באתר, כהה מעט (#a65a39 - גוון ה-hover הקיים)
      כדי שהטקסט הבהיר יעמוד בניגודיות 4.5:1 */
-  /* בפינה הימנית-התחתונה, מעל קו-הרקיע המשורבט (שמתחיל ב-90.6% מהגובה) ומתחת לקו המתאר -
-     אזור פנוי (בבקשת בעל הפרויקט) */
-  position: absolute; right: 1.8%; bottom: 13%; z-index: 6; margin: 0;
+  /* מיושר לקצה הימני של הכותרת, מתחת ל"מפת השכונה" - אזור פנוי מחוץ לקו המתאר (בבקשת בעל הפרויקט) */
+  position: absolute; right: 3.3%; top: 20%; z-index: 6; margin: 0;
   display: flex; align-items: center; gap: 0.4em; width: max-content; box-sizing: border-box;
   padding: 0.38em 0.95em 0.38em 0.6em; border-radius: 999px; border: 1px solid rgba(255, 253, 246, 0.6); background: #a65a39; color: #fffdf6;
-  font-family: inherit; font-size: clamp(10px, calc(var(--map-w, 800px) * 0.017), 16px); font-weight: 600; line-height: 1.25; cursor: pointer;
-  box-shadow: 0 0 0 3px rgba(166, 90, 57, 0.18), 0 4px 12px rgba(43,38,32,0.26); transition: background 0.12s ease, box-shadow 0.12s ease, transform 0.12s ease;
+  font-family: inherit; font-size: clamp(10px, calc(var(--map-w, 800px) * 0.0125), 13px); font-weight: 600; line-height: 1.25; cursor: pointer;
+  box-shadow: 0 2px 0 #7d4129, 0 4px 10px rgba(43, 38, 32, 0.24); animation: am-pulse-orange 2.4s ease-out infinite;
+  transition: background 0.12s ease, transform 0.12s ease;
 }
 /* פלוס קטן בעיגול בהיר - סימן "להוסיף", באותה שפה עגולה של הכפתור */
 .am-share-fab::before {
@@ -1107,9 +1145,10 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
 }
 /* מפה קטנה (טלפון): מחוץ למפה, צמוד לפינה הימנית-התחתונה - בלי לכסות את האיור */
 :root[data-share-dock="below"] .am-share-fab { top: calc(100% + 10px); bottom: auto; right: 0; }
-:root[data-share-dock="beside"] .am-share-fab { right: auto; left: calc(100% + 10px); bottom: 0; }
+:root[data-share-dock="beside"] .am-share-fab { right: auto; left: calc(100% + 10px); top: auto; bottom: 0; }
 :root[data-share-dock="below"] .am-share-fab, :root[data-share-dock="beside"] .am-share-fab { font-size: 13px; min-height: 36px; }
-.am-share-fab:hover { background: #8f4c2f; box-shadow: 0 5px 14px rgba(43,38,32,0.28); transform: translateY(-1px); }
+.am-share-fab:hover { background: #8f4c2f; }
+.am-share-fab:active { transform: translateY(1px); }
 .am-share-fab:focus-visible { outline: 3px solid rgba(166, 90, 57, 0.4); outline-offset: 2px; }
 .am-share-panel .am-creators-main-title { margin-bottom: 2px; }
 .am-share-form .am-creators-back { align-self: flex-start; padding-bottom: 2px; }
@@ -1193,38 +1232,352 @@ textarea.am-join-input { resize: vertical; min-height: 64px; }
   .am-hotspot--icon .am-hotspot-icon, .am-secondary.has-icon[data-layer="place_story"] .am-secondary-icon { transition: none; }
 }
 
-/* ---------------- קו-רקיע בתחתית + "עושים קהילה" מעליו ----------------
-   קו-הרקיע (נכס נפרד /decor/armon-skyline-line.svg) - פס דק אחד בתחתית המפה,
-   מעל האיור ומתחת לכל הכפתורים, בלי pointer-events. */
-.am-map-stage img.am-skyline-line {
-  position: absolute; left: 2%; width: 96%; bottom: 0.8%; height: auto; display: block;
-  pointer-events: none; user-select: none; z-index: 0;
-}
-/* "עושים קהילה" (הנכס עצמו לא השתנה): בפינה הימנית-התחתונה הפנויה, מחוץ לקו המתאר,
-   עם מרווח מעל קו-הרקיע. כפתור השיתוף מעליו; הנקודה המהבהבת צמודה אליו משמאל. */
-.am-brand { left: auto; right: 1.8%; top: auto; bottom: 6.6%; width: 25%; }
-.am-legend-dot { left: 71%; top: 90.4%; }
-/* מפה צרה (טלפון): "עושים קהילה" יורד אל מתחת למפה, משמאל ("יש לי משהו לשתף" מימין) */
-/* מפה צרה (טלפון): כרטיס השמנת נמשך מתחת למפה (פס של 104px), ובו "עושים קהילה" משמאל,
-   "יש לי משהו לשתף" מימין, ומתחתם קו-הרקיע - בלי לכסות את המפה. */
+/* 19.10.2026: הכללים של שכבות הקישוט (קו-רקיע, רחוב, ציורי העוגנים) הוסרו - הכל מצויר באיור עצמו. */
+/* "עושים קהילה" (בלי הפסים שמסביב - brand-osim-kehila-v3-title.png): גדול יותר, בפינה הימנית-התחתונה
+   הפנויה מחוץ לקו המתאר; הכפתור הכחול "הצטרפו" ממורכז מתחתיו, וקו-הרקיע מתחת לשניהם. */
+.am-brand { left: auto; right: 2.5%; top: 81.3%; width: 26%; }
+.am-legend-dot { left: 84.5%; top: 90.5%; }
+/* מפה צרה (טלפון): כרטיס השמנת נמשך מתחת למפה (פס של 104px), ובו "עושים קהילה" עם "הצטרפו" משמאל
+   ו"יש לי משהו לשתף" מימין - בלי לכסות את המפה. קו-הרקיע נשאר בתחתית המפה עצמה. */
 @container (max-width: 420px) {
-  .am-brand { right: auto; left: 4%; bottom: auto; top: calc(100% + 22px); width: 44%; z-index: 1; }
-  .am-legend-dot { left: 26%; top: calc(100% + 10px); z-index: 2; }
+  .am-brand { right: auto; left: 4%; top: calc(100% + 10px); width: 44%; z-index: 1; }
+  .am-legend-dot { left: 26%; top: calc(100% + 80px); }
   .am-share-fab { z-index: 6; }
 }
 @media (max-width: 640px) {
   .am-map-stage::before {
-    content: ''; position: absolute; inset: 0 0 -104px 0; z-index: -1; border-radius: 12px; background: #faf5ea;
+    content: ''; position: absolute; inset: 0 0 -70px 0; z-index: -1; border-radius: 12px; background: #faf5ea;
     box-shadow: 0 1px 2px rgba(60,45,25,0.18), 0 6px 14px rgba(60,45,25,0.16), 0 18px 36px rgba(60,45,25,0.14);
   }
-  .am-map-stage img.base-photo { box-shadow: none; border-radius: 12px 12px 0 0; }
-  .am-map-stage img.am-skyline-line { bottom: -92px; } /* קו-הרקיע בתחתית הכרטיס, מתחת ל"עושים קהילה" ולכפתור */
   :root[data-share-dock="below"] .am-share-fab { right: 3%; top: calc(100% + 16px); }
 }
 /* רקע העמוד: אבן ירושלמית עדינה (נכס נפרד /decor/armon-stone-bg.svg); המפה מורמת ממנו בצל רך */
 body { background: #e6dcc8 url('/decor/armon-stone-bg.svg') repeat; }
 .am-map-stage img.base-photo {
   box-shadow: 0 1px 2px rgba(60,45,25,0.18), 0 6px 14px rgba(60,45,25,0.16), 0 18px 36px rgba(60,45,25,0.14);
+}
+/* טלפון: המפה ורצועת השמנת שמתחתיה הם כרטיס אחד - בלי צל/פינות בתחתית האיור (אחרי כלל הצל, כדי לגבור עליו) */
+@media (max-width: 640px) {
+  .am-map-stage img.base-photo { box-shadow: none; border-radius: 12px 12px 0 0; }
+}
+
+
+/* 19.10.2026: כאן היו שלוש קבוצות כללים ישנות ל"עושים קהילה" (חלקן עם !important) שסתרו זו את זו.
+   כולן נדרסו ע"י הכלל שלמטה, ולכן הוסרו - זה עכשיו המקום היחיד שקובע את מיקום הכפתור. */
+/* Match the blue "עושים קהילה" CTA to the exact compact sizing and placement of "יש לי הצעה". */
+.am-map-stage .am-legend-dot.am-brand-button {
+  position: absolute !important;
+  left: auto !important;
+  right: 3.3% !important;
+  top: 78.5% !important;
+  transform: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: row !important;
+  gap: 0.4em !important;
+  width: max-content !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0.38em 0.95em 0.38em 0.6em !important;
+  border: 1px solid rgba(255, 253, 246, 0.6) !important;
+  border-radius: 999px !important;
+  background: #1f4e8c !important;
+  color: #fffdf6 !important;
+  font-family: inherit !important;
+  font-size: clamp(10px, calc(var(--map-w, 800px) * 0.0125), 13px) !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  box-shadow: 0 2px 0 #163a69, 0 4px 10px rgba(31, 78, 140, 0.3) !important;
+  animation: am-pulse-blue 2.4s ease-out infinite !important;
+  white-space: nowrap !important;
+}
+.am-map-stage .am-legend-dot.am-brand-button .am-brand-plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 50%;
+  background: #fffdf6;
+  color: #1f4e8c;
+  font-size: 0.95em;
+  font-weight: 800;
+  line-height: 1;
+}
+.am-map-stage .am-legend-dot.am-brand-button:hover,
+.am-map-stage .am-legend-dot.am-brand-button:focus-visible {
+  background: #183f73 !important;
+  box-shadow: 0 2px 0 #163a69, 0 4px 10px rgba(31, 78, 140, 0.3) !important;
+}
+.am-map-stage .am-legend-dot.am-brand-button:active { transform: translateY(1px) !important; }
+/* מפה צרה (טלפון): שני הכפתורים ברצועת השמנת שמתחת למפה, זה לצד זה - "יש לי הצעה" מימין
+   ו"עושים קהילה" משמאל (קודם שניהם ישבו באותה נקודה, והכתום הסתיר את הכחול). */
+@container (max-width: 420px) {
+  .am-map-stage .am-legend-dot.am-brand-button {
+    left: 3.3% !important;
+    right: auto !important;
+    top: calc(100% + 16px) !important;
+    font-size: 13px !important;
+    min-height: 36px !important;
+  }
+}
+
+/* ===================== "הצעות תושבים" (19.10.2026) =====================
+   שכבה ירוקה נפרדת (מתג במקרא), סמנים קטנים ושטוחים - לא כפתורים תלת-ממדיים כמו העוגנים.
+   הירוק לקוח מהצמחייה של עמק הזיתים. */
+.am-scrim[hidden] { display: none; }
+/* המקרא גדל לפי התוכן (חמש שורות + הערה), במקום גובה קבוע שנמדד לפי מקרא מצויר שכבר לא באיור */
+.am-map-legend { height: auto; justify-content: flex-start; gap: 0.55em; padding-top: 0.9cqw; padding-bottom: 0.9cqw; }
+.am-map-legend-toggle { margin-top: 0.35em; padding-top: 0.6em; border-top: 1px dashed rgba(185, 160, 108, 0.7); }
+.am-map-legend-toggle .am-map-legend-swatch { background: transparent; box-shadow: inset 0 0 0 1.8px var(--legend-color); }
+.am-map-legend-toggle[aria-pressed="true"] .am-map-legend-swatch { background: var(--legend-color); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.55); }
+.am-map-legend-toggle[aria-pressed="true"] .am-map-legend-label { color: #2f5f22; }
+.am-map-legend-note { display: block; font-size: 0.82em; font-style: normal; color: #4a5a3c; line-height: 1.25; padding: 0 0.2em; }
+.am-map-legend-more { background: none; border: 0; cursor: pointer; font-family: inherit; text-align: right; text-decoration: underline; text-underline-offset: 0.18em; }
+@container (max-width: 420px) {
+  .am-map-legend { gap: 0.35em; padding-top: 3px; padding-bottom: 3px; }
+  .am-map-legend-toggle { margin-top: 0.2em; padding-top: 0.35em; }
+}
+
+.am-suggestion {
+  position: absolute; transform: translate(-50%, -50%); z-index: 3;
+  width: 26px; height: 26px; padding: 0; border: 0; background: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  animation: am-secondary-in 0.22s ease-out;
+}
+.am-suggestion-dot {
+  display: block; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--suggest-color); border: 2px solid #fffdf6; box-shadow: 0 0 0 1px rgba(47, 95, 34, 0.55);
+  transition: transform 0.15s ease;
+}
+/* כותרת קצרה קבועה מתחת לנקודה (בבקשת בעל הפרויקט, 19.10: נקודה מלאה ולא ריקה/מקווקוות, ושם ליד הנקודה כמו בבאר שבע).
+   במעבר עכבר/פוקוס היא מתחלפת בשם המלא שמעל הנקודה. */
+.am-suggestion-short {
+  position: absolute; left: 50%; top: calc(50% + 11px); transform: translateX(-50%);
+  pointer-events: none; white-space: nowrap; padding: 0 6px; border-radius: 999px;
+  background: rgba(255, 253, 246, 0.92); color: #2f5f22; box-shadow: 0 0 0 1px rgba(78, 138, 58, 0.35);
+  font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.45; transition: opacity 0.15s ease;
+}
+.am-suggestion:focus-visible .am-suggestion-short, .am-suggestion.is-active .am-suggestion-short { opacity: 0; }
+@media (hover: hover) { .am-suggestion:hover .am-suggestion-short { opacity: 0; } }
+@media (max-width: 600px) { .am-suggestion-dot { width: 13px; height: 13px; } .am-suggestion-short { top: calc(50% + 8px); padding: 0 4px; font-size: 9px; } }
+.am-suggestion:hover .am-suggestion-dot, .am-suggestion:focus-visible .am-suggestion-dot, .am-suggestion.is-active .am-suggestion-dot { transform: scale(1.35); }
+.am-suggestion:focus { outline: none; }
+.am-suggestion:focus-visible .am-suggestion-dot { outline: 2px solid #2f5f22; outline-offset: 2px; }
+.am-suggestion-name {
+  position: absolute; left: 50%; bottom: calc(50% + 12px); transform: translate(-50%, 4px);
+  opacity: 0; pointer-events: none; white-space: nowrap; max-width: 220px; overflow: hidden; text-overflow: ellipsis;
+  padding: 2px 9px; border-radius: 999px; background: #fffdf6; color: #2f5f22; border: 1px solid rgba(78, 138, 58, 0.45);
+  font-family: inherit; font-size: 12px; font-weight: 600; line-height: 1.3; transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.am-suggestion:focus-visible .am-suggestion-name { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: hover) { .am-suggestion:hover { z-index: 7; } .am-suggestion:hover .am-suggestion-name { opacity: 1; transform: translate(-50%, 0); } }
+@media (pointer: coarse) { .am-suggestion { width: 36px; height: 36px; } }
+
+/* כרטיס הצעה: קומפקטי, באותה שפה של am-card */
+.am-suggestion-card { max-width: 420px; }
+.am-suggestion-badge { display: inline-block; margin-bottom: 6px; padding: 2px 10px; border-radius: 999px; background: #e7f0df; color: #2f5f22; font-size: var(--fs-meta); font-weight: 600; }
+.am-suggestion-text { margin: 6px 0 10px; font-size: var(--fs-item); line-height: 1.6; color: var(--ink); white-space: pre-line; }
+.am-suggestion-meta { display: grid; grid-template-columns: max-content 1fr; gap: 3px 10px; margin: 0 0 10px; font-size: var(--fs-meta); }
+.am-suggestion-meta dt { color: var(--ink-soft); }
+.am-suggestion-meta dd { margin: 0; color: var(--ink); }
+.am-suggestion-meta dd[data-status="submitted"], .am-suggestion-meta dd[data-status="rejected"] { color: #8a5a10; }
+.am-suggestion-note { margin: 0; font-size: var(--fs-meta); color: var(--ink-soft); line-height: 1.5; }
+
+/* טופס "יש לי הצעה" */
+.am-suggest-hint { font-size: var(--fs-meta); color: var(--ink-soft); }
+.am-suggest-field-error { font-size: var(--fs-meta); color: #9b3b22; }
+.am-suggest-form [aria-invalid="true"] { border-color: #c0573a; box-shadow: 0 0 0 2px rgba(192, 87, 58, 0.18); }
+.am-suggest-pick {
+  align-self: flex-start; padding: 6px 14px; border-radius: 999px; border: 1.5px dashed #4e8a3a; background: #f3f8ee; color: #2f5f22;
+  font-family: inherit; font-size: var(--fs-btn, 13px); font-weight: 600; cursor: pointer;
+}
+.am-suggest-pick:hover { background: #e7f0df; }
+.am-suggest-place-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.am-suggest-place-set { color: #2f5f22; font-weight: 600; font-size: var(--fs-meta); }
+.am-suggest-more { margin-top: 2px; }
+
+/* מצב "לסמן מקום במפה": שכבה שקופה מעל כל המפה + הוראה קצרה למעלה */
+.am-place-picker { position: absolute; inset: 0; z-index: 20; cursor: crosshair; background: rgba(78, 138, 58, 0.06); border-radius: 12px; box-shadow: inset 0 0 0 3px rgba(78, 138, 58, 0.55); }
+.am-place-picker-hint {
+  position: absolute; left: 50%; top: 2%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px;
+  padding: 7px 8px 7px 14px; border-radius: 999px; background: #2f5f22; color: #fffdf6; font-size: 14px; font-weight: 600; cursor: default;
+  box-shadow: 0 4px 14px rgba(43, 38, 32, 0.25); white-space: nowrap;
+}
+.am-place-picker-hint button { border: 0; border-radius: 999px; padding: 4px 12px; background: #fffdf6; color: #2f5f22; font-family: inherit; font-weight: 600; cursor: pointer; }
+.am-suggestion-pick-mark {
+  position: absolute; transform: translate(-50%, -100%); z-index: 4; pointer-events: none;
+  width: 16px; height: 16px; border-radius: 50% 50% 50% 0; rotate: -45deg; background: #4e8a3a; border: 2px solid #fffdf6;
+  box-shadow: 0 2px 6px rgba(43, 38, 32, 0.3);
+}
+
+/* ===================== האיור של בעלת הפרויקט כשכבת המפה (19.10.2026) =====================
+   map-background-ref.webp הוא האיור עצמו, בלי העיגולים, המקרא והכפתורים שהיו מצוירים בו.
+   כאן כל אלה חוזרים כשכבת HTML חיה, בדיוק במקומות שבהם הם היו מצוירים (מידות באחוזים מהאיור 1273x991). */
+.am-hotspot--icon { --am-icon-d: clamp(30px, 6.3cqw, 76px); width: max(44px, calc(var(--am-icon-d) + 6px)); }
+.am-hotspot--icon .am-hotspot-icon { padding: 7%; }
+@media (hover: hover) { .am-hotspot--icon:hover .am-hotspot-icon { transform: scale(1.12); } }
+.am-hotspot--icon:focus-visible .am-hotspot-icon { transform: scale(1.12); }
+.am-map-legend { left: 1%; top: 1.5%; width: 13.8%; }
+.am-share-fab { right: 2%; top: 17.6%; font-size: clamp(11px, calc(var(--map-w, 800px) * 0.0145), 17px); }
+.am-map-stage .am-legend-dot.am-brand-button { right: 1.6% !important; top: 82.4% !important; font-size: clamp(11px, calc(var(--map-w, 800px) * 0.0165), 19px) !important; }
+@container (max-width: 420px) {
+  .am-hotspot--icon { --am-icon-d: 30px; }
+  .am-map-stage .am-legend-dot.am-brand-button { right: auto !important; top: calc(100% + 16px) !important; font-size: 13px !important; }
+}
+
+/* ===================== זום וגרירה (19.10.2026, כמו במפת באר שבע) =====================
+   .am-viewport חותך; .am-world (האיור וכל הנקודות) מקבל translate+scale מ-usePanZoom ב-anchor-map.js.
+   הנקודות מקבלות scale הפוך (--am-inv), כדי שיישארו באותו גודל על המסך בכל זום. */
+.am-viewport {
+  position: relative; overflow: hidden; border-radius: 12px; background: #f9f3e4;
+  touch-action: none; cursor: grab;
+  box-shadow: 0 1px 2px rgba(60,45,25,0.18), 0 6px 14px rgba(60,45,25,0.16), 0 18px 36px rgba(60,45,25,0.14);
+}
+.am-viewport.is-drag { cursor: grabbing; }
+.am-viewport.is-drag .am-world * { cursor: grabbing; }
+.am-world { position: relative; transform-origin: 0 0; will-change: transform; }
+.am-map-stage .am-world img.base-photo { box-shadow: none; border-radius: 0; -webkit-user-drag: none; user-select: none; }
+.am-world > .am-hotspot, .am-world > .am-secondary, .am-world > .am-suggestion, .am-world > .am-now-marker {
+  transform: translate(-50%, -50%) scale(var(--am-inv, 1));
+}
+.am-viewport .am-place-picker { border-radius: 0; }
+@media (max-width: 640px) {
+  .am-viewport { box-shadow: none; border-radius: 12px 12px 0 0; }
+  /* בטלפון המפה היא עיקר המסך (בקשת בעל הפרויקט, 19.10.2026): החלון בגובה המסך, עד פי 1.7 מגובה האיור ברוחב המסך; usePanZoom ממלא את הגובה והשאר נחשף בגרירה */
+  .am-viewport { height: min(calc(100dvh - 150px), calc((100vw - 20px) * 1.7 * 991 / 1273)); }
+}
+.am-zoom {
+  position: absolute; right: 1.6%; bottom: 1.6%; z-index: 5;
+  display: flex; flex-direction: row-reverse; gap: 4px; padding: 3px; border-radius: 10px;
+  background: rgba(255, 253, 246, 0.92); box-shadow: 0 1px 2px rgba(27, 42, 74, 0.18), 0 3px 8px rgba(27, 42, 74, 0.12);
+}
+.am-zbtn {
+  width: 30px; height: 30px; padding: 0; border: 1px solid rgba(27, 42, 74, 0.22); border-radius: 7px; background: #fffdf6; color: #1b2a4a;
+  font-family: inherit; font-size: 18px; font-weight: 600; line-height: 1; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.am-zbtn:hover:not(:disabled) { background: #f6ecd9; border-color: var(--terracotta); }
+.am-zbtn:focus-visible { outline: 2px solid #2f6fb3; outline-offset: 2px; }
+.am-zbtn:disabled { opacity: 0.4; cursor: default; }
+@media (pointer: coarse) { .am-zbtn { width: 36px; height: 36px; } }
+@container (max-width: 420px) { .am-zoom { gap: 3px; padding: 2px; } .am-zbtn { width: 30px; height: 30px; font-size: 16px; } }
+
+/* בעד / להצטרף בכרטיס הצעה שאושרה (19.10.2026, כמו בבאר שבע) */
+.am-suggestion-actions { display: flex; flex-direction: column; gap: 8px; margin: 4px 0 12px; padding: 10px 12px; border-radius: 12px; background: #f3f8ef; box-shadow: inset 0 0 0 1px rgba(78, 138, 58, 0.3); }
+.am-suggestion-counts { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; font-size: var(--fs-meta); color: #2f5f22; font-weight: 600; }
+.am-suggestion-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.am-suggestion-act {
+  min-height: 36px; padding: 6px 14px; border-radius: 999px; border: 1.5px solid #4e8a3a; background: #fffdf6; color: #2f5f22;
+  font-family: inherit; font-size: var(--fs-btn); font-weight: 600; cursor: pointer;
+}
+.am-suggestion-act[aria-pressed="true"] { background: #4e8a3a; color: #fffdf6; }
+.am-suggestion-act:disabled { opacity: 0.6; cursor: default; }
+.am-suggestion-act:focus-visible { outline: 2px solid #2f5f22; outline-offset: 2px; }
+.am-suggestion-ask { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; }
+.am-suggestion-ask label { display: flex; flex-direction: column; gap: 3px; flex: 1 1 160px; font-size: var(--fs-meta); color: var(--ink-soft); }
+/* רק לרכזת: קישור לדף האישור במקרא */
+.am-map-legend-mod { color: #8a3d1c; font-weight: 600; text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* "יש לי הצעה" בירוק של שכבת "הצעות תושבים" (בבקשת בעל הפרויקט, 19.10), כהה מעט מהנקודות
+   (#3f7a2e) כדי שהטקסט הבהיר יעמוד בניגודיות 4.5:1 */
+.am-share-fab { background: #3f7a2e; box-shadow: 0 2px 0 #2a5420, 0 4px 10px rgba(43, 38, 32, 0.24); animation-name: am-pulse-green; }
+.am-share-fab::before { color: #3f7a2e; }
+.am-share-fab:hover { background: #33652a; }
+.am-share-fab:focus-visible { outline-color: rgba(63, 122, 46, 0.45); }
+
+/* ===== חלונות בסגנון מפת באר שבע (בבקשת בעל הפרויקט, 19.10.2026) =====
+   במקום חלון קטן באמצע המסך מעל מפה מוחשכת: לוח צד גבוה בצד שמאל (כמו nm-sheet / nm-card
+   בבאר שבע), המפה נשארת גלויה, טקסט גדול וקריא, שדות גבוהים וכפתור שליחה ברוחב מלא.
+   בטלפון: גיליון שעולה מלמטה. לא חל על חלון האתר המוטמע, על גלריית "גיבורי השכונה" ועל
+   המצפן (שצריכים רוחב), שנשארים במרכז. */
+.am-scrim:has(> .am-card:not(.am-rich--site):not(.am-heroes)),
+.am-scrim:has(> .am-creators-panel:not(.is-compass)) {
+  background: rgba(43, 38, 32, 0.08); justify-content: flex-end; align-items: flex-start; padding: 16px;
+}
+.am-scrim > .am-card:not(.am-rich--site):not(.am-heroes),
+.am-scrim > .am-creators-panel:not(.is-compass) {
+  --fs-h1: 24px; --fs-h2: 22px; --fs-body: 16px; --fs-item: 16px; --fs-btn: 15px; --fs-chip: 13px; --fs-meta: 13.5px;
+  width: min(420px, 100%); max-width: min(420px, 100%); max-height: 100%; margin: 0;
+  border-radius: 22px; border: 1px solid rgba(185, 160, 108, 0.45); background: #fffdf6;
+  box-shadow: 0 18px 44px rgba(43, 38, 32, 0.22); overflow-y: auto;
+}
+.am-scrim > .am-creators-panel:not(.is-compass) { padding: 22px 20px 20px; }
+.am-scrim > .am-card:not(.am-rich--site):not(.am-heroes) .am-card-body { padding: 20px 20px 22px; }
+.am-scrim > .am-card:not(.am-rich--site):not(.am-heroes) .am-card-body.no-hero { padding-top: 58px; }
+.am-scrim > .am-card .close-btn, .am-scrim > .am-creators-panel > .close-btn {
+  top: 16px; left: 16px; width: 38px; height: 38px; font-size: 16px; border: 1.5px solid rgba(185, 160, 108, 0.6); background: #fffdf6;
+}
+.am-scrim > .am-creators-panel:not(.is-compass) .am-creators-title { text-align: right; margin: 6px 0 4px; padding-left: 46px; font-weight: 700; }
+.am-scrim > .am-creators-panel:not(.is-compass) .am-creators-sub { text-align: right; margin: 0 0 16px; line-height: 1.55; color: var(--ink-soft); }
+.am-scrim > .am-card .am-card-title { font-weight: 700; margin-bottom: 8px; }
+.am-scrim > .am-card .am-card-desc { line-height: 1.65; }
+/* טופס: תווית ברורה, שדה גבוה, כפתור שליחה ברוחב מלא */
+.am-scrim > .am-creators-panel .am-flow-form { gap: 16px; }
+.am-scrim > .am-creators-panel .am-flow-field { gap: 6px; }
+.am-scrim > .am-creators-panel .am-flow-label { font-size: 15px; }
+.am-scrim > .am-creators-panel .am-flow-input { font-size: 16px; min-height: 48px; padding: 11px 14px; border-radius: 12px; }
+.am-scrim > .am-creators-panel textarea.am-flow-input { min-height: 104px; }
+.am-scrim > .am-creators-panel .am-flow-submit, .am-scrim > .am-creators-panel .am-flow-actions .am-btn.link {
+  align-self: stretch; width: 100%; min-height: 48px; padding: 12px 20px; font-size: 16px; font-weight: 600; border-radius: 999px;
+}
+.am-scrim > .am-creators-panel .am-creators-back { font-size: 15px; padding-bottom: 12px; }
+.am-scrim > .am-creators-panel .am-creators-option { padding: 12px 14px; border-radius: 14px; }
+.am-scrim > .am-creators-panel .am-suggest-pick { font-size: 15px; padding: 9px 16px; }
+@media (max-width: 640px) {
+  .am-scrim:has(> .am-card:not(.am-rich--site):not(.am-heroes)),
+  .am-scrim:has(> .am-creators-panel:not(.is-compass)) { justify-content: center; align-items: flex-end; padding: 0; }
+  .am-scrim > .am-card:not(.am-rich--site):not(.am-heroes),
+  .am-scrim > .am-creators-panel:not(.is-compass) {
+    --fs-h1: 21px; --fs-h2: 20px; --fs-body: 16px; --fs-item: 16px; --fs-btn: 15px; --fs-chip: 13px; --fs-meta: 13px;
+    width: 100%; max-width: 100%; max-height: var(--sheet-max-h, 52vh); align-self: flex-end; border-radius: 22px 22px 0 0; border-bottom: 0;
+  }
+}
+
+/* כפתור הסגירה נשאר גלוי כשגוללים בחלון (בקשת בעל הפרויקט, 20.10.2026): sticky בתוך החלון הנגלל במקום absolute
+   (כמו ב-.am-rich). שוליים שליליים: הכפתור לא תופס מקום בפריסה ויושב באותה פינה כמו קודם -
+   --cb-t/--cb-l/--cb-h הם ה-top/left/גודל של הכפתור בכל גרסה, --pt/--pl הריפוד של החלון שמסביב. */
+/* חלון הגיבורים לא נגלל בעצמו (הגלילה בפנים) - הכפתור שם נשאר כמו שהיה */
+/* :root:root - גובר על כללי ה-top/left של הגרסאות (מפה צרה, חלון מעל רקע) */
+:root:root .am-card:not(.am-rich):not(.am-heroes) > .close-btn, :root:root .am-creators-panel > .close-btn {
+  --m: calc(var(--cb-t) - var(--pt));
+  position: sticky; top: var(--m); left: auto; /* ההיסט של sticky נמדד מתוך הריפוד */
+  margin: var(--m) auto calc(-1 * (var(--cb-h) + var(--m))) calc(var(--cb-l) - var(--pl));
+}
+.am-card { --pt: 0px; --pl: 0px; --cb-t: 12px; --cb-l: 14px; --cb-h: 30px; }
+.am-creators-panel { --pt: 16px; --pl: 18px; --cb-t: 12px; --cb-l: 14px; --cb-h: 30px; }
+@media (max-width: 640px) {
+  .am-card { --cb-t: 9px; --cb-l: 10px; --cb-h: 32px; }
+  .am-creators-panel { --pt: 12px; --pl: 14px; --cb-t: 9px; --cb-l: 10px; --cb-h: 32px; }
+}
+:root[data-map-size="s"] .am-card { --cb-t: 8px; --cb-l: 9px; --cb-h: 28px; }
+:root[data-map-size="s"] .am-creators-panel { --pt: 10px; --pl: 12px; --cb-t: 8px; --cb-l: 9px; --cb-h: 28px; }
+.am-scrim > .am-card { --cb-t: 16px; --cb-l: 16px; --cb-h: 38px; }
+.am-scrim > .am-creators-panel { --cb-t: 16px; --cb-l: 16px; --cb-h: 38px; }
+.am-scrim > .am-creators-panel:not(.is-compass) { --pt: 22px; --pl: 20px; }
+.rg-body .am-creators-panel { --cb-h: 44px; }
+
+/* ===================== המפה על כל המסך (בקשת בעל הפרויקט, 20.10.2026) =====================
+   כמו בגבעתיים וברמת גן: חלון המפה (.am-viewport) ממלא את המסך עד הקצוות, בלי מסגרת, צל ושוליים.
+   usePanZoom מתאים את האיור לגובה (במסך שוכב) או ממלא עד פי 1.7 (בטלפון), והשאר נחשף בגרירה.
+   המקרא הצר נשאר משמאל (מתחת לכפתורי השיתוף וההתקנה), והכפתורים שהיו מתחת למפה בטלפון עולים עליה, למטה. */
+body:has(> #root > .am-app) { overflow: hidden; }
+.am-app { position: fixed; inset: 0; min-height: 0; padding: 0; display: block; }
+.am-app > .am-map-stage { max-width: none; width: 100%; height: 100%; }
+.am-app .am-viewport { position: absolute; inset: 0; height: auto; border-radius: 0; box-shadow: none; }
+.am-app .am-map-stage::before { display: none; }
+.am-app .am-map-legend { left: 12px; top: 62px; width: clamp(96px, 13.8%, 190px); }
+.am-app .am-zoom { right: 12px; bottom: 12px; }
+/* "יש לי הצעה" כשאין לו מקום ליד הכותרת (טלפון): בפס שעל המפה למטה, משמאל ל"עושים קהילה" */
+:root[data-share-dock="bar"] .am-app .am-share-fab { right: auto; left: 12px; top: auto; bottom: 14px; font-size: 13px; min-height: 40px; }
+@container (max-width: 420px) {
+  .am-app .am-map-stage .am-legend-dot.am-brand-button { right: auto !important; left: 50% !important; top: auto !important; bottom: 14px !important; transform: translateX(-50%) !important; font-size: 14px !important; min-height: 40px !important; }
+  .am-app .am-zoom { bottom: 64px; }
+}
+@media (max-width: 640px) {
+  .am-app .am-viewport { height: auto; }
 }
 
 </style>
@@ -1902,44 +2255,68 @@ svg.leaflet-image-layer.leaflet-interactive path {
   --rg-paper: #fcf8ee; --rg-card: #fffdf8; --rg-line: rgba(16,41,74,0.11);
   --rg-font: "Rubik", "Heebo", "Assistant", Arial, sans-serif;
 }
-.rg-body { background: var(--rg-paper); color: var(--rg-ink); margin: 0; font-family: var(--rg-font); overflow-x: hidden; }
+.rg-body { background: var(--rg-paper); color: var(--rg-ink); margin: 0; font-family: var(--rg-font); overflow: hidden; }
 .rg-loading { padding: 40px; text-align: center; }
-.rg-app {
-  display: grid; grid-template-columns: minmax(0, 1fr) clamp(220px, 19vw, 270px);
-  grid-template-areas: "map panel" "events events";
-  gap: 16px 22px; max-width: 1440px; margin: 0 auto; padding: 22px 26px 26px; box-sizing: border-box;
-}
+/* המפה ממלאת את כל המסך, עד הקצוות (בקשת בעל הפרויקט, 20.10.2026). הכותרת, החיפוש, המקרא, בורר הסגנון
+   ופס הפעולות צפים מעליה */
+.rg-app { position: fixed; inset: 0; overflow: hidden; }
 .rg-app *, .rg-app *::before, .rg-app *::after { box-sizing: border-box; }
 .rg-icon { width: 22px; height: 22px; flex: none; display: block; }
 .rg-chev { width: 16px; height: 16px; color: var(--rg-ink); opacity: 0.8; }
 
-/* ---- כותרת ---- */
-.rg-head { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 4px 6px 10px; }
-.rg-title { margin: 0; font-size: clamp(30px, 2.8vw, 42px); font-weight: 800; line-height: 1; color: var(--rg-navy); letter-spacing: -0.5px; }
-.rg-title-stroke { width: clamp(110px, 10vw, 150px); height: 9px; color: var(--rg-green); margin: 2px 0 8px; }
-.rg-tagline { font-size: clamp(14px, 1.1vw, 16px); color: var(--rg-ink); }
-.rg-proto { margin-top: 8px; font-size: 12px; font-weight: 500; color: #8a4b12; background: #fbe9cf; border-radius: 999px; padding: 2px 10px; }
+/* ---- למעלה מימין: כותרת קומפקטית, ומתחתיה חיפוש וסינון ---- */
+.rg-top { position: absolute; top: 12px; right: 12px; z-index: 20; width: min(340px, calc(100vw - 200px)); display: flex; flex-direction: column; align-items: stretch; gap: 8px; pointer-events: none; }
+.rg-top > * { pointer-events: auto; }
+.rg-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; padding: 8px 16px 9px; background: rgba(255,253,248,0.94); border-radius: 22px; box-shadow: 0 4px 16px rgba(16,41,74,0.12); }
+.rg-title { margin: 0; font-size: 26px; font-weight: 800; line-height: 1.05; color: var(--rg-navy); letter-spacing: -0.4px; }
+.rg-tagline { font-size: 14px; color: var(--rg-ink); }
+.rg-proto { flex-basis: 100%; width: fit-content; font-size: 11.5px; font-weight: 500; color: #8a4b12; background: #fbe9cf; border-radius: 999px; padding: 1px 9px; margin-top: 3px; }
 
-/* ---- פאנל: שכבות ושיתוף ---- */
-.rg-panel { grid-area: panel; display: flex; flex-direction: column; gap: 14px; align-self: start; }
-.rg-layers { display: flex; flex-direction: column; gap: 8px; }
+/* ---- המקרא: פס צר של אייקונים בצד שמאל, מעל המפה. לחיצה על הכותרת פותחת שמות, הסברים והערת המפה ---- */
+.rg-panel { position: absolute; top: 64px; left: 12px; z-index: 22; width: 60px; max-height: calc(100% - 170px); overflow-y: auto; overflow-x: hidden;
+  display: flex; flex-direction: column; gap: 6px; padding: 6px; background: rgba(255,253,248,0.95); border-radius: 22px; box-shadow: 0 6px 22px rgba(16,41,74,0.16); transition: width 0.18s ease; scrollbar-width: thin; }
+.rg-panel.is-open { width: 270px; padding: 8px 10px 10px; }
+.rg-legend-toggle { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 44px; padding: 0; border: 0; border-radius: 14px; background: none; font: inherit; font-size: 15px; font-weight: 700; color: var(--rg-ink); cursor: pointer; }
+.rg-legend-toggle:focus-visible { outline: 2px solid var(--rg-navy); outline-offset: 1px; }
+.rg-legend-title, .rg-legend-chev { display: none; }
+.rg-panel.is-open .rg-legend-toggle { justify-content: flex-start; padding-inline: 4px; }
+.rg-panel.is-open .rg-legend-title { display: inline; flex: 1 1 auto; text-align: right; }
+.rg-panel.is-open .rg-legend-chev { display: inline; font-size: 22px; line-height: 1; color: var(--rg-ink-soft); }
+.rg-layers { display: flex; flex-direction: column; gap: 6px; }
 .rg-layer {
-  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 52px; padding: 6px 8px; border: 2px solid transparent; border-radius: 999px;
+  display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; min-height: 48px; padding: 3px; border: 2px solid transparent; border-radius: 999px;
   background: color-mix(in srgb, var(--c) 11%, #fffdf8); font: inherit; color: var(--rg-ink); cursor: pointer; text-align: right;
-  box-shadow: 0 2px 10px rgba(16,41,74,0.06); transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  transition: box-shadow 0.12s ease, border-color 0.12s ease;
 }
-.rg-layer:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(16,41,74,0.1); }
+.rg-panel.is-open .rg-layer { justify-content: flex-start; padding: 4px 6px; }
+.rg-layer:hover { box-shadow: 0 4px 12px rgba(16,41,74,0.12); }
 .rg-layer:focus-visible { outline: 3px solid var(--c); outline-offset: 2px; }
-.rg-layer[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 18%, #fffdf8); }
+.rg-layer[aria-pressed="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 22%, #fffdf8); }
 .rg-layer-dot { width: 38px; height: 38px; border-radius: 50%; background: var(--c); color: #fff; flex: none; display: inline-flex; align-items: center; justify-content: center; }
 .rg-layer-dot .rg-icon { width: 21px; height: 21px; }
-.rg-layer-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
-.rg-layer-label { font-size: 16px; font-weight: 700; line-height: 1.15; color: var(--rg-ink); }
+.rg-layer-text { display: none; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
+.rg-panel.is-open .rg-layer-text { display: flex; }
+.rg-layer-label { font-size: 15.5px; font-weight: 700; line-height: 1.15; color: var(--rg-ink); }
 .rg-layer-sub { font-size: 12px; color: var(--rg-ink-soft); }
-.rg-dir-link { align-self: flex-start; }
+.rg-maplabel { display: none; margin: 4px 2px 0; padding-top: 8px; border-top: 1px solid var(--rg-line); font-size: 11px; line-height: 1.5; color: var(--rg-ink-soft); }
+.rg-panel.is-open .rg-maplabel { display: block; }
+
+/* ---- למטה, על המפה: "יש לי משהו להציע", "מה קורה בעיר?" וקישור לשכבה הפעילה ---- */
+.rg-dock { position: absolute; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 18; width: min(1100px, calc(100vw - 24px));
+  display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; }
+.rg-dock > * { pointer-events: auto; }
+.rg-dock-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; pointer-events: none; }
+.rg-dock-row > * { pointer-events: auto; }
+.rg-chip { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 16px 4px 6px; border-radius: 999px; border: 1px solid var(--rg-line); background: rgba(255,253,248,0.97);
+  font: inherit; font-size: 15px; font-weight: 600; color: var(--rg-ink); cursor: pointer; box-shadow: 0 4px 14px rgba(16,41,74,0.16); white-space: nowrap; }
+.rg-chip.rg-dir-link { padding-inline: 16px; }
+.rg-chip:hover { background: #fff; }
+.rg-chip:focus-visible { outline: 3px solid var(--rg-navy); outline-offset: 2px; }
+.rg-chip-dot { width: 32px; height: 32px; border-radius: 50%; background: #1f6bd0; color: #fff; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.rg-chip-dot .rg-icon { width: 18px; height: 18px; }
 .rg-share {
   /* כפתור קומפקטי ברוחב התוכן, לא לכל רוחב העמודה */
-  display: inline-flex; align-items: center; gap: 9px; width: fit-content; max-width: 100%; align-self: flex-start; justify-self: start;
+  display: inline-flex; align-items: center; gap: 9px; width: fit-content; max-width: 100%;
   min-height: 48px; padding: 5px 6px 5px 18px; border-radius: 999px; border: 0;
   background: var(--rg-navy); color: #fffdf6; font: inherit; cursor: pointer; text-align: right; box-shadow: 0 10px 22px rgba(15,42,79,0.28);
 }
@@ -1953,20 +2330,18 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rg-share-sub { font-size: 11.5px; opacity: 0.85; }
 .rg-share.is-unavailable { background: #3b5172; box-shadow: none; }
 .rg-share .rg-chev { display: none; }
-/* על המפה, בצד ימין שלה (ליד בר-אילן), לא בעמודת השכבות */
-.rg-figure > .rg-share { position: absolute; top: 44%; inset-inline-start: 18px; z-index: 6; }
 .rg-share-closed { font-size: 13px; color: var(--rg-ink-soft); background: var(--rg-card); border-radius: 18px; padding: 10px 14px; }
 
 /* ---- המפה: Leaflet עם אריחי OpenStreetMap, בפינות מעוגלות ---- */
-.rg-figure { grid-area: map; margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; position: relative; }
+.rg-figure { position: absolute; inset: 0; margin: 0; }
 /* isolation: שכבות ה-z-index של Leaflet נשארות בתוך המפה, מתחת לחיפוש ולחלונות */
-.rg-stage { position: relative; width: 100%; max-width: 100%; height: clamp(420px, calc(100vh - 290px), 760px); overflow: hidden; isolation: isolate;
-  border-radius: 26px; border: 1px solid var(--rg-line); box-shadow: 0 6px 22px rgba(16,41,74,0.08); background: #efe9da; }
+.rg-stage { position: absolute; inset: 0; overflow: hidden; isolation: isolate; background: #efe9da; }
 .rg-leaflet { position: absolute; inset: 0; z-index: 0; background: #efe9da; font-family: var(--rg-font); }
 /* האריחים בגוונים שקטים, כדי שהנקודות הצבעוניות יבלטו */
 .rg-leaflet .leaflet-tile-pane { filter: grayscale(0.75) sepia(0.12) brightness(1.04) contrast(0.92); }
 .rg-leaflet .leaflet-control-zoom a { width: 44px; height: 44px; line-height: 44px; font-size: 20px; color: var(--rg-ink); }
 .rg-leaflet .leaflet-control-zoom { border: 1px solid var(--rg-line); border-radius: 14px; overflow: hidden; box-shadow: 0 3px 12px rgba(16,41,74,0.12); }
+.rg-leaflet .leaflet-bottom.leaflet-left { bottom: 4px; }
 .rg-leaflet .leaflet-control-attribution { font-size: 10.5px; background: rgba(252,248,238,0.85); border-radius: 8px 0 0 0; }
 .rg-hood-label { pointer-events: none; }
 .rg-hood-label span { position: absolute; transform: translate(-50%, -50%); white-space: nowrap; font-size: 12px; font-weight: 600; color: #2c5a3a; letter-spacing: 0.2px;
@@ -2001,7 +2376,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rg-stage.has-layer .rg-hood-label span { opacity: 0.55; }
 .rg-stage.has-layer .rg-landmark-cap { display: none; }
 /* בחירת סגנון המפה: מאוירת / מפורטת */
-.rg-style-toggle { position: absolute; top: 12px; left: 12px; z-index: 4; display: flex; background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: 999px; padding: 3px; box-shadow: 0 3px 12px rgba(16,41,74,0.1); }
+.rg-style-toggle { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 20; display: flex; background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: 999px; padding: 3px; box-shadow: 0 3px 12px rgba(16,41,74,0.1); }
 .rg-style-toggle button { min-height: 44px; min-width: 76px; padding: 4px 14px; border: 0; border-radius: 999px; background: none; font: inherit; font-size: 14px; color: var(--rg-ink); cursor: pointer; }
 .rg-style-toggle button.is-on { background: var(--rg-navy); color: #fff; font-weight: 600; }
 .rg-style-toggle button:focus-visible { outline: 2px solid var(--rg-navy); outline-offset: 2px; }
@@ -2011,11 +2386,10 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rg-stage.is-moving .rg-overlay { opacity: 0; transition: none; }
 .rg-stage.is-moving .rg-overlay .rg-pt { pointer-events: none; }
 .rg-hint { z-index: 3; pointer-events: none; }
-.rg-maplabel { font-size: 12px; color: var(--rg-ink-soft); text-align: center; }
-.rg-hint { position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%); background: rgba(255,253,248,0.95); border-radius: 999px; padding: 7px 16px; font-size: 14px; color: var(--rg-ink); box-shadow: 0 4px 14px rgba(16,41,74,0.14); white-space: nowrap; }
+.rg-hint { position: absolute; left: 50%; bottom: 84px; transform: translateX(-50%); background: rgba(255,253,248,0.95); border-radius: 999px; padding: 7px 16px; font-size: 14px; color: var(--rg-ink); box-shadow: 0 4px 14px rgba(16,41,74,0.14); white-space: nowrap; }
 
 /* חיפוש וסינון: גלולות בפינה העליונה של המפה (בצד ימין), כמו בסקיצה */
-.rg-tools { position: absolute; top: 12px; inset-inline-start: 12px; z-index: 5; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; width: min(330px, 46%); }
+.rg-tools { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; width: 100%; }
 .rg-search { position: relative; width: 100%; }
 .rg-search-icon { position: absolute; top: 50%; inset-inline-end: 16px; transform: translateY(-50%); color: var(--rg-ink); pointer-events: none; }
 .rg-search-input { width: 100%; min-height: 52px; padding: 8px 20px 8px 50px; border-radius: 999px; border: 1px solid var(--rg-line); background: var(--rg-card); font: inherit; font-size: 16px; color: var(--rg-ink); box-shadow: 0 3px 12px rgba(16,41,74,0.08); }
@@ -2053,7 +2427,9 @@ svg.leaflet-image-layer.leaflet-interactive path {
 @media (prefers-reduced-motion: reduce) { .rg-layer, .rg-pt-dot, .rg-overlay { transition: none; } }
 
 /* ---- "מה קורה בעיר?" ---- */
-.rg-events { grid-area: events; min-width: 0; background: var(--rg-card); border: 1px solid var(--rg-line); border-radius: 26px; padding: 16px 20px 18px; box-shadow: 0 6px 22px rgba(16,41,74,0.06); }
+.rg-events { position: relative; width: 100%; min-width: 0; background: rgba(255,253,248,0.97); border: 1px solid var(--rg-line); border-radius: 24px; padding: 12px 18px 14px; box-shadow: 0 10px 30px rgba(16,41,74,0.2); }
+.rg-events-close { position: absolute; top: 8px; left: 8px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rg-line); background: #fff; font: inherit; font-size: 24px; line-height: 1; color: var(--rg-ink); cursor: pointer; }
+.rg-events-close:focus-visible { outline: 2px solid var(--rg-navy); outline-offset: 2px; }
 .rg-events-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 26px; margin-bottom: 12px; }
 .rg-events-title { margin: 0; font-size: 24px; font-weight: 700; color: var(--rg-ink); }
 .rg-events-sub { font-size: 14px; color: var(--rg-ink-soft); }
@@ -2062,6 +2438,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rg-tab.is-active { background: var(--rg-navy); color: #fff; font-weight: 600; }
 .rg-tab:focus-visible { outline: 2px solid var(--rg-navy); outline-offset: 2px; }
 .rg-showall { margin-inline-start: auto; color: #1f6bd0; }
+.rg-events-head { margin-bottom: 8px; padding-inline-end: 50px; }
+.rg-events-title { font-size: 21px; }
 .rg-ev-wrap { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .rg-ev-row { display: flex; gap: 12px; overflow-x: auto; padding: 2px 2px 4px; scroll-snap-type: x proximity; flex: 1 1 auto; min-width: 0; scrollbar-width: thin; }
 .rg-ev { flex: 0 0 clamp(250px, 21vw, 290px); scroll-snap-align: start; display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 16px; border: 1px solid var(--rg-line); background: #fff; font: inherit; color: var(--rg-ink); text-align: right; cursor: pointer; }
@@ -2114,37 +2492,50 @@ svg.leaflet-image-layer.leaflet-interactive path {
 /* הקישור "לכל מה שקורה בקהילה" מוביל לעמוד הקהילה של ארמון הנציב - מוסתר כאן */
 .rg-body .am-now-community { display: none; }
 
-/* ---- טלפון ---- */
+@media (max-height: 560px) {
+  .rg-events { padding: 8px 12px 10px; max-height: 46dvh; overflow-y: auto; }
+  .rg-events-sub { display: none; }
+  .rg-ev-thumb { width: 56px; height: 48px; }
+}
+
+/* ---- טלפון: גם כאן המפה על כל המסך. למעלה כותרת קצרה (מימין) וכפתורי ההתקנה והשיתוף (משמאל),
+   מתחתיהם חיפוש וסינון בשורה אחת; פס המקרא משמאל, בורר הסגנון מימין, ופס הפעולות למטה ---- */
 @media (max-width: 760px) {
-  /* בטלפון המפה עולה מיד אחרי השכבות; כפתור השיתוף אחריה (הפאנל "נפתח" לתוך הרשת) */
-  .rg-app { grid-template-columns: minmax(0, 1fr); grid-template-areas: none; padding: 14px 16px 22px; gap: 12px; }
-  .rg-panel { display: contents; }
-  .rg-head { order: 1; }
-  .rg-layers { order: 2; }
-  .rg-dir-link { order: 3; }
-  .rg-figure { order: 4; grid-area: auto; }
-  .rg-figure > .rg-share { position: static; order: 5; margin-top: 6px; }
-  .rg-events { order: 6; grid-area: auto; }
-  .rg-head { padding: 0; }
-  .rg-title { font-size: 32px; }
-  .rg-layers { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .rg-layer { min-height: 46px; padding: 4px 6px; gap: 8px; border-radius: 16px; }
-  .rg-layer-dot { width: 32px; height: 32px; }
-  .rg-layer-dot .rg-icon { width: 18px; height: 18px; }
-  .rg-layer-sub, .rg-layer .rg-chev { display: none; }
-  .rg-layer-label { font-size: 14.5px; }
-  .rg-share { min-height: 46px; }
+  .rg-top { top: 8px; right: 8px; left: 8px; width: auto; gap: 6px; }
+  .rg-head { padding: 4px 12px 5px; margin-inline-end: 110px; gap: 0 8px; border-radius: 16px; width: fit-content; } /* מקום לכפתורי ההתקנה והשיתוף בפינה */
+  .rg-title { font-size: 20px; }
+  .rg-tagline { display: none; }
+  .rg-proto { flex-basis: auto; margin-top: 0; font-size: 10.5px; padding: 0 7px; }
+  .rg-tools { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 6px; }
+  .rg-search { flex: 1 1 auto; min-width: 0; }
+  .rg-search-input { min-height: 42px; padding: 6px 14px 6px 40px; font-size: 16px; }
+  .rg-search-icon { inset-inline-end: 12px; }
+  .rg-filter-btn { flex: none; align-self: auto; min-height: 42px; padding: 4px 12px; gap: 6px; }
+  .rg-filter-text, .rg-filter-btn .rg-chev { display: none; }
+  .rg-filter-summary { position: absolute; top: calc(100% + 4px); right: 0; }
+  .rg-panel { top: 112px; left: 8px; width: 54px; padding: 4px; gap: 4px; border-radius: 18px; max-height: calc(100% - 210px); }
+  .rg-panel.is-open { width: min(270px, calc(100vw - 16px)); }
+  .rg-layer { min-height: 44px; padding: 2px; }
+  .rg-layer-dot { width: 36px; height: 36px; }
+  .rg-style-toggle { top: 112px; left: auto; right: 8px; transform: none; padding: 2px; }
+  .rg-style-toggle button { min-width: 64px; padding: 4px 10px; font-size: 13.5px; }
+  .rg-dock { bottom: max(10px, env(safe-area-inset-bottom)); width: calc(100vw - 16px); gap: 8px; }
+  .rg-dock-row { gap: 6px; }
+  .rg-share { min-height: 46px; padding: 4px 4px 4px 14px; }
   .rg-share-plus { width: 34px; height: 34px; }
-  .rg-tools { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; }
-  .rg-search { flex: 1 1 100%; }
-  .rg-filter-btn { align-self: auto; }
+  .rg-share-title { font-size: 14.5px; }
+  .rg-share-sub { font-size: 10.5px; }
+  .rg-chip { min-height: 46px; font-size: 14px; padding: 4px 12px 4px 5px; }
+  .rg-chip-dot { width: 30px; height: 30px; }
+  .rg-hint { bottom: 72px; font-size: 13px; }
+  .rg-leaflet .leaflet-bottom.leaflet-left { bottom: 62px; }
   .rg-pt-label { font-size: 11.5px; padding: 2px 7px; }
-  .rg-stage { height: clamp(360px, 62vh, 560px); border-radius: 20px; }
-  .rg-events { padding: 14px 14px 16px; border-radius: 20px; }
-  .rg-tab { min-width: 0; padding: 6px 14px; }
-  .rg-showall { margin-inline-start: 0; }
+  .rg-events { padding: 10px 12px 12px; border-radius: 20px; max-height: 40dvh; overflow-y: auto; }
+  .rg-events-head { gap: 8px 12px; }
+  .rg-events-sub { display: none; }
+  .rg-tab { min-width: 0; padding: 6px 12px; }
   .rg-ev-next { display: none; }
-  .rg-ev { flex-basis: 260px; }
+  .rg-ev { flex-basis: 250px; }
 }
 
 /* ---- "ממתין לאימות" ---- */
@@ -2163,6 +2554,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rg-ci-flash.is-error { background: #fde8e2; }
 .rg-showonmap { min-height: 44px; margin-top: 10px; }
 
+/* עמוד סטטי: המפה על כל המסך, ולכן הפס העליון מוסתר - התווית "אב-טיפוס בפיתוח · כל התוכן לדוגמה ולא אומת" נמצאת בכותרת שעל המפה */
+.rg-preview-bar { display: none; }
 .rg-preview-bar { direction: rtl; font-family: "Rubik", Arial, sans-serif; background: #0f2a4f; color: #fffdf7; font-size: 13px; line-height: 1.5; padding: 8px 16px; text-align: center; }
 .rgp-form { display: grid; gap: 12px; }
 .rgp-kinds { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -2209,7 +2602,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 // כל שדה בכרטיס מגיע מ-/api/entities/:id (genially.db).
 
 const h = React.createElement;
-const { useState, useEffect, useCallback } = React;
+const { useState, useEffect, useCallback } = React; // useRef: React.useRef (ramat-gan.js, שנטען אחרי הקובץ הזה, מגדיר useRef משלו)
 
 function useFetch(url, deps) {
   const [data, setData] = useState(null);
@@ -2298,13 +2691,126 @@ const MAP_LEGEND_ITEMS = [
 /** הנקודה המהבהבת מעל "עושים קהילה" (מיקום ב-CSS, .am-legend-dot) פותחת רק את מסע
  *  היוצרים/היוזמות הקיים (CreatorsGatePanel), לא את מקרא המפה. */
 
-/** מסגרת התצוגה: כל הקואורדינטות (mapX/mapY) נשארות באחוזים מהאיור המקורי
- *  1223x1286 - לא משתנות. הבמה מציגה רק את החלק שבו נמצאת השכונה
- *  (x 14..1210, y 30..1120 בפיקסלים של המסגרת המקורית), כך שהמפה גדולה יותר
- *  בחלון; בתחתית רצועה לקו-הרקיע, ל"עושים קהילה" ולכפתור השיתוף. stageX/stageY ממירים אחוז-מסגרת לאחוז-במה (תצוגה בלבד). */
-const MAP_FRAME = { x0: 14, y0: 30, w: 1196, h: 1090, ow: 1223, oh: 1286 };
-const stageX = (x) => ((x / 100) * MAP_FRAME.ow - MAP_FRAME.x0) / MAP_FRAME.w * 100;
-const stageY = (y) => ((y / 100) * MAP_FRAME.oh - MAP_FRAME.y0) / MAP_FRAME.h * 100;
+/** הבמה = האיור של בעלת הפרויקט (map-background-ref.webp, 1273x991, 19.10.2026 - ראו
+ *  tools/gen_ref_background.py). הקואורדינטות השמורות (mapX/mapY) לא משתנות: הן נשארות באחוזים
+ *  מהאיור המקורי 1223x1286. stageX/stageY ממירים אותן לאחוז-במה בהתאמה ליניארית, שחושבה מ-12 העוגנים
+ *  (סטייה מרבית ~2% מהבמה). העוגנים עצמם יושבים בדיוק על העיגולים שבאיור (ANCHOR_STAGE_POS). תצוגה בלבד. */
+const STAGE_FIT = { ax: 0.96035, bx: -3.8049, ay: 1.17291, by: -1.766 };
+const stageX = (x) => STAGE_FIT.ax * x + STAGE_FIT.bx;
+const stageY = (y) => STAGE_FIT.ay * y + STAGE_FIT.by;
+/** ההפך: אחוז-במה (מקום הלחיצה) → אחוז-מסגרת, כדי שמיקום הצעה יישמר באותה מערכת כמו כל הנקודות */
+const frameX = (sx) => (sx - STAGE_FIT.bx) / STAGE_FIT.ax;
+const frameY = (sy) => (sy - STAGE_FIT.by) / STAGE_FIT.ay;
+/** מקום כל עוגן על הבמה (אחוזים), לפי מרכזי העיגולים באיור של בעלת הפרויקט. תצוגה בלבד, לפי title. */
+const ANCHOR_STAGE_POS = {
+  'חוות הלימוד': [21.3, 28.0], 'הטיילת': [33.6, 22.2], 'פארק הדרקונים': [34.1, 36.3],
+  'המרכז המסחרי': [45.2, 38.7], 'ארמון הנציב': [54.4, 25.4], 'פסל הסובלנות': [67.9, 41.0],
+  'גינת אדם': [21.4, 46.1], 'מצפתל': [85.4, 54.3], 'אמת המים': [35.9, 57.5],
+  'מינהל קהילתי תלפיות מזרח': [65.5, 60.1], 'מרכז הספורט': [52.1, 71.3], 'עמק הזיתים': [10.7, 77.9],
+};
+const anchorStyle = (title, x, y) => {
+  const pos = ANCHOR_STAGE_POS[title];
+  return pos ? { left: pos[0] + '%', top: pos[1] + '%' } : { left: stageX(x) + '%', top: stageY(y) + '%' };
+};
+
+/** זום וגרירה במפה (מחליף את useMapZoom מ-PR #55, שנבנה על המבנה הקודם של הבמה) - אותה התנהגות כמו במפת באר שבע (neighborhood-map.js): כפתורי +/−/מרכוז, גלגלת,
+ *  צביטה בשתי אצבעות, וגרירה בכל רמת זום - גם כשהגרירה מתחילה על כפתור (לחיצה בלי תזוזה עדיין פותחת אותו).
+ *  הכל קורה בשכבה אחת (.am-world) שעליה האיור וכל הנקודות; המקרא, הכפתורים והחלונות לא זזים.
+ *  הנקודות נשארות באותו גודל על המסך בכל זום (--am-inv ב-CSS). מצב הזום לא נשמר - כל טעינה מתחילה מהמפה המלאה. */
+const ZOOM_MIN = 1, ZOOM_MAX = 2.8;
+function usePanZoom() {
+  const viewportRef = React.useRef(null), worldRef = React.useRef(null);
+  const st = React.useRef({ z: 1, x: 0, y: 0, min: 1, fit: true });
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const apply = useCallback(() => {
+    const vp = viewportRef.current, w = worldRef.current;
+    if (!vp || !w) return;
+    const W = vp.clientWidth, H = vp.clientHeight, s = st.current;
+    // המפה ממלאת את כל המסך (20.10.2026). במסך שוכב האיור כולו נכנס (לפי הגובה), והשוליים בצבע הנייר של האיור;
+    // במסך עומד (טלפון) הזום המינימלי ממלא יותר מהגובה - עד פי 1.7 מהאיור ברוחב המסך, כמו קודם - והשאר נחשף בגרירה
+    const ww = w.offsetWidth || W, wh = w.offsetHeight || H;
+    const contain = Math.min(W / ww, H / wh), cover = Math.max(W / ww, H / wh);
+    s.min = W >= H ? contain : Math.min(cover, contain * 1.7);
+    if (s.fit) { s.z = s.min; s.x = (W - ww * s.z) / 2; s.y = (H - wh * s.z) / 2; } // מתחילים ממרכז השכונה
+    else s.z = Math.min(s.min * ZOOM_MAX, Math.max(s.min, s.z));
+    // גבולות הגרירה: עד קצה האיור, ועוד רבע מהשטח כדי שהגרירה תורגש גם במפה המלאה (כמו בבאר שבע)
+    const sx = W * 0.25, sy = H * 0.25;
+    s.x = Math.min(sx, Math.max(W - ww * s.z - sx, s.x));
+    s.y = Math.min(sy, Math.max(H - wh * s.z - sy, s.y));
+    w.style.transform = `translate(${s.x}px, ${s.y}px) scale(${s.z})`;
+    vp.style.setProperty('--am-inv', String(1 / s.z));
+  }, []);
+  const zoomBy = useCallback((k, cx, cy) => {
+    const vp = viewportRef.current;
+    if (!vp) return;
+    const s = st.current, r = vp.getBoundingClientRect();
+    const z1 = Math.min(s.min * ZOOM_MAX, Math.max(s.min, s.z * k));
+    if (z1 === s.z) return;
+    s.fit = false;
+    const px = (cx == null ? r.left + r.width / 2 : cx) - r.left, py = (cy == null ? r.top + r.height / 2 : cy) - r.top;
+    s.x = px - (px - s.x) * (z1 / s.z);
+    s.y = py - (py - s.y) * (z1 / s.z);
+    s.z = z1;
+    apply();
+    setZoomLevel(z1 / s.min);
+  }, [apply]);
+  const recenter = useCallback(() => { st.current.fit = true; apply(); setZoomLevel(1); }, [apply]);
+  useEffect(() => {
+    const vp = viewportRef.current;
+    if (!vp) return undefined;
+    const pts = new Map();
+    let last = null, pinch = null, dragged = false, start = null;
+    const down = (e) => {
+      if (e.button) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      last = { x: e.clientX, y: e.clientY };
+      if (pts.size === 1) { start = last; dragged = false; }
+      if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y), z: st.current.z }; dragged = true; }
+    };
+    const move = (e) => {
+      if (!pts.has(e.pointerId)) return;
+      pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pts.size === 2 && pinch) {
+        const [a, b] = [...pts.values()];
+        zoomBy((pinch.z * (Math.hypot(a.x - b.x, a.y - b.y) / pinch.d)) / st.current.z, (a.x + b.x) / 2, (a.y + b.y) / 2);
+        return;
+      }
+      if (pts.size === 1 && last) {
+        if (!dragged) {
+          if (Math.abs(e.clientX - start.x) + Math.abs(e.clientY - start.y) < 6) return; // רעד קטן בלחיצה אינו גרירה
+          dragged = true; vp.classList.add('is-drag');
+          if (!vp.hasPointerCapture(e.pointerId)) vp.setPointerCapture(e.pointerId);
+        }
+        st.current.fit = false;
+        st.current.x += e.clientX - last.x; st.current.y += e.clientY - last.y;
+        last = { x: e.clientX, y: e.clientY };
+        apply();
+      }
+    };
+    // אחרי גרירה - הלחיצה שבסופה לא פותחת כפתור ולא קובעת מקום להצעה
+    const click = (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); } dragged = false; };
+    const end = (e) => { pts.delete(e.pointerId); if (pts.size < 2) pinch = null; if (!pts.size) { last = null; vp.classList.remove('is-drag'); } };
+    const wheel = (e) => {
+      if (e.deltaY > 0 && st.current.z <= st.current.min) return; // במפה המלאה גלילה למטה נשארת גלילה של העמוד
+      e.preventDefault();
+      zoomBy(e.deltaY < 0 ? 1.12 : 1 / 1.12, e.clientX, e.clientY);
+    };
+    vp.addEventListener('pointerdown', down);
+    vp.addEventListener('pointermove', move);
+    vp.addEventListener('click', click, true);
+    vp.addEventListener('pointerup', end);
+    vp.addEventListener('pointercancel', end);
+    vp.addEventListener('wheel', wheel, { passive: false });
+    const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(apply) : null;
+    if (ro) { ro.observe(vp); if (worldRef.current) ro.observe(worldRef.current); } // האיור נטען אחרי החלון
+    return () => {
+      vp.removeEventListener('pointerdown', down); vp.removeEventListener('pointermove', move); vp.removeEventListener('click', click, true);
+      vp.removeEventListener('pointerup', end); vp.removeEventListener('pointercancel', end); vp.removeEventListener('wheel', wheel);
+      if (ro) ro.disconnect();
+    };
+  }, [apply, zoomBy]);
+  return { viewportRef, worldRef, zoomBy, recenter, zoomLevel };
+}
 
 /** כל הפעולות של "עושים קהילה" - מקור אחד לרשימה ולמצפן. פעילות רק אלה שיש
  *  מאחוריהן משהו אמיתי (action): "מוסיפים סיפור למפה" (הטופס הקיים, ראו
@@ -3618,7 +4124,7 @@ function NowItemDetail({ item, today, onBack }) {
   );
 }
 
-function NowPanel({ data, initialTab, initialItemId, onClose, onFocusItem }) {
+function NowPanel({ data, initialTab, initialItemId, onClose, onFocusItem, onShare }) {
   const [tab, setTab] = useState(initialTab || 'today');
   const [activeId, setActiveId] = useState(initialItemId || null);
   useEffect(() => { setTab(initialTab || 'today'); setActiveId(initialItemId || null); }, [initialTab, initialItemId]);
@@ -3665,6 +4171,11 @@ function NowPanel({ data, initialTab, initialItemId, onClose, onFocusItem }) {
                   })
                 ),
             hasDemo ? h('div', { className: 'am-now-note' }, 'פריטים המסומנים "דוגמה" הם תוכן הדגמה - לא מאומת') : null,
+            // שיתוף מתושבים: הצעה לזמן מוגבל (אוכל, מסירה, הטבה), אירוע ושאר הדרכים
+            onShare ? h('button', { type: 'button', className: 'am-now-share', 'data-action': 'now-share', onClick: onShare },
+              h('span', { className: 'am-now-share-plus', 'aria-hidden': 'true' }, '+'),
+              h('span', null, h('span', { className: 'am-now-share-title' }, 'יש לי משהו לשתף'),
+                h('span', { className: 'am-now-share-sub' }, 'אוכל שנשאר, משהו למסירה, הטבה או אירוע'))) : null,
             // קישור שקט לעמוד "מה קורה בקהילה" (/community) - לא פריט ולא כפתור של הרשימה
             h('a', { className: 'am-now-community', href: '/community' }, 'לכל מה שקורה בקהילה ←')
           )
@@ -3952,6 +4463,18 @@ const SHARE_OPTIONS = [
     fields: [{ key: 'body', label: 'מה תרצו לכתוב?', area: true, required: true, max: 2000 }] },
 ];
 
+/** "יש לי משהו להציע עכשיו": אוכל שנשאר, חפץ למסירה, הטבה לזמן מוגבל. עובר בנתיב
+ *  הקיים של משאב להציע (reports, resource_offer) - נשלח לרכזת הקהילה ולא מתפרסם
+ *  אוטומטית. שדות append מצורפים לטקסט הפנייה ("עד מתי: ..."). */
+const SHARE_OFFER_NOW = { id: 'offer_now', label: 'יש לי משהו להציע עכשיו', sub: 'אוכל שנשאר, חפץ למסירה, הטבה לזמן מוגבל', path: '/api/reports', kind: 'resource_offer',
+  bodyPrefix: '[הצעה לזמן מוגבל] ', note: 'זה נשלח לרכזת הקהילה ולא מתפרסם אוטומטית. בלי טלפון ובלי מייל: מי שירצה יפנה דרך הרכזת.',
+  fields: [{ key: 'body', label: 'מה מציעים?', area: true, required: true, max: 1700, placeholder: 'למשל: נשארו מאפים מהיום, אפשר לאסוף' },
+    { key: 'until', label: 'עד מתי? (לא חובה)', max: 80, placeholder: 'למשל: היום עד 19:00', append: true },
+    { key: 'where', label: 'איפה? (לא חובה)', max: 120, placeholder: 'למשל: ליד המרכז המסחרי', append: true }] };
+/** כפתור "יש לי משהו לשתף" בחלון "מה קורה עכשיו": קודם הדברים של עכשיו (הצעה לזמן
+ *  מוגבל, אירוע), אחר-כך שאר דרכי השיתוף הקיימות */
+const NOW_SHARE_OPTIONS = [SHARE_OFFER_NOW].concat(['event', 'resource', 'partners', 'initiative', 'idea', 'new_info', 'wrong_info', 'operator'].map((id) => SHARE_OPTIONS.find((o) => o.id === id)));
+
 /** סטטוסים של "ממתין לאישור" (או טיוטה) - מה שהשרת מחזיר לתושב שאינו מפעיל */
 const SHARE_WAITING = ['submitted', 'submitted_seeking_partners', 'pending', 'draft'];
 
@@ -3959,7 +4482,8 @@ function shareBody(opt, values) {
   const v = (k) => (values[k] || '').trim();
   if (opt.kind) {
     // bodyPrefix: אפשרות של עמוד מטמיע שעוברת דרך אותו מנגנון (למשל "הצעת מקום" ברמת גן)
-    const out = { kind: opt.kind, body: (opt.bodyPrefix || '') + v('body') };
+    const extra = opt.fields.filter((f) => f.append && v(f.key)).map((f) => '\n' + f.label.replace(/ \(לא חובה\)$/, '').replace(/\?$/, '') + ': ' + v(f.key)).join('');
+    const out = { kind: opt.kind, body: (opt.bodyPrefix || '') + v('body') + extra };
     if (v('place')) { out.targetType = 'entity'; out.targetId = v('place'); }
     return out;
   }
@@ -3977,6 +4501,9 @@ function shareErrorText(status, code) {
   if (code === 'account_suspended') return 'אי אפשר לשתף מהחשבון הזה כרגע. אפשר לפנות למפעיל הקהילה.';
   if (code === 'community_layer_not_migrated' || code === 'moderation_unavailable') return 'השיתוף עדיין לא פתוח באתר. נסו שוב בהמשך.';
   if (code === 'target_not_found') return 'לא מצאנו את המקום שבחרתם. אפשר לשלוח בלי לבחור מקום.';
+  if (code === 'neighborhood_proposals_not_migrated') return 'הצעות התושבים עדיין לא פתוחות באתר. נסו שוב בהמשך.';
+  if (code === 'contact_details_not_allowed') return 'נא לא לכתוב טלפון או מייל. פרטי קשר לא נאספים כאן.';
+  if (code === 'too_many_pending') return 'יש לכם כבר 5 הצעות שמחכות לאישור. אפשר לשלוח עוד אחרי שהרכזת תעבור עליהן.';
   if (status === 400 || status === 413) return 'חלק מהפרטים לא תקינים או ארוכים מדי. בדקו ונסו שוב.';
   return 'משהו השתבש בשליחה. נסו שוב בעוד רגע.';
 }
@@ -4065,7 +4592,170 @@ function MySubmissions({ shareKey, onBack, onKeyInvalid }) {
             : null))));
 }
 
-function SharePanel({ onClose, places, options = SHARE_OPTIONS }) {
+/* ===================== "הצעות תושבים" (19.10.2026) =====================
+   אותה מערכת כמו מפת שכונה ט׳ בבאר שבע (app/lib/neighborhoodProposals.ts), עם שכונה משלה:
+   /api/neighborhoods/armon-hanatziv/proposals. השרת מסנן כל שאילתה לפי השכונה, כך שהצעות
+   מבאר שבע לא מגיעות לכאן. כל הצעה ממתינה לאישור הרכזת (/moderation, לשונית "הצעות תושבים");
+   עד אז רק המציע רואה אותה. לא נאספים טלפון או מייל (נבדק גם בשרת). שם התצוגה מוצג ליד הצעה שאושרה. */
+const SUGGESTIONS_PATH = '/api/neighborhoods/armon-hanatziv/proposals';
+const SUGGESTION_GREEN = '#4e8a3a';
+const CONTACT_RE = /(\+?\d[\d\s-]{7,}\d)|(\S+@\S+\.\S+)/;
+const SUGGESTION_STATUS = {
+  submitted: 'ממתינה לאישור הרכזת. עד אז רק אתם רואים אותה.',
+  approved: 'אושרה ומוצגת לכולם',
+  closed: 'נסגרה (נשארת במפה לתיעוד)',
+  rejected: 'לא אושרה. רק אתם רואים אותה.',
+};
+
+/** בדיקת הטופס - אותם כללים כמו בשרת (כותרת 3-80, תיאור 10-400, בלי טלפון ומייל) */
+function validateSuggestion(d, needsName) {
+  const e = {};
+  const title = (d.title || '').trim(), body = (d.body || '').trim(), name = (d.displayName || '').trim();
+  if (title.length < 3) e.title = 'נא לכתוב כותרת קצרה (לפחות 3 תווים).';
+  if (body.length < 10) e.body = 'נא לכתוב כמה מילים על ההצעה (לפחות 10 תווים).';
+  if (CONTACT_RE.test(title)) e.title = 'נא לא לכתוב טלפון או מייל.';
+  if (CONTACT_RE.test(body)) e.body = 'נא לא לכתוב טלפון או מייל. פרטי קשר לא נאספים כאן.';
+  if (needsName && name.length < 2) e.displayName = 'נא לכתוב שם תצוגה (לפחות 2 תווים).';
+  if (needsName && CONTACT_RE.test(name)) e.displayName = 'נא לכתוב שם בלבד, בלי טלפון או מייל.';
+  return e;
+}
+
+function SuggestionField({ name, label, value, onChange, error, area, max, placeholder, hint }) {
+  const props = { className: 'am-flow-input am-share-input', name, value: value || '', maxLength: max, placeholder, 'aria-invalid': error ? 'true' : undefined,
+    onChange: (e) => onChange(e.target.value) };
+  return h('label', { className: 'am-flow-field' },
+    h('span', { className: 'am-flow-label' }, label),
+    area ? h('textarea', { ...props, rows: 3 }) : h('input', { ...props, type: 'text' }),
+    hint ? h('span', { className: 'am-suggest-hint' }, hint) : null,
+    error ? h('span', { className: 'am-suggest-field-error' }, error) : null);
+}
+
+/** כותרת קצרה ליד הנקודה (כמו בבאר שבע): המילים הראשונות, עד כ-16 תווים. השם המלא במעבר עכבר. */
+function shortSuggestionLabel(title) {
+  const words = String(title || '').trim().split(/\s+/);
+  let out = '';
+  for (const w of words) {
+    const next = out ? out + ' ' + w : w;
+    if (out && next.length > 16) return out + '…';
+    out = next;
+  }
+  return out.length > 18 ? out.slice(0, 16) + '…' : out;
+}
+
+/** הצעות שנשלחו בלי מקום במפה (בבקשת בעל הפרויקט, 19.10): מקבלות נקודה באחד המקומות הפנויים
+ *  שבתוך קו השכונה, בין האייקונים (באחוזי הבמה). הבחירה קבועה לפי מזהה ההצעה, כך שההצעה לא
+ *  "קופצת" בין טעינות, ושתי הצעות לא נופלות על אותו מקום. זה מיקום לתצוגה בלבד - לא נשמר בשרת,
+ *  ובכרטיס כתוב שהמקום לא סומן. */
+const UNPLACED_SPOTS = [[48.2, 52.2], [75.8, 50.0], [74.9, 71.6], [42.9, 28.3], [64.2, 76.2], [61.5, 67.0], [83.0, 65.0], [44.0, 62.0]];
+function spreadUnplaced(items) {
+  const hash = (id) => { let x = 0; for (const c of String(id)) x = (x * 31 + c.charCodeAt(0)) >>> 0; return x; };
+  const used = new Set();
+  return items.slice().sort((a, b) => String(a.id).localeCompare(String(b.id))).map((it, i) => {
+    let k = hash(it.id) % UNPLACED_SPOTS.length;
+    for (let n = 0; n < UNPLACED_SPOTS.length && used.has(k); n++) k = (k + 1) % UNPLACED_SPOTS.length;
+    used.add(k);
+    const [sx, sy] = UNPLACED_SPOTS[k];
+    const ring = Math.floor(i / UNPLACED_SPOTS.length) * 3; // יותר מ-8 הצעות: הזזה קטנה כדי שלא יכסו זו את זו
+    return { ...it, mapX: frameX(sx + ring), mapY: frameY(sy + ring), unplaced: true };
+  });
+}
+
+/** סמן הצעה: נקודה ירוקה מלאה עם כותרת קצרה לידה (לא כפתור תלת-ממדי כמו העוגנים).
+ *  ממתינה (רק השולחת רואה): אותה נקודה מלאה, והכותרת מסומנת "ממתינה". */
+function SuggestionMarker({ item, active, onOpen }) {
+  return h('button', {
+    className: 'am-suggestion' + (item.status === 'submitted' ? ' is-pending' : '') + (active ? ' is-active' : ''),
+    style: { left: stageX(item.mapX) + '%', top: stageY(item.mapY) + '%', '--suggest-color': SUGGESTION_GREEN },
+    onClick: onOpen, 'aria-label': 'הצעת תושבים: ' + item.title, 'data-id': item.id, 'data-status': item.status,
+  }, h('span', { className: 'am-suggestion-dot', 'aria-hidden': 'true' }),
+    h('span', { className: 'am-suggestion-short', 'aria-hidden': 'true' },
+      shortSuggestionLabel(item.title) + (item.status === 'submitted' ? ' · ממתינה' : '')),
+    h('span', { className: 'am-suggestion-name', 'aria-hidden': 'true' }, item.title));
+}
+
+/** כרטיס הצעה קומפקטי: כותרת, תיאור, מי הציע, מקום ומצב. בלי פרטי קשר ובלי הצבעות. */
+/** "אני בעד" ו"אני רוצה להצטרף" בהצעה שאושרה - כמו בבאר שבע (בלי "נגד", בקשת בעלת הפרויקט 16.10.2026).
+ *  קול אחד והצטרפות אחת לכל תושב; לחיצה שנייה מבטלת. בלי זיהוי בדפדפן - שם תצוגה פעם אחת (כמו בטופס ההצעה). */
+function SuggestionActions({ item, onChanged }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(null);
+  const [ask, setAsk] = useState(null); // הפעולה שמחכה לשם תצוגה ('for' / 'join')
+  const [name, setName] = useState('');
+  const votesFor = (item.votes && item.votes.for) || 0, joins = item.joinCount || 0;
+  async function run(action, keyArg) {
+    const key = keyArg || loadShareKey();
+    if (!key) { setAsk(action); return; }
+    setBusy(true); setError(null);
+    const base = SUGGESTIONS_PATH + '/' + encodeURIComponent(item.id);
+    const r = action === 'for'
+      ? (item.myVote === 'for' ? await shareRequest('DELETE', base + '/vote', null, key) : await shareRequest('PUT', base + '/vote', { side: 'for' }, key))
+      : (item.joinedByMe ? await shareRequest('DELETE', base + '/join', null, key) : await shareRequest('POST', base + '/join', null, key));
+    setBusy(false);
+    if (r.status === 200 && r.data) { onChanged(r.data); return; }
+    if (r.status === 401) { saveShareKey(null); setAsk(action); setError('הזיהוי בדפדפן הזה כבר לא תקף. כתבו שם תצוגה ונסו שוב.'); return; }
+    setError(shareErrorText(r.status, r.data && r.data.error));
+  }
+  async function withName(e) {
+    e.preventDefault();
+    const n = name.trim();
+    if (n.length < 2) { setError('כתבו שם תצוגה (לפחות 2 תווים).'); return; }
+    if (CONTACT_RE.test(n)) { setError('בלי טלפון או מייל - רק שם תצוגה.'); return; }
+    setBusy(true); setError(null);
+    const created = await shareRequest('POST', '/api/users', { displayName: n });
+    setBusy(false);
+    if (created.status !== 201) { setError(shareErrorText(created.status, created.data && created.data.error)); return; }
+    saveShareKey(created.data.token);
+    const action = ask; setAsk(null);
+    run(action, created.data.token);
+  }
+  return h('div', { className: 'am-suggestion-actions', 'data-actions': item.id },
+    h('p', { className: 'am-suggestion-counts' },
+      h('span', { 'data-votes-for': String(votesFor) }, 'בעד ההצעה: ' + votesFor),
+      h('span', { 'data-joins': String(joins) }, joins ? (joins === 1 ? 'מצטרף אחד' : joins + ' מצטרפים') : 'עדיין אין מצטרפים')),
+    h('div', { className: 'am-suggestion-buttons' },
+      h('button', { type: 'button', className: 'am-suggestion-act', 'data-action': 'vote-for', 'aria-pressed': String(item.myVote === 'for'), disabled: busy, onClick: () => run('for') },
+        item.myVote === 'for' ? 'סימנתם בעד (לחיצה מבטלת)' : 'אני בעד ההצעה'),
+      h('button', { type: 'button', className: 'am-suggestion-act', 'data-action': 'join', 'aria-pressed': String(!!item.joinedByMe), disabled: busy, onClick: () => run('join') },
+        item.joinedByMe ? 'הצטרפתם (לחיצה מבטלת)' : 'אני רוצה להצטרף')),
+    ask ? h('form', { className: 'am-suggestion-ask', onSubmit: withName, noValidate: true },
+      h('label', null, h('span', null, 'שם תצוגה (פעם אחת בדפדפן הזה)'),
+        h('input', { className: 'am-share-input', name: 'displayName', value: name, maxLength: 40, autoComplete: 'nickname', onChange: (e) => setName(e.target.value) })),
+      h('button', { type: 'submit', className: 'am-suggestion-act', disabled: busy }, 'המשך')) : null,
+    error ? h('p', { className: 'am-share-error', role: 'alert' }, error) : null,
+    h('small', { className: 'am-suggestion-note' }, 'רק שם תצוגה, בלי טלפון או מייל. רכזת הקהילה רואה מי הצטרף.'));
+}
+
+function SuggestionCard({ item, onClose, onChanged }) {
+  return h('div', { className: 'am-scrim', onClick: onClose },
+    h('div', { className: 'am-card am-suggestion-card', role: 'dialog', 'aria-label': item.title, onClick: (e) => e.stopPropagation() },
+      h('button', { className: 'close-btn', onClick: onClose, 'aria-label': 'סגור' }, '✕'),
+      h('div', { className: 'am-card-body no-hero' },
+        h('span', { className: 'am-suggestion-badge' }, 'הצעת תושבים'),
+        h('h2', { className: 'am-card-title' }, item.title),
+        h('p', { className: 'am-suggestion-text' }, item.body),
+        h('dl', { className: 'am-suggestion-meta' },
+          h('dt', null, 'הציע/ה'), h('dd', null, item.proposer ? item.proposer.displayName : 'תושב/ת השכונה'),
+          h('dt', null, 'מקום'), h('dd', null, item.unplaced || item.mapX == null ? 'לא סומן מקום (הנקודה במפה לתצוגה בלבד)' : 'מסומן במפה'),
+          h('dt', null, 'מצב'), h('dd', { 'data-status': item.status }, SUGGESTION_STATUS[item.status] || item.status)),
+        item.status === 'approved' ? h(SuggestionActions, { item, onChanged }) : null,
+        h('p', { className: 'am-suggestion-note' }, 'הצעה של תושבים, לא יוזמה רשמית. רכזת הקהילה בודקת כל הצעה לפני שהיא מוצגת לכולם.'))));
+}
+
+/** הצעות בלי מקום במפה - רשימה קצרה (נפתחת מהקישור מתחת למקרא) */
+function SuggestionsList({ items, onOpen, onClose }) {
+  return h('div', { className: 'am-scrim am-creators-scrim', onClick: onClose },
+    h('div', { className: 'am-creators-panel am-suggestions-list', role: 'dialog', 'aria-label': 'הצעות תושבים בלי מקום במפה', onClick: (e) => e.stopPropagation() },
+      h('button', { className: 'close-btn', onClick: onClose, 'aria-label': 'סגור' }, '✕'),
+      h('div', { className: 'am-creators-title am-creators-main-title' }, 'הצעות תושבים'),
+      h('div', { className: 'am-creators-sub' }, 'הצעות שלא סומן להן מקום במפה'),
+      h('div', { className: 'am-creators-list' }, items.map((it) => h('button', { key: it.id, className: 'am-creators-option am-creators-option-live', 'data-id': it.id, onClick: () => onOpen(it.id) },
+        h('span', { className: 'am-creators-option-text' }, h('span', null, it.title),
+          h('span', { className: 'am-creators-option-sub' }, it.status === 'submitted' ? 'ממתינה לאישור' : (it.proposer ? 'הציע/ה: ' + it.proposer.displayName : ''))),
+        h('span', { className: 'am-creators-go', 'aria-hidden': 'true' }, '›'))))));
+}
+
+/** suggest: מפת ארמון הנציב - נפתח בטופס "יש לי הצעה" (הצעות תושבים); בלעדיו (למשל /ramat-gan) - רשימת סוגי השיתוף כמו קודם */
+function SharePanel({ onClose, places, options = SHARE_OPTIONS, suggest = false, listTitle, hidden, pickedPoint, onPickPlace, onSuggested }) {
   const [optionId, setOptionId] = useState(null);
   const [values, setValues] = useState({});
   const [displayName, setDisplayName] = useState('');
@@ -4076,7 +4766,13 @@ function SharePanel({ onClose, places, options = SHARE_OPTIONS }) {
   const [done, setDone] = useState(null);
   const [showMine, setShowMine] = useState(false);
   const [keyNotStored, setKeyNotStored] = useState(false);
+  // "יש לי הצעה" נפתח ישר בטופס הפשוט; שאר שמונה סוגי השיתוף - בקישור "עוד דרכים לשתף"
+  const [showList, setShowList] = useState(!suggest);
+  const [draft, setDraft] = useState({ title: '', body: '', point: null, displayName: '' });
+  const [fieldErrors, setFieldErrors] = useState({});
   const opt = options.find((o) => o.id === optionId) || null;
+  // נקודה שסומנה במפה (ה-App מעביר אותה אחרי מצב "בחירת מקום")
+  useEffect(() => { if (pickedPoint) setDraft((d) => ({ ...d, point: pickedPoint })); }, [pickedPoint]);
 
   // מפתח שמור: בודקים מול השרת שהוא עדיין תקף (ומציגים בשם מי משתפים)
   useEffect(() => {
@@ -4130,8 +4826,53 @@ function SharePanel({ onClose, places, options = SHARE_OPTIONS }) {
     setError(shareErrorText(r.status, r.data && r.data.error));
   }
 
+  async function submitSuggestion(e) {
+    e.preventDefault();
+    if (sending) return; // מונע שליחה כפולה (לחיצה כפולה / Enter חוזר)
+    const errs = validateSuggestion(draft, !key);
+    setFieldErrors(errs);
+    if (Object.keys(errs).length) { setError('יש לתקן את השדות המסומנים.'); return; }
+    setSending(true);
+    setError(null);
+    let useKey = key;
+    if (!useKey) {
+      const created = await shareRequest('POST', '/api/users', { displayName: draft.displayName.trim() });
+      if (created.status !== 201) { setSending(false); setError(shareErrorText(created.status, created.data && created.data.error)); return; }
+      useKey = created.data.token;
+      const stored = saveShareKey(useKey);
+      setKey(useKey);
+      setMe(created.data.user);
+      setKeyNotStored(!stored);
+    }
+    const payload = { kind: 'proposal', title: draft.title.trim(), body: draft.body.trim() };
+    if (draft.point) { payload.mapX = draft.point.x; payload.mapY = draft.point.y; }
+    const r = await shareRequest('POST', SUGGESTIONS_PATH, payload, useKey);
+    setSending(false);
+    if (r.status === 201) {
+      setDone({ suggestion: true, moderated: r.data && r.data.status === 'submitted' });
+      setDraft({ title: '', body: '', point: null, displayName: '' });
+      setFieldErrors({});
+      if (onSuggested) onSuggested(r.data);
+      return;
+    }
+    if (r.status === 401) {
+      saveShareKey(null); setKey(null); setMe(null);
+      setError('הזיהוי בדפדפן הזה כבר לא תקף. כתבו שם תצוגה ושלחו שוב.');
+      return;
+    }
+    setError(shareErrorText(r.status, r.data && r.data.error));
+  }
+
   let body;
-  if (showMine && key) {
+  if (done && done.suggestion) {
+    body = h('div', { className: 'am-share-done', role: 'status' },
+      h('div', { className: 'am-creators-title' }, 'תודה! ההצעה התקבלה'),
+      h('p', { className: 'am-share-text' }, 'רכזת הקהילה תעבור עליה. רק אחרי אישור היא תופיע לכולם בשכבה הירוקה "הצעות תושבים". עד אז רק אתם רואים אותה, בדפדפן הזה.'),
+      keyNotStored ? h('p', { className: 'am-share-key-note' }, 'הדפדפן לא מאפשר לשמור את המפתח, ולכן הזיהוי יישמר רק עד שתסגרו את הדף.') : null,
+      h('div', { className: 'am-flow-actions am-share-actions' },
+        h('button', { className: 'am-btn link am-flow-submit', onClick: onClose }, 'חזרה למפה'),
+        h('button', { className: 'am-flow-next', 'data-action': 'more', onClick: () => setDone(null) }, 'להציע עוד משהו')));
+  } else if (showMine && key) {
     body = h(MySubmissions, { shareKey: key, onBack: () => setShowMine(false), onKeyInvalid: () => { saveShareKey(null); setKey(null); setMe(null); } });
   } else if (done) {
     body = h('div', { className: 'am-share-done', role: 'status' },
@@ -4148,7 +4889,7 @@ function SharePanel({ onClose, places, options = SHARE_OPTIONS }) {
     body = h('form', { className: 'am-flow-form am-share-form', 'data-share': opt.id, onSubmit: submit, noValidate: true },
       h('button', { type: 'button', className: 'am-creators-back', onClick: () => { setOptionId(null); setError(null); } }, '‹ חזרה'),
       h('div', { className: 'am-creators-title am-share-form-title' }, opt.label),
-      h('p', { className: 'am-share-note' }, opt.moderated
+      h('p', { className: 'am-share-note' }, opt.note ? opt.note : opt.moderated
         ? (isOperator ? 'אתם מחוברים כמפעילי קהילה: זה יתפרסם באתר מיד.' : 'מפעיל הקהילה יעבור על זה לפני שזה יופיע לכולם.')
         : 'הפנייה פרטית: רק אתם ומפעיל הקהילה תראו אותה.'),
       opt.fields.map((f) => h(ShareField, { key: f.key, field: f, value: values[f.key], places, onChange: (v) => setValues((cur) => ({ ...cur, [f.key]: v })) })),
@@ -4161,9 +4902,35 @@ function SharePanel({ onClose, places, options = SHARE_OPTIONS }) {
         : me ? h('p', { className: 'am-share-who' }, 'משתפים בשם: ' + me.displayName) : null,
       error ? h('p', { className: 'am-share-error', role: 'alert' }, error) : null,
       h('button', { type: 'submit', className: 'am-btn link am-flow-submit', disabled: !ready || sending }, sending ? 'שולחים...' : 'שליחה'));
+  } else if (!showList) {
+    const needsName = !key;
+    const set = (k) => (v) => { setDraft((d) => ({ ...d, [k]: v })); if (fieldErrors[k]) setFieldErrors((fe) => ({ ...fe, [k]: undefined })); setError(null); };
+    body = h('form', { className: 'am-flow-form am-share-form am-suggest-form', 'data-share': 'suggestion', onSubmit: submitSuggestion, noValidate: true },
+      h('div', { className: 'am-creators-title am-creators-main-title' }, 'יש לי הצעה'),
+      h('p', { className: 'am-share-note' }, 'הצעה לשכונה, קטנה או גדולה. רכזת הקהילה בודקת כל הצעה לפני שהיא מופיעה במפה.'),
+      h(SuggestionField, { name: 'title', label: 'כותרת', value: draft.title, onChange: set('title'), error: fieldErrors.title, max: 80, placeholder: 'למשל: ספסל צל ליד הגינה' }),
+      h(SuggestionField, { name: 'body', label: 'במה מדובר?', value: draft.body, onChange: set('body'), error: fieldErrors.body, area: true, max: 400, hint: 'עד 400 תווים. בלי טלפון ובלי מייל.' }),
+      h('div', { className: 'am-flow-field am-suggest-place' },
+        h('span', { className: 'am-flow-label' }, 'מקום במפה (לא חובה)'),
+        draft.point
+          ? h('div', { className: 'am-suggest-place-row' },
+              h('span', { className: 'am-suggest-place-set', 'data-place': 'set' }, '✓ סומן מקום במפה'),
+              h('button', { type: 'button', className: 'am-flow-next', 'data-action': 'repick', onClick: onPickPlace }, 'לשנות'),
+              h('button', { type: 'button', className: 'am-flow-next', 'data-action': 'clear-place', onClick: () => setDraft((d) => ({ ...d, point: null })) }, 'בלי מקום'))
+          : h('button', { type: 'button', className: 'am-suggest-pick', 'data-action': 'pick', onClick: onPickPlace }, 'לסמן מקום במפה')),
+      needsName
+        ? h('div', { className: 'am-share-identity' },
+            h(SuggestionField, { name: 'displayName', label: 'השם שיוצג ליד ההצעה', value: draft.displayName, onChange: set('displayName'), error: fieldErrors.displayName, max: 40 }),
+            h('p', { className: 'am-share-key-note' },
+              'ההצעה לא אנונימית: אחרי אישור השם הזה מוצג לידה. אין צורך בטלפון או מייל. כדי לזהות אתכם בפעם הבאה, נשמר בדפדפן הזה מפתח אישי.'))
+        : me ? h('p', { className: 'am-share-who' }, 'מציעים בשם: ' + me.displayName + ' (השם מוצג ליד ההצעה אחרי אישור)') : null,
+      error ? h('p', { className: 'am-share-error', role: 'alert' }, error) : null,
+      h('button', { type: 'submit', className: 'am-btn link am-flow-submit', disabled: sending }, sending ? 'שולחים...' : 'שליחת ההצעה'),
+      h('button', { type: 'button', className: 'am-share-mine-link am-suggest-more', 'data-action': 'more-ways', onClick: () => { setShowList(true); setError(null); } }, 'עוד דרכים לשתף (אירוע, מידע, פנייה למפעיל) ›'));
   } else {
     body = h(React.Fragment, null,
-      h('div', { className: 'am-creators-title am-creators-main-title' }, 'יש לי משהו לשתף'),
+      suggest ? h('button', { type: 'button', className: 'am-creators-back', 'data-action': 'back-to-suggestion', onClick: () => { setShowList(false); setError(null); } }, '‹ חזרה ל"יש לי הצעה"') : null,
+      h('div', { className: 'am-creators-title am-creators-main-title' }, listTitle || (suggest ? 'עוד דרכים לשתף' : 'יש לי הצעה')),
       h('div', { className: 'am-creators-sub' }, 'מה תרצו לשתף?'),
       // רק כשיש בדפדפן זהות תושב - אחרת אין "שיתופים שלי" להציג
       key ? h('button', { className: 'am-share-mine-link', 'data-action': 'mine', onClick: () => { setShowMine(true); setError(null); } }, 'השיתופים שלי ›') : null,
@@ -4178,8 +4945,8 @@ function SharePanel({ onClose, places, options = SHARE_OPTIONS }) {
           h('span', { className: 'am-creators-go', 'aria-hidden': 'true' }, '›')))),
       error ? h('p', { className: 'am-share-error', role: 'alert' }, error) : null);
   }
-  return h('div', { className: 'am-scrim am-creators-scrim', onClick: onClose },
-    h('div', { className: 'am-creators-panel am-share-panel', role: 'dialog', 'aria-label': 'יש לי משהו לשתף', onClick: (e) => e.stopPropagation() },
+  return h('div', { className: 'am-scrim am-creators-scrim', onClick: onClose, hidden: !!hidden },
+    h('div', { className: 'am-creators-panel am-share-panel', role: 'dialog', 'aria-label': 'יש לי הצעה', onClick: (e) => e.stopPropagation() },
       h('button', { className: 'close-btn', onClick: onClose, 'aria-label': 'סגור' }, '✕'),
       body));
 }
@@ -4195,11 +4962,22 @@ function App() {
   const [communityDirectoryOpen, setCommunityDirectoryOpen] = useState(false);
   const [businessDirectoryOpen, setBusinessDirectoryOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  // "הצעות תושבים": שכבה נפרדת, נדלקת ונכבית בלי קשר לשכבת המקרא הפעילה
+  const [suggestionsOn, setSuggestionsOn] = useState(false);
+  const [suggestions, setSuggestions] = useState(null); // null = עוד לא נטען / השרת לא זמין
+  const [suggestionsTick, setSuggestionsTick] = useState(0);
+  const [selectedSuggestion, setSelectedSuggestion] = useState(null);
+  const [suggestionsListOpen, setSuggestionsListOpen] = useState(false);
+  const [placing, setPlacing] = useState(false); // מצב "לסמן מקום במפה" מתוך טופס ההצעה
+  const pz = usePanZoom();
+  const [pickedPoint, setPickedPoint] = useState(null);
   // הכפתור מוצג רק כשהשרת אומר שהשיתוף פתוח - כלומר יש מפעיל פעיל שיאשר (lib/moderation.ts)
   const shareStatus = useFetch('/api/share/status', []);
   const shareAvailable = !!(shareStatus && shareStatus.open);
   // "מה קורה עכשיו": null = סגור; אחרת { tab, itemId } (פתיחה מהמקרא / מסמן / מסע היוצרים)
   const [nowOpen, setNowOpen] = useState(null);
+  // חלון השיתוף שנפתח מ"מה קורה עכשיו" (רשימת דרכי השיתוף, לא טופס ההצעה)
+  const [nowShareOpen, setNowShareOpen] = useState(false);
   // שכבת-המקרא הפעילה: מציגה את נקודות-המשנה של השכבה בלבד (שכבה אחת בכל רגע).
   const [activeLayer, setActiveLayer] = useState(null);
   const [selectedSecondary, setSelectedSecondary] = useState(null);
@@ -4226,7 +5004,42 @@ function App() {
     setActiveLayer((cur) => (cur === 'community' ? null : cur));
   }, []);
   const closeBusinessDirectory = useCallback(() => setBusinessDirectoryOpen(false), []);
-  const closeShare = useCallback(() => setShareOpen(false), []);
+  const closeShare = useCallback(() => { setShareOpen(false); setPlacing(false); setPickedPoint(null); }, []);
+  // ההצעות נטענות רק כשהשכבה דולקת (ושוב אחרי שליחה). עם מפתח התושב - כדי שההצעות הממתינות שלי יופיעו לי.
+  useEffect(() => {
+    if (!suggestionsOn) return undefined;
+    let alive = true;
+    shareRequest('GET', SUGGESTIONS_PATH, null, loadShareKey()).then((r) => {
+      if (!alive) return;
+      setSuggestions(r.status === 200 && r.data && Array.isArray(r.data.items) ? r.data.items : []);
+    });
+    return () => { alive = false; };
+  }, [suggestionsOn, suggestionsTick]);
+  const onSuggested = useCallback(() => { setSuggestionsOn(true); setSuggestionsTick((t) => t + 1); }, []);
+  // רכזת הקהילה (מפעיל): קישור במקרא לדף האישור, עם מספר ההצעות שממתינות. לתושבים זה לא מוצג -
+  // השרת מחזיר 403 למי שאינו מפעיל. (מייל אין: האתר לא מחובר לשירות מיילים.)
+  const [modWaiting, setModWaiting] = useState(null);
+  useEffect(() => {
+    const key = loadShareKey();
+    if (!key) return undefined;
+    let alive = true;
+    shareRequest('GET', '/api/neighborhoods/armon-hanatziv/moderation', null, key).then((r) => {
+      if (alive && r.status === 200 && r.data) setModWaiting((r.data.waiting || []).length);
+    });
+    return () => { alive = false; };
+  }, [suggestionsTick]);
+  const startPlacing = useCallback(() => setPlacing(true), []);
+  // לחיצה על המפה במצב בחירת מקום: אחוז-במה → אחוז-מסגרת (כמו כל הנקודות), וחזרה לטופס
+  const pickOnMap = useCallback((e) => {
+    const r = (pz.worldRef.current || e.currentTarget).getBoundingClientRect(); // אחרי זום/גרירה - יחסית לאיור עצמו
+    const sx = ((e.clientX - r.left) / r.width) * 100, sy = ((e.clientY - r.top) / r.height) * 100;
+    if (sx < 0 || sx > 100 || sy < 0 || sy > 100) return;
+    setPickedPoint({ x: Math.round(frameX(sx) * 10) / 10, y: Math.round(frameY(sy) * 10) / 10 });
+    setPlacing(false);
+  }, [pz.worldRef]);
+  const placedSuggestions = (suggestions || []).filter((x) => x.mapX != null && x.mapY != null);
+  const unplacedSuggestions = (suggestions || []).filter((x) => x.mapX == null || x.mapY == null);
+  const suggestionById = (id) => (suggestions || []).find((x) => x.id === id) || null;
   // מתוך חלון-מקום עשיר: סוגר את החלון ופותח את מדריך העסקים הקיים (לא מדריך שני)
   const openBusinessDirectoryFromPlace = useCallback(() => { setSelected(null); setBusinessDirectoryOpen(true); }, []);
   const closeNow = useCallback(() => {
@@ -4259,15 +5072,16 @@ function App() {
       root.style.setProperty('--map-w', Math.round(r.width) + 'px');
       root.style.setProperty('--map-h', Math.round(r.height) + 'px');
       root.dataset.mapSize = r.width <= 420 ? 's' : 'l';
-      // "יש לי משהו לשתף": בתוך המפה, בפינה הימנית-התחתונה הפנויה - כשהוא נכנס אליה
-      // (עד ~5.6% מגובה המפה ו-21% מרוחבה). אחרת (בעיקר בטלפון, שבו יעד המגע גדול
-      // יחסית למפה) הוא היה מכסה את האיור - ולכן יוצא אל מחוץ למפה, צמוד לפינה
+      // "יש לי משהו לשתף": בתוך המפה, מימין למעלה מתחת לכותרת "ארמון הנציב" - כשהוא נכנס
+      // לאזור הפנוי שם (עד ~5.6% מגובה המפה ו-21% מרוחבה). אחרת (בעיקר בטלפון, שבו יעד המגע
+      // גדול יחסית למפה) הוא היה מכסה את האיור - ולכן יוצא אל מחוץ למפה, צמוד לפינה
       // הימנית-התחתונה שלה: מתחתיה כשיש מקום, אחרת לצידה.
       const fab = document.querySelector('.am-share-fab');
       if (fab) {
         root.dataset.shareDock = 'inside';
-        const fits = fab.offsetHeight <= r.height * 0.056 && fab.offsetWidth <= r.width * 0.21; // הפינה הפנויה מימין לקו המתאר: ~21% מהרוחב
-        if (!fits) root.dataset.shareDock = window.innerHeight - r.bottom >= 56 || window.innerWidth - r.right < 160 ? 'below' : 'beside';
+        const fits = fab.offsetHeight <= r.height * 0.075 && fab.offsetWidth <= r.width * 0.2; // המקום של הכפתור באיור: ~19% מהרוחב, ~7% מהגובה
+        // המפה ממלאת את המסך (20.10.2026), ולכן אין "מחוץ למפה": במקום זה הכפתור יורד לפס שעל המפה למטה, ליד "עושים קהילה"
+        if (!fits) root.dataset.shareDock = 'bar';
       }
     };
     apply();
@@ -4281,7 +5095,11 @@ function App() {
   useEffect(() => {
     function onKey(e) {
       if (e.key !== 'Escape') return;
-      if (shareOpen) closeShare();
+      if (placing) setPlacing(false); // ביטול בחירת המקום - חזרה לטופס
+      else if (selectedSuggestion) setSelectedSuggestion(null);
+      else if (suggestionsListOpen) setSuggestionsListOpen(false);
+      else if (shareOpen) closeShare();
+      else if (nowShareOpen) setNowShareOpen(false);
       else if (selected) close();
       else if (selectedSecondary) closeSecondary();
       else if (heroesOpen) closeHeroes();
@@ -4293,19 +5111,15 @@ function App() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [shareOpen, closeShare, selected, selectedSecondary, closeSecondary, heroesOpen, closeHeroes, creatorsOpen, communityDirectoryOpen, businessDirectoryOpen, nowOpen, close, closeCreators, closeCommunityDirectory, closeBusinessDirectory, closeNow]);
+  }, [placing, selectedSuggestion, suggestionsListOpen, shareOpen, closeShare, nowShareOpen, selected, selectedSecondary, closeSecondary, heroesOpen, closeHeroes, creatorsOpen, communityDirectoryOpen, businessDirectoryOpen, nowOpen, close, closeCreators, closeCommunityDirectory, closeBusinessDirectory, closeNow]);
 
   return h('div', { className: 'am-app' },
-    h('div', { className: 'am-map-stage' },
+    h('div', { className: 'am-map-stage' + (placing ? ' is-placing' : '') },
+      /* חלון המפה: חותך את האיור בזום. בתוכו .am-world - האיור וכל הנקודות, שזזים ומתקרבים יחד */
+      h('div', { className: 'am-viewport', ref: pz.viewportRef },
+      h('div', { className: 'am-world', ref: pz.worldRef },
       bg ? h('img', { className: 'base-photo', src: bg.imageUrl, alt: 'מפת השכונה' }) : null,
-      /* קו-רקיע ירושלמי דק בתחתית המפה (כפי שנראה צפונה מהטיילת) - נכס נפרד וניתן
-         להחלפה /decor/armon-skyline-line.svg, קישוט בלבד, מתחת לכל הכפתורים. */
-      bg ? h('img', { className: 'am-skyline-line', src: '/decor/armon-skyline-line.svg', alt: '', 'aria-hidden': 'true', draggable: false }) : null,
-
-      /* "יש לי משהו לשתף" - כפתור HTML בפינה הימנית-התחתונה של המפה, מעל קו-הרקיע
-         המשורבט (בבקשת בעל הפרויקט). שכבה מעל האיור כמו הסמנים - האיור הנעול לא משתנה.
-         הגודל יחסי לרוחב המפה, בערך כגודל הכותרת "עושים קהילה". */
-      shareAvailable ? h('button', { className: 'am-share-fab', onClick: () => setShareOpen(true), 'aria-haspopup': 'dialog' }, 'יש לי משהו לשתף') : null,
+      /* 19.10.2026: שכבות הקישוט (קו-רקיע, רחוב עולי הגרדום, ציורי העוגנים) הוסרו - הכל כבר מצויר באיור. */
 
       /* 11 העוגנים: אזורי-קליק שקופים בלבד מעל האייקונים המצוירים ב-Master
          Visual הנעול - בלי אייקון/פאץ'/נקודה מעל האיור. */
@@ -4318,22 +5132,22 @@ function App() {
         return h('button', {
           key: p.id,
           className: 'am-hotspot am-hotspot--artwork' + (icon ? ' am-hotspot--icon' : '') + (contentId === selected ? ' is-active' : ''),
-          style: { left: stageX(p.display.mapX) + '%', top: stageY(p.display.mapY) + '%' },
+          style: anchorStyle(p.title, p.display.mapX, p.display.mapY),
           onClick: () => setSelected(contentId),
-          title: p.title,
           'aria-label': p.title,
-        }, icon ? h('img', { className: 'am-hotspot-icon', src: icon, alt: '', draggable: false }) : null);
+        }, icon ? h('img', { className: 'am-hotspot-icon', src: icon, alt: '', draggable: false }) : null,
+          icon ? h('span', { className: 'am-hotspot-name', 'aria-hidden': 'true' }, p.title) : null);
       }),
       /* נקודות צמודות לעוגן (פארק הדרקונים ליד המרכז המסחרי) - מוצגות רק כשהעוגן קיים */
       ANCHOR_COMPANIONS.filter((c) => anchorPoints.some((p) => p.title === c.anchorTitle)).map((c) => h('button', {
         key: c.id,
         className: 'am-hotspot am-hotspot--artwork am-hotspot--icon am-hotspot--companion' + (c.entityId === selected ? ' is-active' : ''),
-        style: { left: stageX(c.mapX) + '%', top: stageY(c.mapY) + '%' },
+        style: anchorStyle(c.title, c.mapX, c.mapY),
         onClick: () => setSelected(c.entityId),
-        title: c.title,
         'aria-label': c.title,
         'data-companion': c.id,
-      }, h('img', { className: 'am-hotspot-icon', src: LOCKED_ICON_ASSET_BY_TITLE[c.title], alt: '', draggable: false }))),
+      }, h('img', { className: 'am-hotspot-icon', src: LOCKED_ICON_ASSET_BY_TITLE[c.title], alt: '', draggable: false }),
+        h('span', { className: 'am-hotspot-name', 'aria-hidden': 'true' }, c.title))),
 
       /* נקודות-המשנה של השכבה הפעילה: נקודה אדומה קטנה במיקום המקור המדויק,
          ומעליה אייקון המקור הנעול (אם סופק) - קטן מ-11 העוגנים. */
@@ -4346,6 +5160,23 @@ function App() {
         : null,
 
       nowOpen && nowFocus ? h(NowMarker, { key: nowFocus.id, item: nowFocus }) : null,
+
+      /* שכבת "הצעות תושבים" (ירוקה): כל ההצעות. מי שנשלחה בלי מקום - במקום פנוי בתוך השכונה */
+      suggestionsOn ? placedSuggestions.concat(spreadUnplaced(unplacedSuggestions)).map((it) => h(SuggestionMarker, {
+        key: it.id, item: it, active: selectedSuggestion === it.id, onOpen: () => setSelectedSuggestion(it.id),
+      })) : null,
+      pickedPoint && shareOpen ? h('span', { className: 'am-suggestion-pick-mark', style: { left: stageX(pickedPoint.x) + '%', top: stageY(pickedPoint.y) + '%' }, 'aria-hidden': 'true' }) : null,
+      ), /* סוף .am-world */
+      /* מצב בחירת מקום: שכבה שקופה מעל כל המפה - לחיצה אחת קובעת את המקום */
+      placing ? h('div', { className: 'am-place-picker', onClick: pickOnMap, role: 'button', 'aria-label': 'לחצו על המקום במפה' },
+        h('div', { className: 'am-place-picker-hint', onClick: (e) => e.stopPropagation() },
+          h('span', null, 'לחצו על המקום במפה'),
+          h('button', { type: 'button', onClick: () => setPlacing(false) }, 'ביטול'))) : null,
+    ), /* סוף .am-viewport */
+      /* "יש לי משהו לשתף" - כפתור HTML בפינה הימנית-התחתונה של המפה, מעל קו-הרקיע
+         המשורבט (בבקשת בעל הפרויקט). שכבה מעל האיור כמו הסמנים - האיור הנעול לא משתנה.
+         הגודל יחסי לרוחב המפה, בערך כגודל הכותרת "עושים קהילה". */
+      shareAvailable ? h('button', { className: 'am-share-fab', onClick: () => setShareOpen(true), 'aria-haspopup': 'dialog' }, 'יש לי הצעה') : null,
 
       communityDirectoryOpen ? h(CommunityLayer, { onClose: closeCommunityDirectory }) : null,
 
@@ -4362,20 +5193,48 @@ function App() {
             h('span', { className: 'am-map-legend-label' }, item.label),
             h('span', { className: 'am-map-legend-swatch', 'aria-hidden': 'true' })
           )
-        )
+        ),
+        /* שכבה נפרדת: מתג עצמאי (לא מחליף את השכבה שנבחרה למעלה) */
+        h('button', {
+          className: 'am-map-legend-item am-map-legend-toggle',
+          'aria-pressed': suggestionsOn,
+          'data-layer': 'resident_suggestions',
+          style: { '--legend-color': SUGGESTION_GREEN },
+          title: 'הצעות שתושבים שלחו ב"יש לי הצעה" ושהרכזת אישרה',
+          onClick: () => setSuggestionsOn((on) => !on),
+        },
+          h('span', { className: 'am-map-legend-label' }, 'הצעות תושבים'),
+          h('span', { className: 'am-map-legend-swatch', 'aria-hidden': 'true' })
+        ),
+        suggestionsOn && suggestions && !suggestions.length
+          ? h('span', { className: 'am-map-legend-note', role: 'status' }, 'עדיין אין הצעות שאושרו')
+          : null,
+
+        modWaiting != null
+          ? h('a', { className: 'am-map-legend-note am-map-legend-mod', href: '/moderation?tab=suggestions', 'data-mod-waiting': String(modWaiting) },
+              modWaiting ? modWaiting + ' ממתינות לאישור ›' : 'לדף האישור ›')
+          : null
       ),
 
-      /* מיתוג "עושים קהילה" - גזור byte-מדויק-במיקום מתוך map-background-v3.webp
-         (לא צויר מחדש), מוצג כשכבת UI מעל v4 באותו מיקום בדיוק כמו ב-v3. */
-      h('img', { className: 'am-brand', src: '/brand-osim-kehila-v3-cutout.png', alt: 'עושים קהילה - אנשים · מקומות · יצירה', draggable: false }),
-
-      /* נקודה מהבהבת מעל "עושים קהילה" המצויר באיור - פותחת את מסע היוצרים/היוזמות */
+      /* כפתור המותג "עושים קהילה" - פעולה אחת ברורה, ללא שורת המשנה מהלוגו הישן. */
       h('button', {
-        className: 'am-legend-dot',
+        className: 'am-legend-dot am-brand-button',
         onClick: () => setCreatorsOpen(true),
-        'aria-label': 'פתח מקרא',
-        title: 'פתח מקרא',
-      })
+        title: 'עושים קהילה',
+        'aria-label': 'עושים קהילה',
+      },
+        h('span', { 'aria-hidden': 'true', className: 'am-brand-plus' }, '+'),
+        h('span', null, 'עושים קהילה')
+      ),
+      /* זום: הגדלה, הקטנה וחזרה למפה המלאה (כמו בבאר שבע) */
+      h('div', { className: 'am-zoom', role: 'group', 'aria-label': 'זום במפה' },
+        h('button', { type: 'button', className: 'am-zbtn', 'aria-label': 'הגדלת המפה', onClick: () => pz.zoomBy(1.3), disabled: pz.zoomLevel >= ZOOM_MAX }, '+'),
+        h('button', { type: 'button', className: 'am-zbtn', 'aria-label': 'הקטנת המפה', onClick: () => pz.zoomBy(1 / 1.3), disabled: pz.zoomLevel <= ZOOM_MIN }, '−'),
+        h('button', { type: 'button', className: 'am-zbtn am-zbtn--home', 'aria-label': 'חזרה למפה המלאה', onClick: pz.recenter },
+          h('svg', { viewBox: '0 0 24 24', width: 16, height: 16, 'aria-hidden': 'true' },
+            /* אותו סמל "מרכוז" כמו בבאר שבע */
+            h('g', { fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' },
+              h('circle', { cx: 12, cy: 12, r: 3.2 }), h('path', { d: 'M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4' })))))
     ),
     selected && richIds.includes(selected)
       ? h(RichPlacePanel, { key: selected, entityId: selected, onClose: close, onOpenBusinessDirectory: openBusinessDirectoryFromPlace })
@@ -4386,8 +5245,15 @@ function App() {
     heroesOpen ? h(NeighborhoodHeroesPanel, { data: heroes, onClose: closeHeroes }) : null,
     creatorsOpen ? h(CreatorsGatePanel, { onClose: closeCreators, onOpenEvents: navigateFromCreatorsToEvents }) : null,
     businessDirectoryOpen ? h(BusinessDirectoryPanel, { onClose: closeBusinessDirectory }) : null,
-    nowOpen ? h(NowPanel, { data: nowData, initialTab: nowOpen.tab, initialItemId: nowOpen.itemId, onClose: closeNow, onFocusItem: setNowFocus }) : null,
-    shareOpen ? h(SharePanel, { onClose: closeShare, places: anchorPoints }) : null
+    nowOpen ? h(NowPanel, { data: nowData, initialTab: nowOpen.tab, initialItemId: nowOpen.itemId, onClose: closeNow, onFocusItem: setNowFocus,
+      onShare: shareAvailable ? () => { closeNow(); setNowShareOpen(true); } : null }) : null,
+    nowShareOpen ? h(SharePanel, { onClose: () => setNowShareOpen(false), places: anchorPoints, options: NOW_SHARE_OPTIONS, listTitle: 'יש לי משהו לשתף' }) : null,
+    shareOpen ? h(SharePanel, { onClose: closeShare, places: anchorPoints, suggest: true, hidden: placing, pickedPoint, onPickPlace: startPlacing, onSuggested }) : null,
+    suggestionsListOpen ? h(SuggestionsList, { items: unplacedSuggestions, onClose: () => setSuggestionsListOpen(false), onOpen: (id) => { setSuggestionsListOpen(false); setSelectedSuggestion(id); } }) : null,
+    selectedSuggestion && suggestionById(selectedSuggestion)
+      ? h(SuggestionCard, { item: suggestionById(selectedSuggestion), onClose: () => setSelectedSuggestion(null),
+          onChanged: (u) => setSuggestions((list) => (list || []).map((x) => (x.id === u.id ? u : x))) })
+      : null
   );
 }
 
@@ -4571,9 +5437,14 @@ if (!window.OSIM_EMBED) ReactDOM.createRoot(document.getElementById('root')).ren
 const { useMemo, useLayoutEffect, useRef } = React;
 const T = window.RgTime;
 const RG_DEMO_EVENT_NOTE = 'תוכן לדוגמה לאב-טיפוס - לא אירוע מאומת';
-// כשבוחרים שכבה המפה מתמקדת בנקודות שלה; השוליים משאירים מקום לחיפוש ולסינון שמעל המפה
-const RG_FIT = { paddingTopLeft: [56, 56], paddingBottomRight: [56, 56], maxZoom: 15 };
-const RG_FIT_WITH_TOOLS = { paddingTopLeft: [56, 130], paddingBottomRight: [56, 56], maxZoom: 15 };
+// כשבוחרים שכבה המפה מתמקדת בנקודות שלה; השוליים משאירים מקום למה שצף מעל המפה (המפה על כל המסך):
+// פס המקרא משמאל, הכותרת והחיפוש למעלה, ופס הפעולות למטה
+const RG_FIT = { paddingTopLeft: [56, 150], paddingBottomRight: [40, 90], maxZoom: 15 };
+const RG_FIT_WITH_TOOLS = { paddingTopLeft: [90, 150], paddingBottomRight: [56, 100], maxZoom: 15 };
+// התאמת העיר כולה (בפתיחה ובמעבר סגנון)
+const rgCityFit = (el) => (el.clientWidth < 520
+  ? { paddingTopLeft: [10, 150], paddingBottomRight: [10, 80] }
+  : { paddingTopLeft: [90, 70], paddingBottomRight: [20, 90] });
 // מי שביקש פחות תנועה: המפה קופצת ליעד בלי טיסה ובלי אנימציית זום
 const rgReducedMotion = () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
@@ -4769,7 +5640,7 @@ function createRgMap(el, mapCfg, geo, ill) {
   const memoryBounds = L.latLngBounds([]);
   if (ill) for (const r of rgWarpGeometry(ill.features.find((f) => f.properties.kind === 'city').geometry, warp).coordinates.flat()) memoryBounds.extend([r[1], r[0]]);
   map.setMaxBounds((memoryBounds.isValid() ? L.latLngBounds(bounds.getSouthWest(), bounds.getNorthEast()).extend(memoryBounds) : bounds).pad(0.35));
-  map.fitBounds(bounds, { padding: [12, 12], animate: false });
+  map.fitBounds(bounds, { ...rgCityFit(el), animate: false });
   const zoomClass = () => {
     el.classList.toggle('rg-z-far', map.getZoom() < 14);
     el.classList.toggle('rg-z-xfar', map.getZoom() < 13.5);
@@ -4797,7 +5668,7 @@ function createRgMap(el, mapCfg, geo, ill) {
     tiles.setOpacity(next === 'memory' ? 0 : next === 'art' ? 0.45 : 1);
     el.classList.toggle('rg-style-art', next !== 'detail');
     el.classList.toggle('rg-style-memory', next === 'memory');
-    if ((was === 'memory') !== (next === 'memory')) map.fitBounds(next === 'memory' ? memoryBounds : bounds, { padding: [12, 12], animate: false });
+    if ((was === 'memory') !== (next === 'memory')) map.fitBounds(next === 'memory' ? memoryBounds : bounds, { ...rgCityFit(el), animate: false });
     declutter();
   };
   return { map, setStyle, declutter, place };
@@ -4813,6 +5684,7 @@ const RG_ICON_PATHS = {
   sliders: 'M4 7h9 M17 7h3 M4 12h3 M11 12h9 M4 17h11 M19 17h1 M15 5v4 M9 10v4 M17 15v4',
   pin: 'M12 21s-6-5.6-6-10.5A6 6 0 0 1 18 10.5C18 15.4 12 21 12 21z M12 12.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
   chevron: 'M14.5 6l-6 6 6 6',
+  layers: 'M12 4l8 4.2-8 4.2-8-4.2z M4 12.2l8 4.2 8-4.2 M4 16l8 4.2 8-4.2',
   plus: 'M12 5v14 M5 12h14',
 };
 function RgIcon({ name, className }) {
@@ -5036,7 +5908,7 @@ function HorizonTabs({ tab, onTab, counts }) {
     }, t.label, counts ? h('span', { className: 'rg-tab-count' }, ' (' + counts[t.key] + ')') : null)));
 }
 
-function EventsStrip({ buckets, tab, onTab, today, onOpen, onShowAll, filtered }) {
+function EventsStrip({ buckets, tab, onTab, today, onOpen, onShowAll, filtered, onCollapse }) {
   const items = buckets[tab];
   const rowRef = useRef(null);
   return h('section', { className: 'rg-events', 'aria-labelledby': 'rg-events-title' },
@@ -5045,7 +5917,8 @@ function EventsStrip({ buckets, tab, onTab, today, onOpen, onShowAll, filtered }
         h('h2', { className: 'rg-events-title', id: 'rg-events-title' }, 'מה קורה בעיר?'),
         h('div', { className: 'rg-events-sub' }, 'אירועים ופעילויות למשפחות')),
       h(HorizonTabs, { tab, onTab }),
-      h('button', { type: 'button', className: 'rg-link-btn rg-showall', onClick: onShowAll }, 'הצג הכל')),
+      h('button', { type: 'button', className: 'rg-link-btn rg-showall', onClick: onShowAll }, 'הצג הכל'),
+      onCollapse ? h('button', { type: 'button', className: 'rg-events-close', 'aria-label': 'סגירת הפס "מה קורה בעיר?"', onClick: onCollapse }, '×') : null),
     items.length
       ? h('div', { className: 'rg-ev-wrap' },
           h('div', { className: 'rg-ev-row', role: 'tabpanel', ref: rowRef }, items.map((it) => h(EventCard, { key: it.id, item: it, today, onOpen }))),
@@ -5255,6 +6128,8 @@ function RamatGanApp() {
   const [selected, setSelected] = useState(null); // { kind: 'point' | 'business' | 'event', ref }
   const [tab, setTab] = useState('now');
   const [eventsOpen, setEventsOpen] = useState(false);
+  const [eventsDock, setEventsDock] = useState(false); // פס "מה קורה בעיר?" בתחתית המפה - סגור כברירת מחדל, כדי שהמפה תהיה פנויה
+  const [legendOpen, setLegendOpen] = useState(false); // המקרא: פס אייקונים צר, נפתח לשמות ולהסברים
   const [directory, setDirectory] = useState(null); // null | { initialBusinessId }
   const [shareOpen, setShareOpen] = useState(false);
   const [communityOpen, setCommunityOpen] = useState(false);
@@ -5342,12 +6217,16 @@ function RamatGanApp() {
     } else {
       const wide = stageRef.current && stageRef.current.getBoundingClientRect().width > 760;
       const bounds = L.latLngBounds(points.map((p) => placeRef.current(p.lat, p.lng)));
-      const opts = wide ? RG_FIT_WITH_TOOLS : RG_FIT;
+      const base = wide ? RG_FIT_WITH_TOOLS : RG_FIT;
+      // הנקודות לא מתחבאות מתחת לפס הפעולות שלמטה (שגדל כשפס "מה קורה בעיר?" פתוח)
+      const dock = document.querySelector('.rg-dock');
+      const below = dock ? Math.round(dock.getBoundingClientRect().height) + 24 : base.paddingBottomRight[1];
+      const opts = { ...base, paddingBottomRight: [base.paddingBottomRight[0], Math.max(base.paddingBottomRight[1], below)] };
       if (still) map.fitBounds(bounds, { ...opts, animate: false });
       else map.flyToBounds(bounds, { ...opts, duration: 0.6 });
     }
     return () => { clearTimeout(t); map.off('moveend', finish); };
-  }, [activeLayer, pointsKey, !!mapRef.current, mapStyle]);
+  }, [activeLayer, pointsKey, !!mapRef.current, mapStyle, eventsDock]);
 
   // המיקום של כל נקודה בפיקסלים בתוך המפה; נקודה שמחוץ לתצוגה לא מוצגת
   const placed = useMemo(() => {
@@ -5385,11 +6264,11 @@ function RamatGanApp() {
     const onKey = (e) => {
       if (e.key !== 'Escape') return;
       if (selected) setSelected(null); else if (shareOpen) setShareOpen(false); else if (communityOpen) setCommunityOpen(false); else if (directory) setDirectory(null);
-      else if (eventsOpen) setEventsOpen(false); else if (filterOpen) setFilterOpen(false); else setActiveLayer(null);
+      else if (eventsOpen) setEventsOpen(false); else if (filterOpen) setFilterOpen(false); else if (eventsDock) setEventsDock(false); else setActiveLayer(null);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [selected, shareOpen, communityOpen, directory, eventsOpen, filterOpen]);
+  }, [selected, shareOpen, communityOpen, directory, eventsOpen, filterOpen, eventsDock]);
 
   if (!cfg) return h('div', { className: 'rg-loading' }, 'טוען...');
 
@@ -5455,53 +6334,74 @@ function RamatGanApp() {
     interests.length ? h('div', { className: 'rg-filter-summary', role: 'status' }, 'מוצג: ' + filterSummary,
       h('button', { type: 'button', className: 'rg-link-btn', onClick: () => setInterests([]) }, 'ניקוי')) : null);
 
+  // המפה ממלאת את כל המסך (בקשת בעל הפרויקט, 20.10.2026): הכותרת, החיפוש, המקרא ופס הפעולות צפים מעליה.
+  // המקרא הוא פס צר של אייקונים בצד שמאל שנפתח לפירוט; "מה קורה בעיר?" נפתח מלמטה לפי בקשה
+  const shareOn = shareAvailable || inbox;
   return h('main', { className: 'rg-app' },
-    h('aside', { className: 'rg-panel', 'aria-label': 'שכבות ושיתוף' },
-      h('header', { className: 'rg-head' },
-        h('h1', { className: 'rg-title' }, cfg.city),
-        h('svg', { className: 'rg-title-stroke', viewBox: '0 0 240 14', preserveAspectRatio: 'none', 'aria-hidden': 'true' },
-          h('path', { d: 'M3 10 C 60 3, 150 2, 237 6 C 160 6, 80 9, 10 13', fill: 'currentColor' })),
-        h('div', { className: 'rg-tagline' }, cfg.tagline),
-        h('div', { className: 'rg-proto' }, 'אב-טיפוס בפיתוח · כל התוכן לדוגמה ולא אומת')),
-      h('div', { className: 'rg-layers', role: 'group', 'aria-label': 'שכבות במפה' },
-        cfg.layers.map((l) => h('button', {
-          key: l.key, type: 'button', className: 'rg-layer', 'aria-pressed': activeLayer === l.key, 'data-layer': l.key,
-          style: { '--c': l.color }, onClick: () => { setSelected(null); setFocusId(null); setActiveLayer((cur) => (cur === l.key ? null : l.key)); },
-        },
-          h('span', { className: 'rg-layer-dot', 'aria-hidden': 'true' }, h(RgIcon, { name: l.key })),
-          h('span', { className: 'rg-layer-text' }, h('span', { className: 'rg-layer-label' }, l.label), h('span', { className: 'rg-layer-sub' }, l.sub)),
-          h(RgIcon, { name: 'chevron', className: 'rg-chev' })))),
-      activeLayer === 'business'
-        ? h('button', { type: 'button', className: 'rg-link-btn rg-dir-link', onClick: () => setDirectory({}) }, 'לאינדקס העסקים המלא')
-        : null,
-      activeLayer === 'community'
-        ? h('button', { type: 'button', className: 'rg-link-btn rg-dir-link', 'data-action': 'community', onClick: () => setCommunityOpen(true) }, 'יוזמות ורעיונות שאפשר להצטרף אליהם')
-        : null),
-
     h('figure', { className: 'rg-figure' },
-      tools,
       h('div', { className: 'rg-stage' + (moving ? ' is-moving' : '') + (activeLayer ? ' has-layer' : ''), ref: stageRef, 'data-layer': activeLayer || '', 'data-fit': fitted },
         h('div', { className: 'rg-leaflet', ref: mapElRef, dir: 'ltr', role: 'region', 'aria-label': 'מפת רמת גן עם השכונות' }),
-        h('div', { className: 'rg-style-toggle', role: 'group', 'aria-label': 'סגנון המפה' },
-          [['memory', 'מאוירת'], ['detail', 'מפורטת']].map(([k, t]) => h('button', {
-            key: k, type: 'button', 'data-style': k, 'aria-pressed': mapStyle === k, className: mapStyle === k ? 'is-on' : '', onClick: () => setMapStyle(k),
-          }, t))),
         h('div', { className: 'rg-overlay' },
           activeLayer
             ? placed.map((pt) => h(RgPoint, { key: pt.id, pt, layer: layersByKey[activeLayer], active: (selected && selected.ref === pt.ref) || focusId === pt.id, onOpen: openPoint }))
             : null),
         !geo || !ill ? h('div', { className: 'rg-hint' }, 'טוען את המפה...')
           : !activeLayer ? h('div', { className: 'rg-hint' }, 'בחרו שכבה כדי לראות מה יש במפה')
-            : !points.length ? h('div', { className: 'rg-hint' }, 'אין נקודות שמתאימות לבחירה') : null),
-      h('figcaption', { className: 'rg-maplabel' }, cfg.mapNote),
-      // הפעולה המרכזית נשארת בולטת תמיד, על המפה בצד ימין (ליד בר-אילן); כשהשיתוף לא זמין (אין מפעיל, או תצוגה מקדימה) היא מסבירה למה
-      h('button', { type: 'button', className: 'rg-share' + (shareAvailable || inbox ? '' : ' is-unavailable'), onClick: () => setShareOpen(true), 'aria-haspopup': 'dialog' },
-        h('span', { className: 'rg-share-plus', 'aria-hidden': 'true' }, h(RgIcon, { name: 'plus' })),
-        h('span', { className: 'rg-share-text' }, h('span', { className: 'rg-share-title' }, 'יש לי משהו להציע'),
-          h('span', { className: 'rg-share-sub' }, shareAvailable || inbox ? 'רעיון, יוזמה, אירוע או מקום' : preview ? 'לא פעיל בתצוגה המקדימה' : 'ייפתח כשיהיה מפעיל קהילה')),
-        h(RgIcon, { name: 'chevron', className: 'rg-chev' }))),
+            : !points.length ? h('div', { className: 'rg-hint' }, 'אין נקודות שמתאימות לבחירה') : null)),
 
-    h(EventsStrip, { buckets, tab, onTab: setTab, today, onOpen: openEvent, onShowAll: () => setEventsOpen(true), filtered: interests.length > 0 }),
+    h('div', { className: 'rg-style-toggle', role: 'group', 'aria-label': 'סגנון המפה' },
+      [['memory', 'מאוירת'], ['detail', 'מפורטת']].map(([k, t]) => h('button', {
+        key: k, type: 'button', 'data-style': k, 'aria-pressed': mapStyle === k, className: mapStyle === k ? 'is-on' : '', onClick: () => setMapStyle(k),
+      }, t))),
+
+    h('div', { className: 'rg-top' },
+      h('header', { className: 'rg-head' },
+        h('h1', { className: 'rg-title' }, cfg.city),
+        h('div', { className: 'rg-tagline' }, cfg.tagline),
+        h('div', { className: 'rg-proto' }, 'אב-טיפוס בפיתוח · כל התוכן לדוגמה ולא אומת')),
+      tools),
+
+    h('aside', { className: 'rg-panel' + (legendOpen ? ' is-open' : ''), 'aria-label': 'שכבות במפה' },
+      h('button', { type: 'button', className: 'rg-legend-toggle', 'aria-expanded': legendOpen, 'aria-controls': 'rg-layers', onClick: () => setLegendOpen((o) => !o),
+        title: legendOpen ? 'צמצום המקרא' : 'פתיחת המקרא' },
+        h(RgIcon, { name: 'layers' }),
+        h('span', { className: 'rg-legend-title' }, 'שכבות במפה'),
+        h('span', { className: 'rg-legend-chev', 'aria-hidden': 'true' }, legendOpen ? '›' : '‹')),
+      h('div', { className: 'rg-layers', id: 'rg-layers', role: 'group', 'aria-label': 'שכבות במפה' },
+        cfg.layers.map((l) => h('button', {
+          key: l.key, type: 'button', className: 'rg-layer', 'aria-pressed': activeLayer === l.key, 'data-layer': l.key, title: l.label,
+          style: { '--c': l.color }, onClick: () => {
+            setSelected(null); setFocusId(null);
+            const on = activeLayer !== l.key;
+            setActiveLayer(on ? l.key : null);
+            // שכבת "מה קורה בעיר?" פותחת גם את הפס עם טווחי הזמן; שכבה אחרת מקפלת אותו, כדי שהנקודות שלה יהיו פנויות על המפה
+            if (on) setEventsDock(l.key === 'now');
+          },
+        },
+          h('span', { className: 'rg-layer-dot', 'aria-hidden': 'true' }, h(RgIcon, { name: l.key })),
+          h('span', { className: 'rg-layer-text' }, h('span', { className: 'rg-layer-label' }, l.label), h('span', { className: 'rg-layer-sub' }, l.sub))))),
+      h('p', { className: 'rg-maplabel' }, cfg.mapNote)),
+
+    h('div', { className: 'rg-dock' + (eventsDock ? ' has-events' : '') },
+      eventsDock
+        ? h(EventsStrip, { buckets, tab, onTab: setTab, today, onOpen: openEvent, onShowAll: () => setEventsOpen(true), filtered: interests.length > 0, onCollapse: () => setEventsDock(false) })
+        : null,
+      h('div', { className: 'rg-dock-row' },
+        activeLayer === 'business'
+          ? h('button', { type: 'button', className: 'rg-chip rg-dir-link', onClick: () => setDirectory({}) }, 'לאינדקס העסקים המלא')
+          : null,
+        activeLayer === 'community'
+          ? h('button', { type: 'button', className: 'rg-chip rg-dir-link', 'data-action': 'community', onClick: () => setCommunityOpen(true) }, 'יוזמות ורעיונות שאפשר להצטרף אליהם')
+          : null,
+        !eventsDock
+          ? h('button', { type: 'button', className: 'rg-chip rg-events-open', 'aria-expanded': false, onClick: () => setEventsDock(true) },
+              h('span', { className: 'rg-chip-dot', 'aria-hidden': 'true' }, h(RgIcon, { name: 'now' })), 'מה קורה בעיר?')
+          : null,
+        // הפעולה המרכזית נשארת בולטת תמיד, על המפה למטה; כשהשיתוף לא זמין (אין מפעיל, או תצוגה מקדימה) היא מסבירה למה
+        h('button', { type: 'button', className: 'rg-share' + (shareOn ? '' : ' is-unavailable'), onClick: () => setShareOpen(true), 'aria-haspopup': 'dialog' },
+          h('span', { className: 'rg-share-plus', 'aria-hidden': 'true' }, h(RgIcon, { name: 'plus' })),
+          h('span', { className: 'rg-share-text' }, h('span', { className: 'rg-share-title' }, 'יש לי משהו להציע'),
+            h('span', { className: 'rg-share-sub' }, shareOn ? 'רעיון, יוזמה, אירוע או מקום' : preview ? 'לא פעיל בתצוגה המקדימה' : 'ייפתח כשיהיה מפעיל קהילה'))))),
 
     eventsOpen ? h(EventsPanel, { buckets, initialTab: tab, today, onClose: () => setEventsOpen(false), onOpen: (e) => { setEventsOpen(false); openEvent(e); } }) : null,
     filterOpen ? h(FilterSheet, { cfg, interests, onChange: setInterests, onClose: () => setFilterOpen(false) }) : null,
