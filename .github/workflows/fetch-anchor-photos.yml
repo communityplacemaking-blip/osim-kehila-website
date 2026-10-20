@@ -1,0 +1,19 @@
+name: Fetch anchor photos
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/eco-city-photos]
+    paths: [maps/eco-city-demo/photos/commons.json, tools/fetch_commons_photos.py]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/fetch_commons_photos.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add maps/eco-city-demo/photos
+          git diff --cached --quiet || (git commit -m "Fetch Eco City anchor photos from Wikimedia Commons" && git push)
