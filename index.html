@@ -121,6 +121,16 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .tile .status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--warm);margin-inline-end:6px;vertical-align:middle}
 .tile .go{font-size:15px;font-weight:400;box-shadow:inset 0 -1px 0 var(--must);align-self:flex-start;margin-top:4px}
 a.tile{transition:box-shadow .25s,transform .25s} a.tile:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(15,45,74,.10)}
+dialog.viewer{width:min(1200px,94vw);height:min(860px,90vh);max-width:none;max-height:none;padding:0;border:0;border-radius:16px;overflow:hidden;background:#fff;color:var(--navy);box-shadow:0 20px 60px rgba(15,45,74,.35)}
+dialog.viewer[open]{display:flex;flex-direction:column}
+dialog.viewer::backdrop{background:rgba(15,45,74,.55)}
+.viewer .bar{display:flex;align-items:center;gap:14px;padding:10px 16px;border-bottom:1px solid var(--grey);font-size:15px}
+.viewer .bar b{font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.viewer .bar a{color:var(--muted)}
+.viewer .x{background:none;border:0;font:inherit;font-size:26px;line-height:1;color:var(--navy);cursor:pointer;padding:2px 8px;border-radius:8px}
+.viewer .x:hover{background:var(--cream)}
+.viewer iframe{flex:1;width:100%;border:0;background:var(--cream)}
+@media (max-width:600px){dialog.viewer{width:100vw;height:100dvh;border-radius:0}}
 .tile .play{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.92);position:relative}
 .tile .play::after{content:'';position:absolute;top:17px;left:21px;border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent var(--navy)}
 /* who */
@@ -177,7 +187,18 @@ document.addEventListener('DOMContentLoaded',function(){
     var a=document.createElement('a');a.className=t.className+' linked';a.href=u;a.target='_blank';a.rel='noopener';a.dataset.place=k;a.innerHTML=t.innerHTML;
     a.querySelector('.go').textContent='לשוטט במפה החיה ←';
     var f=document.createElement('iframe');f.src=u;f.loading='lazy';f.tabIndex=-1;f.setAttribute('aria-hidden','true');f.title='';a.querySelector('.img').appendChild(f);
-    a.setAttribute('aria-label',t.querySelector('h3').textContent+': לשוטט במפה החיה (נפתח בלשונית חדשה)');t.replaceWith(a);});
+    a.setAttribute('aria-label',t.querySelector('h3').textContent+': לשוטט במפה החיה');t.replaceWith(a);});
+  var dlg=document.getElementById('viewer'),vf=dlg&&dlg.querySelector('iframe');
+  if(dlg&&dlg.showModal){
+    function closeV(){if(dlg.open)dlg.close();}
+    dlg.addEventListener('close',function(){vf.src='about:blank';});
+    dlg.addEventListener('click',function(e){if(e.target===dlg)closeV();});
+    dlg.querySelector('.x').addEventListener('click',closeV);
+    document.querySelectorAll('#examples a.tile.linked').forEach(function(a){a.addEventListener('click',function(e){
+      if(e.ctrlKey||e.metaKey||e.shiftKey||e.button!==0)return;e.preventDefault();
+      var h=a.querySelector('h3');dlg.querySelector('.bar b').textContent=(h?h.textContent:'');
+      dlg.querySelector('.bar a').href=a.href;vf.title=h?h.textContent:'';vf.src=a.dataset.embed||a.href;dlg.showModal();});});
+  }
   var net=document.querySelector('.net'); if(!net) return;
   var lines=net.querySelectorAll('path.t'), nodes=net.querySelectorAll('.node');
   function on(id){net.classList.add('focus');var L={};L[id]=1;
@@ -1434,7 +1455,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <article class="tile" data-place="bs"><div class="img" style="background-image:url(assets/beer-sheva-map.jpg)"><span class="status">אב־טיפוס</span></div><div class="body"><small>באר שבע · שכונה ט׳</small><h3>מפת החוסן המקומי</h3><span class="go"></span></div></article>
 <article class="tile" data-place="givat"><div class="img" style="background-image:url(assets/givatayim-map.jpg?v=20261018)"><span class="status">אב־טיפוס</span></div><div class="body"><small>גבעתיים</small><h3>מפת הקהילה העירונית</h3><span class="go"></span></div></article>
 <article class="tile" data-place="rg"><div class="img" style="background-image:url(assets/ramat-gan-map.jpg?v=20261018)"><span class="status">אב־טיפוס</span></div><div class="body"><small>רמת גן</small><h3>מפת המשפחות</h3><span class="go"></span></div></article>
-<a class="tile linked" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener" aria-label="Placemaking Eilat: לצפייה בסרטון (נפתח ביוטיוב)"><div class="img" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)"><span class="status">פרויקט עבר</span><span class="play" aria-hidden="true"></span></div><div class="body"><small>אילת · 2018–2021</small><h3 dir="ltr">Placemaking Eilat</h3><span class="go">לצפייה בסרטון ←</span></div></a>
+<a class="tile linked" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" data-embed="https://www.youtube-nocookie.com/embed/zpe4qSbIm7Q?autoplay=1&amp;rel=0" target="_blank" rel="noopener" aria-label="Placemaking Eilat: לצפייה בסרטון"><div class="img" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)"><span class="status">פרויקט עבר</span><span class="play" aria-hidden="true"></span></div><div class="body"><small>אילת · 2018–2021</small><h3 dir="ltr">Placemaking Eilat</h3><span class="go">לצפייה בסרטון ←</span></div></a>
 <article class="tile" data-place="eco"><div class="img"><span class="status">הדגמה</span></div><div class="body"><small>תל אביב · אקו סיטי</small><h3>מפת התחדשות עירונית</h3><span class="go"></span></div></article>
 </div></div></section>
 
@@ -3091,4 +3112,5 @@ render();
 <footer><div class="wrap"><span>עושים קהילה · Community Making</span>
 <nav aria-label="קישורים בתחתית העמוד" style="display:flex;flex-wrap:wrap;gap:6px 18px"><a href="https://www.facebook.com/communityplacemaking/">פייסבוק</a><a href="https://www.instagram.com/communityplacemaking/">אינסטגרם</a><a href="mailto:osimkehilanet@gmail.com">osimkehilanet@gmail.com</a><a href="accessibility.html">הצהרת נגישות</a></nav>
 </div></footer>
+<dialog class="viewer" id="viewer" aria-label="תצוגת מפה"><div class="bar"><b></b><a href="#" target="_blank" rel="noopener">פתיחה בלשונית חדשה ↗</a><button class="x" type="button" aria-label="סגירה">×</button></div><iframe src="about:blank" allow="autoplay; fullscreen; geolocation; encrypted-media" allowfullscreen></iframe></dialog>
 </body></html>
