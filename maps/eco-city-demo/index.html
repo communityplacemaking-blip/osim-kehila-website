@@ -103,11 +103,11 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .zlow .anc .an{display:none}
 .zlow .anc .disc{transform:scale(.72)}
 .zlow .anc .halo{display:none}
-/* דמויות מאוירות (doodles/): קישוט בלבד, לא לחיצות, עם תנועה עדינה */
+/* דמויות מאוירות (characters/): קישוט בלבד, לא לחיצות, עם תנועה עדינה. --s הוא גובה הדמות */
 .motif{pointer-events:none;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
-.motif img{display:block;width:var(--s,110px);height:auto;transform-origin:50% 85%;animation:alive var(--d,3s) ease-in-out var(--o,0s) infinite alternate}
-.zlow .motif img{width:calc(var(--s,110px)*.72)}
-@keyframes alive{0%{transform:rotate(-2.5deg) translateY(0)}100%{transform:rotate(2.5deg) translateY(-3px)}}
+.motif img{display:block;height:var(--s,110px);width:auto;filter:drop-shadow(0 3px 3px rgba(22,49,49,.18));transform-origin:50% 85%;animation:alive var(--d,3s) ease-in-out var(--o,0s) infinite alternate}
+.zlow .motif img{height:calc(var(--s,110px)*.72)}
+@keyframes alive{0%{transform:rotate(-1.5deg) translateY(0)}100%{transform:rotate(1.5deg) translateY(-2px)}}
 @media (prefers-reduced-motion:reduce){.motif img{animation:none}}
 .hand{font-family:"Amatic SC",Rubik,sans-serif;font-weight:700}
 .motif .mc{font-family:"Amatic SC",Rubik,sans-serif;font-weight:700;font-size:21px;line-height:1;color:var(--teal);text-align:center;white-space:nowrap;margin-top:-2px;text-shadow:0 0 3px #FFF9F5,0 0 3px #FFF9F5}
@@ -283,7 +283,7 @@ L.control.zoom({position:'bottomleft'}).addTo(map);
    וכל עוגן מותח את המרחב סביבו לפי המשקל שלו, כמו יריעת גומי. הכיוונים נשמרים, הגדלים מספרים מה חשוב.
    המרחקים ("דקות הליכה") מחושבים תמיד מהמיקום האמיתי. */
 map.attributionControl.setPrefix(false);
-map.attributionControl.addAttribution('גבולות: OpenStreetMap, israel-municipalities-polygons · שכונות תל אביב: שרטוט סכמטי · תמונות העוגנים: Wikimedia Commons · דמויות: Open Doodles, Pablo Stanley (CC0)');
+map.attributionControl.addAttribution('גבולות: OpenStreetMap, israel-municipalities-polygons · שכונות תל אביב: שרטוט סכמטי · תמונות העוגנים: Wikimedia Commons · איורי דמויות: עושים קהילה');
 var W=A.map(function(a){return {lat:a.lat,lng:a.lng,w:.16*a.w,r:200+80*a.w};}),KX=94300,KY=110540;
 function warp(lat,lng){var dx=0,dy=0;W.forEach(function(a){var ex=(lng-a.lng)*KX,ey=(lat-a.lat)*KY,g=a.w*Math.exp(-(ex*ex+ey*ey)/(a.r*a.r));dx+=ex*g;dy+=ey*g;});return [lat+dy/KY,lng+dx/KX];}
 function dens(r){var o=[];for(var i=0;i<r.length;i++){o.push(r[i]);var q=r[i+1];if(!q)break;var n=Math.floor(Math.hypot(q[0]-r[i][0],q[1]-r[i][1])/.0004);for(var k=1;k<n;k++)o.push([r[i][0]+(q[0]-r[i][0])*k/n,r[i][1]+(q[1]-r[i][1])*k/n]);}return o;}
@@ -345,23 +345,21 @@ map.on('zoomend',hoods);
   L.marker(w,{interactive:false,keyboard:false,zIndexOffset:-2000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="city">'+c[0]+'</div>'})}).addTo(map);
 });
 
-/* דמויות: Open Doodles של Pablo Stanley (נחלת הכלל, CC0), בצבעי אקו סיטי. כל דמות יושבת באזור שלה, לא בכתובת מדויקת */
+/* דמויות: איורי "Cool Tel Aviv" של עושים קהילה. כל דמות יושבת באזור שלה, לא בכתובת מדויקת */
 (function(){var d=document.createElement('div');d.className='paper';map.getContainer().appendChild(d);})();
 [
- ['bikini',32.0842,34.7662,150,'חוף גורדון'],
- ['ice-cream',32.0695,34.7650,112,'גלידה בטיילת'],
- ['roller-skating',32.0990,34.7718,128,'רולר בנמל'],
- ['running',32.1012,34.8005,132,'ריצה בירקון'],
- ['dog-jump',32.0960,34.8120,124,'גינת כלבים'],
- ['coffee',32.0878,34.7766,120,'קפה של בוקר'],
- ['sitting-reading',32.0922,34.8008,132,'ספר וקפה'],
- ['selfie',32.0795,34.7722,104,'סלפי בדיזנגוף'],
- ['ballet',32.0700,34.7850,136,'תרבות ליד הבימה'],
- ['strolling',32.0652,34.7782,124,'שדרות רוטשילד'],
- ['petting',32.0792,34.8128,120,'פארק המכתש']
+ ['cafe-couple',32.0878,34.7766,118,'קפה בצפון הישן'],
+ ['surfer',32.0842,34.7662,128,'חוף גורדון'],
+ ['iced-coffee-woman',32.0690,34.7652,118,'קפה קר בטיילת'],
+ ['headphones-woman',32.0990,34.7720,118,'נמל תל אביב'],
+ ['cyclist',32.1010,34.8000,124,'אופניים בירקון'],
+ ['tote-woman',32.0752,34.7692,118,'בן יהודה'],
+ ['coffee-guy',32.0652,34.7782,118,'שדרות רוטשילד'],
+ ['denim-guy',32.0700,34.7860,118,'ליד הבימה'],
+ ['backpack-guy',32.0790,34.8125,118,'פארק המכתש']
 ].forEach(function(m,i){
   L.marker(warp(m[1],m[2]),{pane:'motif',interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:[0,0],
-    html:'<div class="motif" style="--s:'+m[3]+'px;--d:'+(2.6+(i%4)*.45)+'s;--o:'+(-i*.37)+'s"><img src="doodles/'+m[0]+'.svg" alt=""><div class="mc">'+m[4]+'</div></div>'})}).addTo(map);
+    html:'<div class="motif" style="--s:'+m[3]+'px;--d:'+(2.6+(i%4)*.45)+'s;--o:'+(-i*.37)+'s"><img src="characters/'+m[0]+'.png" alt=""><div class="mc">'+m[4]+'</div></div>'})}).addTo(map);
 });
 
 var threads=L.layerGroup().addTo(map);
