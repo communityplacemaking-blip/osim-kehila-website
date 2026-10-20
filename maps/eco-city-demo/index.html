@@ -16,7 +16,7 @@
   --gold:#C59A3C; --gold-2:#E2C27A;
   --ink:#1A2626; --muted:#5E6B6A; --line:#E7DED3;
   --shadow:0 12px 32px rgba(22,49,49,.22);
-  --panel:420px;
+  --panel:330px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-family:Heebo,Arial,sans-serif}
@@ -26,27 +26,27 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .panel{position:fixed;top:0;right:0;bottom:0;width:var(--panel);background:var(--cream);z-index:600;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(22,49,49,.12)}
 #map{position:fixed;top:0;bottom:0;left:0;right:var(--panel);background:#ECE6DC}
 
-.head{background:var(--teal);color:#fff;padding:22px 22px 16px;position:relative;overflow:hidden}
+.head{background:var(--teal);color:#fff;padding:16px 18px 12px;position:relative;overflow:hidden}
 .head::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 22px);pointer-events:none}
 .kicker{font-size:11.5px;letter-spacing:.22em;color:var(--gold-2);font-weight:500}
-.head h1{margin:8px 0 6px;font-size:30px;line-height:1.2;font-weight:500;letter-spacing:-.005em}
+.head h1{margin:6px 0 4px;font-size:23px;line-height:1.2;font-weight:500;letter-spacing:-.005em}
 .head h1 span{display:block}
-.head p{margin:0;font-size:14px;font-weight:300;opacity:.85}
-.stats{display:flex;gap:0;margin-top:16px;border-top:1px solid rgba(255,255,255,.15);padding-top:12px}
+.head p{margin:0;font-size:12.5px;font-weight:300;opacity:.85}
+.stats{display:flex;gap:0;margin-top:10px;border-top:1px solid rgba(255,255,255,.15);padding-top:8px}
 .stat{flex:1;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
 .stat:last-child{border-left:0}
-.stat b{display:block;font-size:24px;font-weight:500;color:var(--gold-2);font-family:Rubik,Heebo,sans-serif}
-.stat span{font-size:11.5px;opacity:.8}
-.filters{display:flex;gap:6px;padding:12px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;background:var(--cream)}
-.chip{border:1px solid var(--line);background:#fff;color:var(--teal);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.stat b{display:block;font-size:19px;font-weight:500;color:var(--gold-2);font-family:Rubik,Heebo,sans-serif}
+.stat span{font-size:10.5px;opacity:.8}
+.filters{display:flex;gap:5px;padding:9px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap;background:var(--cream)}
+.chip{border:1px solid var(--line);background:#fff;color:var(--teal);border-radius:999px;padding:5px 10px;font:inherit;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .chip[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
 .chip i{width:8px;height:8px;border-radius:50%;display:inline-block;background:currentColor}
 
-.grid{flex:1;overflow:auto;padding:14px 16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
-.card{position:relative;border-radius:10px;overflow:hidden;height:150px;background:var(--teal-2) center/cover no-repeat;cursor:pointer;border:0;padding:0;font:inherit;text-align:right;color:#fff;transition:transform .2s,box-shadow .2s}
+.grid{flex:1;overflow:auto;padding:10px 12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+.card{position:relative;border-radius:10px;overflow:hidden;height:118px;background:var(--teal-2) center/cover no-repeat;cursor:pointer;border:0;padding:0;font:inherit;text-align:right;color:#fff;transition:transform .2s,box-shadow .2s}
 .card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(14,32,32,.82),rgba(14,32,32,0) 58%)}
 .card .t{position:absolute;bottom:8px;right:10px;left:10px;z-index:1}
-.card .t b{display:block;font-size:15px;font-weight:700}
+.card .t b{display:block;font-size:13.5px;font-weight:700}
 .card .t span{font-size:11.5px;opacity:.85;display:block;border-top:1px solid rgba(255,255,255,.35);margin-top:4px;padding-top:3px}
 .card .st{position:absolute;top:8px;right:8px;z-index:1;background:var(--gold);color:#fff;font-size:10.5px;font-weight:700;border-radius:999px;padding:2px 8px}
 .card:hover,.card.on{transform:translateY(-2px);box-shadow:0 0 0 3px var(--gold),var(--shadow)}
@@ -55,7 +55,7 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .live-list{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px}
 .live-list button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font:inherit;font-size:12.5px;color:var(--teal);cursor:pointer}
 .live-list button:hover{border-color:var(--teal)}
-.credit{font-size:11px;color:var(--muted);padding:10px 22px;border-top:1px solid var(--line);background:var(--cream)}
+.credit{font-size:10.5px;color:var(--muted);padding:8px 14px;border-top:1px solid var(--line);background:var(--cream)}
 .credit b{color:var(--teal);font-weight:500}
 
 /* מפת משמעות: רקע מאויר בלי אריחים */
@@ -89,8 +89,17 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 
 /* עוגנים: עיגול עם תמונת המקום, ועיגולי משיכה דקים סביבו (כמו האיורים העגולים במפת רמת גן) */
 .anc{display:flex;flex-direction:column;align-items:center;cursor:pointer}
-.anc .disc{position:relative;border-radius:50%;background:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--gold),0 6px 16px rgba(22,49,49,.28);transition:transform .2s}
-.anc:hover .disc{transform:scale(1.08)}
+.anc .disc{position:relative;border-radius:50%;background:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--gold),0 6px 16px rgba(22,49,49,.28);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.anc .an{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+/* מעבר עכבר: התמונה גדלה, כמו לעצור מול המקום בזמן שיטוט */
+.anc:hover .disc{transform:scale(2.6);box-shadow:0 0 0 1px var(--gold),0 14px 34px rgba(22,49,49,.38)}
+.anc:hover .an{transform:translateY(calc(var(--d)*.83))}
+.anc .an small{display:none;font-size:11.5px;font-weight:400;color:var(--muted);text-align:center}
+.anc:hover .an{border-radius:12px;padding:3px 11px;text-align:center}
+.anc:hover .an small{display:block}
+.anc:hover .halo,.anc:hover .bdg{opacity:0}
+.anc .halo,.anc .bdg{transition:opacity .25s}
+.zlow .anc:hover .disc{transform:scale(1.9)}
 .anc .disc img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
 .anc .disc.has>svg{display:none}
 .anc .disc>svg{width:50%;height:50%;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
@@ -103,19 +112,19 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .zlow .anc .an{display:none}
 .zlow .anc .disc{transform:scale(.72)}
 .zlow .anc .halo{display:none}
-/* דמויות מאוירות (doodles/): קישוט בלבד, לא לחיצות, עם תנועה עדינה */
+/* דמויות מאוירות (characters/): קישוט בלבד, לא לחיצות, עם תנועה עדינה. --s הוא גובה הדמות */
 .motif{pointer-events:none;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
-.motif img{display:block;width:var(--s,110px);height:auto;transform-origin:50% 85%;animation:alive var(--d,3s) ease-in-out var(--o,0s) infinite alternate}
-.zlow .motif img{width:calc(var(--s,110px)*.72)}
-@keyframes alive{0%{transform:rotate(-2.5deg) translateY(0)}100%{transform:rotate(2.5deg) translateY(-3px)}}
+.motif img{display:block;height:var(--s,110px);width:auto;filter:drop-shadow(0 3px 3px rgba(22,49,49,.18));transform-origin:50% 85%;animation:alive var(--d,3s) ease-in-out var(--o,0s) infinite alternate}
+.zlow .motif img{height:calc(var(--s,110px)*.72)}
+@keyframes alive{0%{transform:rotate(-1.5deg) translateY(0)}100%{transform:rotate(1.5deg) translateY(-2px)}}
 @media (prefers-reduced-motion:reduce){.motif img{animation:none}}
 .hand{font-family:"Amatic SC",Rubik,sans-serif;font-weight:700}
 .motif .mc{font-family:"Amatic SC",Rubik,sans-serif;font-weight:700;font-size:21px;line-height:1;color:var(--teal);text-align:center;white-space:nowrap;margin-top:-2px;text-shadow:0 0 3px #FFF9F5,0 0 3px #FFF9F5}
 .zlow .motif .mc{font-size:17px}
-.street{transform:translate(-50%,-50%) rotate(var(--r,0deg));font-family:"Amatic SC",Rubik,sans-serif;font-weight:700;font-size:19px;color:#5E6B6A;white-space:nowrap;pointer-events:none;text-shadow:0 0 3px #FFF9F5,0 0 3px #FFF9F5,0 0 5px #FFF9F5}
-.zlow .street{font-size:16px}
+.street{transform:translate(-50%,-50%) rotate(var(--r,0deg));font-family:Rubik,Heebo,sans-serif;font-weight:500;font-size:12.5px;letter-spacing:.02em;color:#2F4A49;white-space:nowrap;pointer-events:none;text-shadow:0 0 3px #FFF9F5,0 0 3px #FFF9F5,0 0 5px #FFF9F5}
+.zlow .street{font-size:11px}
 /* נייר: טקסטורה עדינה מעל הרקע, מתחת לסמנים */
-.paper{position:absolute;inset:0;z-index:395;pointer-events:none;mix-blend-mode:multiply;opacity:.55;
+.paper{position:absolute;inset:0;z-index:395;pointer-events:none;mix-blend-mode:multiply;opacity:.35;
  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .5 0 0 0 0 .42 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E")}
 .anc.dim{opacity:.35}
 .thread{stroke-dasharray:2 7;animation:flow 1.1s linear infinite}
@@ -225,25 +234,25 @@ var IC={
 function svg(k){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>';}
 /* תמונות העוגנים מ-Wikimedia Commons. אם קובץ לא נטען עוברים לחלופה, ואם אין, נשאר האייקון */
 window.nextPhoto=nextPhoto;
-function nextPhoto(el){var a=A[+el.dataset.a],k=+el.dataset.k+1;if(a.ph[k]){el.dataset.k=k;el.src=photo(a.ph[k],240);}else{var b=el.parentNode.querySelector('.bdg');if(b)b.remove();el.parentNode.classList.remove('has');el.remove();}}
+function nextPhoto(el){var a=A[+el.dataset.a],k=+el.dataset.k+1;if(a.ph[k]){el.dataset.k=k;el.src=photo(a.ph[k],480);}else{var b=el.parentNode.querySelector('.bdg');if(b)b.remove();el.parentNode.classList.remove('has');el.remove();}}
 document.addEventListener('load',function(e){var el=e.target;if(el.tagName==='IMG'&&el.dataset.a!=null)A[+el.dataset.a].ok=+el.dataset.k;},true);
-function photo(f,w){return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/^File:/,''))+'?width='+w;}
+function photo(f,w){if(/^photos\//.test(f))return f;return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/^File:/,''))+'?width='+w;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
 /* עוגנים עירוניים, מיקומים מאומתים. w = משקל בזיכרון העירוני (בחירה עיצובית) */
 var A=[
  {n:'כיכר רבין',ph:['Rabin-square-tel-aviv-april-2014.jpg', 'RabinSquare.jpg'],k:'square',w:5,lat:32.080610,lng:34.780590,t:'הכיכר של העיר'},
- {n:'פארק הירקון',ph:['Yarkon Park Tel Aviv 2019.jpg', 'PikiWiki Israel 15306 Tel-Aviv - Yarkon park.jpg'],k:'park',w:5,lat:32.098007,lng:34.788297,t:'הריאה הירוקה של העיר'},
+ {n:'פארק הירקון',ph:['Yarkon Park Tel Aviv 2019.jpg', 'Yarkon Park - Tel Aviv - panoramio (4).jpg', 'PikiWiki Israel 15306 Tel-Aviv - Yarkon park.jpg'],k:'park',w:5,lat:32.098007,lng:34.788297,t:'הריאה הירוקה של העיר'},
  {n:'הבימה',ph:['Habima Theatre building-Tel Aviv.jpg', 'Habima Theatre (cropped).jpg'],k:'theater',w:4,lat:32.072650,lng:34.779450,t:'התיאטרון הלאומי וכיכר התרבות'},
  {n:'דיזנגוף סנטר',ph:['Dizengoff Center - Tel Aviv, Israel - panoramio.jpg', 'Dizengof Center Tel Aviv.jpg'],k:'bag',w:4,lat:32.075350,lng:34.775200,t:'הקניון הראשון של העיר'},
- {n:'עזריאלי',ph:['Azrieli Towers, Tel Aviv.jpg', 'Israel Tel Aviv - Azrieli towers.jpg'],k:'towers',w:4,lat:32.074303,lng:34.791692,t:'קו הרקיע של העיר'},
- {n:'נמל תל אביב',ph:['Namal tel aviv.JPG', 'Old Port in Tel Aviv.jpg'],k:'port',w:4,lat:32.099069,lng:34.775343,t:'טיילת, שוק האיכרים ושקיעה על הים'},
- {n:'כיכר המדינה',k:'ring',w:3,lat:32.086769,lng:34.789763,t:'טבעת ירוקה בצפון הישן'},
- {n:'כיכר דיזנגוף',ph:['Fire and Water Fountain - Dizengoff Square - Kikar Dizengoff - Tel Aviv (4025020229).jpg', 'Dizengoff Square Fountain.jpg'],k:'fountain',w:3,lat:32.077837,lng:34.774539,t:'המזרקה ושוק העתיקות'},
+ {n:'עזריאלי',ph:['Azrieli Towers, Tel Aviv.jpg', 'Israel Tel Aviv - Azrieli towers.jpg', 'Azriely.jpg'],k:'towers',w:4,lat:32.074303,lng:34.791692,t:'קו הרקיע של העיר'},
+ {n:'נמל תל אביב',ph:['Namal tel aviv.JPG', 'Old Port in Tel Aviv.jpg', 'Tel Aviv Port Lowshot.jpg'],k:'port',w:4,lat:32.099069,lng:34.775343,t:'טיילת, שוק האיכרים ושקיעה על הים'},
+ {n:'כיכר המדינה',ph:['photos/kikar-hamedina.jpg'],k:'ring',w:3,lat:32.086769,lng:34.789763,t:'טבעת ירוקה בצפון הישן'},
+ {n:'כיכר דיזנגוף',ph:['Fire and Water Fountain - Dizengoff Square - Kikar Dizengoff - Tel Aviv (4025020229).jpg', 'Dizengoff Square Fountain.jpg', 'Dizengoff Square.jpg'],k:'fountain',w:3,lat:32.077837,lng:34.774539,t:'המזרקה ושוק העתיקות'},
  {n:'מוזיאון תל אביב',ph:['Tel Aviv Museum of Art - Israel, March 2024 37.jpg'],k:'museum',w:3,lat:32.077299,lng:34.785627,t:'אמנות, ספרייה ורחבה עירונית'},
- {n:'רכבת סבידור מרכז',ph:['Israel Tel Aviv Savidor station.jpg', 'Tel Aviv Central Savidor train station רכבת סבידור מרכז (9).JPG'],k:'train',w:2,lat:32.083487,lng:34.797137,t:'רכבת, הקו הסגול ונתיבי איילון'},
- {n:'גבעת קוזלובסקי',ph:['Givatayim-Observatory.jpg'],k:'hill',w:3,lat:32.071354,lng:34.816575,t:'תצפית על כל העיר מגבעתיים'},
- {n:'רחוב כצנלסון',k:'cafe',w:3,lat:32.075303,lng:34.810700,t:'הרחוב הראשי של גבעתיים'}
+ {n:'רכבת סבידור מרכז',ph:['Israel Tel Aviv Savidor station.jpg', 'Tel Aviv Central Savidor train station רכבת סבידור מרכז (9).JPG', 'Tel Aviv Central Savidor train station רכבת סבידור מרכז (3).JPG'],k:'train',w:2,lat:32.083487,lng:34.797137,t:'רכבת, הקו הסגול ונתיבי איילון'},
+ {n:'גבעת קוזלובסקי',ph:['Givatayim-Observatory.jpg', "Giv'atayim from Koslovsky Hill 2020.jpg"],k:'hill',w:3,lat:32.071354,lng:34.816575,t:'תצפית על כל העיר מגבעתיים'},
+ {n:'רחוב כצנלסון',ph:['photos/katznelson.jpg'],k:'cafe',w:3,lat:32.075303,lng:34.810700,t:'הרחוב הראשי של גבעתיים'}
 ];
 
 /* פרויקטים בשיווק. מקור: דפי הפרויקטים באתר אקו סיטי. מיקום: גיאוקוד לפי מספר בית */
@@ -283,7 +292,7 @@ L.control.zoom({position:'bottomleft'}).addTo(map);
    וכל עוגן מותח את המרחב סביבו לפי המשקל שלו, כמו יריעת גומי. הכיוונים נשמרים, הגדלים מספרים מה חשוב.
    המרחקים ("דקות הליכה") מחושבים תמיד מהמיקום האמיתי. */
 map.attributionControl.setPrefix(false);
-map.attributionControl.addAttribution('גבולות: OpenStreetMap, israel-municipalities-polygons · שכונות תל אביב: שרטוט סכמטי · תמונות העוגנים: Wikimedia Commons · דמויות: Open Doodles, Pablo Stanley (CC0)');
+map.attributionControl.addAttribution('גבולות: OpenStreetMap, israel-municipalities-polygons · רחובות: Overture Maps / OpenStreetMap (ODbL) · שכונות תל אביב: שרטוט סכמטי · תמונות העוגנים: Wikimedia Commons · איורי דמויות: עושים קהילה');
 var W=A.map(function(a){return {lat:a.lat,lng:a.lng,w:.16*a.w,r:200+80*a.w};}),KX=94300,KY=110540;
 function warp(lat,lng){var dx=0,dy=0;W.forEach(function(a){var ex=(lng-a.lng)*KX,ey=(lat-a.lat)*KY,g=a.w*Math.exp(-(ex*ex+ey*ey)/(a.r*a.r));dx+=ex*g;dy+=ey*g;});return [lat+dy/KY,lng+dx/KX];}
 function dens(r){var o=[];for(var i=0;i<r.length;i++){o.push(r[i]);var q=r[i+1];if(!q)break;var n=Math.floor(Math.hypot(q[0]-r[i][0],q[1]-r[i][1])/.0004);for(var k=1;k<n;k++)o.push([r[i][0]+(q[0]-r[i][0])*k/n,r[i][1]+(q[1]-r[i][1])*k/n]);}return o;}
@@ -296,18 +305,18 @@ function wgeom(g){
   return g;
 }
 P.concat(A).forEach(function(p){p.rlat=p.lat;p.rlng=p.lng;var w=warp(p.lat,p.lng);p.lat=w[0];p.lng=w[1];});
-var TONES=['#F6EEE3','#EAF2EF','#F3E7D6','#E6F0F3','#F5EAE2'];
+var TONES=['#F0E3CF','#E0ECE6','#EDDCC3','#DAE8EE','#EFDFD2'];
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
 map.createPane('motif');map.getPane('motif').style.zIndex=380;map.getPane('motif').style.pointerEvents='none';
 var hoodLayer=null,hoodLabels=L.layerGroup();
 fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
   gj.features.forEach(function(f){f.geometry=wgeom(f.geometry);});
   var by=function(k){return {type:'FeatureCollection',features:gj.features.filter(function(f){return f.properties.kind===k;})};};
-  L.geoJSON(by('sea'),{pane:'geo',interactive:false,style:{stroke:false,fillColor:'#DCF2FD',fillOpacity:1}}).addTo(map);
+  L.geoJSON(by('sea'),{pane:'geo',interactive:false,style:{stroke:false,fillColor:'#C9E8F8',fillOpacity:1}}).addTo(map);
   L.geoJSON(by('city'),{pane:'geo',interactive:false,style:function(f){var c=f.properties.context;
     return {color:'#1E3F3F',weight:c?1:1.8,opacity:c?.35:.85,dashArray:c?'4 5':null,fillColor:c?'#F1EAE0':'#FFF9F5',fillOpacity:1};}}).addTo(map);
   var i=0;hoodLayer=L.geoJSON(by('hood'),{pane:'geo',interactive:false,style:function(f){
-    return {color:'#1E3F3F',weight:.9,opacity:.45,dashArray:'3 4',fillColor:f.properties.park?'#DCEBD6':TONES[(i++)%TONES.length],fillOpacity:1};}}).addTo(map);
+    return {color:'#1E3F3F',weight:.9,opacity:.45,dashArray:'3 4',fillColor:f.properties.park?'#CDE3C2':TONES[(i++)%TONES.length],fillOpacity:1};}}).addTo(map);
   L.geoJSON(by('river'),{pane:'geo',interactive:false,style:{color:'#BFE3F5',weight:7,opacity:1,lineCap:'round'}}).addTo(map);
   streets();
   by('hood').features.forEach(function(f){var c=warp(f.properties.center[0],f.properties.center[1]);
@@ -315,26 +324,35 @@ fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
   hoods();
 });
 /* רחובות ראשיים, כמו במפה מצוירת: פס לבן רחב עם שוליים. התוואי סכמטי (נקודות ציון ידועות לאורך הרחוב) */
-var STREETS=[
- ['דיזנגוף',[[32.0728,34.7752],[32.0778,34.7745],[32.0835,34.7738],[32.0880,34.7742],[32.0935,34.7765],[32.0975,34.7790]]],
- ['אבן גבירול',[[32.0700,34.7818],[32.0760,34.7815],[32.0820,34.7820],[32.0880,34.7835],[32.0950,34.7855],[32.1005,34.7870]]],
- ['בן יהודה',[[32.0735,34.7685],[32.0800,34.7708],[32.0870,34.7728],[32.0935,34.7745]]],
- ['רוטשילד',[[32.0610,34.7712],[32.0640,34.7745],[32.0670,34.7780],[32.0715,34.7792]]],
- ['ארלוזורוב',[[32.0888,34.7698],[32.0870,34.7765],[32.0855,34.7840],[32.0842,34.7920],[32.0820,34.8010],[32.0800,34.8090]]],
- ['איילון',[[32.0580,34.7905],[32.0700,34.7920],[32.0800,34.7950],[32.0900,34.7985],[32.1010,34.8030]]],
- ['כצנלסון',[[32.0700,34.8065],[32.0750,34.8090],[32.0800,34.8110]]],
- ['ז\'בוטינסקי',[[32.0880,34.7990],[32.0870,34.8090],[32.0860,34.8180]]]
-];
+/* רחובות אמיתיים מ-Overture Maps (נגזר מ-OpenStreetMap, ODbL), נבנה ב-build-streets.py. גם הם עוברים את מתיחת העוגנים */
+var ST={M:{c:'#F4E2B4',k:'#C9A75A',w:6.5},A:{c:'#FBF0D6',k:'#CDB27A',w:5.2},B:{c:'#FFFFFF',k:'#C8BCAA',w:3.6},C:{c:'#FFFFFF',k:'#DCD2C3',w:1.7}};
+var streetLayers=[],streetLabels=L.layerGroup(),streetLabelsMinor=L.layerGroup();
 function streets(){
-  STREETS.forEach(function(st){
-    var g=wgeom({type:'LineString',coordinates:st[1].map(function(c){return [c[1],c[0]];})}),ll=g.coordinates.map(function(c){return [c[1],c[0]];});
-    L.polyline(ll,{pane:'geo',interactive:false,color:'#C9C0B2',weight:11,opacity:.9,lineCap:'round',lineJoin:'round'}).addTo(map);
-    L.polyline(ll,{pane:'geo',interactive:false,color:'#FFFFFF',weight:8,opacity:1,lineCap:'round',lineJoin:'round'}).addTo(map);
-    var i=Math.floor(ll.length*.42),a=ll[i],b=ll[Math.min(i+3,ll.length-1)],ang=Math.atan2(-(b[0]-a[0])*1.17,b[1]-a[1])*180/Math.PI;
-    if(ang>90)ang-=180;if(ang<-90)ang+=180;
-    L.marker(a,{interactive:false,keyboard:false,zIndexOffset:-2500,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="street" style="--r:'+ang.toFixed(0)+'deg">'+st[0]+'</div>'})}).addTo(map);
+  map.createPane('streets');map.getPane('streets').style.zIndex=270;
+  var rend=L.canvas({pane:'streets',padding:.3});
+  fetch('streets.json').then(function(r){return r.json();}).then(function(d){
+    function wl(c){return wring(c).map(function(p){return [p[1],p[0]];});}
+    ['C','B','A','M'].forEach(function(k){
+      var lines=d[k].map(function(x){return wl(x[1]);});
+      var cas=L.polyline(lines,{renderer:rend,interactive:false,color:ST[k].k,weight:ST[k].w+2,lineCap:'round',lineJoin:'round'});
+      var fil=L.polyline(lines,{renderer:rend,interactive:false,color:ST[k].c,weight:ST[k].w,lineCap:'round',lineJoin:'round'});
+      streetLayers.push({k:k,cas:cas,fil:fil});
+    });
+    /* קודם כל המעטפות ואז המילוי, כדי שהצמתים ייראו נקיים */
+    streetLayers.forEach(function(l){l.cas.addTo(map);});
+    streetLayers.forEach(function(l){l.fil.addTo(map);});
+    d.L.forEach(function(x,i){
+      var ll=wl(x[1]),j=Math.floor(ll.length*.5),a=ll[Math.max(0,j-1)],b=ll[Math.min(j+1,ll.length-1)],m=ll[j];
+      var ang=Math.atan2(-(b[0]-a[0])*1.17,b[1]-a[1])*180/Math.PI;if(ang>90)ang-=180;if(ang<-90)ang+=180;
+      L.marker(m,{interactive:false,keyboard:false,zIndexOffset:-2500,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="street" style="--r:'+ang.toFixed(0)+'deg">'+x[0]+'</div>'})}).addTo(i<8?streetLabels:streetLabelsMinor);
+    });
+    streetZoom();map.on('zoomend',streetZoom);
   });
 }
+function streetZoom(){var z=map.getZoom(),f=Math.max(.45,Math.min(1.6,Math.pow(1.45,z-14)));
+  streetLayers.forEach(function(l){l.cas.setStyle({weight:ST[l.k].w*f+2,opacity:l.k==='C'&&z<13.5?.5:1});l.fil.setStyle({weight:ST[l.k].w*f,opacity:l.k==='C'&&z<13.5?.6:1});});
+  if(z>=12.5)streetLabels.addTo(map);else map.removeLayer(streetLabels);
+  if(z>=14.25)streetLabelsMinor.addTo(map);else map.removeLayer(streetLabelsMinor);}
 function hoods(){if(!hoodLayer)return;var z=map.getZoom(),show=z>=14,lab=z>=15;
   hoodLayer.setStyle(function(f){return {opacity:show?.45:0,fillOpacity:show||f.properties.park?1:0};});
   if(lab)hoodLabels.addTo(map);else map.removeLayer(hoodLabels);}
@@ -345,23 +363,15 @@ map.on('zoomend',hoods);
   L.marker(w,{interactive:false,keyboard:false,zIndexOffset:-2000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="city">'+c[0]+'</div>'})}).addTo(map);
 });
 
-/* דמויות: Open Doodles של Pablo Stanley (נחלת הכלל, CC0), בצבעי אקו סיטי. כל דמות יושבת באזור שלה, לא בכתובת מדויקת */
+/* דמויות: איורי "Cool Tel Aviv" של עושים קהילה. כל דמות יושבת באזור שלה, לא בכתובת מדויקת */
 (function(){var d=document.createElement('div');d.className='paper';map.getContainer().appendChild(d);})();
 [
- ['bikini',32.0842,34.7662,150,'חוף גורדון'],
- ['ice-cream',32.0695,34.7650,112,'גלידה בטיילת'],
- ['roller-skating',32.0990,34.7718,128,'רולר בנמל'],
- ['running',32.1012,34.8005,132,'ריצה בירקון'],
- ['dog-jump',32.0960,34.8120,124,'גינת כלבים'],
- ['coffee',32.0878,34.7766,120,'קפה של בוקר'],
- ['sitting-reading',32.0922,34.8008,132,'ספר וקפה'],
- ['selfie',32.0795,34.7722,104,'סלפי בדיזנגוף'],
- ['ballet',32.0700,34.7850,136,'תרבות ליד הבימה'],
- ['strolling',32.0652,34.7782,124,'שדרות רוטשילד'],
- ['petting',32.0792,34.8128,120,'פארק המכתש']
+ ['cafe-couple',32.0878,34.7766,118,'קפה בצפון הישן'],
+ ['surfer',32.0842,34.7662,128,'בדרך לים'],
+ ['tote-woman',32.0712,34.7832,118,'ליד הבימה']
 ].forEach(function(m,i){
   L.marker(warp(m[1],m[2]),{pane:'motif',interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:[0,0],
-    html:'<div class="motif" style="--s:'+m[3]+'px;--d:'+(2.6+(i%4)*.45)+'s;--o:'+(-i*.37)+'s"><img src="doodles/'+m[0]+'.svg" alt=""><div class="mc">'+m[4]+'</div></div>'})}).addTo(map);
+    html:'<div class="motif" style="--s:'+m[3]+'px;--d:'+(2.6+(i%4)*.45)+'s;--o:'+(-i*.37)+'s"><img src="characters/'+m[0]+'.png" alt=""><div class="mc">'+m[4]+'</div></div>'})}).addTo(map);
 });
 
 var threads=L.layerGroup().addTo(map);
@@ -369,11 +379,11 @@ var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup().addTo(map),anc:L.
 
 A.forEach(function(a,i){
   a.id=i;var d=34+a.w*7,h1=Math.round(d*1.75),h2=Math.round(d*2.4);
-  var img=a.ph?'<img src="'+esc(photo(a.ph[0],240))+'" alt="" loading="lazy" data-a="'+i+'" data-k="0" onerror="nextPhoto(this)">':'';
-  L.marker([a.lat,a.lng],{title:a.n,zIndexOffset:-500,icon:L.divIcon({className:'',iconSize:[d,d],iconAnchor:[d/2,d/2],
-    html:'<div class="anc" data-a="'+i+'"><div class="disc'+(img?' has':'')+'" style="width:'+d+'px;height:'+d+'px">'+
+  var img=a.ph?'<img src="'+esc(photo(a.ph[0],480))+'" alt="" loading="lazy" data-a="'+i+'" data-k="0" onerror="nextPhoto(this)">':'';
+  L.marker([a.lat,a.lng],{title:a.n,zIndexOffset:-500,riseOnHover:true,riseOffset:5000,icon:L.divIcon({className:'',iconSize:[d,d],iconAnchor:[d/2,d/2],
+    html:'<div class="anc" data-a="'+i+'" style="--d:'+d+'px"><div class="disc'+(img?' has':'')+'" style="width:'+d+'px;height:'+d+'px">'+
       '<span class="halo" style="width:'+h1+'px;height:'+h1+'px"></span><span class="halo h2" style="width:'+h2+'px;height:'+h2+'px;animation-delay:'+(i*.27)+'s"></span>'+
-      svg(a.k)+img+(img?'<span class="bdg">'+svg(a.k)+'</span>':'')+'</div><div class="an">'+a.n+'</div></div>'})})
+      svg(a.k)+img+(img?'<span class="bdg">'+svg(a.k)+'</span>':'')+'</div><div class="an">'+a.n+'<small>'+a.t+'</small></div></div>'})})
    .on('click',function(){showA(a);}).addTo(layers.anc);
 });
 function pinHtml(p,extra){return '<div class="pin" data-p="'+p.id+'" style="animation-delay:'+(p.id*45)+'ms"><div class="ph" style="background-image:url(\''+esc(p.thumb)+'\')"></div><div class="nm">'+esc(p.n)+'</div>'+(extra||'')+'</div>';}
