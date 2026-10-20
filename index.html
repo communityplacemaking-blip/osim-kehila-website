@@ -114,8 +114,8 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .tile .wip{position:relative;background:rgba(255,255,255,.9);border-radius:999px;padding:4px 14px;font-size:14px;color:var(--navy)}
 .tile .img{aspect-ratio:16/9;background:var(--cream) center 25%/cover no-repeat;position:relative;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px}
 .tile .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
-.tile small{color:var(--muted);font-size:14px}
-.tile h3{font-size:21px;font-weight:700;color:var(--navy);line-height:1.3}
+.tile small{color:var(--warm);font-size:15.5px;font-weight:500}
+.tile h3{font-size:17px;font-weight:500;color:var(--navy);line-height:1.35}
 .tile .img iframe{position:absolute;top:0;left:0;width:200%;height:200%;border:0;transform:scale(.5);transform-origin:0 0;pointer-events:none;background:transparent}
 .tile .img{overflow:hidden}.tile .status{z-index:1;position:absolute;top:10px;inset-inline-start:10px;background:#fff;color:var(--navy);font-size:13px;padding:3px 11px;border-radius:999px;box-shadow:0 0 0 1px var(--grey)}
 .tile .status::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--warm);margin-inline-end:6px;vertical-align:middle}
@@ -139,7 +139,12 @@ dialog.viewer::backdrop{background:rgba(15,45,74,.55)}
 .who h2{font-size:28px;margin-bottom:14px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .tracks{display:grid;gap:8px}.tracks div{background:#fff;border:1px solid var(--grey);border-radius:14px;padding:10px 16px}.tracks b{display:block;font-weight:500;font-size:17px}.tracks span{display:block;font-size:15.5px;color:var(--muted);line-height:1.45}
-.chips span{padding:7px 16px;border-radius:999px;font-size:16px;border:1px solid var(--grey);background:#fff}
+.chips span,.chips button{padding:7px 16px;border-radius:999px;font:inherit;font-size:16px;color:var(--navy);border:1px solid var(--grey);background:#fff}
+.chips button{cursor:pointer;box-shadow:inset 0 -1px 0 var(--must);transition:border-color .2s,background .2s}.chips button:hover{border-color:var(--must);background:var(--cream)}
+.viewer .doc{display:none;flex:1;overflow:auto;padding:22px 28px 32px;font-size:17px;line-height:1.65}
+.viewer.text{width:min(760px,94vw);height:auto;max-height:88vh}.viewer.text iframe,.viewer.text .bar a{display:none}.viewer.text .doc{display:block}
+.viewer .doc h3{font-size:22px;font-weight:500;margin:0 0 10px}.viewer .doc h4{font-size:17px;font-weight:500;margin:18px 0 6px}.viewer .doc p{margin:0 0 10px}.viewer .doc ul{margin:0 0 10px;padding-inline-start:20px}.viewer .doc .lead{color:var(--warm);font-weight:400}.viewer .doc blockquote{margin:14px 0;padding:6px 16px;border-inline-start:3px solid var(--must);color:var(--muted)}.viewer .doc .more{display:inline-block;margin-top:8px;color:var(--navy);box-shadow:inset 0 -1px 0 var(--must);text-decoration:none}
+.viewer .doc .album{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--cream);margin:0 0 14px}
 .who h2{box-shadow:inset 0 -2px 0 var(--warm);display:inline-block;padding-bottom:4px}
 /* contact */
 .contact{background:var(--sand);position:relative;overflow:hidden}
@@ -191,7 +196,15 @@ document.addEventListener('DOMContentLoaded',function(){
   var dlg=document.getElementById('viewer'),vf=dlg&&dlg.querySelector('iframe');
   if(dlg&&dlg.showModal){
     function closeV(){if(dlg.open)dlg.close();}
-    dlg.addEventListener('close',function(){vf.src='about:blank';});
+    var doc=dlg.querySelector('.doc'),rot=0;
+    dlg.addEventListener('close',function(){vf.src='about:blank';clearInterval(rot);doc.innerHTML='';dlg.classList.remove('text');});
+    doc.addEventListener('click',function(e){if(e.target.closest('[data-close]'))closeV();});
+    document.querySelectorAll('.chips button[data-tool]').forEach(function(b){b.addEventListener('click',function(){
+      var t=document.getElementById('tool-'+b.dataset.tool);if(!t)return;
+      doc.innerHTML='';doc.appendChild(t.content.cloneNode(true));doc.scrollTop=0;
+      dlg.querySelector('.bar b').textContent='כלים ותהליכים';dlg.classList.add('text');dlg.showModal();
+      var im=doc.querySelectorAll('.album img'),n=0;
+      if(im.length>1&&!matchMedia('(prefers-reduced-motion: reduce)').matches)rot=setInterval(function(){im[n].classList.remove('on');n=(n+1)%im.length;im[n].classList.add('on');},3500);});});
     dlg.addEventListener('click',function(e){if(e.target===dlg)closeV();});
     dlg.querySelector('.x').addEventListener('click',closeV);
     document.querySelectorAll('#examples a.tile.linked').forEach(function(a){a.addEventListener('click',function(e){
@@ -1455,8 +1468,8 @@ document.addEventListener('DOMContentLoaded',function(){
 <article class="tile" data-place="bs"><div class="img" style="background-image:url(assets/beer-sheva-map.jpg)"><span class="status">אב־טיפוס</span></div><div class="body"><small>באר שבע · שכונה ט׳</small><h3>מפת החוסן המקומי</h3><span class="go"></span></div></article>
 <article class="tile" data-place="givat"><div class="img" style="background-image:url(assets/givatayim-map.jpg?v=20261018)"><span class="status">אב־טיפוס</span></div><div class="body"><small>גבעתיים</small><h3>מפת הקהילה העירונית</h3><span class="go"></span></div></article>
 <article class="tile" data-place="rg"><div class="img" style="background-image:url(assets/ramat-gan-map.jpg?v=20261018)"><span class="status">אב־טיפוס</span></div><div class="body"><small>רמת גן</small><h3>מפת המשפחות</h3><span class="go"></span></div></article>
-<a class="tile linked" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" data-embed="https://www.youtube-nocookie.com/embed/zpe4qSbIm7Q?autoplay=1&amp;rel=0" target="_blank" rel="noopener" aria-label="Placemaking Eilat: לצפייה בסרטון"><div class="img" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)"><span class="status">פרויקט עבר</span><span class="play" aria-hidden="true"></span></div><div class="body"><small>אילת · 2018–2021</small><h3 dir="ltr">Placemaking Eilat</h3><span class="go">לצפייה בסרטון ←</span></div></a>
 <article class="tile" data-place="eco"><div class="img"><span class="status">הדגמה</span></div><div class="body"><small>תל אביב · אקו סיטי</small><h3>מפת התחדשות עירונית</h3><span class="go"></span></div></article>
+<a class="tile linked" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" data-embed="https://www.youtube-nocookie.com/embed/zpe4qSbIm7Q?autoplay=1&amp;rel=0" target="_blank" rel="noopener" aria-label="Placemaking Eilat: לצפייה בסרטון"><div class="img" style="background-image:url(https://img.youtube.com/vi/zpe4qSbIm7Q/hqdefault.jpg)"><span class="status">פרויקט עבר</span><span class="play" aria-hidden="true"></span></div><div class="body"><small>אילת · 2018–2021</small><h3 dir="ltr">Placemaking Eilat</h3><span class="go">לצפייה בסרטון ←</span></div></a>
 </div></div></section>
 
 <section class="design reveal" id="design"><div class="wrap">
@@ -1725,7 +1738,27 @@ render();
 <g class="node" data-n="b50" style="--d:2.05s"><circle cx="1337.7304970186958" cy="223.68671206719574" r="3.1579123001462053" fill="#9A4E2C" stroke="#fff" stroke-width="2.5"></circle></g>
 </svg><div class="wrap">
 <div><h2>למי זה מתאים</h2><div class="tracks"><div><b>עסקים וארגונים</b><span>מפה שמציגה את השירותים, הסניפים, הערכים והקשרים שלכם, בצורה מעניינת ללקוחות ולעובדים.</span></div><div><b>קהילות ורשויות</b><span>מפה ותהליך שמחברים בין אנשים, מקומות, סיפורים ויוזמות.</span></div><div><b>שניהם יחד</b><span>עסקים וקהילה סביב אותו מקום, בשביל ערך משותף.</span></div></div></div>
-<div><h2>כלים ותהליכים</h2><div class="chips"><span>קפה עולם</span><span>שוטטות</span><span>סיפור ומיפוי קהילתי</span><span>שיתוף ציבור</span><span>עושים מקום (Placemaking)</span><span>הכשרת מובילים מקומיים</span><span>הטמעת מערכת עושים קהילה</span></div></div>
+<div><h2>כלים ותהליכים</h2><div class="chips"><button type="button" data-tool="cafe">קפה עולם</button><button type="button" data-tool="lead">מנהיגות השתתפותית</button><button type="button" data-tool="walk">שוטטות</button><button type="button" data-tool="story">סיפור ומיפוי קהילתי</button><button type="button" data-tool="public">שיתוף ציבור</button><button type="button" data-tool="place">עושים מקום (Placemaking)</button><button type="button" data-tool="train">הכשרת מובילים מקומיים</button><button type="button" data-tool="system">הטמעת מערכת עושים קהילה</button></div><template id="tool-cafe"><div class="album" role="img" aria-label="תמונות ממפגשי קפה עולם"><img src="assets/cafe/cafe-1.jpg" class="on" alt="" loading="lazy"><img src="assets/cafe/cafe-2.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-3.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-4.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-5.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-6.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-7.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-8.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-9.jpg" alt="" loading="lazy"><img src="assets/cafe/cafe-10.jpg" alt="" loading="lazy"></div>
+<h3>קפה עולם</h3><p class="lead">הדרך הנעימה והמהנה שאנו מכירים להגיע אל חוכמת הרבים.</p>
+<p>עם מסגרות משרד החינוך, התאגידים המובילים בארץ, האיחוד האירופי ורשויות רבות, עברנו עם קפה עולם דרך מופלאה לאפשר שיחה משמעותית בקבוצות גדולות.</p>
+<p>בין אם מדובר בתהליך או בכנס אחד, המשתתפים יוצאים מועצמים, בתחושה שהקשיבו להם, ויש תובנות משותפות ותחושת שייכות.</p>
+<a class="more" href="https://www.facebook.com/worldcafeisrael" target="_blank" rel="noopener">עוד מפגשים בדף קפה עולם ישראל ↗</a></template><template id="tool-lead"><h3>מנהיגות השתתפותית</h3><p class="lead">תפיסה ואסופה של כלים המיועדים לאפשר תנועה מחוכמת של הכלל אל יצירה משותפת.</p>
+<p>בין כאוס לסדר ישנן הזדמנויות ללמידה חדשה, לתובנות לקראת סדר חדש, כזה שנכון לרגע, כזה שעולה מהצוות, מהקבוצה, מהקהילה, ומחובר לעתיד רצוי. בכלים המהנים של מנהיגות השתתפותית נכוון לכוונה המשותפת.</p>
+<h4>השאלות שאנחנו עובדים איתן</h4><ul><li>איך עוברים מנקודה א׳ לנקודה ב׳, ומגלים בדרך את ג׳?</li><li>איך כל אחד ואחת בצוות נעים מהמוכר אל יצירה שמחוברת לכישרונות ולתשוקות שלהם?</li><li>איך יוצרים מרחב סבלני ומכיל לשיחה על נושאים כבדים, בקלות?</li></ul>
+<h4>הכלים</h4><p>מעגל, קפה עולם, Open Space, סיפור (Storytelling), הנחיה גרפית, תאוריה U, עושים מקום השתתפותי, Art of Hosting.</p>
+<blockquote>כי אנחנו חכמים יותר יחד<br>כי אנו זקוקים לחזור להיות הרשת שאנחנו<br>כי לכל אחד.ת מגיעה ההזדמנות להוביל<br>כי זה מהנה יותר ביחד</blockquote></template><template id="tool-walk"><h3>שוטטות</h3><p class="lead">יוצאים אל המקום, מתבוננים ומקשיבים.</p>
+<p>שוטטות מחברת בין התבוננות, הקשבה, חקירה והידע של הקהילה. היא נקודת ההתחלה שלנו: לגלות ולמפות את מה שכבר קיים במקום, לפני שמתכננים מה להוסיף לו.</p></template><template id="tool-story"><h3>סיפור ומיפוי קהילתי</h3><p class="lead">תהליך השתתפותי לאיסוף ידע, חוויות וסיפורים מקומיים לכדי מפה אינטראקטיבית, ברשת ומחוצה לה.</p>
+<p>עיר, שכונה, בית ספר, מוסד אקדמי, חברה מסחרית, תהליך או קהילה: התהליך מאפשר מפגש, היכרות, חיבור ויצירה של הבמה הטובה ביותר למען האנשים והמקום. עבר, הווה ועתיד מקומי נאספים למאגר אינטראקטיבי ברשת ובמרחב הציבורי.</p>
+<h4>תהליך בניית סיפור קהילתי מאפשר</h4><p>בניית קהילה · שיתוף ציבור · מיתוג מקומי · יצירת מקום · שייכות</p>
+<h4>בדרך אנחנו</h4><p>מארחים, משתתפים, חוגגים, שואלים, יוצרים, מקשיבים, מתכננים ועושים.</p>
+<a class="more" href="#examples" data-close>למפות שנוצרו כך ←</a></template><template id="tool-public"><h3>שיתוף ציבור</h3><p class="lead">הקשבה למקום ולאנשים בכל שלב של התכנון.</p>
+<p>אנחנו מלווים תהליכי תכנון יחד עם אנשי אדריכלות ותכנון, ומביאים את הקול של התושבים ואת הידע המקומי אל תוך התכנון.</p></template><template id="tool-place"><h3>עושים מקום (Placemaking)</h3><p class="lead">תהליך מעורבות מקומי, הנעשה בהשתתפות הקהילה, ליצירה והשראה לחוויית חיים נעימה ומשמעותית בשכונה או בארגון.</p>
+<blockquote>צריך מקום כדי ליצור קהילה, וצריך קהילה כדי ליצור מקום.<br><small>Fred Kent, PlacemakingX</small></blockquote>
+<h4>עשינו מקום ב</h4><p>דיזנגוף סנטר, שכונת נווה שרת בתל אביב, הרצליה, פרדס חנה (עם שיכון ובינוי), אשקלון ואילת.</p>
+<a class="more" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener">הסרטון של Placemaking Eilat ↗</a></template><template id="tool-train"><h3>הכשרת מובילים מקומיים</h3><p class="lead">כי לכל אחד ואחת מגיעה ההזדמנות להוביל.</p>
+<p>סדנאות והכשרות לתושבים, לנציגים ולצוותים: מנהיגות מקומית, מנהיגות רשתית, הקשבה ותקשורת, וחזון משותף. כך הכלים והידע נשארים בקהילה גם אחרי שהתהליך מסתיים.</p></template><template id="tool-system"><h3>הטמעת מערכת עושים קהילה</h3><p class="lead">המפה מציירת את המקום. הקהילה נותנת לו משמעות.</p>
+<p>מערכת דיגיטלית שמחברת בין אנשים, מקום, סיפורים ויוזמות, והופכת ידע מקומי לתשתית של קהילה פעילה. אנחנו מלווים את ההטמעה שלה בשכונה, בבית הספר או בארגון.</p>
+<a class="more" href="#system" data-close>עוד על המערכת ←</a></template></div>
 </div></section>
 
 <section class="how reveal" id="how"><svg class="bgnet" viewBox="0 0 1440 520" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" style="display:block;overflow:visible">
@@ -3112,5 +3145,5 @@ render();
 <footer><div class="wrap"><span>עושים קהילה · Community Making</span>
 <nav aria-label="קישורים בתחתית העמוד" style="display:flex;flex-wrap:wrap;gap:6px 18px"><a href="https://www.facebook.com/communityplacemaking/">פייסבוק</a><a href="https://www.instagram.com/communityplacemaking/">אינסטגרם</a><a href="mailto:osimkehilanet@gmail.com">osimkehilanet@gmail.com</a><a href="accessibility.html">הצהרת נגישות</a></nav>
 </div></footer>
-<dialog class="viewer" id="viewer" aria-label="תצוגת מפה"><div class="bar"><b></b><a href="#" target="_blank" rel="noopener">פתיחה בלשונית חדשה ↗</a><button class="x" type="button" aria-label="סגירה">×</button></div><iframe src="about:blank" allow="autoplay; fullscreen; geolocation; encrypted-media" allowfullscreen></iframe></dialog>
+<dialog class="viewer" id="viewer" aria-label="תצוגת מפה"><div class="bar"><b></b><a href="#" target="_blank" rel="noopener">פתיחה בלשונית חדשה ↗</a><button class="x" type="button" aria-label="סגירה">×</button></div><div class="doc"></div><iframe src="about:blank" allow="autoplay; fullscreen; geolocation; encrypted-media" allowfullscreen></iframe></dialog>
 </body></html>
