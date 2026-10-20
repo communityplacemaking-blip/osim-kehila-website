@@ -1,0 +1,72 @@
+{
+ "rabin-square": {
+  "name": "כיכר רבין",
+  "file": "Rabin-square-tel-aviv-april-2014.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Rabin-square-tel-aviv-april-2014.jpg",
+  "author": "Andrew Nash",
+  "license": "CC BY-SA 2.0"
+ },
+ "yarkon-park": {
+  "name": "פארק הירקון",
+  "file": "Yarkon Park Tel Aviv 2019.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Yarkon_Park_Tel_Aviv_2019.jpg",
+  "author": "Laliv g",
+  "license": "CC BY-SA 4.0"
+ },
+ "habima": {
+  "name": "הבימה",
+  "file": "Habima Theatre building-Tel Aviv.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Habima_Theatre_building-Tel_Aviv.jpg",
+  "author": "Yair Haklai",
+  "license": "CC BY-SA 3.0"
+ },
+ "dizengoff-center": {
+  "name": "דיזנגוף סנטר",
+  "file": "Dizengoff Center - Tel Aviv, Israel - panoramio.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Dizengoff_Center_-_Tel_Aviv,_Israel_-_panoramio.jpg",
+  "author": "Eassa",
+  "license": "CC BY-SA 3.0"
+ },
+ "azrieli": {
+  "name": "עזריאלי",
+  "file": "Azrieli Towers, Tel Aviv.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Azrieli_Towers,_Tel_Aviv.jpg",
+  "author": "http://wikitravel.org/en/User_talk:Cccc3333",
+  "license": "CC BY-SA 3.0"
+ },
+ "tel-aviv-port": {
+  "name": "נמל תל אביב",
+  "file": "Namal tel aviv.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Namal_tel_aviv.JPG",
+  "author": "Meravh",
+  "license": "CC BY-SA 3.0"
+ },
+ "dizengoff-square": {
+  "name": "כיכר דיזנגוף",
+  "file": "Fire and Water Fountain - Dizengoff Square - Kikar Dizengoff - Tel Aviv (4025020229).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Fire_and_Water_Fountain_-_Dizengoff_Square_-_Kikar_Dizengoff_-_Tel_Aviv_(4025020229).jpg",
+  "author": "David Berkowitz from New York, NY, USA",
+  "license": "CC BY 2.0"
+ },
+ "tel-aviv-museum": {
+  "name": "מוזיאון תל אביב",
+  "file": "Tel Aviv Museum of Art - Israel, March 2024 37.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Tel_Aviv_Museum_of_Art_-_Israel,_March_2024_37.jpg",
+  "author": "Chenspec",
+  "license": "CC BY-SA 4.0"
+ },
+ "savidor-station": {
+  "name": "רכבת סבידור מרכז",
+  "file": "Israel Tel Aviv Savidor station.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Israel_Tel_Aviv_Savidor_station.jpg",
+  "author": "Eurovaran",
+  "license": "CC BY-SA 4.0"
+ },
+ "kozlovsky-hill": {
+  "name": "גבעת קוזלובסקי",
+  "file": "Givatayim-Observatory.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Givatayim-Observatory.jpg",
+  "author": "Orion Avidan",
+  "license": "Public domain"
+ }
+}
