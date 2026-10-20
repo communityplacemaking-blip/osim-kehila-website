@@ -144,7 +144,7 @@ dialog.viewer::backdrop{background:rgba(15,45,74,.55)}
 .viewer .doc{display:none;flex:1;overflow:auto;padding:22px 28px 32px;font-size:17px;line-height:1.65}
 .viewer.text{width:min(760px,94vw);height:auto;max-height:88vh}.viewer.text iframe,.viewer.text .bar a{display:none}.viewer.text .doc{display:block}
 .viewer .doc h3{font-size:22px;font-weight:500;margin:0 0 10px}.viewer .doc h4{font-size:17px;font-weight:500;margin:18px 0 6px}.viewer .doc p{margin:0 0 10px}.viewer .doc ul{margin:0 0 10px;padding-inline-start:20px}.viewer .doc .lead{color:var(--warm);font-weight:400}.viewer .doc blockquote{margin:14px 0;padding:6px 16px;border-inline-start:3px solid var(--must);color:var(--muted)}.viewer .doc .more{display:inline-block;margin-top:8px;color:var(--navy);box-shadow:inset 0 -1px 0 var(--must);text-decoration:none}
-.viewer .doc .photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:0 0 14px;background:var(--cream)}.viewer .doc .album{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--cream);margin:0 0 14px}
+.viewer .doc .photo.sketch{object-fit:contain;background:#fff;aspect-ratio:auto;max-height:240px;width:auto;margin-inline:auto}.viewer .doc .photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:0 0 14px;background:var(--cream)}.viewer .doc .album{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--cream);margin:0 0 14px}
 .who h2{box-shadow:inset 0 -2px 0 var(--warm);display:inline-block;padding-bottom:4px}
 /* contact */
 .contact{background:var(--sand);position:relative;overflow:hidden}
@@ -1742,6 +1742,7 @@ render();
 <h3>קפה עולם</h3><p class="lead">הדרך הנעימה והמהנה שאנו מכירים להגיע אל חוכמת הרבים.</p>
 <p>עם מסגרות משרד החינוך, התאגידים המובילים בארץ, האיחוד האירופי ורשויות רבות, עברנו עם קפה עולם דרך מופלאה לאפשר שיחה משמעותית בקבוצות גדולות.</p>
 <p>בין אם מדובר בתהליך או בכנס אחד, המשתתפים יוצאים מועצמים, בתחושה שהקשיבו להם, ויש תובנות משותפות ותחושת שייכות.</p>
+<h4>כלים לשיחה משמעותית בקבוצות גדולות</h4><p>קפה עולם, מרחב פתוח ותרגול מעגל. מתאים לכנסים, לשיתוף ציבור, לגישור, ליצירה ועוד.</p>
 <a class="more" href="https://www.facebook.com/worldcafeisrael" target="_blank" rel="noopener">עוד מפגשים בדף קפה עולם ישראל ↗</a></template><template id="tool-lead"><img class="photo" src="assets/leadership-1.jpg" alt="שיחה במעגל קטן בתהליך של מנהיגות השתתפותית"><h3>מנהיגות השתתפותית</h3><p class="lead">תפיסה ואסופה של כלים המיועדים לאפשר תנועה מחוכמת של הכלל אל יצירה משותפת.</p>
 <p>בין כאוס לסדר ישנן הזדמנויות ללמידה חדשה, לתובנות לקראת סדר חדש, כזה שנכון לרגע, כזה שעולה מהצוות, מהקבוצה, מהקהילה, ומחובר לעתיד רצוי. בכלים המהנים של מנהיגות השתתפותית נכוון לכוונה המשותפת.</p>
 <h4>השאלות שאנחנו עובדים איתן</h4><ul><li>איך עוברים מנקודה א׳ לנקודה ב׳, ומגלים בדרך את ג׳?</li><li>איך כל אחד ואחת בצוות נעים מהמוכר אל יצירה שמחוברת לכישרונות ולתשוקות שלהם?</li><li>איך יוצרים מרחב סבלני ומכיל לשיחה על נושאים כבדים, בקלות?</li></ul>
@@ -1749,14 +1750,18 @@ render();
 <blockquote>כי אנחנו חכמים יותר יחד<br>כי אנו זקוקים לחזור להיות הרשת שאנחנו<br>כי לכל אחד.ת מגיעה ההזדמנות להוביל<br>כי זה מהנה יותר ביחד</blockquote></template><template id="tool-walk"><h3>שוטטות</h3><p class="lead">יוצאים אל המקום, מתבוננים ומקשיבים.</p>
 <p>שוטטות מחברת בין התבוננות, הקשבה, חקירה והידע של הקהילה. היא נקודת ההתחלה שלנו: לגלות ולמפות את מה שכבר קיים במקום, לפני שמתכננים מה להוסיף לו.</p></template><template id="tool-story"><h3>סיפור ומיפוי קהילתי</h3><p class="lead">תהליך השתתפותי לאיסוף ידע, חוויות וסיפורים מקומיים לכדי מפה אינטראקטיבית, ברשת ומחוצה לה.</p>
 <p>עיר, שכונה, בית ספר, מוסד אקדמי, חברה מסחרית, תהליך או קהילה: התהליך מאפשר מפגש, היכרות, חיבור ויצירה של הבמה הטובה ביותר למען האנשים והמקום. עבר, הווה ועתיד מקומי נאספים למאגר אינטראקטיבי ברשת ובמרחב הציבורי.</p>
+<p>שכונה, ארגון או כל מוסד שהוא: כולם צריכים סיפור להתחבר אליו. את זה אנחנו עושים, סיפור שמופיע ברשת במפה מסודרת, וכולם תורמים חלק כדי לבנות אותו.</p>
 <h4>תהליך בניית סיפור קהילתי מאפשר</h4><p>בניית קהילה · שיתוף ציבור · מיתוג מקומי · יצירת מקום · שייכות</p>
 <h4>בדרך אנחנו</h4><p>מארחים, משתתפים, חוגגים, שואלים, יוצרים, מקשיבים, מתכננים ועושים.</p>
 <a class="more" href="#examples" data-close>למפות שנוצרו כך ←</a></template><template id="tool-public"><h3>שיתוף ציבור</h3><p class="lead">הקשבה למקום ולאנשים בכל שלב של התכנון.</p>
 <p>אנחנו מלווים תהליכי תכנון יחד עם אנשי אדריכלות ותכנון, ומביאים את הקול של התושבים ואת הידע המקומי אל תוך התכנון.</p></template><template id="tool-place"><h3>עושים מקום (Placemaking)</h3><p class="lead">תהליך מעורבות מקומי, הנעשה בהשתתפות הקהילה, ליצירה והשראה לחוויית חיים נעימה ומשמעותית בשכונה או בארגון.</p>
 <blockquote>צריך מקום כדי ליצור קהילה, וצריך קהילה כדי ליצור מקום.<br><small>Fred Kent, PlacemakingX</small></blockquote>
+<p>פלייסמייקינג לסוגיו: טקטי, קהילתי או תכנוני.</p>
 <h4>עשינו מקום ב</h4><p>דיזנגוף סנטר, שכונת נווה שרת בתל אביב, הרצליה, פרדס חנה (עם שיכון ובינוי), אשקלון ואילת.</p>
-<a class="more" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener">הסרטון של Placemaking Eilat ↗</a></template><template id="tool-train"><h3>הכשרת מובילים מקומיים</h3><p class="lead">כי לכל אחד ואחת מגיעה ההזדמנות להוביל.</p>
-<p>סדנאות והכשרות לתושבים, לנציגים ולצוותים: מנהיגות מקומית, מנהיגות רשתית, הקשבה ותקשורת, וחזון משותף. כך הכלים והידע נשארים בקהילה גם אחרי שהתהליך מסתיים.</p></template><template id="tool-system"><h3>הטמעת מערכת עושים קהילה</h3><p class="lead">המפה מציירת את המקום. הקהילה נותנת לו משמעות.</p>
+<a class="more" href="https://www.youtube.com/watch?v=zpe4qSbIm7Q" target="_blank" rel="noopener">הסרטון של Placemaking Eilat ↗</a></template><template id="tool-train"><img class="photo sketch" src="assets/hearts-network.png" alt="איור: אדם מצטרף לרשת של אנשים עם לבבות"><h3>הכשרת מובילים מקומיים</h3><p class="lead">כי לכל אחד ואחת מגיעה ההזדמנות להוביל.</p>
+<p>תהליכים קצרים או ארוכים להקמה, לבנייה ולחיזוק קהילה: בית ספרית, ארגונית, שכונתית ואחרות. כבר מזמן הבנו שקל ואדיר יותר בקהילה.</p>
+<h4>סדנאות והכשרות</h4><ul><li>תהליכי הכשרה למנהיגות פעילים מקומית</li><li>מנהיגות בגישת כוח הרשת</li><li>מנהיגות השתתפותית</li><li>סדנאות הקשבה ותקשורת</li><li>בניית חזון השתתפותי</li><li>העצמת זהות מקומית</li><li>לימודי קיימות, מתרבות הצריכה ובכל תחום אחר בנושא</li></ul>
+<p>כך הכלים והידע נשארים בקהילה גם אחרי שהתהליך מסתיים.</p></template><template id="tool-system"><h3>הטמעת מערכת עושים קהילה</h3><p class="lead">המפה מציירת את המקום. הקהילה נותנת לו משמעות.</p>
 <p>מערכת דיגיטלית שמחברת בין אנשים, מקום, סיפורים ויוזמות, והופכת ידע מקומי לתשתית של קהילה פעילה. אנחנו מלווים את ההטמעה שלה בשכונה, בבית הספר או בארגון.</p>
 <a class="more" href="#system" data-close>עוד על המערכת ←</a></template></div>
 </div></section>
