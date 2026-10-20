@@ -358,14 +358,8 @@ map.on('zoomend',hoods);
 (function(){var d=document.createElement('div');d.className='paper';map.getContainer().appendChild(d);})();
 [
  ['cafe-couple',32.0878,34.7766,118,'קפה בצפון הישן'],
- ['surfer',32.0842,34.7662,128,'חוף גורדון'],
- ['iced-coffee-woman',32.0690,34.7652,118,'קפה קר בטיילת'],
- ['headphones-woman',32.0990,34.7720,118,'נמל תל אביב'],
- ['cyclist',32.1010,34.8000,124,'אופניים בירקון'],
- ['tote-woman',32.0752,34.7692,118,'בן יהודה'],
- ['coffee-guy',32.0652,34.7782,118,'שדרות רוטשילד'],
- ['denim-guy',32.0700,34.7860,118,'ליד הבימה'],
- ['backpack-guy',32.0790,34.8125,118,'פארק המכתש']
+ ['surfer',32.0842,34.7662,128,'בדרך לים'],
+ ['tote-woman',32.0712,34.7832,118,'ליד הבימה']
 ].forEach(function(m,i){
   L.marker(warp(m[1],m[2]),{pane:'motif',interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:[0,0],
     html:'<div class="motif" style="--s:'+m[3]+'px;--d:'+(2.6+(i%4)*.45)+'s;--o:'+(-i*.37)+'s"><img src="characters/'+m[0]+'.png" alt=""><div class="mc">'+m[4]+'</div></div>'})}).addTo(map);
