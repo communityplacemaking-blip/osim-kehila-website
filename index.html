@@ -144,7 +144,7 @@ dialog.viewer::backdrop{background:rgba(15,45,74,.55)}
 .viewer .doc{display:none;flex:1;overflow:auto;padding:22px 28px 32px;font-size:17px;line-height:1.65}
 .viewer.text{width:min(760px,94vw);height:auto;max-height:88vh}.viewer.text iframe,.viewer.text .bar a{display:none}.viewer.text .doc{display:block}
 .viewer .doc h3{font-size:22px;font-weight:500;margin:0 0 10px}.viewer .doc h4{font-size:17px;font-weight:500;margin:18px 0 6px}.viewer .doc p{margin:0 0 10px}.viewer .doc ul{margin:0 0 10px;padding-inline-start:20px}.viewer .doc .lead{color:var(--warm);font-weight:400}.viewer .doc blockquote{margin:14px 0;padding:6px 16px;border-inline-start:3px solid var(--must);color:var(--muted)}.viewer .doc .more{display:inline-block;margin-top:8px;color:var(--navy);box-shadow:inset 0 -1px 0 var(--must);text-decoration:none}
-.viewer .doc .album{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--cream);margin:0 0 14px}
+.viewer .doc .photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:0 0 14px;background:var(--cream)}.viewer .doc .album{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--cream);margin:0 0 14px}
 .who h2{box-shadow:inset 0 -2px 0 var(--warm);display:inline-block;padding-bottom:4px}
 /* contact */
 .contact{background:var(--sand);position:relative;overflow:hidden}
@@ -1742,7 +1742,7 @@ render();
 <h3>קפה עולם</h3><p class="lead">הדרך הנעימה והמהנה שאנו מכירים להגיע אל חוכמת הרבים.</p>
 <p>עם מסגרות משרד החינוך, התאגידים המובילים בארץ, האיחוד האירופי ורשויות רבות, עברנו עם קפה עולם דרך מופלאה לאפשר שיחה משמעותית בקבוצות גדולות.</p>
 <p>בין אם מדובר בתהליך או בכנס אחד, המשתתפים יוצאים מועצמים, בתחושה שהקשיבו להם, ויש תובנות משותפות ותחושת שייכות.</p>
-<a class="more" href="https://www.facebook.com/worldcafeisrael" target="_blank" rel="noopener">עוד מפגשים בדף קפה עולם ישראל ↗</a></template><template id="tool-lead"><h3>מנהיגות השתתפותית</h3><p class="lead">תפיסה ואסופה של כלים המיועדים לאפשר תנועה מחוכמת של הכלל אל יצירה משותפת.</p>
+<a class="more" href="https://www.facebook.com/worldcafeisrael" target="_blank" rel="noopener">עוד מפגשים בדף קפה עולם ישראל ↗</a></template><template id="tool-lead"><img class="photo" src="assets/leadership-1.jpg" alt="שיחה במעגל קטן בתהליך של מנהיגות השתתפותית"><h3>מנהיגות השתתפותית</h3><p class="lead">תפיסה ואסופה של כלים המיועדים לאפשר תנועה מחוכמת של הכלל אל יצירה משותפת.</p>
 <p>בין כאוס לסדר ישנן הזדמנויות ללמידה חדשה, לתובנות לקראת סדר חדש, כזה שנכון לרגע, כזה שעולה מהצוות, מהקבוצה, מהקהילה, ומחובר לעתיד רצוי. בכלים המהנים של מנהיגות השתתפותית נכוון לכוונה המשותפת.</p>
 <h4>השאלות שאנחנו עובדים איתן</h4><ul><li>איך עוברים מנקודה א׳ לנקודה ב׳, ומגלים בדרך את ג׳?</li><li>איך כל אחד ואחת בצוות נעים מהמוכר אל יצירה שמחוברת לכישרונות ולתשוקות שלהם?</li><li>איך יוצרים מרחב סבלני ומכיל לשיחה על נושאים כבדים, בקלות?</li></ul>
 <h4>הכלים</h4><p>מעגל, קפה עולם, Open Space, סיפור (Storytelling), הנחיה גרפית, תאוריה U, עושים מקום השתתפותי, Art of Hosting.</p>
