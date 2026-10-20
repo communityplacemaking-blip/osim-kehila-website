@@ -233,7 +233,7 @@ function svg(k){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</s
 window.nextPhoto=nextPhoto;
 function nextPhoto(el){var a=A[+el.dataset.a],k=+el.dataset.k+1;if(a.ph[k]){el.dataset.k=k;el.src=photo(a.ph[k],480);}else{var b=el.parentNode.querySelector('.bdg');if(b)b.remove();el.parentNode.classList.remove('has');el.remove();}}
 document.addEventListener('load',function(e){var el=e.target;if(el.tagName==='IMG'&&el.dataset.a!=null)A[+el.dataset.a].ok=+el.dataset.k;},true);
-function photo(f,w){return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/^File:/,''))+'?width='+w;}
+function photo(f,w){if(/^photos\//.test(f))return f;return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/^File:/,''))+'?width='+w;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
 /* עוגנים עירוניים, מיקומים מאומתים. w = משקל בזיכרון העירוני (בחירה עיצובית) */
@@ -244,12 +244,12 @@ var A=[
  {n:'דיזנגוף סנטר',ph:['Dizengoff Center - Tel Aviv, Israel - panoramio.jpg', 'Dizengof Center Tel Aviv.jpg'],k:'bag',w:4,lat:32.075350,lng:34.775200,t:'הקניון הראשון של העיר'},
  {n:'עזריאלי',ph:['Azrieli Towers, Tel Aviv.jpg', 'Israel Tel Aviv - Azrieli towers.jpg', 'Azriely.jpg'],k:'towers',w:4,lat:32.074303,lng:34.791692,t:'קו הרקיע של העיר'},
  {n:'נמל תל אביב',ph:['Namal tel aviv.JPG', 'Old Port in Tel Aviv.jpg', 'Tel Aviv Port Lowshot.jpg'],k:'port',w:4,lat:32.099069,lng:34.775343,t:'טיילת, שוק האיכרים ושקיעה על הים'},
- {n:'כיכר המדינה',k:'ring',w:3,lat:32.086769,lng:34.789763,t:'טבעת ירוקה בצפון הישן'},
+ {n:'כיכר המדינה',ph:['photos/kikar-hamedina.jpg'],k:'ring',w:3,lat:32.086769,lng:34.789763,t:'טבעת ירוקה בצפון הישן'},
  {n:'כיכר דיזנגוף',ph:['Fire and Water Fountain - Dizengoff Square - Kikar Dizengoff - Tel Aviv (4025020229).jpg', 'Dizengoff Square Fountain.jpg', 'Dizengoff Square.jpg'],k:'fountain',w:3,lat:32.077837,lng:34.774539,t:'המזרקה ושוק העתיקות'},
  {n:'מוזיאון תל אביב',ph:['Tel Aviv Museum of Art - Israel, March 2024 37.jpg'],k:'museum',w:3,lat:32.077299,lng:34.785627,t:'אמנות, ספרייה ורחבה עירונית'},
  {n:'רכבת סבידור מרכז',ph:['Israel Tel Aviv Savidor station.jpg', 'Tel Aviv Central Savidor train station רכבת סבידור מרכז (9).JPG', 'Tel Aviv Central Savidor train station רכבת סבידור מרכז (3).JPG'],k:'train',w:2,lat:32.083487,lng:34.797137,t:'רכבת, הקו הסגול ונתיבי איילון'},
  {n:'גבעת קוזלובסקי',ph:['Givatayim-Observatory.jpg', "Giv'atayim from Koslovsky Hill 2020.jpg"],k:'hill',w:3,lat:32.071354,lng:34.816575,t:'תצפית על כל העיר מגבעתיים'},
- {n:'רחוב כצנלסון',k:'cafe',w:3,lat:32.075303,lng:34.810700,t:'הרחוב הראשי של גבעתיים'}
+ {n:'רחוב כצנלסון',ph:['photos/katznelson.jpg'],k:'cafe',w:3,lat:32.075303,lng:34.810700,t:'הרחוב הראשי של גבעתיים'}
 ];
 
 /* פרויקטים בשיווק. מקור: דפי הפרויקטים באתר אקו סיטי. מיקום: גיאוקוד לפי מספר בית */
