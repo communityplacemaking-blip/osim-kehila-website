@@ -155,6 +155,8 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 .anc.dim{opacity:.35}
 .thread{stroke-dasharray:2 7;animation:flow 1.1s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-18}}
+/* בעמוד מימין לשמאל הדפדפן מצמיד תיבה ממוקמת לימין, וזה מזיז את חלוניות הריחוף שמאלה ברוחב שלהן */
+.leaflet-tooltip{left:0;top:0}
 .tip{font-family:Heebo,Arial,sans-serif;font-size:13px;font-weight:500}
 
 /* דף פרויקט שנפתח על הפאנל */
@@ -470,7 +472,7 @@ function layout(force){
     if(p.slot&&p.slot[0]<R.length)best=tryAt(p.slot[0],p.slot[1]);
     for(var ri=0;ri<R.length&&!best;ri++){r=R[ri];
       for(k=0;k<(ri?16:8)&&!best;k++)best=tryAt(ri,k);}
-    var dot=L.circleMarker([p.lat,p.lng],{pane:'leaders',radius:low?4.5:5.5,color:'#fff',weight:2,fillColor:'#C59A3C',fillOpacity:1})
+    var dot=L.circleMarker([p.lat,p.lng],{pane:'leaders',radius:low?4.5:5.5,color:'#fff',weight:2,fillColor:'#C59A3C',fillOpacity:1,bubblingMouseEvents:false})
       .on('click',function(){showP(p);}).addTo(leaders);
     if(!best){dot.bindTooltip(p.n,{direction:'top',offset:[0,-6],className:'tip'});p.m=dot;return;}
     boxes.push(best.box);p.slot=[best.ri,best.k];
@@ -596,12 +598,20 @@ function showA(a){
   fly(a);
 }
 function fly(p,pts){
-  var z=Math.max(map.getZoom(),p.s==='sale'?16.25:15.5),c=[p.lat,p.lng];
+  var cz=map.getZoom(),z=Math.max(cz,p.s==='sale'?16.25:15.5),c=[p.lat,p.lng];
   if(pts&&pts.length){var b=L.latLngBounds(pts.map(function(q){return [q.lat,q.lng];})).extend(c),m=innerWidth<=820;
-    z=Math.max(13.5,Math.min(p.s==='sale'?16.25:15.5,map.getBoundsZoom(b,false,L.point(m?50:140,m?140:110))));c=b.getCenter();}
+    z=Math.max(13.5,Math.min(p.s==='sale'?16.25:15.5,map.getBoundsZoom(b,false,L.point(m?50:140,m?140:110))));c=b.getCenter();
+    /* אם הכל כבר נכנס בזום הנוכחי, רק גוללים בלי לשנות זום */
+    if(cz<=z&&cz>=z-1.5)z=cz;}
   var pt=map.project(c,z);
   if(innerWidth<=820)pt=pt.add([0,innerHeight*.08]);
-  map.flyTo(map.unproject(pt,z),z,{duration:.8});
+  var to=map.unproject(pt,z);
+  /* בלי flyTo: הוא מתרחק ומתקרב בקשת ומצייר מחדש את כל השכבות בכל פריים, וזה נראה כמו רעידה.
+     גלילה רגילה או זום מונפש של Leaflet (כמו בגלגלת) חלקים יותר. מחכים פריים כדי שפתיחת הכרטיס לא תתקע את תחילת התנועה. */
+  requestAnimationFrame(function(){
+    if(Math.abs(z-map.getZoom())<.01)map.panTo(to,{animate:true,duration:.6,easeLinearity:.3});
+    else map.setView(to,z,{animate:true});
+  });
 }
 function bindD(){
   det.querySelector('.back').onclick=closeD;
