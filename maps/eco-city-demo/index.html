@@ -598,12 +598,20 @@ function showA(a){
   fly(a);
 }
 function fly(p,pts){
-  var z=Math.max(map.getZoom(),p.s==='sale'?16.25:15.5),c=[p.lat,p.lng];
+  var cz=map.getZoom(),z=Math.max(cz,p.s==='sale'?16.25:15.5),c=[p.lat,p.lng];
   if(pts&&pts.length){var b=L.latLngBounds(pts.map(function(q){return [q.lat,q.lng];})).extend(c),m=innerWidth<=820;
-    z=Math.max(13.5,Math.min(p.s==='sale'?16.25:15.5,map.getBoundsZoom(b,false,L.point(m?50:140,m?140:110))));c=b.getCenter();}
+    z=Math.max(13.5,Math.min(p.s==='sale'?16.25:15.5,map.getBoundsZoom(b,false,L.point(m?50:140,m?140:110))));c=b.getCenter();
+    /* אם הכל כבר נכנס בזום הנוכחי, רק גוללים בלי לשנות זום */
+    if(cz<=z&&cz>=z-1.5)z=cz;}
   var pt=map.project(c,z);
   if(innerWidth<=820)pt=pt.add([0,innerHeight*.08]);
-  map.flyTo(map.unproject(pt,z),z,{duration:.8});
+  var to=map.unproject(pt,z);
+  /* בלי flyTo: הוא מתרחק ומתקרב בקשת ומצייר מחדש את כל השכבות בכל פריים, וזה נראה כמו רעידה.
+     גלילה רגילה או זום מונפש של Leaflet (כמו בגלגלת) חלקים יותר. מחכים פריים כדי שפתיחת הכרטיס לא תתקע את תחילת התנועה. */
+  requestAnimationFrame(function(){
+    if(Math.abs(z-map.getZoom())<.01)map.panTo(to,{animate:true,duration:.6,easeLinearity:.3});
+    else map.setView(to,z,{animate:true});
+  });
 }
 function bindD(){
   det.querySelector('.back').onclick=closeD;
