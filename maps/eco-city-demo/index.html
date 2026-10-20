@@ -89,8 +89,14 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 
 /* עוגנים: עיגול עם תמונת המקום, ועיגולי משיכה דקים סביבו (כמו האיורים העגולים במפת רמת גן) */
 .anc{display:flex;flex-direction:column;align-items:center;cursor:pointer}
-.anc .disc{position:relative;border-radius:50%;background:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--gold),0 6px 16px rgba(22,49,49,.28);transition:transform .2s}
-.anc:hover .disc{transform:scale(1.08)}
+.anc .disc{position:relative;border-radius:50%;background:var(--cream);display:grid;place-items:center;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--gold),0 6px 16px rgba(22,49,49,.28);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.anc .an{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+/* מעבר עכבר: התמונה גדלה, כמו לעצור מול המקום בזמן שיטוט */
+.anc:hover .disc{transform:scale(2.3);box-shadow:0 0 0 1px var(--gold),0 14px 34px rgba(22,49,49,.38)}
+.anc:hover .an{transform:translateY(calc(var(--d)*.68))}
+.anc:hover .halo,.anc:hover .bdg{opacity:0}
+.anc .halo,.anc .bdg{transition:opacity .25s}
+.zlow .anc:hover .disc{transform:scale(1.9)}
 .anc .disc img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover}
 .anc .disc.has>svg{display:none}
 .anc .disc>svg{width:50%;height:50%;stroke:var(--teal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
@@ -225,7 +231,7 @@ var IC={
 function svg(k){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>';}
 /* תמונות העוגנים מ-Wikimedia Commons. אם קובץ לא נטען עוברים לחלופה, ואם אין, נשאר האייקון */
 window.nextPhoto=nextPhoto;
-function nextPhoto(el){var a=A[+el.dataset.a],k=+el.dataset.k+1;if(a.ph[k]){el.dataset.k=k;el.src=photo(a.ph[k],240);}else{var b=el.parentNode.querySelector('.bdg');if(b)b.remove();el.parentNode.classList.remove('has');el.remove();}}
+function nextPhoto(el){var a=A[+el.dataset.a],k=+el.dataset.k+1;if(a.ph[k]){el.dataset.k=k;el.src=photo(a.ph[k],480);}else{var b=el.parentNode.querySelector('.bdg');if(b)b.remove();el.parentNode.classList.remove('has');el.remove();}}
 document.addEventListener('load',function(e){var el=e.target;if(el.tagName==='IMG'&&el.dataset.a!=null)A[+el.dataset.a].ok=+el.dataset.k;},true);
 function photo(f,w){return 'https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/^File:/,''))+'?width='+w;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -367,9 +373,9 @@ var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup().addTo(map),anc:L.
 
 A.forEach(function(a,i){
   a.id=i;var d=34+a.w*7,h1=Math.round(d*1.75),h2=Math.round(d*2.4);
-  var img=a.ph?'<img src="'+esc(photo(a.ph[0],240))+'" alt="" loading="lazy" data-a="'+i+'" data-k="0" onerror="nextPhoto(this)">':'';
-  L.marker([a.lat,a.lng],{title:a.n,zIndexOffset:-500,icon:L.divIcon({className:'',iconSize:[d,d],iconAnchor:[d/2,d/2],
-    html:'<div class="anc" data-a="'+i+'"><div class="disc'+(img?' has':'')+'" style="width:'+d+'px;height:'+d+'px">'+
+  var img=a.ph?'<img src="'+esc(photo(a.ph[0],480))+'" alt="" loading="lazy" data-a="'+i+'" data-k="0" onerror="nextPhoto(this)">':'';
+  L.marker([a.lat,a.lng],{title:a.n,zIndexOffset:-500,riseOnHover:true,riseOffset:5000,icon:L.divIcon({className:'',iconSize:[d,d],iconAnchor:[d/2,d/2],
+    html:'<div class="anc" data-a="'+i+'" style="--d:'+d+'px"><div class="disc'+(img?' has':'')+'" style="width:'+d+'px;height:'+d+'px">'+
       '<span class="halo" style="width:'+h1+'px;height:'+h1+'px"></span><span class="halo h2" style="width:'+h2+'px;height:'+h2+'px;animation-delay:'+(i*.27)+'s"></span>'+
       svg(a.k)+img+(img?'<span class="bdg">'+svg(a.k)+'</span>':'')+'</div><div class="an">'+a.n+'</div></div>'})})
    .on('click',function(){showA(a);}).addTo(layers.anc);
