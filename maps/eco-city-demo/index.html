@@ -472,7 +472,7 @@ function layout(force){
     if(p.slot&&p.slot[0]<R.length)best=tryAt(p.slot[0],p.slot[1]);
     for(var ri=0;ri<R.length&&!best;ri++){r=R[ri];
       for(k=0;k<(ri?16:8)&&!best;k++)best=tryAt(ri,k);}
-    var dot=L.circleMarker([p.lat,p.lng],{pane:'leaders',radius:low?4.5:5.5,color:'#fff',weight:2,fillColor:'#C59A3C',fillOpacity:1})
+    var dot=L.circleMarker([p.lat,p.lng],{pane:'leaders',radius:low?4.5:5.5,color:'#fff',weight:2,fillColor:'#C59A3C',fillOpacity:1,bubblingMouseEvents:false})
       .on('click',function(){showP(p);}).addTo(leaders);
     if(!best){dot.bindTooltip(p.n,{direction:'top',offset:[0,-6],className:'tip'});p.m=dot;return;}
     boxes.push(best.box);p.slot=[best.ri,best.k];
