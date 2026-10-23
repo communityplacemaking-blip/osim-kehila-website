@@ -588,7 +588,7 @@ function renderStats(){
   document.getElementById('stats').innerHTML='<div class="stat"><b>'+S.length+'</b><span>פרויקטים בשיווק</span></div><div class="stat"><b>'+L0.length+'</b><span>בניינים מאוכלסים</span></div><div class="stat"><b>2</b><span>ערים</span></div>';
 }
 var CAP={sale:'הפרויקטים שאקו סיטי משווקת עכשיו',live:'בניינים שאקו סיטי כבר חידשה, ומשפחות גרות בהם היום',
-  anc:'המקומות שעושים את השכונה: פארקים, כיכרות, תרבות ותחבורה',mot:'רגעים מהחיים ברחוב, כמו שזוכרים את העיר'};
+  anc:'המקומות שעושים את השכונה: פארקים, כיכרות, תרבות ותחבורה',mot:'רגעים מהחיים ברחוב וקולות הים והעיר, כמו שזוכרים אותה'};
 var toast=document.createElement('div');toast.className='toast';document.getElementById('map').appendChild(toast);var toastT=null;
 function say(t){toast.textContent=t;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toast.classList.remove('on');},3800);}
 var hint=document.getElementById('hint');
@@ -596,6 +596,7 @@ var hint=document.getElementById('hint');
   var b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed',on[f[0]]);b.title=CAP[f[0]];
   b.innerHTML='<i class="lg lg-'+f[0]+'"></i>'+f[1];
   b.onclick=function(){on[f[0]]=!on[f[0]];b.setAttribute('aria-pressed',on[f[0]]);on[f[0]]?map.addLayer(layers[f[0]]):map.removeLayer(layers[f[0]]);closeD();renderGrid();layout(true);
+    if(f[0]==='mot'&&on.mot!==sndOn)snd.onclick();
     if(on[f[0]])say(CAP[f[0]]);if(hint){hint.remove();hint=null;}};
   document.getElementById('filters').appendChild(b);
 });
