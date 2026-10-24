@@ -55,7 +55,6 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 /* כל כפתור סינון מציג את הסימן שלו במפה, כך שהוא משמש גם כמקרא */
 .lg-sale{width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid #fff;box-shadow:0 0 0 1px rgba(30,63,63,.25)}
 .lg-live{width:9px;height:9px;border-radius:2px;background:var(--teal);border:1.5px solid #fff;transform:rotate(45deg);box-shadow:0 0 0 1px rgba(30,63,63,.25)}
-.lg-mot{width:12px;height:12px;border-radius:50%;background:#fff;border:1.5px dashed #8a8a8a}
 /* הזמנה להוסיף שכבות, נעלמת אחרי הלחיצה הראשונה */
 .hint{position:fixed;right:18px;bottom:calc(var(--dbar) + 14px);max-width:360px;z-index:650;box-shadow:0 4px 14px rgba(22,49,49,.15);display:flex;align-items:center;gap:8px;margin:0;padding:8px 12px;border-radius:10px;background:#FBF3E2;border:1px dashed var(--gold);color:var(--teal);font-size:12.5px;line-height:1.35}
 .hint b{color:var(--gold);font-size:16px;animation:nudge 1.2s ease-in-out infinite}
@@ -470,7 +469,7 @@ var MOT=[],motLayer=L.layerGroup();
 
 var threads=L.layerGroup().addTo(map);
 /* בנחיתה רואים את הפרויקטים בשיווק ואת המקומות בעיר; שאר השכבות נפתחות בכפתורים */
-var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup(),anc:L.layerGroup().addTo(map),mot:motLayer};
+var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup(),anc:L.layerGroup().addTo(map),mot:motLayer.addTo(map)};
 
 A.forEach(function(a,i){
   a.id=i;var d=34+a.w*7,h1=Math.round(d*1.75),h2=Math.round(d*2.4);
@@ -564,7 +563,8 @@ function arc(p,q){
   return L.polyline(pts,{color:GOLD,weight:2.4,opacity:.95,className:'thread',interactive:false});
 }
 
-var on={sale:true,live:false,anc:true,mot:false};
+/* הדמויות המאוירות תמיד על המפה; הקולות נדלקים מהכפתור שלהם */
+var on={sale:true,live:false,anc:true,mot:true};
 var cur=null;
 function mark(pid,keep){cur=[pid,keep];
   document.querySelectorAll('[data-p]').forEach(function(e){var id=+e.dataset.p;
@@ -598,15 +598,14 @@ function renderStats(){
   document.getElementById('stats').innerHTML='<div class="stat"><b>'+S.length+'</b><span>פרויקטים בשיווק</span></div><div class="stat"><b>'+L0.length+'</b><span>בניינים מאוכלסים</span></div><div class="stat"><b>2</b><span>ערים</span></div>';
 }
 var CAP={sale:'הפרויקטים שאקו סיטי משווקת עכשיו',live:'בניינים שאקו סיטי כבר חידשה, ומשפחות גרות בהם היום',
-  anc:'המקומות שעושים את השכונה: פארקים, כיכרות, תרבות ותחבורה',mot:'רגעים מהחיים ברחוב, רחש הים ומוזיקה שקטה, כמו שזוכרים את העיר'};
+  anc:'המקומות שעושים את השכונה: פארקים, כיכרות, תרבות ותחבורה'};
 var toast=document.createElement('div');toast.className='toast';document.getElementById('map').appendChild(toast);var toastT=null;
 function say(t){toast.textContent=t;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toast.classList.remove('on');},3800);}
 var hint=document.getElementById('hint');
-[['sale','בשיווק'],['live','מאוכלסים'],['anc','מקומות בעיר'],['mot','אווירה']].forEach(function(f){
+[['sale','בשיווק'],['live','מאוכלסים'],['anc','מקומות בעיר']].forEach(function(f){
   var b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed',on[f[0]]);b.title=CAP[f[0]];
   b.innerHTML='<i class="lg lg-'+f[0]+'"></i>'+f[1];
   b.onclick=function(){on[f[0]]=!on[f[0]];b.setAttribute('aria-pressed',on[f[0]]);on[f[0]]?map.addLayer(layers[f[0]]):map.removeLayer(layers[f[0]]);closeD();renderGrid();layout(true);
-    if(f[0]==='mot'&&on.mot!==sndOn)snd.onclick();
     if(on[f[0]])say(CAP[f[0]]);if(hint){hint.remove();hint=null;}};
   document.getElementById('filters').appendChild(b);
 });
