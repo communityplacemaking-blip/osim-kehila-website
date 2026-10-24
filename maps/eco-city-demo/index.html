@@ -55,7 +55,6 @@ html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-fam
 /* כל כפתור סינון מציג את הסימן שלו במפה, כך שהוא משמש גם כמקרא */
 .lg-sale{width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid #fff;box-shadow:0 0 0 1px rgba(30,63,63,.25)}
 .lg-live{width:9px;height:9px;border-radius:2px;background:var(--teal);border:1.5px solid #fff;transform:rotate(45deg);box-shadow:0 0 0 1px rgba(30,63,63,.25)}
-.lg-mot{width:12px;height:12px;border-radius:50%;background:#fff;border:1.5px dashed #8a8a8a}
 /* הזמנה להוסיף שכבות, נעלמת אחרי הלחיצה הראשונה */
 .hint{position:fixed;right:18px;bottom:calc(var(--dbar) + 14px);max-width:360px;z-index:650;box-shadow:0 4px 14px rgba(22,49,49,.15);display:flex;align-items:center;gap:8px;margin:0;padding:8px 12px;border-radius:10px;background:#FBF3E2;border:1px dashed var(--gold);color:var(--teal);font-size:12.5px;line-height:1.35}
 .hint b{color:var(--gold);font-size:16px;animation:nudge 1.2s ease-in-out infinite}
@@ -265,11 +264,22 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
   .gal{height:240px}
   .detail{touch-action:pan-y}
 }
+/* ערכות כהות: הרקע כהה, והכיתובים והפרויקטים בהירים ובולטים */
+.th-blue{--mapbg:#0A2348}.th-green{--mapbg:#163131}
+.th-dark #map,.th-dark .leaflet-container{background:var(--mapbg)}
+.th-dark .hood{color:#BFE6FF;text-shadow:0 0 4px rgba(0,0,0,.6)}
+.th-green .hood{color:#E9CF8E}
+.th-dark .street{color:#EAF6FF;text-shadow:0 0 3px rgba(0,0,0,.75),0 0 6px rgba(0,0,0,.5)}
+.th-green .street{color:#F6E7C0}
+.th-dark .city{color:#fff;opacity:.08}
+.th-dark .plab{background:#FFF9F5;border-color:#E2C27A;box-shadow:0 2px 8px rgba(0,0,0,.45)}
+.th-dark .ld{background:rgba(255,255,255,.7)}
+.th-dark .leaflet-container .leaflet-control-attribution{background:rgba(8,22,40,.75);color:#cfe3f0}.th-dark .leaflet-container .leaflet-control-attribution a{color:#9fd4f2}
 </style>
 </head>
 <body>
 <div id="map" aria-label="מפת הפרויקטים של אקו סיטי בתל אביב ובגבעתיים"></div>
-<button class="snd" id="snd" aria-pressed="false" title="רחש גלים וצפירות רחוקות"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="on-i" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="off-i" d="M17 10l4 4M21 10l-4 4"/></svg><span>קולות העיר</span></button>
+<button class="snd" id="snd" aria-pressed="false" title="רחש גלים ומוזיקה שקטה"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="on-i" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="off-i" d="M17 10l4 4M21 10l-4 4"/></svg><span>קולות העיר</span></button>
 
 <section class="panel" id="panel">
   <header class="head">
@@ -394,19 +404,32 @@ var Q=[
  {n:'שרונה',k:'market',lat:32.071980,lng:34.787500}
 ];
 P.concat(A,Q).forEach(function(p){p.rlat=p.lat;p.rlng=p.lng;var w=warp(p.lat,p.lng);p.lat=w[0];p.lng=w[1];});
-var TONES=['#F0E3CF','#E0ECE6','#EDDCC3','#DAE8EE','#EFDFD2'];
+/* ערכות צבע לרקע המפה. ברירת המחדל ירוק אקו סיטי וחרדל; ‎?theme=light הגרסה הבהירה, ‎?theme=blue כחול עמוק ותכלת */
+var THEMES={
+  light:{sea:'#C9E8F8',city:'#FFF9F5',ctx:'#F1EAE0',line:'#1E3F3F',park:'#CDE3C2',river:'#BFE3F5',wave:'#fff',st:.5,
+    tones:['#F0E3CF','#E0ECE6','#EDDCC3','#DAE8EE','#EFDFD2'],
+    ST:{M:{c:'#F4E2B4',k:'#C9A75A'},A:{c:'#FBF0D6',k:'#CDB27A'},B:{c:'#FFFFFF',k:'#C8BCAA'},C:{c:'#FFFFFF',k:'#DCD2C3'}}},
+  blue:{sea:'#0B2D57',city:'#123A6B',ctx:'#0E2C52',line:'#8FD3FF',park:'#1D5A6E',river:'#5CC2F2',wave:'#9BDCFF',st:.8,
+    tones:['#15427A','#123B6E','#184880','#113766','#164476'],
+    ST:{M:{c:'#7CC6F0',k:'#2D6FA8'},A:{c:'#3A80BE',k:'#1B4E84'},B:{c:'#1F5590',k:'#15406E'},C:{c:'#1A4C84',k:'#143C68'}}},
+  green:{sea:'#0B2A33',city:'#1E3F3F',ctx:'#173333',line:'#E2C27A',park:'#2E5B3E',river:'#4E8C93',wave:'#E2C27A',st:.8,
+    tones:['#22484A','#1E4243','#264D4C','#1C3D3E','#244A47'],
+    ST:{M:{c:'#C59A3C',k:'#7A5E22'},A:{c:'#9C7E3E',k:'#5F4C24'},B:{c:'#3C625F',k:'#2A4A48'},C:{c:'#335754',k:'#264442'}}}};
+var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='green';var TH=THEMES[THN];
+if(THN!=='light')document.documentElement.classList.add('th-dark','th-'+THN);
+var TONES=TH.tones;
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
 map.createPane('motif');map.getPane('motif').style.zIndex=380;map.getPane('motif').style.pointerEvents='none';
 var hoodLayer=null,hoodLabels=L.layerGroup();
 fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
   gj.features.forEach(function(f){f.geometry=wgeom(f.geometry);});
   var by=function(k){return {type:'FeatureCollection',features:gj.features.filter(function(f){return f.properties.kind===k;})};};
-  L.geoJSON(by('sea'),{pane:'geo',interactive:false,style:{stroke:false,fillColor:'#C9E8F8',fillOpacity:1}}).addTo(map);
+  L.geoJSON(by('sea'),{pane:'geo',interactive:false,style:{stroke:false,fillColor:TH.sea,fillOpacity:1}}).addTo(map);
   L.geoJSON(by('city'),{pane:'geo',interactive:false,style:function(f){var c=f.properties.context;
-    return {color:'#1E3F3F',weight:c?1:1.8,opacity:c?.35:.85,dashArray:c?'4 5':null,fillColor:c?'#F1EAE0':'#FFF9F5',fillOpacity:1};}}).addTo(map);
+    return {color:TH.line,weight:c?1:1.8,opacity:c?.35:.85,dashArray:c?'4 5':null,fillColor:c?TH.ctx:TH.city,fillOpacity:1};}}).addTo(map);
   var i=0;hoodLayer=L.geoJSON(by('hood'),{pane:'geo',interactive:false,style:function(f){
-    return {color:'#1E3F3F',weight:.9,opacity:.45,dashArray:'3 4',fillColor:f.properties.park?'#CDE3C2':TONES[(i++)%TONES.length],fillOpacity:1};}}).addTo(map);
-  L.geoJSON(by('river'),{pane:'geo',interactive:false,style:{color:'#BFE3F5',weight:7,opacity:1,lineCap:'round'}}).addTo(map);
+    return {color:TH.line,weight:.9,opacity:.45,dashArray:'3 4',fillColor:f.properties.park?TH.park:TONES[(i++)%TONES.length],fillOpacity:1};}}).addTo(map);
+  L.geoJSON(by('river'),{pane:'geo',interactive:false,style:{color:TH.river,weight:7,opacity:1,lineCap:'round'}}).addTo(map);
   waves(by('sea'));
   streets();
   by('hood').features.forEach(function(f){var c=warp(f.properties.center[0],f.properties.center[1]);
@@ -415,12 +438,12 @@ fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
 });
 /* רחובות ראשיים, כמו במפה מצוירת: פס לבן רחב עם שוליים. התוואי סכמטי (נקודות ציון ידועות לאורך הרחוב) */
 /* רחובות אמיתיים מ-Overture Maps (נגזר מ-OpenStreetMap, ODbL), נבנה ב-build-streets.py. גם הם עוברים את מתיחת העוגנים */
-var ST={M:{c:'#F4E2B4',k:'#C9A75A',w:6.5},A:{c:'#FBF0D6',k:'#CDB27A',w:5.2},B:{c:'#FFFFFF',k:'#C8BCAA',w:3.6},C:{c:'#FFFFFF',k:'#DCD2C3',w:1.7}};
+var ST={M:{c:TH.ST.M.c,k:TH.ST.M.k,w:6.5},A:{c:TH.ST.A.c,k:TH.ST.A.k,w:5.2},B:{c:TH.ST.B.c,k:TH.ST.B.k,w:3.6},C:{c:TH.ST.C.c,k:TH.ST.C.k,w:1.7}};
 var streetLayers=[],streetLabels=L.layerGroup(),streetLabelsMinor=L.layerGroup();
 function streets(){
   map.createPane('streets');map.getPane('streets').style.zIndex=270;
   /* רשת הרחובות ברקע, מעומעמת כדי שהפרויקטים יבלטו */
-  map.getPane('streets').style.opacity=.5;
+  map.getPane('streets').style.opacity=TH.st;
   var rend=L.canvas({pane:'streets',padding:.3});
   fetch('streets.json').then(function(r){return r.json();}).then(function(d){
     function wl(c){return wring(c).map(function(p){return [p[1],p[0]];});}
@@ -470,7 +493,7 @@ var MOT=[],motLayer=L.layerGroup();
 
 var threads=L.layerGroup().addTo(map);
 /* בנחיתה רואים את הפרויקטים בשיווק ואת המקומות בעיר; שאר השכבות נפתחות בכפתורים */
-var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup(),anc:L.layerGroup().addTo(map),mot:motLayer};
+var layers={sale:L.layerGroup().addTo(map),live:L.layerGroup(),anc:L.layerGroup().addTo(map),mot:motLayer.addTo(map)};
 
 A.forEach(function(a,i){
   a.id=i;var d=34+a.w*7,h1=Math.round(d*1.75),h2=Math.round(d*2.4);
@@ -564,7 +587,8 @@ function arc(p,q){
   return L.polyline(pts,{color:GOLD,weight:2.4,opacity:.95,className:'thread',interactive:false});
 }
 
-var on={sale:true,live:false,anc:true,mot:false};
+/* הדמויות המאוירות תמיד על המפה; הקולות נדלקים מהכפתור שלהם */
+var on={sale:true,live:false,anc:true,mot:true};
 var cur=null;
 function mark(pid,keep){cur=[pid,keep];
   document.querySelectorAll('[data-p]').forEach(function(e){var id=+e.dataset.p;
@@ -598,15 +622,14 @@ function renderStats(){
   document.getElementById('stats').innerHTML='<div class="stat"><b>'+S.length+'</b><span>פרויקטים בשיווק</span></div><div class="stat"><b>'+L0.length+'</b><span>בניינים מאוכלסים</span></div><div class="stat"><b>2</b><span>ערים</span></div>';
 }
 var CAP={sale:'הפרויקטים שאקו סיטי משווקת עכשיו',live:'בניינים שאקו סיטי כבר חידשה, ומשפחות גרות בהם היום',
-  anc:'המקומות שעושים את השכונה: פארקים, כיכרות, תרבות ותחבורה',mot:'רגעים מהחיים ברחוב וקולות הים והעיר, כמו שזוכרים אותה'};
+  anc:'המקומות שעושים את השכונה: פארקים, כיכרות, תרבות ותחבורה'};
 var toast=document.createElement('div');toast.className='toast';document.getElementById('map').appendChild(toast);var toastT=null;
 function say(t){toast.textContent=t;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toast.classList.remove('on');},3800);}
 var hint=document.getElementById('hint');
-[['sale','בשיווק'],['live','מאוכלסים'],['anc','מקומות בעיר'],['mot','אווירה']].forEach(function(f){
+[['sale','בשיווק'],['live','מאוכלסים'],['anc','מקומות בעיר']].forEach(function(f){
   var b=document.createElement('button');b.className='chip';b.setAttribute('aria-pressed',on[f[0]]);b.title=CAP[f[0]];
   b.innerHTML='<i class="lg lg-'+f[0]+'"></i>'+f[1];
   b.onclick=function(){on[f[0]]=!on[f[0]];b.setAttribute('aria-pressed',on[f[0]]);on[f[0]]?map.addLayer(layers[f[0]]):map.removeLayer(layers[f[0]]);closeD();renderGrid();layout(true);
-    if(f[0]==='mot'&&on.mot!==sndOn)snd.onclick();
     if(on[f[0]])say(CAP[f[0]]);if(hint){hint.remove();hint=null;}};
   document.getElementById('filters').appendChild(b);
 });
@@ -702,12 +725,12 @@ function zcls(){var el=document.getElementById('map'),z=map.getZoom();el.classLi
 map.on('zoomend',function(){zcls();layout();});
 var relay=null;map.on('resize',function(){clearTimeout(relay);relay=setTimeout(layout,120);});
 renderGrid();renderStats();
-/* פתיחה על תל אביב בלבד; לגבעתיים יש הפניה בפינה */
-var core=P.filter(function(p){return p.c==='תל אביב'&&p.lat<32.105;}).concat(A.filter(function(a){return a.rlng<34.8;}));
+/* פתיחה צמודה על הפרויקטים בשיווק בתל אביב, כדי שיהיו מרווחים; לגבעתיים יש הפניה בפינה */
+var core=P.filter(function(p){return p.s==='sale'&&p.c==='תל אביב'&&p.lat<32.105;});
 var giv=S.filter(function(p){return p.c==='גבעתיים';})[0];
 if(giv){var gb=document.createElement('button');gb.className='giv';gb.innerHTML='<span>גם בגבעתיים</span><b>'+esc(giv.n)+'</b><i>←</i>';
   gb.onclick=function(e){e.stopPropagation();showP(giv);};document.getElementById('map').appendChild(gb);}
-map.fitBounds(L.latLngBounds(core.map(function(p){return [p.lat,p.lng];})).pad(.06),{padding:[30,30]});
+map.fitBounds(L.latLngBounds(core.map(function(p){return [p.lat,p.lng];})),innerWidth<=820?{paddingTopLeft:[55,80],paddingBottomRight:[55,100]}:{paddingTopLeft:[90,70],paddingBottomRight:[90,60]});
 /* גלים: קווי קצף מקבילים לקו החוף, בכמה מרחקים לתוך הים, שמופיעים בזה אחר זה מבחוץ פנימה */
 var coast=[];
 function waves(sea){
@@ -716,14 +739,14 @@ function waves(sea){
   map.createPane('waves');map.getPane('waves').style.zIndex=255;map.getPane('waves').style.pointerEvents='none';
   [60,190,340,510,700,920].forEach(function(m,i){
     var off=m/94300;
-    L.polyline(coast.map(function(c){return [c[0],c[1]-off];}),{pane:'waves',interactive:false,color:'#fff',weight:i<2?2.6:2,opacity:1,
+    L.polyline(coast.map(function(c){return [c[0],c[1]-off];}),{pane:'waves',interactive:false,color:TH.wave,weight:i<2?2.6:2,opacity:1,
       dashArray:i%2?'16 22':'26 18',lineCap:'round',className:'wave',smoothFactor:2}).addTo(map)
       .getElement().style.animationDelay=(-(5-i)*.8).toFixed(1)+'s';
   });
 }
 
-/* קולות העיר: רחש גלים וצפירות רחוקות, מסונתזים בדפדפן (בלי קובצי שמע). כבויים עד שלוחצים */
-var snd=document.getElementById('snd'),AC=null,mixW,mixC,sndOn=false,hornT=null,swellT=null;
+/* קולות העיר: רחש גלים ומוזיקת לאונג' שקטה, מסונתזים בדפדפן (בלי קובצי שמע). כבויים עד שלוחצים */
+var snd=document.getElementById('snd'),AC=null,mixW,mixC,sndOn=false,swellT=null;
 function noiseBuf(ctx,brown){var n=ctx.sampleRate*4,b=ctx.createBuffer(2,n,ctx.sampleRate);
   for(var ch=0;ch<2;ch++){var d=b.getChannelData(ch),last=0;for(var i=0;i<n;i++){var w=Math.random()*2-1;if(brown){last=(last+.02*w)/1.02;d[i]=last*3.5;}else d[i]=w;}}return b;}
 function loop(ctx,buf){var s=ctx.createBufferSource();s.buffer=buf;s.loop=true;s.start();return s;}
@@ -743,23 +766,41 @@ function startAudio(){
     swell.gain.linearRampToValueAtTime(pk,t+p*.42);swell.gain.linearRampToValueAtTime(.12,t+p);
     fg.gain.cancelScheduledValues(t);fg.gain.setValueAtTime(0,t+p*.38);fg.gain.linearRampToValueAtTime(.05*pk,t+p*.5);fg.gain.linearRampToValueAtTime(0,t+p*.95);
     swellT=setTimeout(wave,p*1000);})();
-  /* זמזום תנועה רחוק */
-  var hum=loop(AC,brown),hl=AC.createBiquadFilter();hl.type='lowpass';hl.frequency.value=180;var hg=AC.createGain();hg.gain.value=.22;
-  hum.connect(hl);hl.connect(hg);hg.connect(mixC);
-  (function horn(){if(!sndOn){hornT=setTimeout(horn,1500);return;}
-    var t=AC.currentTime+.05,f=330+Math.random()*170,n=Math.random()<.35?2:1,pan=AC.createStereoPanner?AC.createStereoPanner():null,
-      lf=AC.createBiquadFilter(),g=AC.createGain(),vol=.025+Math.random()*.03;
-    lf.type='lowpass';lf.frequency.value=900+Math.random()*500;g.gain.value=0;lf.connect(g);
-    if(pan){pan.pan.value=Math.random()*1.6-.8;g.connect(pan);pan.connect(mixC);}else g.connect(mixC);
-    [1,1.26].forEach(function(k){var o=AC.createOscillator();o.type='sawtooth';o.frequency.value=f*k;o.connect(lf);o.start(t);o.stop(t+n*.55+.2);});
-    for(var i=0;i<n;i++){var s=t+i*.32,d=n>1?.18:.25+Math.random()*.35;g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(vol,s+.02);g.gain.setValueAtTime(vol,s+d);g.gain.linearRampToValueAtTime(0,s+d+.05);}
-    hornT=setTimeout(horn,3500+Math.random()*9000);})();
+  /* מוזיקת לאונג' שקטה ליד הים: פסנתר חשמלי רך, בס, תוף עדין ושייקר. הכל מסונתז כאן, בלי קבצים ובלי זכויות של אחרים */
+  var bpm=88,beat=60/bpm,bar=beat*4,mus=AC.createGain();mus.gain.value=.55;mus.connect(mixC);
+  var dl=AC.createDelay(1),fb=AC.createGain(),wet=AC.createGain(),dlf=AC.createBiquadFilter();
+  dl.delayTime.value=beat*.75;fb.gain.value=.32;wet.gain.value=.28;dlf.type='lowpass';dlf.frequency.value=1800;
+  dl.connect(dlf);dlf.connect(fb);fb.connect(dl);dlf.connect(wet);wet.connect(mus);
+  var keysBus=AC.createGain(),kf=AC.createBiquadFilter();kf.type='lowpass';kf.frequency.value=2200;keysBus.connect(kf);kf.connect(mus);kf.connect(dl);
+  var trem=AC.createOscillator(),tg=AC.createGain();trem.frequency.value=4.2;tg.gain.value=.12;trem.connect(tg);tg.connect(keysBus.gain);trem.start();
+  function hz(m){return 440*Math.pow(2,(m-69)/12);}
+  /* Am9 · Dm9 · Gmaj7 · Cmaj7, בכל תיבה אקורד אחד */
+  var CH=[[57,60,64,67,71],[50,57,60,64,65],[55,59,62,66,69],[48,55,59,62,64]],BS=[45,38,43,36];
+  function ep(m,t,d,v){[1,2,3.01].forEach(function(k,i){var o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=hz(m)*k;
+    var a=v*[1,.28,.06][i];g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(a,t+.012);g.gain.exponentialRampToValueAtTime(a*.35,t+.5);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g);g.connect(keysBus);o.start(t);o.stop(t+d+.05);});}
+  function bass(m,t,d){var o=AC.createOscillator(),g=AC.createGain(),lf=AC.createBiquadFilter();o.type='triangle';o.frequency.value=hz(m);lf.type='lowpass';lf.frequency.value=320;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.32,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(lf);lf.connect(g);g.connect(mus);o.start(t);o.stop(t+d+.05);}
+  function kick(t){var o=AC.createOscillator(),g=AC.createGain();o.frequency.setValueAtTime(110,t);o.frequency.exponentialRampToValueAtTime(42,t+.18);
+    g.gain.setValueAtTime(.38,t);g.gain.exponentialRampToValueAtTime(.0001,t+.3);o.connect(g);g.connect(mus);o.start(t);o.stop(t+.32);}
+  function tick(t,v,f,d){var s=AC.createBufferSource(),bf=AC.createBiquadFilter(),g=AC.createGain();s.buffer=white;bf.type=f>3000?'highpass':'bandpass';bf.frequency.value=f;bf.Q.value=1.2;
+    g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(bf);bf.connect(g);g.connect(mus);s.start(t,Math.random()*3);s.stop(t+d+.02);}
+  var step=0,next=AC.currentTime+.15;
+  setInterval(function(){if(!sndOn||AC.state!=='running')return;
+    while(next<AC.currentTime+.25){var b=Math.floor(step/8)%4,i=step%8,t=next,sw=(i%2)?beat*.06:0;
+      if(i===0){CH[b].forEach(function(m,j){ep(m,t+j*.018,bar*.9,.045);});}
+      if(i===5)CH[b].slice(1,4).forEach(function(m){ep(m+12,t+sw,beat*1.2,.022);});
+      if(i===0)bass(BS[b],t,beat*1.6);if(i===3)bass(BS[b]+7,t+sw,beat*.8);if(i===4)bass(BS[b]+12,t,beat*.9);if(i===7&&b===3)bass(BS[b]+10,t+sw,beat*.5);
+      if(i===0||i===4)kick(t);
+      if(i===2||i===6)tick(t,.07,1900,.09);
+      tick(t+sw,i%2?.035:.022,7000,.05);
+      next+=beat/2;step++;}},40);
   mixSea();
 }
-/* קרוב לים שומעים יותר גלים, בתוך העיר יותר צפירות */
+/* קרוב לים הגלים חזקים יותר, בתוך העיר המוזיקה קצת יותר */
 function seaDist(){if(!coast.length)return 2000;var c=map.getCenter(),best=1e9;coast.forEach(function(q){var dx=(c.lng-q[1])*94300,dy=(c.lat-q[0])*110540,d=Math.sqrt(dx*dx+dy*dy);if(d<best)best=d;});return best;}
 function mixSea(){if(!AC)return;var d=seaDist(),w=Math.max(.3,Math.min(1,1.15-d/3500)),t=AC.currentTime;
-  mixW.gain.setTargetAtTime(w,t,.6);mixC.gain.setTargetAtTime(.45+(1-w)*.75,t,.6);}
+  mixW.gain.setTargetAtTime(w*.45,t,.6);mixC.gain.setTargetAtTime(.8+(1-w)*.2,t,.6);}
 map.on('moveend',mixSea);
 snd.onclick=function(){sndOn=!sndOn;snd.setAttribute('aria-pressed',sndOn);
   if(sndOn){if(!AC)startAudio();else AC.resume();}else if(AC)AC.suspend();};
