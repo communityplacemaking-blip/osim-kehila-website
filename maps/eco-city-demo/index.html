@@ -404,7 +404,7 @@ var Q=[
  {n:'שרונה',k:'market',lat:32.071980,lng:34.787500}
 ];
 P.concat(A,Q).forEach(function(p){p.rlat=p.lat;p.rlng=p.lng;var w=warp(p.lat,p.lng);p.lat=w[0];p.lng=w[1];});
-/* ערכות צבע לרקע המפה. ברירת המחדל בהירה; ‎?theme=blue כחול עמוק ותכלת, ‎?theme=green ירוק אקו סיטי וחרדל */
+/* ערכות צבע לרקע המפה. ברירת המחדל ירוק אקו סיטי וחרדל; ‎?theme=light הגרסה הבהירה, ‎?theme=blue כחול עמוק ותכלת */
 var THEMES={
   light:{sea:'#C9E8F8',city:'#FFF9F5',ctx:'#F1EAE0',line:'#1E3F3F',park:'#CDE3C2',river:'#BFE3F5',wave:'#fff',st:.5,
     tones:['#F0E3CF','#E0ECE6','#EDDCC3','#DAE8EE','#EFDFD2'],
@@ -415,8 +415,8 @@ var THEMES={
   green:{sea:'#0B2A33',city:'#1E3F3F',ctx:'#173333',line:'#E2C27A',park:'#2E5B3E',river:'#4E8C93',wave:'#E2C27A',st:.8,
     tones:['#22484A','#1E4243','#264D4C','#1C3D3E','#244A47'],
     ST:{M:{c:'#C59A3C',k:'#7A5E22'},A:{c:'#9C7E3E',k:'#5F4C24'},B:{c:'#3C625F',k:'#2A4A48'},C:{c:'#335754',k:'#264442'}}}};
-var THN=(location.search.match(/theme=(\w+)/)||[])[1],TH=THEMES[THN]||THEMES.light;
-if(THEMES[THN]&&THN!=='light')document.documentElement.classList.add('th-dark','th-'+THN);
+var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='green';var TH=THEMES[THN];
+if(THN!=='light')document.documentElement.classList.add('th-dark','th-'+THN);
 var TONES=TH.tones;
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
 map.createPane('motif');map.getPane('motif').style.zIndex=380;map.getPane('motif').style.pointerEvents='none';
