@@ -702,12 +702,12 @@ function zcls(){var el=document.getElementById('map'),z=map.getZoom();el.classLi
 map.on('zoomend',function(){zcls();layout();});
 var relay=null;map.on('resize',function(){clearTimeout(relay);relay=setTimeout(layout,120);});
 renderGrid();renderStats();
-/* פתיחה על תל אביב בלבד; לגבעתיים יש הפניה בפינה */
-var core=P.filter(function(p){return p.c==='תל אביב'&&p.lat<32.105;}).concat(A.filter(function(a){return a.rlng<34.8;}));
+/* פתיחה צמודה על הפרויקטים בשיווק בתל אביב, כדי שיהיו מרווחים; לגבעתיים יש הפניה בפינה */
+var core=P.filter(function(p){return p.s==='sale'&&p.c==='תל אביב'&&p.lat<32.105;});
 var giv=S.filter(function(p){return p.c==='גבעתיים';})[0];
 if(giv){var gb=document.createElement('button');gb.className='giv';gb.innerHTML='<span>גם בגבעתיים</span><b>'+esc(giv.n)+'</b><i>←</i>';
   gb.onclick=function(e){e.stopPropagation();showP(giv);};document.getElementById('map').appendChild(gb);}
-map.fitBounds(L.latLngBounds(core.map(function(p){return [p.lat,p.lng];})).pad(.06),{padding:[30,30]});
+map.fitBounds(L.latLngBounds(core.map(function(p){return [p.lat,p.lng];})),innerWidth<=820?{paddingTopLeft:[55,80],paddingBottomRight:[55,100]}:{paddingTopLeft:[90,70],paddingBottomRight:[90,60]});
 /* גלים: קווי קצף מקבילים לקו החוף, בכמה מרחקים לתוך הים, שמופיעים בזה אחר זה מבחוץ פנימה */
 var coast=[];
 function waves(sea){
