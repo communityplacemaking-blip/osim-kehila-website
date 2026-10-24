@@ -776,7 +776,7 @@ function startAudio(){
 /* קרוב לים הגלים חזקים יותר, בתוך העיר המוזיקה קצת יותר */
 function seaDist(){if(!coast.length)return 2000;var c=map.getCenter(),best=1e9;coast.forEach(function(q){var dx=(c.lng-q[1])*94300,dy=(c.lat-q[0])*110540,d=Math.sqrt(dx*dx+dy*dy);if(d<best)best=d;});return best;}
 function mixSea(){if(!AC)return;var d=seaDist(),w=Math.max(.3,Math.min(1,1.15-d/3500)),t=AC.currentTime;
-  mixW.gain.setTargetAtTime(w,t,.6);mixC.gain.setTargetAtTime(.6+(1-w)*.35,t,.6);}
+  mixW.gain.setTargetAtTime(w*.45,t,.6);mixC.gain.setTargetAtTime(.8+(1-w)*.2,t,.6);}
 map.on('moveend',mixSea);
 snd.onclick=function(){sndOn=!sndOn;snd.setAttribute('aria-pressed',sndOn);
   if(sndOn){if(!AC)startAudio();else AC.resume();}else if(AC)AC.suspend();};
