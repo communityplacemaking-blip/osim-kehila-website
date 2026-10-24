@@ -224,9 +224,6 @@ h3{font-size:14px;margin:18px 0 6px;color:var(--teal)}
 .btn.pri{background:var(--teal);color:#fff}
 .btn.sec{background:var(--cream-2);color:var(--teal)}
 a.btn{display:flex;align-items:center;justify-content:center;text-decoration:none!important;border:0}
-form.leadf{display:none;margin-top:12px;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:14px}
-form.leadf.open{display:block}
-form.leadf input{width:100%;margin-bottom:8px;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;font-size:15px;background:#fff}
 .rep{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px}
 .rep .av{width:40px;height:40px;border-radius:50%;background:var(--teal);color:var(--gold-2);display:grid;place-items:center;font-weight:700;font-size:13px}
 .ok{font-size:15px;color:var(--teal);font-weight:500}
@@ -630,10 +627,9 @@ function showP(p){listOff();
    (p.a?'<p class="nearby">אדריכלות: '+esc(p.a)+'</p>':'')+
    '<h3>מה קרוב לבית</h3><ul class="near">'+near.map(function(n){return '<li'+(A.indexOf(n.a)>=0?' data-ga="'+n.a.id+'"':'')+'><span class="ic">'+svg(n.a.k)+'</span>'+n.a.n+'<small>'+walk(n.m)+'</small></li>';}).join('')+'</ul>'+
    (p.near?'<p class="nearby">'+esc(p.near)+'</p>':'')+
-   (sale?'<div class="cta"><button class="btn pri" id="go">לתיאום פגישה עם נציג</button><a class="btn sec" href="'+esc(p.url)+'" target="_blank" rel="noopener">לדף הפרויקט</a></div>'+
-     '<form class="leadf" id="lf"><div class="rep"><div class="av">EC</div><div><b>נציג/ת מכירות</b><br>אקו סיטי · '+esc(p.n)+'</div></div><input required placeholder="שם מלא" autocomplete="name"><input required type="tel" placeholder="טלפון" autocomplete="tel"><button class="btn pri" style="width:100%">שלחו ונחזור אליכם</button></form>'
+   (sale?'<div class="cta"><a class="btn pri" href="'+esc(p.url)+'" target="_blank" rel="noopener">לדף הפרויקט באתר אקו סיטי</a></div>'
      :'<div class="cta"><a class="btn sec" href="https://www.ecocity.co.il/your-project" target="_blank" rel="noopener">רוצים פרויקט כזה בבניין שלכם?</a></div>')+
-   '<div class="src">מקור: האתר הציבורי של אקו סיטי. זמני ההליכה בקירוב. בדמו הטופס לא נשלח.</div></div>';
+   '<div class="src">מקור: האתר הציבורי של אקו סיטי. זמני ההליכה בקירוב.</div></div>';
   bindD();bindGal();
   det.classList.add('open');det.scrollTop=0;
   fly(p,lines.map(function(n){return n.a;}));
@@ -677,9 +673,6 @@ function bindD(){
   det.querySelector('.back').onclick=closeD;
   det.querySelectorAll('[data-ga]').forEach(function(li){li.onclick=function(){showA(A[+li.dataset.ga]);};});
   det.querySelectorAll('[data-gp]').forEach(function(li){li.onclick=function(){showP(P[+li.dataset.gp]);};});
-  var go=det.querySelector('#go'),lf=det.querySelector('#lf');
-  if(go)go.onclick=function(){lf.classList.add('open');lf.querySelector('input').focus();};
-  if(lf)lf.onsubmit=function(e){e.preventDefault();lf.innerHTML='<p class="ok">תודה! נציג/ה של אקו סיטי יחזרו אליכם בהקדם.</p>';};
 }
 map.on('click',closeD);
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeD();});
