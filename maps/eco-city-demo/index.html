@@ -298,6 +298,9 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function(){
+/* בית דיגיטלי לפרויקט (פיילוט קשרי דיירים): נטען רק מכתובת עם ?pilot=<שם>. בלי הפרמטר העמוד לא משתנה. הקוד בתיקייה pilot/ */
+var PILOT=(location.search.match(/[?&]pilot=([a-z0-9-]{1,40})(?:&|$)/)||[])[1];
+if(PILOT){document.documentElement.classList.add('pilot');var plc=document.createElement('link');plc.rel='stylesheet';plc.href='pilot/pilot.css?v=1';document.head.appendChild(plc);}
 var TEAL='#1E3F3F',GOLD='#C59A3C';
 var IC={
  park:'<path d="M12 21v-6"/><path d="M12 15c-4 0-6-2.5-6-5.5S8.5 4 12 3c3.5 1 6 3.5 6 6.5S16 15 12 15z"/><path d="M5 21h14"/>',
@@ -811,6 +814,9 @@ function listOff(){if(panel.classList.contains('up')){panel.classList.remove('up
 listb.onclick=function(){var up=!panel.classList.contains('up');panel.classList.toggle('up',up);listb.textContent=up?'מפה':'רשימה';panel.scrollTop=0;};
 var attr=document.querySelector('.leaflet-control-attribution');if(attr)attr.addEventListener('click',function(e){if(e.target.tagName!=='A')attr.classList.toggle('open');});
 zcls();layout();
+if(PILOT){window.ECO_PILOT={slug:PILOT,map:map,A:A,Q:Q,on:on,threads:threads,det:det,svg:svg,warp:warp,walk:walk,nearA:nearA,pickLines:pickLines,thread:thread,
+  fly:fly,mark:mark,closeD:closeD,bindD:bindD,listOff:listOff};
+  var pls=document.createElement('script');pls.src='pilot/pilot.js?v=1';document.body.appendChild(pls);}
 })();
 </script>
 <script>if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
