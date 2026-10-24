@@ -264,6 +264,17 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
   .gal{height:240px}
   .detail{touch-action:pan-y}
 }
+/* ערכות כהות: הרקע כהה, והכיתובים והפרויקטים בהירים ובולטים */
+.th-blue{--mapbg:#0A2348}.th-green{--mapbg:#163131}
+.th-dark #map,.th-dark .leaflet-container{background:var(--mapbg)}
+.th-dark .hood{color:#BFE6FF;text-shadow:0 0 4px rgba(0,0,0,.6)}
+.th-green .hood{color:#E9CF8E}
+.th-dark .street{color:#EAF6FF;text-shadow:0 0 3px rgba(0,0,0,.75),0 0 6px rgba(0,0,0,.5)}
+.th-green .street{color:#F6E7C0}
+.th-dark .city{color:#fff;opacity:.08}
+.th-dark .plab{background:#FFF9F5;border-color:#E2C27A;box-shadow:0 2px 8px rgba(0,0,0,.45)}
+.th-dark .ld{background:rgba(255,255,255,.7)}
+.th-dark .leaflet-container .leaflet-control-attribution{background:rgba(8,22,40,.75);color:#cfe3f0}.th-dark .leaflet-container .leaflet-control-attribution a{color:#9fd4f2}
 </style>
 </head>
 <body>
@@ -393,19 +404,32 @@ var Q=[
  {n:'שרונה',k:'market',lat:32.071980,lng:34.787500}
 ];
 P.concat(A,Q).forEach(function(p){p.rlat=p.lat;p.rlng=p.lng;var w=warp(p.lat,p.lng);p.lat=w[0];p.lng=w[1];});
-var TONES=['#F0E3CF','#E0ECE6','#EDDCC3','#DAE8EE','#EFDFD2'];
+/* ערכות צבע לרקע המפה. ברירת המחדל בהירה; ‎?theme=blue כחול עמוק ותכלת, ‎?theme=green ירוק אקו סיטי וחרדל */
+var THEMES={
+  light:{sea:'#C9E8F8',city:'#FFF9F5',ctx:'#F1EAE0',line:'#1E3F3F',park:'#CDE3C2',river:'#BFE3F5',wave:'#fff',st:.5,
+    tones:['#F0E3CF','#E0ECE6','#EDDCC3','#DAE8EE','#EFDFD2'],
+    ST:{M:{c:'#F4E2B4',k:'#C9A75A'},A:{c:'#FBF0D6',k:'#CDB27A'},B:{c:'#FFFFFF',k:'#C8BCAA'},C:{c:'#FFFFFF',k:'#DCD2C3'}}},
+  blue:{sea:'#0B2D57',city:'#123A6B',ctx:'#0E2C52',line:'#8FD3FF',park:'#1D5A6E',river:'#5CC2F2',wave:'#9BDCFF',st:.8,
+    tones:['#15427A','#123B6E','#184880','#113766','#164476'],
+    ST:{M:{c:'#7CC6F0',k:'#2D6FA8'},A:{c:'#3A80BE',k:'#1B4E84'},B:{c:'#1F5590',k:'#15406E'},C:{c:'#1A4C84',k:'#143C68'}}},
+  green:{sea:'#0B2A33',city:'#1E3F3F',ctx:'#173333',line:'#E2C27A',park:'#2E5B3E',river:'#4E8C93',wave:'#E2C27A',st:.8,
+    tones:['#22484A','#1E4243','#264D4C','#1C3D3E','#244A47'],
+    ST:{M:{c:'#C59A3C',k:'#7A5E22'},A:{c:'#9C7E3E',k:'#5F4C24'},B:{c:'#3C625F',k:'#2A4A48'},C:{c:'#335754',k:'#264442'}}}};
+var THN=(location.search.match(/theme=(\w+)/)||[])[1],TH=THEMES[THN]||THEMES.light;
+if(THEMES[THN]&&THN!=='light')document.documentElement.classList.add('th-dark','th-'+THN);
+var TONES=TH.tones;
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
 map.createPane('motif');map.getPane('motif').style.zIndex=380;map.getPane('motif').style.pointerEvents='none';
 var hoodLayer=null,hoodLabels=L.layerGroup();
 fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
   gj.features.forEach(function(f){f.geometry=wgeom(f.geometry);});
   var by=function(k){return {type:'FeatureCollection',features:gj.features.filter(function(f){return f.properties.kind===k;})};};
-  L.geoJSON(by('sea'),{pane:'geo',interactive:false,style:{stroke:false,fillColor:'#C9E8F8',fillOpacity:1}}).addTo(map);
+  L.geoJSON(by('sea'),{pane:'geo',interactive:false,style:{stroke:false,fillColor:TH.sea,fillOpacity:1}}).addTo(map);
   L.geoJSON(by('city'),{pane:'geo',interactive:false,style:function(f){var c=f.properties.context;
-    return {color:'#1E3F3F',weight:c?1:1.8,opacity:c?.35:.85,dashArray:c?'4 5':null,fillColor:c?'#F1EAE0':'#FFF9F5',fillOpacity:1};}}).addTo(map);
+    return {color:TH.line,weight:c?1:1.8,opacity:c?.35:.85,dashArray:c?'4 5':null,fillColor:c?TH.ctx:TH.city,fillOpacity:1};}}).addTo(map);
   var i=0;hoodLayer=L.geoJSON(by('hood'),{pane:'geo',interactive:false,style:function(f){
-    return {color:'#1E3F3F',weight:.9,opacity:.45,dashArray:'3 4',fillColor:f.properties.park?'#CDE3C2':TONES[(i++)%TONES.length],fillOpacity:1};}}).addTo(map);
-  L.geoJSON(by('river'),{pane:'geo',interactive:false,style:{color:'#BFE3F5',weight:7,opacity:1,lineCap:'round'}}).addTo(map);
+    return {color:TH.line,weight:.9,opacity:.45,dashArray:'3 4',fillColor:f.properties.park?TH.park:TONES[(i++)%TONES.length],fillOpacity:1};}}).addTo(map);
+  L.geoJSON(by('river'),{pane:'geo',interactive:false,style:{color:TH.river,weight:7,opacity:1,lineCap:'round'}}).addTo(map);
   waves(by('sea'));
   streets();
   by('hood').features.forEach(function(f){var c=warp(f.properties.center[0],f.properties.center[1]);
@@ -414,12 +438,12 @@ fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
 });
 /* רחובות ראשיים, כמו במפה מצוירת: פס לבן רחב עם שוליים. התוואי סכמטי (נקודות ציון ידועות לאורך הרחוב) */
 /* רחובות אמיתיים מ-Overture Maps (נגזר מ-OpenStreetMap, ODbL), נבנה ב-build-streets.py. גם הם עוברים את מתיחת העוגנים */
-var ST={M:{c:'#F4E2B4',k:'#C9A75A',w:6.5},A:{c:'#FBF0D6',k:'#CDB27A',w:5.2},B:{c:'#FFFFFF',k:'#C8BCAA',w:3.6},C:{c:'#FFFFFF',k:'#DCD2C3',w:1.7}};
+var ST={M:{c:TH.ST.M.c,k:TH.ST.M.k,w:6.5},A:{c:TH.ST.A.c,k:TH.ST.A.k,w:5.2},B:{c:TH.ST.B.c,k:TH.ST.B.k,w:3.6},C:{c:TH.ST.C.c,k:TH.ST.C.k,w:1.7}};
 var streetLayers=[],streetLabels=L.layerGroup(),streetLabelsMinor=L.layerGroup();
 function streets(){
   map.createPane('streets');map.getPane('streets').style.zIndex=270;
   /* רשת הרחובות ברקע, מעומעמת כדי שהפרויקטים יבלטו */
-  map.getPane('streets').style.opacity=.5;
+  map.getPane('streets').style.opacity=TH.st;
   var rend=L.canvas({pane:'streets',padding:.3});
   fetch('streets.json').then(function(r){return r.json();}).then(function(d){
     function wl(c){return wring(c).map(function(p){return [p[1],p[0]];});}
@@ -715,7 +739,7 @@ function waves(sea){
   map.createPane('waves');map.getPane('waves').style.zIndex=255;map.getPane('waves').style.pointerEvents='none';
   [60,190,340,510,700,920].forEach(function(m,i){
     var off=m/94300;
-    L.polyline(coast.map(function(c){return [c[0],c[1]-off];}),{pane:'waves',interactive:false,color:'#fff',weight:i<2?2.6:2,opacity:1,
+    L.polyline(coast.map(function(c){return [c[0],c[1]-off];}),{pane:'waves',interactive:false,color:TH.wave,weight:i<2?2.6:2,opacity:1,
       dashArray:i%2?'16 22':'26 18',lineCap:'round',className:'wave',smoothFactor:2}).addTo(map)
       .getElement().style.animationDelay=(-(5-i)*.8).toFixed(1)+'s';
   });
