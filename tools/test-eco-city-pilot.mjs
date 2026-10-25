@@ -99,10 +99,24 @@ for (const w of [390, 1280]) {
   await pg.context().close();
 }
 
-console.log('2. הקישור הישיר לפיילוט');
+console.log('2. קישור הפיילוט: המפה נשארת, והבית נפתח רק בלחיצה');
 for (const w of [390, 1280]) {
   const pg = await page(w);
-  await open(pg, MAP + '?pilot=demo&src=wa');
+  await open(pg, MAP + '?pilot=demo&src=share');
+  // רגרסיה: הקישור לא עובר מעצמו לבית של הפרויקט (היה setTimeout(open) ב-start)
+  await pg.waitForTimeout(2500);
+  const land = await pg.evaluate(() => {
+    const m = document.getElementById('map').getBoundingClientRect(), pin = document.querySelector('.pl-dot')?.getBoundingClientRect();
+    return { open: document.getElementById('detail').classList.contains('open'), url: location.pathname + location.search,
+      map: m.width > 300 && m.height > 300, pinInView: !!pin && pin.left >= 0 && pin.right <= innerWidth && pin.top >= m.top && pin.bottom <= m.bottom,
+      chip: !!document.querySelector('.pl-chip'), banner: !!document.querySelector('.pl-banner'), labels: document.querySelectorAll('.plab').length, anchors: document.querySelectorAll('.anc').length };
+  });
+  check(`${w}px: המפה נשארת פתוחה, בלי מעבר אוטומטי לבית`, !land.open && land.map && land.url === '/maps/eco-city-demo/?pilot=demo&src=share', land);
+  // בטלפון התצוגה הרגילה צרה, והסמן יכול להיות מחוץ למסך. הכניסה היא הכפתור בפס, שתמיד גלוי
+  check(`${w}px: כפתור "פרויקט ההדגמה" בפס${w > 600 ? ', והסמן בתוך המפה' : ''}`, land.chip && (w < 600 || land.pinInView), land);
+  check(`${w}px: הפרויקטים והעוגנים של המפה מוצגים כרגיל`, land.labels > 0 && land.anchors > 0, land);
+  await shot(pg, `landing-${w}`);
+  await pg.click('.pl-chip'); await pg.waitForTimeout(900);
   const r = await pg.evaluate(() => {
     const d = document.getElementById('detail'), q = (s) => d.querySelectorAll(s);
     return {
@@ -115,7 +129,7 @@ for (const w of [390, 1280]) {
       heroImg: d.querySelector('.pl-ring img')?.naturalWidth > 0,
     };
   });
-  check(`${w}px: הבית של הפרויקט נפתח ישר מהקישור`, r.open && r.home && r.title === 'פרויקט הדגמה בצפון הישן', r);
+  check(`${w}px: לחיצה על הכפתור פותחת את הבית של הפרויקט`, r.open && r.home && r.title === 'פרויקט הדגמה בצפון הישן', r);
   check(`${w}px: פס "אב־טיפוס להמחשה — לא פרויקט אמיתי" גלוי`, r.banner === 'אב־טיפוס להמחשה — לא פרויקט אמיתי' && r.bannerVisible, r.banner);
   check(`${w}px: כל החלקים שיש להם תוכן, ובלי מפגשים (אין מפגש מאושר)`, JSON.stringify(r.sections) === JSON.stringify(['pl-overview', 'pl-updates', 'pl-faq', 'pl-contact', 'pl-hood']), r.sections);
   check(`${w}px: 3 עדכונים, אחד מהם "כפוף לאישור"`, r.updates === 3 && r.pending === 1, r);
@@ -180,6 +194,7 @@ console.log('3. ניקוי תוכן מסוכן');
   };
   const pg = await page(390, { fixtures: { 'evil.json': evil } });
   await open(pg, MAP + '?pilot=evil');
+  await pg.click('.pl-chip'); await pg.waitForTimeout(900);
   const r = await pg.evaluate(() => ({
     x: window.__x, title: document.querySelector('#detail h2')?.textContent,
     hrefs: [...document.querySelectorAll('#detail a[href]')].map((a) => a.getAttribute('href')),
@@ -198,6 +213,7 @@ console.log('4. תוכן חסר, קובץ חסר, שם לא תקין');
 {
   const pg = await page(390, { fixtures: { 'min.json': { project: { name: 'פרויקט מינימלי', lat: 32.0858, lng: 34.7752 } } } });
   await open(pg, MAP + '?pilot=min');
+  await pg.click('.pl-chip'); await pg.waitForTimeout(900);
   const r = await pg.evaluate(() => ({ sections: [...document.querySelectorAll('.pl-sec')].map((s) => s.id), banner: !!document.querySelector('.pl-banner'), ask: !!document.querySelector('.pl-ask'), tabs: document.querySelectorAll('.pl-tabs [data-go]').length }));
   check('רק סקירה ושכונה מוצגות, בלי פס הדגמה ובלי שאלה לצוות', JSON.stringify(r.sections) === JSON.stringify(['pl-overview', 'pl-hood']) && !r.banner && !r.ask && r.tabs === 2, r);
   check('אין שגיאות JavaScript', pg.errors.length === 0, pg.errors);
@@ -225,9 +241,9 @@ console.log('5. כתובת השיתוף');
 {
   const pg = await page(390);
   await pg.goto(base + MAP + 'home/', { waitUntil: 'load' });
-  await pg.waitForTimeout(1800);
-  const r = await pg.evaluate(() => ({ url: location.pathname + location.search, home: document.getElementById('detail')?.classList.contains('pl-home') }));
-  check('כתובת השיתוף מעבירה לבית של פרויקט ההדגמה', r.url === '/maps/eco-city-demo/?pilot=demo&src=share' && r.home, r);
+  await pg.waitForTimeout(3000);
+  const r = await pg.evaluate(() => ({ url: location.pathname + location.search, open: document.getElementById('detail')?.classList.contains('open'), pin: !!document.querySelector('.pl-pin') }));
+  check('כתובת השיתוף מעבירה למפה עם הפיילוט, והמפה נשארת בלי לפתוח את הבית', r.url === '/maps/eco-city-demo/?pilot=demo&src=share' && r.pin && !r.open, r);
   const html = await readFile(join(ROOT, 'maps/eco-city-demo/home/index.html'), 'utf8');
   const og = (p) => (html.match(new RegExp(`property="og:${p}" content="([^"]*)"`)) || [])[1];
   check('יש og:title, og:description ו-og:image מלא', !!og('title') && !!og('description') && /^https:\/\/osimkehila\.co\.il\//.test(og('image') || ''), { t: og('title'), i: og('image') });
