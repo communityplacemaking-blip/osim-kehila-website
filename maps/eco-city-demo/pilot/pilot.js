@@ -187,10 +187,7 @@ function start(cfg){
   var b=document.createElement('button');b.type='button';b.className='chip pl-chip';b.innerHTML='<i class="pl-chip-dot"></i>'+h(C.demo?'פרויקט ההדגמה':C.name);
   b.onclick=function(e){e.stopPropagation();open();};
   var f=document.getElementById('filters');if(f)f.insertBefore(b,f.firstChild);
-  /* מהקישור נכנסים ישר לבית של הפרויקט: רגע של מפה סביב הבית, ואז הכרטיס נפתח */
-  map.setView([PP.lat,PP.lng],15,{animate:false});
-  drawHood();
-  setTimeout(open,matchMedia('(prefers-reduced-motion: reduce)').matches?0:700);
+  /* המפה נפתחת בתצוגה הרגילה שלה. הבית של הפרויקט נפתח רק בלחיצה על הסמן או על הכפתור בפס, לא מעצמו */
 }
 fetch('pilot/'+E.slug+'.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(start)
   .catch(function(e){console.warn('pilot: '+E.slug+' לא נטען ('+e.message+')');document.documentElement.classList.remove('pilot');});
