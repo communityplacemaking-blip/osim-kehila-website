@@ -7,15 +7,15 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="/assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500&amp;family=Frank+Ruhl+Libre:wght@400;500&amp;family=Playfair+Display:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500&amp;display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0F2D4A;--must:#D4A72C;--cream:#F6F0E1;--paper:#FBF7EE;--terra:#B4532A;--turq:#8FC3BD;--turq-bg:#E3F0EE;--muted:#4D5E70;--line:#E2D8C3}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;background:var(--cream);color:var(--navy);font-family:Heebo,system-ui,sans-serif;font-weight:300;font-size:18px;line-height:1.75}
 .wrap{max-width:1100px;margin:0 auto;padding:0 28px}.narrow{max-width:720px}
 h1,h2,h3{margin:0;font-weight:400;line-height:1.2}
-.serif{font-family:'Frank Ruhl Libre',Georgia,serif}
-[lang=en] .serif{font-family:'Playfair Display',Georgia,serif}
+.serif{font-family:Heebo,system-ui,sans-serif}
+
 a{color:var(--navy)}p{margin:0 0 14px}
 .skip{position:absolute;inset-inline-start:16px;top:-60px;z-index:100;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px}.skip:focus{top:12px}
 :focus-visible{outline:2px solid var(--navy);outline-offset:3px}
@@ -31,8 +31,8 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 .eyebrow{color:var(--terra);font-size:15px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
 [lang=he] .eyebrow{letter-spacing:.02em;text-transform:none;font-size:17px}
 .hero h1{font-size:clamp(44px,6vw,78px);line-height:1.05}
-.hero h1 em{display:block;font-style:italic;color:var(--must);font-size:1.15em}
-[lang=he] .hero h1 em{font-style:normal;font-size:.42em;color:var(--terra);margin-top:10px;font-family:'Playfair Display',Georgia,serif;font-style:italic}
+.hero h1 em{display:block;font-style:normal;color:var(--must);font-size:1.15em}
+[lang=he] .hero h1 em{font-style:normal;font-size:.42em;color:var(--terra);margin-top:10px}
 .tag{font-size:clamp(21px,2.3vw,27px);margin:22px 0 16px;font-weight:400}
 .hero p.lead{font-size:19px;color:var(--muted);max-width:32em}
 .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
@@ -58,7 +58,7 @@ h2 small{display:block;font-family:Heebo,sans-serif;font-size:15px;color:var(--t
 .ws{background:var(--turq-bg);border-block:1px solid var(--turq)}
 .ws ol{list-style:none;margin:0;padding:0;counter-reset:w;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 48px}
 .ws li{counter-increment:w}
-.ws li::before{content:counter(w,decimal-leading-zero);display:block;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:30px;color:var(--terra);line-height:1}
+.ws li::before{content:counter(w,decimal-leading-zero);display:block;font-weight:300;font-size:30px;color:var(--terra);line-height:1}
 .ws h3{font-size:22px;font-weight:500;margin:6px 0 6px}
 .ws p{margin:0;color:var(--muted)}
 .lead2{color:var(--muted);max-width:40em;margin-bottom:34px}
@@ -89,7 +89,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 
 <h1 class="serif">המשוטט האקוסיסטמי<em lang="en">The Ecosystemic Flâneur</em></h1>
 <p class="tag serif">להניח רגע את המפה. לפגוש את מה שלא תוכנן.</p>
 <p class="lead">שוטטות אינה הליכה לאיבוד לשם הליכה לאיבוד. זו דרך לשחרר קצת את הצורך לדעת ולשלוט בכל מראש, ולפנות מקום לקשב, למפגשים, לגילויים ולאפשרויות שלא היה אפשר לתכנן.</p><p class="lead">אנחנו מביאים אותה לסדנאות, לכנסים ולתהליכים עם קהילות, ארגונים ומקומות.</p>
-<div class="ctas"><a class="btn solid" href="#invite">להזמנת סדנה</a><a class="btn must" href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/">לעומק השיטה ↗</a></div>
+<div class="ctas"><a class="btn solid" href="#invite">להזמנת סדנה</a><a class="btn must" href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/">להתנסות בשוטטות ↗</a></div>
 </div>
 <figure class="ph tall"><span>דמות המשוטט המצוירת, מתוך Getting Lost Workshop</span></figure>
 </div></section>
@@ -121,7 +121,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 
 <section class="invite" id="invite"><div class="wrap">
 <h2 class="serif">להזמנת סדנה / לבחינת שיתוף פעולה</h2>
 <p>מארגנים כנס, מפגש מחקרי או כינוס על ערים, קהילות או השתתפות? נשמח לבדוק יחד איזה פורמט יכול להתאים.</p>
-<div class="ctas"><a class="btn solid" href="mailto:osimkehilanet@gmail.com">כתבו לנו</a><a class="btn must" href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/">לעומק השיטה ↗</a></div>
+<div class="ctas"><a class="btn solid" href="mailto:osimkehilanet@gmail.com">כתבו לנו</a><a class="btn must" href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/">להתנסות בשוטטות ↗</a></div>
 </div></section>
 </main>
 <footer><div class="wrap"><span>עושים קהילה · Community Making</span><span><a href="mailto:osimkehilanet@gmail.com" dir="ltr">osimkehilanet@gmail.com</a> · <a href="/">לדף הבית</a></span></div></footer>
