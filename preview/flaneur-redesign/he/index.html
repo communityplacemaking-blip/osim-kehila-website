@@ -41,8 +41,8 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 .btn.must{border-color:var(--must);background:transparent}
 .btn.soon{opacity:.55;border-style:dashed;cursor:default}
 .ph{margin:0;position:relative;border:1.5px dashed var(--terra);border-radius:6px;background:var(--paper);display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;color:var(--terra);font-size:15px;min-height:180px}
-.ph.real{border:0;padding:0;background:none}.ph.real img{width:100%;height:auto;display:block;border-radius:4px}
-.ph.tall{min-height:440px}
+.ph.real{display:block;border:0;padding:0;background:none;text-align:start}.ph.real img{width:100%;height:auto;display:block;border-radius:4px}
+.ph.tall{min-height:440px}.ph.tall.real{min-height:0}
 section{padding:64px 0}
 h2{font-size:clamp(30px,3.4vw,42px);margin-bottom:22px}
 h2 small{display:block;font-family:Heebo,sans-serif;font-size:15px;color:var(--terra);letter-spacing:.08em;margin-bottom:8px}
@@ -91,22 +91,18 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 
 <p class="lead">שוטטות אינה הליכה לאיבוד לשם הליכה לאיבוד. זו דרך לשחרר קצת את הצורך לדעת ולשלוט בכל מראש, ולפנות מקום לקשב, למפגשים, לגילויים ולאפשרויות שלא היה אפשר לתכנן.</p><p class="lead">אנחנו מביאים אותה לסדנאות, לכנסים ולתהליכים עם קהילות, ארגונים ומקומות.</p>
 <div class="ctas"><a class="btn solid" href="#invite">להזמנת סדנה</a><a class="btn must" href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/">להתנסות בשוטטות ↗</a></div>
 </div>
-<figure class="ph tall"><span>דמות המשוטט המצוירת, מתוך Getting Lost Workshop</span></figure>
+<figure class="ph tall real"><img src="/assets/flaneur/history/flaneur-figure.jpg" alt="דמות המשוטט המצוירת, מתוך Getting Lost Workshop" loading="lazy"></figure>
 </div></section>
 <hr class="rule">
 <section class="co"><div class="wrap grid">
 <div><h2 class="serif"><small>בין כאוס לסדר</small>לא ויתור על סדר</h2><p>שוטטות איננה ויתור על סדר. היא נעה בין השניים: יוצאים מתוך מבנה, מאפשרים לו להתרופף, ומגלים בדרך סדר אחר, שלא היה אפשר לתכנן מראש.</p></div>
-<figure class="ph "><span>החומר ההיסטורי על התנועה בין כאוס לסדר</span></figure>
+<figure class="ph  real"><img src="/assets/flaneur/history/chaos-order.jpg" alt="קריסה, כאוס, סדר ושליטה ברצף, ובין כאוס לסדר המרחב הכאורדי ודמות שהולכת בשביל" loading="lazy"><figcaption class="cap">איור פרשני שלנו, בהשראת ה־Chaordic Path של קהילת Art of Hosting. אין זה המודל המקורי.</figcaption></figure>
 </div></section>
 <section class="areas"><div class="wrap">
 <h2 class="serif"><small>מה השוטטות מחברת</small>תחומי חקירה ועשייה</h2>
 <ol><li><h3 class="serif">שוטטות עירונית והתבוננות קשובה</h3><p>הליכה איטית במקום ושימת לב למה שבדרך כלל לא רואים: מעברים, עקבות של שימוש, פינות מפגש לא רשמיות, והסיפורים שאנשים קושרים אליהם.</p></li><li><h3 class="serif">אינטליגנציה קולקטיבית וחוכמה משותפת</h3><p>חקירה של האופן שבו קבוצה שמתבוננת יחד רואה יותר מכל אחד מחבריה, ואיך התבוננות אישית הופכת להבנה משותפת.</p></li><li><h3 class="serif">Art of Hosting והנחיה משתפת</h3><p>פרקטיקות אירוח כמו מעגל, <a href="/cafe-olam/">קפה עולם</a> ו<a href="/open-space/">מרחב פתוח</a>, לשיחות שבהן קולות רבים יכולים להישמע.</p></li><li><h3 class="serif">עשיית מקום ותהליכים בהובלת הקהילה</h3><p>איך קשב למקום יכול להפוך לנקודת פתיחה שממנה אנשים מעצבים אותו יחד, כשהקהילה במרכז. עוד על <a href="/placemaking/">פלייסמייקינג</a>.</p></li><li><h3 class="serif">מורכבות, הגחה וארגון עצמי</h3><p>התייחסות לשכונה כמערכת חיה, שבה דפוסים צומחים מהרבה קשרים קטנים ולא מתוכנית אחת.</p></li></ol>
 </div></section>
-<section class="archive"><div class="wrap">
-<h2 class="serif"><small>מהארכיון</small>סדנאות שוטטות</h2>
-<p class="lead2">הזמנות ומפות מסדנאות שוטטות קודמות.</p>
-<div class="strip"><figure class="ph "><span>הזמנה היסטורית לסדנת שוטטות</span></figure><figure class="ph "><span>מפה עירונית מסדנה</span></figure><figure class="ph "><span>הזמנה היסטורית נוספת</span></figure></div>
-</div></section>
+
 <section class="ws" id="workshops"><div class="wrap">
 <h2 class="serif"><small>לכנסים</small>סדנאות לכנסים</h2>
 <p class="lead2">אלה פורמטים גמישים ולא תוכניות קבועות. אפשר להתאים כל אחד מהם לנושא הכנס, למקום, לגודל הקבוצה ולזמן שעומד לרשותנו.</p>
