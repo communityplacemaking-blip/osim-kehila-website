@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>עושים קהילה | מיפוי קהילתי, בניית קהילה ומפות דיגיטליות</title>
 
-<meta name="description" content="עושים קהילה: מיפוי קהילתי ומפות דיגיטליות לשכונות, לרשויות ולעסקים, ותהליכי בניית קהילה ושיתוף ציבור: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
+<meta name="description" content="עושים קהילה: מפות דיגיטליות נגישות לגילוי, לחיבור ולפעולה במקום, לעסקים, לרשויות, לארגונים וליוזמות קהילתיות, ותהליכים השתתפותיים: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
 <link rel="canonical" href="https://osimkehila.co.il/">
 <meta name="google-site-verification" content="pNy0iRYMOvS1eJQYpZcEoyCGeR8fEGoUOPYILp6vmp8">
 <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="עושים קהילה | Community Making">
 <meta property="og:url" content="https://osimkehila.co.il/">
 <meta property="og:title" content="עושים קהילה | מיפוי קהילתי, בניית קהילה ומפות דיגיטליות">
-<meta property="og:description" content="עושים קהילה: מיפוי קהילתי ומפות דיגיטליות לשכונות, לרשויות ולעסקים, ותהליכי בניית קהילה ושיתוף ציבור: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
+<meta property="og:description" content="עושים קהילה: מפות דיגיטליות נגישות לגילוי, לחיבור ולפעולה במקום, לעסקים, לרשויות, לארגונים וליוזמות קהילתיות, ותהליכים השתתפותיים: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
 <meta property="og:image" content="https://osimkehila.co.il/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -74,11 +74,10 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .mwho span{display:inline-block;border:1px solid var(--grey);border-radius:999px;padding:6px 14px;font-size:15px;background:#fff}
 .mwho input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
 .mwho input:focus-visible+span{outline:2px solid var(--must);outline-offset:2px}
-.msl label{display:block;font-weight:500;font-size:16px;margin-bottom:2px}
-.msl input{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;margin:10px 0 6px;cursor:pointer;background:linear-gradient(to left,var(--must) var(--p,50%),var(--grey) var(--p,50%))}
-.msl input::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--navy)}
-.msl input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--navy)}
-.msl .ends{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}.msl .ends b{color:var(--warm);font-weight:500;font-size:14px}.msl .ends span.on{color:var(--warm);font-weight:500}
+.mq{border:0;padding:0;margin:0}
+.mq legend{padding:0;font-weight:500;font-size:16px;margin-bottom:6px}.mq legend small{font-weight:300;color:var(--muted);font-size:13.5px;margin-inline-start:6px}
+.mq .mwho span{font-size:14.5px;padding:5px 12px}
+.mres .dir{color:var(--must);font-size:14px;font-weight:500}
 .mres{background:var(--navy);color:#fff;border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;gap:6px}
 .mres small{color:var(--must);font-size:14px}.mres h3{font-size:24px;font-weight:400;margin:0}.mres p{color:#d5dde6;margin:0 0 6px}
 .mres ol{margin:0 0 8px;padding-inline-start:22px;display:flex;flex-direction:column;gap:2px}.mres li{font-size:16px}
@@ -102,6 +101,10 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .how .wrap,.contact .wrap,.system .wrap{position:relative}
 .how .wrap{display:flex;flex-direction:column;gap:30px}
 .how .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:end}
+.how .creed{max-width:760px;display:flex;flex-direction:column;gap:10px;font-size:17px;line-height:1.7}
+.how .creed p{margin:0}
+.how .creed .belief{font-size:19.5px;font-weight:500;color:var(--navy)}
+.how .creed .principle{font-weight:500;color:var(--navy);border-inline-start:3px solid var(--warm);padding-inline-start:12px}
 .how blockquote{margin:0;font-size:19px;color:var(--muted);max-width:28em;border-inline-start:2px solid var(--must);padding-inline-start:16px}
 .pillars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
 .pillar{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
@@ -116,6 +119,12 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .system .motto{font-size:21px;font-weight:400;color:var(--must)}
 .system ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:16.5px}
 .system li::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--must);margin-inline-end:9px;vertical-align:middle}
+.system .layers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.system .layers div{border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:12px 16px;background:rgba(15,45,74,.55)}
+.system .layers b{display:block;font-weight:500;font-size:17.5px;color:var(--must)}
+.system .layers small{display:block;font-size:13.5px;color:#C9D3DE;margin-bottom:4px}
+.system .layers span{display:block;font-size:15.5px;line-height:1.5}
+@media(max-width:640px){.system .layers{grid-template-columns:1fr}}
 .system .btn.must{background:var(--must);color:var(--navy);align-self:flex-start;font-weight:500}
 .shot{flex:1 1 400px;position:relative;display:block;border-radius:18px;overflow:hidden;height:350px;text-decoration:none;background:#fff}
 .shot img{width:100%;height:100%;object-fit:cover;object-position:center 4%;display:block}
@@ -153,7 +162,7 @@ dialog.viewer::backdrop{background:rgba(15,45,74,.55)}
 .who .wrap{display:grid;grid-template-columns:1fr 1fr;gap:36px}
 .who h2{font-size:28px;margin-bottom:14px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.tracks{display:grid;gap:8px}.tracks div{background:#fff;border:1px solid var(--grey);border-radius:14px;padding:10px 16px}.tracks b{display:block;font-weight:500;font-size:17px}.tracks span{display:block;font-size:15.5px;color:var(--muted);line-height:1.45}
+.who .idea{margin:0 0 12px;font-size:17px;font-weight:500;color:var(--navy);border-inline-start:3px solid var(--warm);padding-inline-start:12px;line-height:1.55}.tracks small{display:block;font-size:13.5px;color:var(--warm);margin-bottom:2px}.tracks{display:grid;gap:8px}.tracks div{background:#fff;border:1px solid var(--grey);border-radius:14px;padding:10px 16px}.tracks b{display:block;font-weight:500;font-size:17px}.tracks span{display:block;font-size:15.5px;color:var(--muted);line-height:1.45}
 .chips span,.chips button{padding:7px 16px;border-radius:999px;font:inherit;font-size:16px;color:var(--navy);border:1px solid var(--grey);background:#fff}
 .chips button{cursor:pointer;box-shadow:inset 0 -1px 0 var(--must);transition:border-color .2s,background .2s}.chips button:hover{border-color:var(--must);background:var(--cream)}
 .viewer .doc{display:none;flex:1;overflow:auto;padding:22px 28px 32px;font-size:17px;line-height:1.65}
@@ -251,7 +260,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <div class="txt">
 <p class="words" aria-label="אנשים, מקום, סיפורים, יוזמות, פעולה"><span>אנשים</span><span>מקום</span><span>סיפורים</span><span>יוזמות</span><span>פעולה</span></p>
 <h1>יוצרים <span class="hl must">מקום</span> לקהילה,<br>ויוצרים <span class="hl clay">קהילה</span> בשביל מקום.</h1>
-<p class="lead">מתודולוגיה ומפות דיגיטליות לקהילות, לרשויות, לארגונים ולעסקים. אנחנו עוזרים לגלות את האנשים, המקומות, השירותים והסיפורים שכבר פועלים במקום, ולחבר ביניהם.</p>
+<p class="lead">מפות דיגיטליות ומתודולוגיה השתתפותית לעסקים, לרשויות, לארגונים וליוזמות קהילתיות. אנחנו הופכים מקום למרחב נגיש של גילוי, חיבור ופעולה: שירותים ועסקים מקומיים, אנשים, יוזמות והזדמנויות, במפה אחת שקל להבין ולהשתמש בה.</p>
 <div class="ctas"><a class="btn line" href="#how">איך אנחנו עובדים ←</a></div>
 </div>
 <div class="art"><svg class="net" viewBox="0 0 640 380" role="img" aria-label="רשת קשרים ויחסי גומלין: תושבים, בית ספר, רשות, עסקים, יוזמה, רעיון, סיפור ומקום, מחוברים זה לזה ולקהילה" style="display:block;overflow:visible">
@@ -1490,22 +1499,27 @@ document.addEventListener('DOMContentLoaded',function(){
 </div></div></section>
 
 <section class="design reveal" id="design"><div class="wrap">
-<div class="dhead"><p class="eyebrow">עצבו לעצמכם</p><h2>איזו מפה מתאימה לכם?</h2><p class="t">בחרו מי אתם והזיזו שלושה כפתורים. נראה לכם איזו מפה ואיזה תהליך מתאימים.</p></div>
+<div class="dhead"><p class="eyebrow">עצבו לעצמכם</p><h2>איזו מפה מתאימה לכם?</h2><p class="t">ספרו מי אתם ומה תרצו להשיג. נמליץ על כיוון, על מפה ועל הצעד הבא.</p></div>
 <div class="mini">
 <div class="mctl">
-<div class="mwho" role="radiogroup" aria-label="מי אתם?"><label><input type="radio" name="mwho" value="neighborhood" checked><span>שכונה או קהילה</span></label><label><input type="radio" name="mwho" value="city"><span>עיר או רשות</span></label><label><input type="radio" name="mwho" value="org"><span>ארגון או מוסד</span></label><label><input type="radio" name="mwho" value="company"><span>חברה או עסק</span></label></div>
-<div class="msl"><label for="mgoal">מה המטרה?</label><input type="range" id="mgoal" min="0" max="4" step="1" value="4"><div class="ends"><span>עסקית</span><b id="vgoal"></b><span>קהילתית</span></div></div>
-<div class="msl"><label for="mlead">כמה ליווי?</label><input type="range" id="mlead" min="0" max="4" step="1" value="2"><div class="ends"><span>כלי מוכן</span><b id="vlead"></b><span>תהליך מלווה</span></div></div>
-<div class="msl"><label for="mscale">מה ההיקף?</label><input type="range" id="mscale" min="0" max="4" step="1" value="2"><div class="ends"><span>מקום או סניף</span><b id="vscale"></b><span>אזור או ארצי</span></div></div>
+<fieldset class="mq"><legend>מי אתם?</legend><div class="mwho" id="mwho"></div></fieldset>
+<fieldset class="mq"><legend>מה תרצו שאנשים יעשו עם המפה?</legend><div class="mwho" id="mact"></div></fieldset>
+<fieldset class="mq"><legend>מה צריך להופיע במפה?<small>אפשר לבחור כמה</small></legend><div class="mwho" id="mshow"></div></fieldset>
+<fieldset class="mq"><legend>איך תרצו לעבוד?</legend><div class="mwho" id="mwork"></div></fieldset>
 </div>
-<div class="mres" aria-live="polite"><small>מה שמתאים לכם</small><h3 id="mT"></h3><p id="mD"></p><ol id="mS"></ol>
-<div class="mgo"><a class="go" id="mCta" href="#contact">לבקשת הצעה</a><a class="full" href="configurator/">למכוון המלא ←</a></div></div>
+<div class="mres" aria-live="polite"><small>מה אנחנו ממליצים</small><span class="dir" id="mDir"></span><h3 id="mT"></h3><p id="mD"></p><ol id="mS"></ol>
+<div class="mgo"><a class="go" id="mCta" href="#contact">לתיאום שיחת היכרות</a><a class="full" href="configurator/">למכוון המלא ←</a></div></div>
 </div>
 </div></section>
 <script>
 (function(){
-var MAIL='osimkehilanet@gmail.com',G={neighborhood:4,city:3,org:2,company:0},touched=false;
-var ST={goal:['עסקית','בעיקר עסקית','גם וגם','בעיקר קהילתית','קהילתית'],lead:['כלי מוכן','כלי ועזרה בהתחלה','כלי ומפגש התנעה','בעיקר תהליך','תהליך מלווה'],scale:['מקום או סניף','מתחם','שכונה','עיר','אזור או ארצי']};
+var MAIL='osimkehilanet@gmail.com',touched=false;
+/* אותם נתונים כמו ב-configurator/index.html */
+var WHO=[['company','חברה או עסק','discover'],['city','רשות מקומית','understand'],['initiative','יוזמה קהילתית','join'],['nonprofit','עמותה או ארגון חברתי','join'],['edu','מוסד חינוך או תרבות','understand'],['other','ארגון אחר','both']];
+var ACT=[['discover','יגלו את השירותים, הסניפים או ההטבות שלנו','biz'],['understand','יבינו מה קורה במקום ומה יש בו',null],['join','ישתתפו: יציעו, יתנדבו, יצטרפו','comm'],['both','יגלו שירותים וגם ישתתפו בחיים המקומיים','mix']];
+var SHOW=[['services','שירותים, סניפים ועסקים','biz'],['offers','הטבות ומבצעים','biz'],['places','מקומות משמעותיים וסיפורים','comm'],['people','אנשים, ארגונים ויוזמות','comm'],['events','אירועים ופעילויות',null],['ideas','רעיונות והצעות מהציבור','comm']];
+var WORK=[['ready','כלי מוכן'],['kickoff','כלי ומפגש התנעה'],['guided','תהליך מלווה']];
+var DIR={biz:'כיוון עסקי ושיווקי',comm:'כיוון קהילתי והשתתפותי',mix:'כיוון משולב: ערך עסקי וקהילתי'};
 var P={p1:['מפת פריסה','השירותים, הסניפים או המתחם שלכם, במפה מעניינת ללקוחות או לעובדים.',['שיחת אפיון','איסוף הנתונים שכבר יש לכם','עיצוב המפה והקמתה']],
 p2:['מפת ערך לארגון','הערכים, הנכסים והקשרים של הארגון, במפה שמספרת מה מייחד אותו.',['שיחת אפיון','סדנה: ערכים, נכסים וקשרים','איסוף סיפורים מהשטח','עיצוב המפה והקמתה']],
 p3:['מפה קהילתית חיה','מפה של המקום, שהקהילה ממלאת ומעדכנת בעצמה.',['שיחת אפיון','הקמת המפה בהתאמה למקום','הקהילה ממלאת וממשיכה לעדכן']],
@@ -1513,18 +1527,24 @@ p4:['תהליך קהילתי מלא','הקשבה, מפגשים וסיפורים,
 mr:['מפה משותפת לעסקים ולקהילה','מפה אחת שמציגה את מה שהעסקים מציעים לצד מה שחשוב לקהילה.',['שיחת אפיון','איסוף נתונים עסקיים וקהילתיים','הקמת המפה','העסקים והקהילה ממשיכים לעדכן']],
 mg:['תהליך משותף לעסקים ולקהילה','עסקים וקהילה מגלים יחד מה חשוב במקום, ובונים מזה מפה ויוזמה.',['הקשבה לאנשים ולארגונים','מפגש משותף לעסקים ולקהילה','הקמת המפה','יוזמה משותפת במרחב']]};
 var $=function(i){return document.getElementById(i)};
-function v(k){return +$('m'+k).value}
+function chips(id,type,list,on){$(id).innerHTML=list.map(function(x){return '<label><input type="'+type+'" name="'+id+'" value="'+x[0]+'"'+(on.indexOf(x[0])>-1?' checked':'')+'><span>'+x[1]+'</span></label>'}).join('')}
+chips('mwho','radio',WHO,['initiative']);chips('mact','radio',ACT,['join']);chips('mshow','checkbox',SHOW,[]);chips('mwork','radio',WORK,['kickoff']);
+function find(list,v){return list.filter(function(x){return x[0]===v})[0]}
+function pick(n){return document.querySelector('input[name='+n+']:checked').value}
 function render(){
-  ['goal','lead','scale'].forEach(function(k){var e=$('m'+k);e.style.setProperty('--p',(v(k)/4*100)+'%');e.setAttribute('aria-valuetext',ST[k][v(k)]);var x=v(k),sp=e.parentNode.querySelectorAll('.ends span');$('v'+k).textContent=(x>0&&x<4)?ST[k][x]:'';sp[0].classList.toggle('on',x===0);sp[1].classList.toggle('on',x===4);});
-  var g=v('goal'),l=v('lead'),gd=l>=3,pr=P[g<=1?(gd?'p2':'p1'):g>=3?(gd?'p4':'p3'):(gd?'mg':'mr')],s=pr[2].slice();
-  if(l===2)s.splice(s.length-1,0,'מפגש התנעה');if(l===1)s.push('עזרה בהתחלה');
-  $('mT').textContent=pr[0];$('mD').textContent=pr[1];$('mS').innerHTML=s.map(function(x){return '<li>'+x+'</li>'}).join('');
-  var who=document.querySelector('input[name=mwho]:checked').parentNode.textContent;
-  var body=['שלום, מילאנו את המכוון באתר:','מי אנחנו: '+who,'המטרה: '+ST.goal[g],'ליווי: '+ST.lead[l],'היקף: '+ST.scale[v('scale')],'המוצר שהוצע: '+pr[0],'התהליך: '+s.join(' | '),'','נשמח לקבל הצעה.'].join('\n');
-  $('mCta').href='mailto:'+MAIL+'?subject='+encodeURIComponent('בקשת הצעה: '+pr[0])+'&body='+encodeURIComponent(body);
+  var act=pick('mact'),work=pick('mwork'),show=[].map.call(document.querySelectorAll('input[name=mshow]:checked'),function(i){return i.value});
+  var kinds=show.map(function(v){return find(SHOW,v)[2]}),b=kinds.indexOf('biz')>-1,c=kinds.indexOf('comm')>-1,d=find(ACT,act)[2];
+  var side=d==='biz'?(c?'mix':'biz'):d==='comm'?(b?'mix':'comm'):d==='mix'?'mix':(b&&c?'mix':b?'biz':'comm');
+  var gd=work==='guided',pr=P[side==='biz'?(gd?'p2':'p1'):side==='comm'?(gd?'p4':'p3'):(gd?'mg':'mr')],s=pr[2].slice();
+  if(work==='kickoff')s.splice(s.length-1,0,'מפגש התנעה');
+  $('mDir').textContent=DIR[side];$('mT').textContent=pr[0];$('mD').textContent=pr[1];$('mS').innerHTML=s.map(function(x){return '<li>'+x+'</li>'}).join('');
+  var who=find(WHO,pick('mwho'))[1],showT=show.map(function(v){return find(SHOW,v)[1]}).join(', ')||'עוד לא בחרנו';
+  var body=['שלום, מילאנו את המכוון באתר:','מי אנחנו: '+who,'מה נרצה שאנשים יעשו: '+find(ACT,act)[1],'מה יופיע במפה: '+showT,'איך נרצה לעבוד: '+find(WORK,work)[1],'הכיוון: '+DIR[side],'המפה שהוצעה: '+pr[0],'התהליך: '+s.join(' | '),'','נשמח לשיחת היכרות.'].join('\n');
+  $('mCta').href='mailto:'+MAIL+'?subject='+encodeURIComponent('שיחת היכרות: '+pr[0])+'&body='+encodeURIComponent(body);
 }
-['goal','lead','scale'].forEach(function(k){$('m'+k).addEventListener('input',function(){if(k==='goal')touched=true;render()})});
-document.querySelectorAll('input[name=mwho]').forEach(function(r){r.addEventListener('change',function(){if(!touched)$('mgoal').value=G[r.value];render()})});
+document.querySelectorAll('input[name=mact]').forEach(function(r){r.addEventListener('change',function(){touched=true;render()})});
+document.querySelectorAll('input[name=mshow],input[name=mwork]').forEach(function(r){r.addEventListener('change',render)});
+document.querySelectorAll('input[name=mwho]').forEach(function(r){r.addEventListener('change',function(){if(!touched)document.querySelector('input[name=mact][value='+find(WHO,r.value)[2]+']').checked=true;render()})});
 render();
 })();
 </script>
@@ -1754,7 +1774,7 @@ render();
 <g class="node" data-n="b40" style="--d:1.64s"><circle cx="1093.7428568410564" cy="140.06271547998108" r="4.132487163952041" fill="#D4A72C" stroke="#fff" stroke-width="2.5"></circle></g>
 <g class="node" data-n="b50" style="--d:2.05s"><circle cx="1337.7304970186958" cy="223.68671206719574" r="3.1579123001462053" fill="#9A4E2C" stroke="#fff" stroke-width="2.5"></circle></g>
 </svg><div class="wrap">
-<div><h2>למי זה מתאים</h2><div class="tracks"><div><b>עסקים וארגונים</b><span>מפה שמציגה את השירותים, הסניפים, הערכים והקשרים שלכם, בצורה מעניינת ללקוחות ולעובדים.</span></div><div><b>קהילות ורשויות</b><span>מפה ותהליך שמחברים בין אנשים, מקומות, סיפורים ויוזמות.</span></div><div><b>שניהם יחד</b><span>עסקים וקהילה סביב אותו מקום, בשביל ערך משותף.</span></div></div></div>
+<div><h2>למי זה מתאים</h2><p class="idea">הגיאוגרפיה נותנת את המבנה, המשמעות מעצבת את המפה, והקהילות והעסקים מפיחים בה חיים.</p><div class="tracks"><div><b>עסקי ושיווקי</b><small>לעסקים, לחברות ולרשתות</small><span>עוזרים לאנשים לגלות עסקים, שירותים, סניפים, הטבות והזדמנויות מקומיים שרלוונטיים להם, בהקשר של המקום. שיווק שעוזר לגלות, לא לוח מודעות.</span></div><div><b>קהילתי</b><small>לרשויות, ליוזמות קהילתיות ולעמותות</small><span>מחברים בין אנשים, סיפורים, מקומות, ידע מקומי ויוזמות, עם דרך פשוטה להציע, להתנדב ולהשתתף.</span></div><div><b>משולב</b><small>לכל מי שפועל באותו מקום</small><span>מחברים בין עסקים, ארגונים, מוסדות ציבוריים וקהילות, כדי ליצור ערך משותף במקום או במערכת שלמה.</span></div></div></div>
 <div><h2>כלים ותהליכים</h2><div class="chips"><button type="button" data-tool="cafe">קפה עולם</button><button type="button" data-tool="lead">מנהיגות השתתפותית</button><button type="button" data-tool="open">מרחב פתוח</button><button type="button" data-tool="walk">שוטטות</button><button type="button" data-tool="story">סיפור ומיפוי קהילתי</button><button type="button" data-tool="public">שיתוף ציבור</button><button type="button" data-tool="place">עושים מקום (Placemaking)</button><button type="button" data-tool="train">הכשרת מובילים מקומיים</button><button type="button" data-tool="system">הטמעת מערכת עושים קהילה</button></div><template id="tool-cafe"><div class="album" role="img" aria-label="תמונות ממפגשי קפה עולם"><img src="assets/cafe/cafe-0.jpg" class="on" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-1.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-2.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-3.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-4.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-5.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-6.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-7.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-8.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-9.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-10.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"></div>
 <h3>קפה עולם</h3><p class="lead">הדרך הנעימה והמהנה שאנו מכירים להגיע אל חוכמת הרבים.</p>
 <p>עם מסגרות משרד החינוך, התאגידים המובילים בארץ, האיחוד האירופי ורשויות רבות, עברנו עם קפה עולם דרך מופלאה לאפשר שיחה משמעותית בקבוצות גדולות.</p>
@@ -2351,6 +2371,11 @@ render();
 </svg><div class="wrap">
 <div class="top"><div><p class="eyebrow">הגישה שלנו</p><h2>מהמקום ומהסיפורים שלו, אל זהות ושייכות קהילתית</h2></div>
 <blockquote>"צריך קהילה כדי ליצור מקום, וצריך מקום כדי ליצור קהילה."</blockquote></div>
+<div class="creed">
+<p class="belief">אנחנו מאמינים שחוכמה, ידע ומשאבים מפוזרים בין האנשים שחיים ופועלים במרחב: תושבים, עסקים, קבוצות קהילתיות, ארגונים ואנשי מקצוע. כשמאפשרים להם להיפגש, להיות גלויים ולהתחבר, נפתחות אפשרויות חדשות לעשייה.</p>
+<p>השתתפות אצלנו היא לא שלב של התייעצות אחרי שהכול הוחלט. היא הדרך לגלות משאבים, להציף צרכים, להציע רעיונות ולפתח הזדמנויות יחד. אנשים הם לא רק קהל שמקבל שירות או מידע, הם שותפים.</p>
+<p class="principle">הידע נמצא אצל רבים. המפה מחברת אותו. הקהילה הופכת אותו לאפשרות לפעול יחד.</p>
+</div>
 <div class="pillars">
 <div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/></svg></i><h3>מקום</h3><p>שוטטות, הקשבה ומיפוי של מה שכבר קיים.</p></div>
 <div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="2.6"/><circle cx="5.5" cy="10" r="2"/><circle cx="18.5" cy="10" r="2"/><path d="M7.5 19a4.5 4.5 0 0 1 9 0M2 18.5a3.6 3.6 0 0 1 5-3.2M22 18.5a3.6 3.6 0 0 0-5-3.2"/></svg></i><h3>אנשים</h3><p>תושבים, ארגונים ועסקים שמכירים זה את זה.</p></div>
@@ -2863,8 +2888,11 @@ render();
 <p class="eyebrow">המערכת הדיגיטלית</p>
 <h2>מערכת עושים קהילה</h2>
 <p class="motto">המפה מציירת את המקום. הקהילה נותנת לו משמעות.</p>
-<p>מערכת דיגיטלית שמחברת בין אנשים, מקום, סיפורים ויוזמות, והופכת ידע מקומי לתשתית של קהילה פעילה.</p>
-<ul><li>מפה שכונתית מאוירת</li><li>סיפורים וזיכרון קהילתי</li><li>אנשים ונכסים קהילתיים</li><li>יוזמות והתנדבות</li><li>הגשת רעיונות מהתושבים</li><li>לשכונות, בתי ספר וארגונים</li></ul>
+<p>מפה דיגיטלית נגישה, שמרגישה כמו מוצר יומיומי ולא כמו פורטל מיפוי מקצועי. היא לא מחליפה את מערכות המידע הגיאוגרפי של הרשות, שנותנות נתונים רשמיים וניתוח מקצועי. היא משלימה אותן: עוזרת לגלות, להבין ולפעול. המפה עונה על שתי שאלות:</p>
+<div class="layers"><div><small>שכבת הקהילה</small><b>מה קורה כאן?</b><span>יוזמות, אירועים, אנשים, סיפורים ומקומות משמעותיים, ודרך להציע רעיון, להתנדב או להצטרף.</span></div><div><small>שכבת השיווק</small><b>מה אפשר לגלות כאן?</b><span>עסקים ושירותים מקומיים, סניפים והטבות, שמגיעים לאנשים שרלוונטיים להם, בהקשר של המקום.</span></div></div>
+<p>שתי השכבות משלימות זו את זו: עסק יכול לתרום לחיים המקומיים, ויוזמה קהילתית יכולה לפתוח הזדמנות לעסקים. הידע של תושבים, עסקים וארגונים עולה למפה בתהליך ברור, ומה שמוצע מסומן כהצעה עד שהוא נבדק.</p>
+<p><strong>מפת המשמעות</strong> היא יכולת ייחודית שלנו: העוגנים שחשובים לקהילה או לקהל מקבלים נוכחות גדולה יותר במפה עצמה, והכיוונים והשכנויות נשמרים ככל האפשר. המשמעות יכולה לבוא מסיפורים ומהשתתפות של תושבים, או משירותים, מקהלים ומהזדמנויות. פיתחנו אותה באב-הטיפוס של רמת גן.</p>
+<ul><li>מפה מאוירת או מפורטת</li><li>מפת משמעות</li><li>מה קורה: אירועים ופעילויות</li><li>אינדקס עסקים והטבות</li><li>סיפורים, אנשים ויוזמות</li><li>הצעות מהציבור, עם אישור</li></ul>
 <a class="btn must" href="#contact">מערכת לקהילה שלכם</a>
 </div>
 </div></section>
