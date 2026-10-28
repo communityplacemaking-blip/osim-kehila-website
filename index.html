@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>עושים קהילה | מיפוי קהילתי, בניית קהילה ומפות דיגיטליות</title>
 
-<meta name="description" content="עושים קהילה: מיפוי קהילתי ומפות דיגיטליות לשכונות, לרשויות ולעסקים, ותהליכי בניית קהילה ושיתוף ציבור: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
+<meta name="description" content="עושים קהילה: מפות דיגיטליות נגישות לגילוי, לחיבור ולפעולה במקום, לעסקים, לרשויות, לארגונים וליוזמות קהילתיות, ותהליכים השתתפותיים: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
 <link rel="canonical" href="https://osimkehila.co.il/">
 <meta name="google-site-verification" content="pNy0iRYMOvS1eJQYpZcEoyCGeR8fEGoUOPYILp6vmp8">
 <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="עושים קהילה | Community Making">
 <meta property="og:url" content="https://osimkehila.co.il/">
 <meta property="og:title" content="עושים קהילה | מיפוי קהילתי, בניית קהילה ומפות דיגיטליות">
-<meta property="og:description" content="עושים קהילה: מיפוי קהילתי ומפות דיגיטליות לשכונות, לרשויות ולעסקים, ותהליכי בניית קהילה ושיתוף ציבור: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
+<meta property="og:description" content="עושים קהילה: מפות דיגיטליות נגישות לגילוי, לחיבור ולפעולה במקום, לעסקים, לרשויות, לארגונים וליוזמות קהילתיות, ותהליכים השתתפותיים: קפה עולם, מרחב פתוח, מנהיגות השתתפותית ופלייסמייקינג.">
 <meta property="og:image" content="https://osimkehila.co.il/assets/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -102,6 +102,10 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .how .wrap,.contact .wrap,.system .wrap{position:relative}
 .how .wrap{display:flex;flex-direction:column;gap:30px}
 .how .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:end}
+.how .creed{max-width:760px;display:flex;flex-direction:column;gap:10px;font-size:17px;line-height:1.7}
+.how .creed p{margin:0}
+.how .creed .belief{font-size:19.5px;font-weight:500;color:var(--navy)}
+.how .creed .principle{font-weight:500;color:var(--navy);border-inline-start:3px solid var(--warm);padding-inline-start:12px}
 .how blockquote{margin:0;font-size:19px;color:var(--muted);max-width:28em;border-inline-start:2px solid var(--must);padding-inline-start:16px}
 .pillars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
 .pillar{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
@@ -116,6 +120,12 @@ nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:
 .system .motto{font-size:21px;font-weight:400;color:var(--must)}
 .system ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;font-size:16.5px}
 .system li::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--must);margin-inline-end:9px;vertical-align:middle}
+.system .layers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.system .layers div{border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:12px 16px;background:rgba(15,45,74,.55)}
+.system .layers b{display:block;font-weight:500;font-size:17.5px;color:var(--must)}
+.system .layers small{display:block;font-size:13.5px;color:#C9D3DE;margin-bottom:4px}
+.system .layers span{display:block;font-size:15.5px;line-height:1.5}
+@media(max-width:640px){.system .layers{grid-template-columns:1fr}}
 .system .btn.must{background:var(--must);color:var(--navy);align-self:flex-start;font-weight:500}
 .shot{flex:1 1 400px;position:relative;display:block;border-radius:18px;overflow:hidden;height:350px;text-decoration:none;background:#fff}
 .shot img{width:100%;height:100%;object-fit:cover;object-position:center 4%;display:block}
@@ -251,7 +261,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <div class="txt">
 <p class="words" aria-label="אנשים, מקום, סיפורים, יוזמות, פעולה"><span>אנשים</span><span>מקום</span><span>סיפורים</span><span>יוזמות</span><span>פעולה</span></p>
 <h1>יוצרים <span class="hl must">מקום</span> לקהילה,<br>ויוצרים <span class="hl clay">קהילה</span> בשביל מקום.</h1>
-<p class="lead">מתודולוגיה ומפות דיגיטליות לקהילות, לרשויות, לארגונים ולעסקים. אנחנו עוזרים לגלות את האנשים, המקומות, השירותים והסיפורים שכבר פועלים במקום, ולחבר ביניהם.</p>
+<p class="lead">מפות דיגיטליות ומתודולוגיה השתתפותית לעסקים, לרשויות, לארגונים וליוזמות קהילתיות. אנחנו הופכים מקום למרחב נגיש של גילוי, חיבור ופעולה: שירותים ועסקים מקומיים, אנשים, יוזמות והזדמנויות, במפה אחת שקל להבין ולהשתמש בה.</p>
 <div class="ctas"><a class="btn line" href="#how">איך אנחנו עובדים ←</a></div>
 </div>
 <div class="art"><svg class="net" viewBox="0 0 640 380" role="img" aria-label="רשת קשרים ויחסי גומלין: תושבים, בית ספר, רשות, עסקים, יוזמה, רעיון, סיפור ומקום, מחוברים זה לזה ולקהילה" style="display:block;overflow:visible">
@@ -1754,7 +1764,7 @@ render();
 <g class="node" data-n="b40" style="--d:1.64s"><circle cx="1093.7428568410564" cy="140.06271547998108" r="4.132487163952041" fill="#D4A72C" stroke="#fff" stroke-width="2.5"></circle></g>
 <g class="node" data-n="b50" style="--d:2.05s"><circle cx="1337.7304970186958" cy="223.68671206719574" r="3.1579123001462053" fill="#9A4E2C" stroke="#fff" stroke-width="2.5"></circle></g>
 </svg><div class="wrap">
-<div><h2>למי זה מתאים</h2><div class="tracks"><div><b>עסקים וארגונים</b><span>מפה שמציגה את השירותים, הסניפים, הערכים והקשרים שלכם, בצורה מעניינת ללקוחות ולעובדים.</span></div><div><b>קהילות ורשויות</b><span>מפה ותהליך שמחברים בין אנשים, מקומות, סיפורים ויוזמות.</span></div><div><b>שניהם יחד</b><span>עסקים וקהילה סביב אותו מקום, בשביל ערך משותף.</span></div></div></div>
+<div><h2>למי זה מתאים</h2><div class="tracks"><div><b>עסקים וחברות</b><span>השירותים, הסניפים וההטבות שלכם מגיעים לאנשים שהם רלוונטיים להם, בהקשר של המקום. שיווק שעוזר לגלות, לא לוח מודעות.</span></div><div><b>רשויות, יוזמות קהילתיות ועמותות</b><span>מה קורה כאן: יוזמות, אירועים, אנשים ומקומות משמעותיים, עם דרך פשוטה להציע, להתנדב ולהצטרף.</span></div><div><b>שניהם יחד</b><span>עסק שתורם לחיים המקומיים, יוזמה שפותחת הזדמנות לעסקים, מוסד חינוך או תרבות שמחבר ביניהם. מפה ותהליך אחד בשביל ערך משותף.</span></div></div></div>
 <div><h2>כלים ותהליכים</h2><div class="chips"><button type="button" data-tool="cafe">קפה עולם</button><button type="button" data-tool="lead">מנהיגות השתתפותית</button><button type="button" data-tool="open">מרחב פתוח</button><button type="button" data-tool="walk">שוטטות</button><button type="button" data-tool="story">סיפור ומיפוי קהילתי</button><button type="button" data-tool="public">שיתוף ציבור</button><button type="button" data-tool="place">עושים מקום (Placemaking)</button><button type="button" data-tool="train">הכשרת מובילים מקומיים</button><button type="button" data-tool="system">הטמעת מערכת עושים קהילה</button></div><template id="tool-cafe"><div class="album" role="img" aria-label="תמונות ממפגשי קפה עולם"><img src="assets/cafe/cafe-0.jpg" class="on" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-1.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-2.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-3.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-4.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-5.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-6.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-7.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-8.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-9.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"><img src="assets/cafe/cafe-10.jpg" alt="תמונה ממפגש קפה עולם" loading="lazy"></div>
 <h3>קפה עולם</h3><p class="lead">הדרך הנעימה והמהנה שאנו מכירים להגיע אל חוכמת הרבים.</p>
 <p>עם מסגרות משרד החינוך, התאגידים המובילים בארץ, האיחוד האירופי ורשויות רבות, עברנו עם קפה עולם דרך מופלאה לאפשר שיחה משמעותית בקבוצות גדולות.</p>
@@ -2351,6 +2361,11 @@ render();
 </svg><div class="wrap">
 <div class="top"><div><p class="eyebrow">הגישה שלנו</p><h2>מהמקום ומהסיפורים שלו, אל זהות ושייכות קהילתית</h2></div>
 <blockquote>"צריך קהילה כדי ליצור מקום, וצריך מקום כדי ליצור קהילה."</blockquote></div>
+<div class="creed">
+<p class="belief">אנחנו מאמינים שחוכמה, ידע ומשאבים מפוזרים בין האנשים שחיים ופועלים במרחב: תושבים, עסקים, קבוצות קהילתיות, ארגונים ואנשי מקצוע. כשמאפשרים להם להיפגש, להיות גלויים ולהתחבר, נפתחות אפשרויות חדשות לעשייה.</p>
+<p>השתתפות אצלנו היא לא שלב של התייעצות אחרי שהכול הוחלט. היא הדרך לגלות משאבים, להציף צרכים, להציע רעיונות ולפתח הזדמנויות יחד. אנשים הם לא רק קהל שמקבל שירות או מידע, הם שותפים.</p>
+<p class="principle">הידע נמצא אצל רבים. המפה מחברת אותו. הקהילה הופכת אותו לאפשרות לפעול יחד.</p>
+</div>
 <div class="pillars">
 <div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/></svg></i><h3>מקום</h3><p>שוטטות, הקשבה ומיפוי של מה שכבר קיים.</p></div>
 <div class="pillar"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="2.6"/><circle cx="5.5" cy="10" r="2"/><circle cx="18.5" cy="10" r="2"/><path d="M7.5 19a4.5 4.5 0 0 1 9 0M2 18.5a3.6 3.6 0 0 1 5-3.2M22 18.5a3.6 3.6 0 0 0-5-3.2"/></svg></i><h3>אנשים</h3><p>תושבים, ארגונים ועסקים שמכירים זה את זה.</p></div>
@@ -2863,8 +2878,11 @@ render();
 <p class="eyebrow">המערכת הדיגיטלית</p>
 <h2>מערכת עושים קהילה</h2>
 <p class="motto">המפה מציירת את המקום. הקהילה נותנת לו משמעות.</p>
-<p>מערכת דיגיטלית שמחברת בין אנשים, מקום, סיפורים ויוזמות, והופכת ידע מקומי לתשתית של קהילה פעילה.</p>
-<ul><li>מפה שכונתית מאוירת</li><li>סיפורים וזיכרון קהילתי</li><li>אנשים ונכסים קהילתיים</li><li>יוזמות והתנדבות</li><li>הגשת רעיונות מהתושבים</li><li>לשכונות, בתי ספר וארגונים</li></ul>
+<p>מפה דיגיטלית נגישה, שמרגישה כמו מוצר יומיומי ולא כמו פורטל מיפוי מקצועי. היא לא מחליפה את מערכות המידע הגיאוגרפי של הרשות, שנותנות נתונים רשמיים וניתוח מקצועי. היא משלימה אותן: עוזרת לגלות, להבין ולפעול. המפה עונה על שתי שאלות:</p>
+<div class="layers"><div><small>שכבת הקהילה</small><b>מה קורה כאן?</b><span>יוזמות, אירועים, אנשים, סיפורים ומקומות משמעותיים, ודרך להציע רעיון, להתנדב או להצטרף.</span></div><div><small>שכבת השיווק</small><b>מה אפשר לגלות כאן?</b><span>עסקים ושירותים מקומיים, סניפים והטבות, שמגיעים לאנשים שרלוונטיים להם, בהקשר של המקום.</span></div></div>
+<p>שתי השכבות משלימות זו את זו: עסק יכול לתרום לחיים המקומיים, ויוזמה קהילתית יכולה לפתוח הזדמנות לעסקים. הידע של תושבים, עסקים וארגונים עולה למפה בתהליך ברור, ומה שמוצע מסומן כהצעה עד שהוא נבדק.</p>
+<p><strong>מפת המשמעות</strong> היא יכולת ייחודית שלנו: העוגנים שחשובים לקהילה או לקהל מקבלים נוכחות גדולה יותר במפה עצמה, והכיוונים והשכנויות נשמרים ככל האפשר. המשמעות יכולה לבוא מסיפורים ומהשתתפות של תושבים, או משירותים, מקהלים ומהזדמנויות. פיתחנו אותה באב-הטיפוס של רמת גן.</p>
+<ul><li>מפה מאוירת או מפורטת</li><li>מפת משמעות</li><li>מה קורה: אירועים ופעילויות</li><li>אינדקס עסקים והטבות</li><li>סיפורים, אנשים ויוזמות</li><li>הצעות מהציבור, עם אישור</li></ul>
 <a class="btn must" href="#contact">מערכת לקהילה שלכם</a>
 </div>
 </div></section>
