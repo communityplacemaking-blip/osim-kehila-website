@@ -298,8 +298,11 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 (function(){
-/* בית דיגיטלי לפרויקט (פיילוט קשרי דיירים): נטען רק מכתובת עם ?pilot=<שם>. בלי הפרמטר העמוד לא משתנה. הקוד בתיקייה pilot/ */
+/* בית דיגיטלי לפרויקט (פיילוט קשרי דיירים). הקוד בתיקייה pilot/. בלי פרמטר נטען פרויקט ההדגמה, כך שגם מהמפה הרגילה
+   יש כניסה אליו. ?pilot=<שם> טוען פרויקט אחר, ו-?pilot=off מציג את המפה בלי הפיילוט */
 var PILOT=(location.search.match(/[?&]pilot=([a-z0-9-]{1,40})(?:&|$)/)||[])[1];
+if(!PILOT&&!/[?&]pilot=/.test(location.search))PILOT='demo';
+if(PILOT==='off')PILOT=null;
 if(PILOT){document.documentElement.classList.add('pilot');var plc=document.createElement('link');plc.rel='stylesheet';plc.href='pilot/pilot.css?v=1';document.head.appendChild(plc);}
 var TEAL='#1E3F3F',GOLD='#C59A3C';
 var IC={

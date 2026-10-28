@@ -78,25 +78,36 @@ async function mapState(pg) {
   }));
 }
 
-console.log('1. המפה הרגילה, בלי הפרמטר');
+console.log('1. המפה הרגילה: כניסה לפרויקט ההדגמה, בלי מעבר אוטומטי; ?pilot=off כמו קודם');
+async function baseline(w, url) {
+  if (!process.env.BASELINE_DIR) return null;
+  const bs = await serve(process.env.BASELINE_DIR), bpg = await page(w);
+  await bpg.goto(`http://127.0.0.1:${bs.address().port}${url}`, { waitUntil: 'load' }); await bpg.waitForTimeout(1600);
+  const st = await mapState(bpg); await bpg.context().close(); bs.close(); return st;
+}
 for (const w of [390, 1280]) {
+  // BASELINE_DIR: המפה בלי הפיילוט (main שלפני השינוי, בכתובת הרגילה)
+  const before = await baseline(w, MAP);
   const pg = await page(w);
   await open(pg, MAP);
+  await pg.waitForTimeout(2500);
   const st = await mapState(pg);
-  check(`${w}px: אין בקשה לקובצי הפיילוט`, !pg.requests.some((u) => u.includes('/pilot/')), pg.requests.filter((u) => u.includes('/pilot/')));
-  check(`${w}px: אין פס הדגמה ואין צ'יפ פיילוט`, !st.banner && !st.chips.some((c) => c.includes('הדגמה')), st.chips);
-  check(`${w}px: אין מחלקת pilot בעמוד`, !/pilot/.test(st.pilotClass), st.pilotClass);
+  check(`${w}px: בכתובת הרגילה יש כפתור "פרויקט ההדגמה" ופס אב־טיפוס`, st.chips[0] === 'פרויקט ההדגמה' && st.banner, st.chips);
+  check(`${w}px: בכתובת הרגילה הבית לא נפתח מעצמו`, !st.detailOpen);
+  if (before) check(`${w}px: פרויקטים, עוגנים וכותרת כמו במפה בלי הפיילוט`, st.labels === before.labels && st.anchors === before.anchors && st.title === before.title && st.head === before.head, { before, st });
   check(`${w}px: אין שגיאות JavaScript`, pg.errors.length === 0, pg.errors);
-  if (process.env.BASELINE_DIR) {
-    const bs = await serve(process.env.BASELINE_DIR);
-    const bpg = await page(w);
-    await bpg.goto(`http://127.0.0.1:${bs.address().port}${MAP}`, { waitUntil: 'load' }); await bpg.waitForTimeout(1600);
-    const bst = await mapState(bpg);
-    check(`${w}px: זהה למפה ב-main (סמנים, תוויות, עוגנים, כפתורים)`, JSON.stringify(bst) === JSON.stringify(st), { main: bst, branch: st });
-    await bpg.context().close(); bs.close();
-  }
   await shot(pg, `regular-${w}`);
+  await pg.click('.pl-chip'); await pg.waitForTimeout(900);
+  check(`${w}px: לחיצה על הכפתור במפה הרגילה פותחת את הבית`, await pg.evaluate(() => document.getElementById('detail').classList.contains('pl-home') && document.getElementById('detail').classList.contains('open')));
   await pg.context().close();
+
+  const off = await page(w);
+  await open(off, MAP + '?pilot=off');
+  const so = await mapState(off);
+  check(`${w}px: ?pilot=off: אין בקשה לקובצי הפיילוט ואין פס`, !off.requests.some((u) => u.includes('/pilot/')) && !so.banner && !/pilot/.test(so.pilotClass), so);
+  if (before) check(`${w}px: ?pilot=off זהה למפה בלי הפיילוט`, JSON.stringify(so) === JSON.stringify(before), { before, so });
+  check(`${w}px: ?pilot=off בלי שגיאות JavaScript`, off.errors.length === 0, off.errors);
+  await off.context().close();
 }
 
 console.log('2. קישור הפיילוט: המפה נשארת, והבית נפתח רק בלחיצה');
