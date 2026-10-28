@@ -187,11 +187,6 @@ function start(cfg){
   var b=document.createElement('button');b.type='button';b.className='chip pl-chip';b.innerHTML='<i class="pl-chip-dot"></i>'+h(C.demo?'פרויקט ההדגמה':C.name);
   b.onclick=function(e){e.stopPropagation();open();};
   var f=document.getElementById('filters');if(f)f.insertBefore(b,f.firstChild);
-  var cta=document.createElement('button');cta.type='button';cta.className='pl-cta';
-  cta.innerHTML='<span class="pl-cta-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></span>'+
-    '<span class="pl-cta-t"><b>'+h(C.demo?'הבית הדיגיטלי של הפרויקט':C.name)+'</b><small>'+(C.demo?'לחצו לצפייה בהדגמה':'לחצו למידע ועדכונים')+'</small></span>';
-  cta.onclick=function(e){e.stopPropagation();open();};
-  document.body.appendChild(cta);
   /* המפה נפתחת בתצוגה הרגילה שלה. הבית של הפרויקט נפתח רק בלחיצה על הסמן או על הכפתור בפס, לא מעצמו */
 }
 fetch('pilot/'+E.slug+'.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(start)

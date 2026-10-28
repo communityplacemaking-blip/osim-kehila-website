@@ -303,7 +303,7 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 var PILOT=(location.search.match(/[?&]pilot=([a-z0-9-]{1,40})(?:&|$)/)||[])[1];
 if(!PILOT&&!/[?&]pilot=/.test(location.search))PILOT='demo';
 if(PILOT==='off')PILOT=null;
-if(PILOT){document.documentElement.classList.add('pilot');var plc=document.createElement('link');plc.rel='stylesheet';plc.href='pilot/pilot.css?v=2';document.head.appendChild(plc);}
+if(PILOT){document.documentElement.classList.add('pilot');var plc=document.createElement('link');plc.rel='stylesheet';plc.href='pilot/pilot.css?v=3';document.head.appendChild(plc);}
 var TEAL='#1E3F3F',GOLD='#C59A3C';
 var IC={
  park:'<path d="M12 21v-6"/><path d="M12 15c-4 0-6-2.5-6-5.5S8.5 4 12 3c3.5 1 6 3.5 6 6.5S16 15 12 15z"/><path d="M5 21h14"/>',
@@ -819,7 +819,7 @@ var attr=document.querySelector('.leaflet-control-attribution');if(attr)attr.add
 zcls();layout();
 if(PILOT){window.ECO_PILOT={slug:PILOT,map:map,A:A,Q:Q,on:on,threads:threads,det:det,svg:svg,warp:warp,walk:walk,nearA:nearA,pickLines:pickLines,thread:thread,
   fly:fly,mark:mark,closeD:closeD,bindD:bindD,listOff:listOff};
-  var pls=document.createElement('script');pls.src='pilot/pilot.js?v=2';document.body.appendChild(pls);}
+  var pls=document.createElement('script');pls.src='pilot/pilot.js?v=3';document.body.appendChild(pls);}
 })();
 </script>
 <script>if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
