@@ -6365,7 +6365,8 @@ function RamatGanApp() {
   }, [cfg, activeLayer, businesses, buckets, tab, interests]);
   const pointsKey = points.map((p) => p.id).join('|');
 
-  // בחירת שכבה (או טווח זמן בשכבת "מה קורה"): המפה מתמקדת בנקודות שלה
+  // בחירת שכבה (או טווח זמן בשכבת "מה קורה"): המפה לא זזה כשכל הנקודות כבר נראות בחלק הפנוי של המסך.
+  // רק אם חלק מהן מחוץ לתצוגה, היא קופצת אליהן מיד, בלי אנימציה (בעל הפרויקט, 29.10.2026: "המפה זזה שמאלה וימינה")
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !activeLayer) return undefined;
@@ -6392,8 +6393,15 @@ function RamatGanApp() {
       const opts = !r ? base : wide
         ? { ...base, paddingTopLeft: [Math.round(r.width) + 36, base.paddingTopLeft[1] - 70] }
         : { ...base, paddingBottomRight: [base.paddingBottomRight[0], Math.max(base.paddingBottomRight[1], Math.round(window.innerHeight - r.top) + 16)] };
-      if (still) map.fitBounds(bounds, { ...opts, animate: false });
-      else map.flyToBounds(bounds, { ...opts, duration: 0.6 });
+      // החלק הפנוי של המפה: בלי עמודת הפקדים מימין (מסך רחב) או בלי השורות שלמטה (טלפון)
+      const size = map.getSize();
+      const box = { left: 16, top: 16, right: size.x - (r && wide ? Math.round(r.width) + 28 : 16), bottom: r && !wide ? Math.round(r.top) - 12 : size.y - 16 };
+      const inView = points.every((p) => {
+        const px = map.latLngToContainerPoint(placeRef.current(p.lat, p.lng));
+        return px.x >= box.left && px.x <= box.right && px.y >= box.top && px.y <= box.bottom;
+      });
+      if (inView) { clearTimeout(t); map.off('moveend', finish); finish(); return undefined; }
+      map.fitBounds(bounds, { ...opts, animate: false });
     }
     return () => { clearTimeout(t); map.off('moveend', finish); };
   }, [activeLayer, pointsKey, !!mapRef.current, mapStyle, eventsDock]);
