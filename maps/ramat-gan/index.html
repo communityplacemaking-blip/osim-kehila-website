@@ -2612,6 +2612,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rg-ci-flash.is-error { background: #fde8e2; }
 .rg-showonmap { min-height: 44px; margin-top: 10px; }
 
+/* שיתוף והורדה (install-app.js, 29.10.2026): קטנים, בשורה של הכותרת בעמודה; בטלפון בפינה השמאלית-העליונה, אחד מעל השני */
+.rg-ia-slot { display: flex; }
+.rg-ia-slot:empty { display: none; }
+@media (max-width: 760px) {
+  .rg-ia-slot { position: fixed; top: calc(10px + env(safe-area-inset-top)); left: 8px; }
+  .rg-ia-slot .ia { flex-direction: column; align-items: stretch; }
+}
+
 /* כפתור "שתפו" לנקודה אחת (map-share.js) - רמת גן וגבעתיים */
 .osh { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .osh-btn, .osh-net { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 6px 16px; border-radius: 999px;
@@ -6594,7 +6602,9 @@ function RamatGanApp() {
       h('div', { className: 'rg-style-toggle', role: 'group', 'aria-label': 'סגנון המפה' },
         [['memory', 'מאוירת'], ['detail', 'מפורטת']].map(([k, t]) => h('button', {
           key: k, type: 'button', 'data-style': k, 'aria-pressed': mapStyle === k, className: mapStyle === k ? 'is-on' : '', onClick: () => setMapStyle(k),
-        }, t)))),
+        }, t))),
+      // שיתוף והורדה (install-app.js נכנס לכאן), קטנים בגודל הכיתוב של המפה (29.10.2026)
+      h('div', { className: 'rg-ia-slot' })),
 
     h('aside', { className: 'rg-panel' + (legendOpen ? ' is-open' : ''), 'aria-label': 'שכבות במפה' },
       h('div', { className: 'rg-layers', id: 'rg-layers', role: 'group', 'aria-label': 'שכבות במפה' },
@@ -6667,4 +6677,315 @@ ReactDOM.createRoot(document.getElementById('root')).render(h(RamatGanApp));
 
 </script>
 
-<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script></body></html>
+<style id="ia-style">
+/* כפתורי ״שיתוף״ ו״התקנה כאפליקציה״ המשותפים (install-app.js). צבעים קבועים כדי שייראו אותו דבר בכל העמודים. */
+.ia { position: relative; direction: rtl; flex: none; font-family: inherit; z-index: 30; display: flex; align-items: center; gap: 6px; }
+.ia[hidden], .ia__help[hidden], .ia__btn[hidden], .ia__toast[hidden] { display: none; }
+.ia__btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 4px 14px;
+  border: 0; border-radius: 999px; background: #1d3550; color: #fff;
+  font: inherit; font-size: 14px; font-weight: 700; line-height: 1; white-space: nowrap; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(29, 53, 80, 0.18);
+}
+.ia__btn:hover { background: #142840; }
+.ia__btn:focus-visible { outline: 3px solid #c4593a; outline-offset: 2px; }
+.ia__btn svg { width: 18px; height: 18px; flex: none; }
+.ia__long { display: none; }
+@media (min-width: 600px) { .ia__short { display: none; } .ia__long { display: inline; } }
+
+.ia__help {
+  position: fixed; left: 12px; right: 12px; max-width: 320px; margin-inline: auto; /* top נקבע ב-JS מתחת לכפתור */
+  padding: 12px 14px; background: #fffbf3; color: #1d3550; border: 1px solid rgba(29, 53, 80, 0.25); border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(29, 53, 80, 0.18); font-size: 14px; line-height: 1.55; text-align: right;
+}
+.ia__help p { margin: 0 0 4px; font-weight: 700; }
+.ia__help ol { margin: 0 0 10px; padding-inline-start: 20px; }
+.ia__ico svg { width: 16px; height: 16px; display: inline-block; vertical-align: -3px; }
+.ia__note { margin: 0 0 10px; }
+.ia__help p.ia__note { font-weight: 400; }
+.ia__row { display: flex; gap: 8px; }
+.ia__yes { min-height: 36px; padding: 0 16px; border: 0; border-radius: 999px; background: #1d3550; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.ia__yes:focus-visible, .ia__close:focus-visible { outline: 3px solid #c4593a; outline-offset: 2px; }
+.ia__close { min-height: 36px; padding: 0 14px; border: 1px solid rgba(29, 53, 80, 0.3); border-radius: 999px; background: #fff; color: #1d3550; font: inherit; font-weight: 700; cursor: pointer; }
+
+/* מיקום צף לעמודים שבהם הכותרת נבנית ב-React: פינה שמאלית-עליונה, מחוץ לפריטי העמוד */
+.ia--float { position: fixed; top: calc(12px + env(safe-area-inset-top)); left: 12px; }
+/* גבעתיים: המפה על כל המסך - הכפתורים בפינה השמאלית-העליונה, מעל פס המקרא (givatayim.css) */
+@media (max-width: 760px) { .ia--givatayim { left: 8px; top: calc(60px + env(safe-area-inset-top)); } }
+/* רמת גן: הכותרת בפינה הימנית של עמודה צרה, ולכן תמיד הכיתוב הקצר */
+.ia--ramat-gan .ia__long { display: none; }
+.ia--ramat-gan .ia__short { display: inline; }
+
+/* שיתוף: אותו גודל כמו כפתור ההתקנה, בגרסה בהירה כדי שההתקנה תישאר הפעולה הבולטת */
+.ia__share {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 4px 14px;
+  border: 1.5px solid #1d3550; border-radius: 999px; background: #fffdf8; color: #1d3550;
+  font: inherit; font-size: 14px; font-weight: 700; line-height: 1; white-space: nowrap; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(29, 53, 80, 0.12);
+}
+.ia__share:hover { background: #f3ecdf; }
+.ia__share:focus-visible { outline: 3px solid #c4593a; outline-offset: 2px; }
+.ia__share svg { width: 17px; height: 17px; flex: none; }
+.ia__toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 60;
+  max-width: calc(100vw - 32px); padding: 10px 16px; border-radius: 12px; background: #1d3550; color: #fff;
+  font-size: 14px; font-weight: 500; box-shadow: 0 6px 18px rgba(29, 53, 80, 0.25); text-align: center;
+}
+/* בטלפון: השיתוף הוא עיגול עם אייקון בלבד, כדי לא להעמיס על הכותרת */
+@media (max-width: 599px) {
+  .ia__share { width: 40px; padding: 0; justify-content: center; }
+  .ia__share span { display: none; }
+  .ia__share svg { width: 19px; height: 19px; }
+  /* ארמון הנציב (סיפורי השכונה): הכותרת באמצע, ולכן השיתוף מתחת לכפתור ההתקנה */
+  .ia--armon-home { flex-direction: column-reverse; align-items: flex-end; }
+  /* בתוך כותרת (באר שבע) הכל צפוף יותר */
+  .ia:not(.ia--float) { gap: 4px; }
+  .ia:not(.ia--float) .ia__btn { padding: 4px 10px; }
+}
+/* טלפון צר במיוחד (כ-320px) בכותרת באר שבע: גם ההתקנה כאייקון בלבד */
+@media (max-width: 349px) {
+  .ia:not(.ia--float) .ia__btn { width: 40px; padding: 0; justify-content: center; }
+  .ia:not(.ia--float) .ia__short { display: none; }
+}
+
+/* תפריט השיתוף (20.10.2026): וואטסאפ, פייסבוק, X, טלגרם, מייל, העתקת קישור ועוד אפשרויות */
+.ia__menu { max-width: 300px; }
+.ia__menu[hidden] { display: none; }
+.ia__nets { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.ia__net {
+  display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 10px; border-radius: 12px;
+  border: 1px solid rgba(29, 53, 80, 0.18); background: #fff; color: #1d3550; text-decoration: none;
+  font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; text-align: start; white-space: nowrap;
+}
+.ia__net:hover { background: #f3ecdf; }
+.ia__net:focus-visible { outline: 3px solid #c4593a; outline-offset: 2px; }
+.ia__net svg { width: 26px; height: 26px; flex: none; padding: 4px; border-radius: 50%; color: #fff; background: #1d3550; box-sizing: border-box; }
+.ia__net--whatsapp svg { background: #25d366; }
+.ia__net--facebook svg { background: #1877f2; }
+.ia__net--x svg { background: #111; }
+.ia__net--telegram svg { background: #229ed9; }
+.ia__net--mail svg, .ia__net--copy svg, .ia__net--more svg { background: #1d3550; fill: none; stroke: #fff; }
+
+/* מפת התקווה (ערכה שקטה, 28.10.2026): שיתוף והתקנה קטנים ועדינים - כיתוב דק, מסגרת דקה, בלי מילוי כהה */
+.nm-theme-quiet .ia { gap: 4px; }
+.nm-theme-quiet .ia__btn, .nm-theme-quiet .ia__share {
+  min-height: 30px; padding: 2px 10px; gap: 5px; font-size: 13px; font-weight: 400;
+  background: rgba(255, 251, 243, 0.85); color: #1d3550; border: 1px solid rgba(29, 53, 80, 0.22); box-shadow: none;
+}
+.nm-theme-quiet .ia__btn:hover, .nm-theme-quiet .ia__share:hover { background: #f3ecdf; }
+.nm-theme-quiet .ia__btn svg, .nm-theme-quiet .ia__share svg { width: 15px; height: 15px; }
+@media (max-width: 599px) { .nm-theme-quiet .ia__share { width: 30px; padding: 0; } }
+
+/* מפות רמת גן וגבעתיים (29.10.2026): שיתוף והורדה קטנים, בגודל הכיתוב של המפה - כיתוב בינוני, מסגרת דקה, בלי מילוי כהה */
+.ia.ia--small { gap: 4px; }
+.ia.ia--small .ia__btn, .ia.ia--small .ia__share {
+  width: auto; min-height: 30px; padding: 2px 10px; gap: 5px; justify-content: center; font-size: 13px; font-weight: 600;
+  background: rgba(255, 253, 248, 0.96); color: #1d3550; border: 1px solid rgba(29, 53, 80, 0.22); box-shadow: 0 2px 6px rgba(16, 41, 74, 0.12);
+}
+.ia.ia--small .ia__btn:hover, .ia.ia--small .ia__share:hover { background: #f3ecdf; }
+.ia.ia--small .ia__btn svg, .ia.ia--small .ia__share svg { width: 15px; height: 15px; }
+.ia.ia--small .ia__share span { display: inline; }
+@media (max-width: 599px) {
+  .ia.ia--small .ia__btn, .ia.ia--small .ia__share { min-height: 28px; padding: 2px 9px; font-size: 12.5px; }
+}
+.ia.ia--small .ia__help { font-size: 13px; line-height: 1.5; padding: 10px 12px; }
+.ia.ia--small .ia__yes, .ia.ia--small .ia__close { min-height: 32px; font-size: 13px; }
+</style><script id="ia-script" data-slot=".rg-ia-slot" data-size="small" data-install-label="הורדה" data-install="always" data-nudge="20" data-sw="sw.js" data-share-title="רמת גן - מפת המשפחות">
+/* כפתורי ״שיתוף״ (20.10.2026) ו״התקנה כאפליקציה״ (19.10.2026), משותפים לכל עמודי התושבים.
+ * כל עמוד מקשר ל-manifest משלו ומוסיף:
+ *   <script src="/install-app.js" defer data-slot=".selector"><\/script>  - הכפתור נכנס בתחילת האלמנט (כותרת שאינה של React)
+ *   <script src="/install-app.js" defer data-pos="armon"><\/script>        - הכפתור צף בפינה; המיקום לכל עמוד ב-install-app.css
+ * Chrome/Edge/Samsung: הכפתור פותח את חלון ההתקנה של הדפדפן. אייפון/אייפד: אין התקנה מהדף, ולכן מוצגת הנחיה קצרה.
+ * אנדרואיד: אם הדפדפן עוד לא הציע התקנה (או לא תומך בחלון), הכפתור מציג הנחיה דרך תפריט הדפדפן.
+ * מי שכבר פתח מהאייקון, או מחשב שלא מציע התקנה, לא רואה כפתור.
+ * לפני חלון ההתקנה של הדפדפן נשאלת שאלה פשוטה: להוסיף אייקון? (כן / לא עכשיו). מיקום האייקון נקבע על ידי הדפדפן.
+ * 20.10.2026: נרשם /sw.js (service worker מינימלי), שבלעדיו אנדרואיד לא מציע התקנה.
+ * שיתוף (בקשת בעל הפרויקט, 20.10.2026): לחיצה פותחת תפריט קטן - וואטסאפ, פייסבוק, X, טלגרם, מייל, העתקת קישור,
+ * ובטלפון גם "עוד אפשרויות" (חלון השיתוף של המכשיר). הכותרת והקישור נשלחים יחד. אלה קישורי שיתוף רגילים, בלי סקריפט חיצוני.
+ * מוצג תמיד, גם באפליקציה המותקנת. בתגית הסקריפט:
+ *   data-share-title="..."  הכותרת שנשלחת (ברירת מחדל: כותרת העמוד)
+ *   data-share-path="/..."  הכתובת הקצרה של העמוד (ברירת מחדל: הכתובת הנוכחית)
+ * מפות רמת גן וגבעתיים (בעל הפרויקט, 29.10.2026: "שיהיו קטנים, בגודל הפונט שכבר יש במפות"):
+ *   data-size="small"         כפתורים קטנים ובהירים, בגודל הכיתוב של המפה
+ *   data-install-label="..."  שם אחר לכפתור ההתקנה (שם: "הורדה")
+ *   data-sw="sw.js"           service worker של העמוד עצמו (באתר הסטטי), במקום /sw.js של השרת
+ *   data-install="always"     כפתור ההתקנה מוצג תמיד, גם במחשב: אם הדפדפן מציע התקנה - חלון ההתקנה, ואחרת הסבר קצר לדפדפן הזה
+ *   data-nudge="20"           הצעה עדינה אחת להוריד את המפה, אחרי 20 שניות בעמוד (פעם אחת בכל דפדפן) */
+(function () {
+  const script = document.currentScript;
+  const slotSel = script && script.dataset.slot;
+  const pos = (script && script.dataset.pos) || '';
+  const shareTitle = (script && script.dataset.shareTitle) || document.title;
+  const shareUrl = location.origin + ((script && script.dataset.sharePath) || location.pathname);
+  const small = script && script.dataset.size === 'small';
+  const installLabel = script && script.dataset.installLabel;
+  const swPath = script && script.dataset.sw;
+  const always = script && script.dataset.install === 'always';
+  const nudgeSec = Number(script && script.dataset.nudge) || 0;
+  const ua = navigator.userAgent;
+  const standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const android = /android/i.test(navigator.userAgent);
+  const desk = ios || android ? '' : /edg\//i.test(ua) ? 'edge' : /firefox\//i.test(ua) ? 'firefox' : /chrome\//i.test(ua) ? 'chrome' : /safari\//i.test(ua) ? 'safari' : 'other';
+  if ('serviceWorker' in navigator) (swPath ? navigator.serviceWorker.register(swPath) : navigator.serviceWorker.register('/sw.js', { scope: '/' })).catch(() => {});
+  let deferred = null;
+  let box = null;
+
+  const SVG = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${d}</svg>`;
+  const PHONE = '<rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M12 8v6M9.5 11.5L12 14l2.5-2.5M10.5 18.5h3"/>';
+  const MENU = '<circle cx="12" cy="5" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="12" cy="19" r="1.4"/>';
+  const SHARE = '<path d="M12 3v12M8 7l4-4 4 4"/><path d="M7 10H5.5v10.5h13V10H17"/>';
+  const NODES = '<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/>';
+  const INSTALL = '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 7.5v6M9.5 11L12 13.5l2.5-2.5M8 20.5h8"/>';
+  const LINK = '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.2 1.2"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.2-1.2"/>';
+  // סמלי הרשתות: צורות פשוטות בצבע הרשת (עיגול לבן בתוך כפתור צבעוני)
+  const FILL = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="${d}"/></svg>`;
+  const NETS = [
+    { id: 'whatsapp', label: 'וואטסאפ', svg: FILL('M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5zm0 1.8a7.7 7.7 0 1 1-3.9 14.3l-.3-.2-2.8.8.8-2.7-.2-.3A7.7 7.7 0 0 1 12 4.3zm-3 3.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4.9 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4l-.4-.3-2-1c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.5-.5.3-.5c.1-.2 0-.4 0-.5l-.9-2.2c-.2-.5-.5-.5-.7-.5H9z'),
+      href: (t, u) => `https://wa.me/?text=${encodeURIComponent(t)}` },
+    { id: 'facebook', label: 'פייסבוק', svg: FILL('M13.5 21.5v-8h2.7l.4-3.2h-3.1V8.3c0-.9.3-1.5 1.6-1.5h1.7V4a22 22 0 0 0-2.5-.1c-2.5 0-4.2 1.5-4.2 4.3v2.1H7.4v3.2h2.7v8z'),
+      href: (t, u) => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}` },
+    { id: 'x', label: 'X (טוויטר)', svg: FILL('M17.8 3h3.1l-6.8 7.7 8 10.3h-6.2l-4.9-6.4L5.4 21H2.3l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z'),
+      href: (t, u, title) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(u)}` },
+    { id: 'telegram', label: 'טלגרם', svg: FILL('M21.4 3.6 2.9 10.8c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.6zM9.5 14.2l9-5.7c.4-.3.8-.1.5.2l-7.5 6.8-.3 3.2z'),
+      href: (t, u, title) => `https://t.me/share/url?url=${encodeURIComponent(u)}&text=${encodeURIComponent(title)}` },
+    { id: 'mail', label: 'מייל', svg: SVG('<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>'),
+      href: (t, u, title) => `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(t)}` },
+  ];
+
+  function build() {
+    box = document.createElement('div');
+    box.className = 'ia' + (slotSel ? '' : ' ia--float' + (pos ? ' ia--' + pos : '')) + (small ? ' ia--small' : '');
+    box.innerHTML =
+      `<button type="button" class="ia__share" aria-label="שיתוף המפה">${SVG(NODES)}<span>שיתוף</span></button>` +
+      `<span class="ia__toast" role="status" aria-live="polite" hidden></span>` +
+      `<div class="ia__help ia__menu" id="ia-share" role="menu" aria-label="שיתוף המפה" hidden><p>שיתוף המפה</p><div class="ia__nets">` +
+        NETS.map((n) => `<a role="menuitem" class="ia__net ia__net--${n.id}" data-net="${n.id}" target="_blank" rel="noopener noreferrer">${n.svg}<span>${n.label}</span></a>`).join('') +
+        `<button type="button" role="menuitem" class="ia__net ia__net--copy" data-net="copy">${SVG(LINK)}<span>העתקת קישור</span></button>` +
+        (navigator.share ? `<button type="button" role="menuitem" class="ia__net ia__net--more" data-net="more">${SVG(NODES)}<span>עוד אפשרויות</span></button>` : '') +
+      `</div></div>` +
+      `<button type="button" class="ia__btn">${SVG(PHONE)}${installLabel ? `<span>${installLabel}</span>` : '<span class="ia__short">התקנה</span><span class="ia__long">התקנה כאפליקציה</span>'}</button>` +
+      `<div class="ia__help ia__how" id="ia-help" role="dialog" aria-label="${ios ? 'התקנה באייפון' : android ? 'התקנה באנדרואיד' : 'התקנה במחשב'}" hidden>` +
+      (desk
+        ? `<p>כך מוסיפים את המפה למחשב:</p>` + (
+          desk === 'firefox'
+            ? `<p class="ia__note">פיירפוקס לא מתקין אתרים כאפליקציה. אפשר לפתוח את המפה ב-Chrome או ב-Edge ולהתקין משם, או לשמור אותה במועדפים (Ctrl+D).</p>`
+            : desk === 'safari'
+              ? `<ol><li>בתפריט ״קובץ״ למעלה, בחרו ״הוספה ל-Dock״.</li><li>לחצו ״הוסף״. המפה תיפתח מה-Dock כמו אפליקציה.</li></ol>`
+              : `<ol><li>בשורת הכתובת, בצד, לחצו על סמל ההתקנה <span class="ia__ico">${SVG(INSTALL)}</span>.</li>` +
+                `<li>אם אין סמל: פתחו את תפריט הדפדפן <span class="ia__ico">${SVG(MENU)}</span> וחפשו שם ״התקנה״.</li>` +
+                `<li>אשרו. המפה תיפתח מאייקון במחשב, כמו אפליקציה.</li></ol>`)
+        : ios
+        ? `<p>כך מתקינים באייפון:</p><ol>` +
+          `<li>לחצו על כפתור השיתוף <span class="ia__ico">${SVG(SHARE)}</span> בתחתית המסך או בשורת הכתובת.</li>` +
+          `<li>גללו ובחרו ״הוספה למסך הבית״.</li>` +
+          `<li>לחצו ״הוסף״. האייקון יופיע במסך הטלפון.</li></ol>`
+        : `<p>כך מתקינים באנדרואיד:</p><ol>` +
+          `<li>לחצו על תפריט הדפדפן <span class="ia__ico">${SVG(MENU)}</span> (או ☰ בתחתית המסך בדפדפן של סמסונג).</li>` +
+          `<li>בחרו ״התקנת אפליקציה״ או ״הוספה למסך הבית״.</li>` +
+          `<li>אשרו. האייקון יופיע במסך הטלפון.</li></ol>`) +
+        `<button type="button" class="ia__close">הבנתי</button></div>` +
+      `<div class="ia__help ia__ask" role="dialog" aria-label="הוספת אייקון" hidden>` +
+        `<p>${ios || android ? 'להוסיף את המפה כאייקון במסך הבית?' : 'להוסיף את המפה כאייקון במחשב?'}</p>` +
+        `<p class="ia__note">כך תוכלו לפתוח אותה בלחיצה אחת, כמו אפליקציה.</p>` +
+        `<div class="ia__row"><button type="button" class="ia__yes">כן, להוסיף</button><button type="button" class="ia__close ia__no">לא עכשיו</button></div></div>` +
+      `<div class="ia__help ia__nudge" role="dialog" aria-label="הורדת המפה" hidden>` +
+        `<p>${ios || android ? 'רוצים את המפה בטלפון?' : 'רוצים את המפה במחשב?'}</p>` +
+        `<p class="ia__note">מורידים פעם אחת, ואז פותחים אותה בלחיצה מהאייקון, כמו אפליקציה.</p>` +
+        `<div class="ia__row"><button type="button" class="ia__yes ia__go">${installLabel || 'התקנה'}</button><button type="button" class="ia__close ia__later">לא עכשיו</button></div></div>`;
+    const btn = box.querySelector('.ia__btn');
+    const help = box.querySelector('.ia__how');
+    const nudge = box.querySelector('.ia__nudge');
+    const ask = box.querySelector('.ia__ask');
+    const shareBtn = box.querySelector('.ia__share');
+    const toast = box.querySelector('.ia__toast');
+    let toastTimer = 0;
+    const say = (t) => { toast.textContent = t; toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { toast.hidden = true; }, 2600); };
+    // הכותרת והקישור בטקסט אחד: וואטסאפ ואפליקציות אחרות מוחקות לפעמים את הטקסט כשהקישור נשלח בשדה נפרד
+    const text = shareTitle + '\n' + shareUrl;
+    const menu = box.querySelector('.ia__menu');
+    menu.querySelectorAll('a[data-net]').forEach((a) => { const n = NETS.find((x) => x.id === a.dataset.net); a.href = n.href(text, shareUrl, shareTitle); });
+    // מתחת לכפתור; במסך רחב גם צמוד אליו לרוחב (בטלפון: באמצע המסך)
+    const placeUnder = (panel, anchor) => {
+      const r = anchor.getBoundingClientRect();
+      panel.style.top = Math.round(r.bottom + 8) + 'px';
+      if (innerWidth >= 600) {
+        const w = panel.offsetWidth, cx = (r.left + r.right) / 2;
+        panel.style.left = Math.round(Math.min(Math.max(12, cx - w / 2), innerWidth - w - 12)) + 'px';
+        panel.style.right = 'auto'; panel.style.marginInline = '0';
+      } else { panel.style.left = panel.style.right = panel.style.marginInline = ''; }
+    };
+    const openMenu = (open) => {
+      menu.hidden = !open; shareBtn.setAttribute('aria-expanded', String(open));
+      if (open) placeUnder(menu, shareBtn);
+      if (open) { const f = menu.querySelector('.ia__net'); if (f) f.focus(); }
+    };
+    shareBtn.setAttribute('aria-haspopup', 'menu'); shareBtn.setAttribute('aria-controls', 'ia-share'); shareBtn.setAttribute('aria-expanded', 'false');
+    shareBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(help, false); toggle(ask, false); toggle(nudge, false); openMenu(menu.hidden); });
+    menu.addEventListener('click', async (e) => {
+      const it = e.target.closest('[data-net]');
+      if (!it) return;
+      if (it.tagName === 'A') { openMenu(false); return; }
+      openMenu(false);
+      if (it.dataset.net === 'more') { try { await navigator.share({ title: shareTitle, text }); } catch (_) { /* החלון נסגר */ } return; }
+      try { await navigator.clipboard.writeText(text); say('הכותרת והקישור הועתקו. אפשר להדביק בכל מקום.'); }
+      catch (_) { window.prompt('העתיקו ושלחו:', text); }
+    });
+    document.addEventListener('click', (e) => { if (!menu.hidden && !menu.contains(e.target)) openMenu(false); });
+    btn.setAttribute('aria-label', installLabel ? installLabel + ' - התקנה כאפליקציה' : 'התקנה כאפליקציה');
+    if (ios || android || always) { btn.setAttribute('aria-controls', 'ia-help'); btn.setAttribute('aria-expanded', 'false'); }
+    const toggle = (panel, open) => {
+      panel.hidden = !open; btn.setAttribute('aria-expanded', String(open));
+      if (open) placeUnder(panel, btn);
+    };
+    const closeAll = () => { toggle(help, false); toggle(ask, false); toggle(nudge, false); btn.focus(); };
+    // הכפתור וההצעה עושים אותו דבר: חלון ההתקנה של הדפדפן אם הוא מציע, ואחרת ההסבר לדפדפן הזה
+    const install = () => {
+      if (!menu.hidden) openMenu(false);
+      nudge.hidden = true;
+      if (deferred) { toggle(help, false); toggle(ask, ask.hidden); if (!ask.hidden) box.querySelector('.ia__yes').focus(); return; }
+      if (ios || android || always) toggle(help, help.hidden);
+    };
+    btn.addEventListener('click', install);
+    nudge.querySelector('.ia__go').addEventListener('click', install);
+    nudge.querySelector('.ia__later').addEventListener('click', () => toggle(nudge, false));
+    ask.querySelector('.ia__yes').addEventListener('click', async () => {
+      toggle(ask, false);
+      if (!deferred) return;
+      const p = deferred; deferred = null;
+      p.prompt();
+      try { const r = await p.userChoice; if (r && r.outcome === 'accepted') btn.hidden = true; } catch (_) { /* החלון נסגר */ }
+    });
+    box.querySelectorAll('.ia__close:not(.ia__later)').forEach((b) => b.addEventListener('click', closeAll));
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (!menu.hidden) { openMenu(false); shareBtn.focus(); }
+      else if (!help.hidden || !ask.hidden || !nudge.hidden) closeAll();
+    });
+    btn.hidden = standalone || !(deferred || ios || android || always);
+    mount();
+    // הצעה עדינה אחת להוריד (בעל הפרויקט, 29.10.2026: "לתת הזדמנות להורדה ולדחוף להורדה"): פעם אחת בכל דפדפן,
+    // רק כשאין חלון אחר פתוח. זוכרים שכבר הוצעה בדפדפן עצמו בלבד
+    if (nudgeSec && !standalone) setTimeout(() => {
+      const key = 'ia-nudge:' + location.pathname;
+      try { if (localStorage.getItem(key)) return; } catch (_) { /* אין גישה לאחסון: מציעים, פעם אחת בביקור */ }
+      if (btn.hidden || !box.isConnected || !menu.hidden || !help.hidden || !ask.hidden) return;
+      try { localStorage.setItem(key, String(Date.now())); } catch (_) { /* בלי אחסון */ }
+      toggle(nudge, true);
+    }, nudgeSec * 1000);
+  }
+
+  // הכותרת בחלק מהעמודים נבנית (ונבנית מחדש) אחרי הטעינה, ולכן מחזירים את הכפתור אליה בכל פעם
+  function mount() {
+    if (!slotSel) { document.body.append(box); return; }
+    const place = () => { if (box.isConnected) return; const slot = document.querySelector(slotSel); if (slot) slot.prepend(box); };
+    place();
+    new MutationObserver(place).observe(document.body, { childList: true, subtree: true });
+  }
+
+  const installBtn = () => box && box.querySelector('.ia__btn');
+  window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferred = e; if (box && !standalone) installBtn().hidden = false; });
+  window.addEventListener('appinstalled', () => { deferred = null; if (box) installBtn().hidden = true; });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
+})();
+</script><script>if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});</script></body></html>
