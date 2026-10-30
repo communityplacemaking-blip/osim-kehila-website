@@ -181,8 +181,8 @@ body:has(.panel.up) :is(.snd,.giv,.hint),body:has(.detail.open) :is(.snd,.giv,.h
 .motif.wide img{height:auto;width:96%;bottom:6%}
 .zlow .motif .fr{width:calc(var(--s,110px)*.72);height:calc(var(--s,110px)*.72)}
 .hand{font-family:"Amatic SC",Rubik,sans-serif;font-weight:700}
-.motif .mc{font-family:"Amatic SC",Rubik,sans-serif;font-weight:700;font-size:20px;line-height:1;color:var(--teal);text-align:center;white-space:nowrap;margin-top:4px;background:rgba(255,249,245,.9);border-radius:999px;padding:1px 10px}
-.zlow .motif .mc{font-size:16px}
+.motif .mc{font-family:Rubik,Heebo,sans-serif;font-weight:500;font-size:14px;line-height:1;color:var(--teal);text-align:center;white-space:nowrap;margin-top:4px;background:rgba(255,249,245,.9);border-radius:999px;padding:1px 10px}
+.zlow .motif .mc{font-size:12px}
 .street{transform:translate(-50%,-50%) rotate(var(--r,0deg));font-family:Rubik,Heebo,sans-serif;font-weight:500;font-size:12.5px;letter-spacing:.02em;color:#2F4A49;white-space:nowrap;pointer-events:none;text-shadow:0 0 3px #FFF9F5,0 0 3px #FFF9F5,0 0 5px #FFF9F5}
 .zlow .street{font-size:11px}
 /* נייר: טקסטורה עדינה מעל הרקע, מתחת לסמנים */
@@ -303,7 +303,7 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 var PILOT=(location.search.match(/[?&]pilot=([a-z0-9-]{1,40})(?:&|$)/)||[])[1];
 if(!PILOT&&!/[?&]pilot=/.test(location.search))PILOT='demo';
 if(PILOT==='off')PILOT=null;
-if(PILOT){document.documentElement.classList.add('pilot');var plc=document.createElement('link');plc.rel='stylesheet';plc.href='pilot/pilot.css?v=1';document.head.appendChild(plc);}
+if(PILOT){document.documentElement.classList.add('pilot');var plc=document.createElement('link');plc.rel='stylesheet';plc.href='pilot/pilot.css?v=2';document.head.appendChild(plc);}
 var TEAL='#1E3F3F',GOLD='#C59A3C';
 var IC={
  park:'<path d="M12 21v-6"/><path d="M12 15c-4 0-6-2.5-6-5.5S8.5 4 12 3c3.5 1 6 3.5 6 6.5S16 15 12 15z"/><path d="M5 21h14"/>',
@@ -819,7 +819,7 @@ var attr=document.querySelector('.leaflet-control-attribution');if(attr)attr.add
 zcls();layout();
 if(PILOT){window.ECO_PILOT={slug:PILOT,map:map,A:A,Q:Q,on:on,threads:threads,det:det,svg:svg,warp:warp,walk:walk,nearA:nearA,pickLines:pickLines,thread:thread,
   fly:fly,mark:mark,closeD:closeD,bindD:bindD,listOff:listOff};
-  var pls=document.createElement('script');pls.src='pilot/pilot.js?v=1';document.body.appendChild(pls);}
+  var pls=document.createElement('script');pls.src='pilot/pilot.js?v=2';document.body.appendChild(pls);}
 })();
 </script>
 <script>if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(function(){});
