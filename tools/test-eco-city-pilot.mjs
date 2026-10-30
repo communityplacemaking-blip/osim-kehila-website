@@ -99,9 +99,10 @@ for (const w of [390, 1280]) {
   await shot(pg, `regular-${w}`);
   const cta = await pg.evaluate(() => { const b = document.querySelector('.pl-cta'); if (!b) return null; const r = b.getBoundingClientRect();
     const mc = document.querySelector('.motif .mc'); return { text: b.textContent, inView: r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth,
-      onTop: document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('.pl-cta') === b, mcFont: mc ? getComputedStyle(mc).fontFamily : '' }; });
+      onTop: document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('.pl-cta') === b, mcFont: mc ? getComputedStyle(mc).fontFamily : '', v3: document.documentElement.classList.contains('v3') }; });
   check(`${w}px: כפתור בולט "הבית הדיגיטלי של הפרויקט" גלוי במסך`, cta && cta.text.includes('הבית הדיגיטלי של הפרויקט') && cta.inView && cta.onTop, cta);
-  check(`${w}px: שמות האיורים בגופן של שאר הכותרות (Rubik)`, cta && /^Rubik/.test(cta.mcFont), cta && cta.mcFont);
+  /* בתצוגת התלת מימד אין איורי אווירה; בשטוחה השמות שלהם ב-Rubik */
+  check(`${w}px: שמות האיורים בגופן של שאר הכותרות (Rubik), ובתלת מימד בלי איורים`, cta && (cta.v3 ? cta.mcFont === '' : /^Rubik/.test(cta.mcFont)), cta && cta.mcFont);
   await pg.click('.pl-cta'); await pg.waitForTimeout(900);
   check(`${w}px: לחיצה על הכפתור הבולט פותחת את הבית`, await pg.evaluate(() => document.getElementById('detail').classList.contains('pl-home') && document.getElementById('detail').classList.contains('open')));
   await pg.keyboard.press('Escape'); await pg.waitForTimeout(700);
