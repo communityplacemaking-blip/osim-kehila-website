@@ -2330,11 +2330,14 @@ svg.leaflet-image-layer.leaflet-interactive path {
 }
 .gv-panel-notes[hidden] { display: none !important; }
 
-/* שיתוף והורדה (install-app.js, 29.10.2026): קטנים, בשורה העליונה ליד בורר הסגנון; בטלפון מתחת לה, בצד שמאל */
-.gv-ia-slot { display: flex; }
+/* שיתוף והורדה (install-app.js, 29.10.2026): קטנים, בעמודה מימין מעל השכבות, כמו ברמת גן; בטלפון מתחת לשורה העליונה, בצד שמאל */
+.gv-ia-slot { position: absolute; top: 68px; right: 12px; z-index: 20; display: flex; }
 .gv-ia-slot:empty { display: none; }
+@media (min-width: 761px) {
+  .gv-ia-slot:not(:empty) + .gv-panel { top: 108px; max-height: calc(100% - 200px); }
+}
 @media (max-width: 760px) {
-  .gv-ia-slot { position: fixed; top: calc(62px + env(safe-area-inset-top)); left: 8px; }
+  .gv-ia-slot { position: fixed; top: calc(62px + env(safe-area-inset-top)); left: 8px; right: auto; }
 }
 
 /* כפתור "שתפו" לנקודה אחת (map-share.js) - רמת גן וגבעתיים */
@@ -5133,9 +5136,10 @@ function GivatayimApp() {
         // באיור עצמו השם כבר מצויר, ולכן שם העיר מופיע רק במפות "כמו שזוכרים" ו"מפורטת"
         style !== 'art' ? h('header', { className: 'gv-brand' }, h('h1', { className: 'gv-brand-city' }, cfg.city), cfg.tagline ? h('span', { className: 'gv-brand-tag' }, cfg.tagline) : null) : null,
         h('div', { className: 'gv-styles', role: 'group', 'aria-label': 'סגנון המפה' },
-          GV_STYLES.map((st) => h('button', { key: st.key, type: 'button', className: 'gv-style', 'data-style': st.key, 'aria-pressed': style === st.key, onClick: () => setStyle(st.key) }, st.label))),
-        // שיתוף והורדה (install-app.js נכנס לכאן), קטנים בגודל הכיתוב של המפה (29.10.2026)
-        h('div', { className: 'gv-ia-slot' }))),
+          GV_STYLES.map((st) => h('button', { key: st.key, type: 'button', className: 'gv-style', 'data-style': st.key, 'aria-pressed': style === st.key, onClick: () => setStyle(st.key) }, st.label))))),
+    // שיתוף והורדה (install-app.js נכנס לכאן), קטנים בגודל הכיתוב של המפה (29.10.2026).
+    // בעמודה מימין, מעל השכבות, כמו ברמת גן (בעל הפרויקט, 29.10.2026)
+    h('div', { className: 'gv-ia-slot' }),
     // השכבות בעמודה מימין, תמיד גלויות: לחיצה אחת מדליקה שכבה (בעל הפרויקט, 28.10.2026: "לא צריך לפתוח אותן אלא פשוט להדליק").
     // בטלפון הן שורה אחת למטה, מעל "יש לי הצעה"
     h('aside', { className: 'gv-panel is-open', 'aria-label': 'שכבות במפה' },
