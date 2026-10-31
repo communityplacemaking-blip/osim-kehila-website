@@ -9,6 +9,7 @@ import { createServer } from 'node:http';
 import { readFile, mkdir } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
@@ -265,6 +266,91 @@ console.log('5. כתובת השיתוף');
   let size = 0; try { size = (await readFile(img)).length; } catch {}
   check('תמונת התצוגה המקדימה קיימת וקטנה מ-300KB (מגבלה של וואטסאפ)', size > 0 && size < 300 * 1024, size);
   await pg.context().close();
+}
+
+console.log('6. קישור ישיר לבית, בלי לעבור דרך המפה, ומה רואים מיד');
+for (const w of [390, 1280]) {
+  const pg = await page(w);
+  await open(pg, MAP + '?pilot=demo&home=1');
+  const r = await pg.evaluate(() => {
+    const d = document.getElementById('detail'), q = (s) => [...d.querySelectorAll(s)];
+    const tiles = q('.pl-tiles button').map((b) => { const r = b.getBoundingClientRect(); return { t: b.querySelector('b').textContent, go: b.dataset.go || (b.hasAttribute('data-ask') ? 'ask' : ''), seen: r.top >= 0 && r.bottom <= innerHeight }; });
+    return { open: d.classList.contains('open') && d.classList.contains('pl-home'), tiles, brand: d.querySelector('.pl-wm')?.textContent,
+      promise: d.querySelector('.pl-promise p')?.textContent || '', text: d.textContent, banner: !!document.querySelector('.pl-banner') };
+  });
+  check(`${w}px: ?pilot=demo&home=1 פותח את הבית מיד`, r.open, r.open);
+  check(`${w}px: אריחי התועלת (פרויקט, עדכונים, תשובות, שאלה לצוות) גלויים במסך הראשון`, JSON.stringify(r.tiles.map((t) => t.t)) === JSON.stringify(['על הפרויקט', 'עדכונים', 'תשובות לשאלות', 'שאלה לצוות']) && r.tiles.every((t) => t.seen), r.tiles);
+  check(`${w}px: שורת התועלת מתחת לכותרת, ומיתוג ecocity`, r.brand === 'ecocity' && ['מידע', 'עדכונים', 'תשובות', 'קשר'].every((k) => r.promise.includes(k)), { b: r.brand, p: r.promise });
+  check(`${w}px: רק מסלול בעלי הדירות: אין מסלול לרוכשים או ללקוחות`, !/רוכש|לקוחות קיימים|לאחר האכלוס/.test(r.text) , r.text.match(/רוכש|לקוחות קיימים/));
+  check(`${w}px: פס האב־טיפוס גלוי גם בכניסה ישירה`, r.banner);
+  if (w === 390) await shot(pg, 'direct-390');
+  // כל אריח מוביל לחלק שלו
+  for (const t of r.tiles.filter((t) => t.go && t.go !== 'ask')) {
+    await pg.evaluate(() => document.getElementById('detail').scrollTo(0, 0));
+    await pg.click(`.pl-tiles [data-go="${t.go}"]`); await pg.waitForTimeout(800);
+    const seen = await pg.evaluate((id) => { const s = document.getElementById(id), tb = document.querySelector('.pl-tabs'); const r = s.getBoundingClientRect(); return r.top >= (tb ? tb.getBoundingClientRect().bottom - 30 : 0) && r.top < innerHeight / 2; }, t.go);
+    check(`${w}px: האריח "${t.t}" גולל לחלק שלו`, seen);
+  }
+  await pg.evaluate(() => document.getElementById('detail').scrollTo(0, 0));
+  await pg.click('.pl-tiles [data-ask]'); await pg.waitForTimeout(400);
+  check(`${w}px: האריח "שאלה לצוות" פותח את התצוגה (בלי טופס ובלי שליחה)`, await pg.evaluate(() => !!document.querySelector('.pl-sheet') && !document.querySelector('form')) && pg.writes.length === 0, pg.writes);
+  await pg.keyboard.press('Escape'); await pg.waitForTimeout(300); await pg.keyboard.press('Escape'); await pg.waitForTimeout(700);
+  check(`${w}px: אחרי סגירה המפה זמינה כרגיל`, await pg.evaluate(() => !document.getElementById('detail').classList.contains('open') && document.querySelectorAll('.plab').length > 0));
+  check(`${w}px: אין שגיאות JavaScript`, pg.errors.length === 0, pg.errors);
+  await pg.context().close();
+}
+
+console.log('7. עמוד השיתוף הייעודי של הפרויקט');
+{
+  let built = true; try { execFileSync('node', ['tools/build-pilot-share.mjs', '--check'], { stdio: 'pipe' }); } catch (e) { built = String(e.stdout || e.message); }
+  check('עמודי השיתוף מעודכנים לפי קובצי התוכן (build-pilot-share --check)', built === true, built);
+  const pg = await page(390);
+  await pg.goto(base + MAP + 'home/demo/', { waitUntil: 'load' });
+  await pg.waitForTimeout(3000);
+  const r = await pg.evaluate(() => ({ url: location.pathname + location.search, open: document.getElementById('detail')?.classList.contains('pl-home') }));
+  check('home/demo/ פותח ישר את הבית של הפרויקט', r.url === '/maps/eco-city-demo/?pilot=demo&home=1&src=share' && r.open, r);
+  const html = await readFile(join(ROOT, 'maps/eco-city-demo/home/demo/index.html'), 'utf8');
+  const og = (p) => (html.match(new RegExp(`property="og:${p}" content="([^"]*)"`)) || [])[1];
+  check('התגיות של עמוד הפרויקט: כותרת, תיאור, כתובת ותמונה משלו', og('title') === 'Eco City · הבית הדיגיטלי של פרויקט ההדגמה' && !!og('description') &&
+    og('url') === 'https://osimkehila.co.il/maps/eco-city-demo/home/demo/' && og('image') === 'https://osimkehila.co.il/maps/eco-city-demo/home/demo/preview.jpg', { t: og('title'), u: og('url'), i: og('image') });
+  let size = 0; try { size = (await readFile(join(ROOT, new URL(og('image')).pathname))).length; } catch {}
+  check('התמונה קיימת וקטנה מ-300KB', size > 0 && size < 300 * 1024, size);
+  check('אין בעמוד השיתוף סקריפט חיצוני או טופס', !/<script[^>]+src=|<form/i.test(html));
+  check('אין שגיאות JavaScript', pg.errors.length === 0, pg.errors);
+  await pg.context().close();
+}
+
+console.log('8. רגרסיה: כל כרטיסי הפרויקטים והמקומות נפתחים כמו בלי הפיילוט');
+async function cards(url) {
+  const pg = await page(1280);
+  await open(pg, url);
+  // גם המאוכלסים: מדליקים את השכבה
+  await pg.evaluate(() => { const c = [...document.querySelectorAll('#filters .chip')].find((b) => b.textContent.includes('מאוכלסים')); if (c && !c.classList.contains('on')) c.click(); });
+  await pg.waitForTimeout(800);
+  // המפה בונה מחדש את התוויות אחרי זום, ולכן כל סמן נמצא מחדש לפי המזהה שלו (data-p לפרויקט, data-a לעוגן)
+  const keys = await pg.evaluate(() => [...new Set([...document.querySelectorAll('.leaflet-marker-icon :is(.plab,.bld)[data-p]')].map((e) => 'p' + e.dataset.p)
+    .concat([...document.querySelectorAll('.leaflet-marker-icon .anc[data-a]')].map((e) => 'a' + e.dataset.a)))]);
+  const n = keys.length, out = [];
+  for (const k of keys) {
+    const r = await pg.evaluate((k) => { const d = document.getElementById('detail');
+      const e = document.querySelector(k[0] === 'p' ? `.leaflet-marker-icon :is(.plab,.bld)[data-p="${k.slice(1)}"]` : `.leaflet-marker-icon .anc[data-a="${k.slice(1)}"]`);
+      if (!e) return { k, missing: true };
+      e.closest('.leaflet-marker-icon').dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      return d.classList.contains('open') ? { k, h: d.querySelector('h2')?.textContent || '', len: d.textContent.length, home: d.classList.contains('pl-home') } : { k, closed: true }; }, k);
+    out.push(r);
+    if (!r.closed && !r.missing) { await pg.keyboard.press('Escape'); await pg.waitForTimeout(450); }
+  }
+  const errors = pg.errors; await pg.context().close();
+  return { n, out, errors };
+}
+{
+  const on = await cards(MAP), off = await cards(MAP + '?pilot=off');
+  const opened = on.out.filter((c) => c.h);
+  check(`כל סמן של פרויקט ושל מקום פותח כרטיס (${opened.length} מתוך ${on.n})`, on.n > 30 && opened.length === on.n, on.out.filter((c) => !c.h).slice(0, 8));
+  check('אותם כרטיסים, אותן כותרות ואותו תוכן כמו ב-?pilot=off', JSON.stringify(on.out.map((c) => [c.k, c.h, c.len])) === JSON.stringify(off.out.map((c) => [c.k, c.h, c.len])),
+    on.out.map((c, i) => [c.h, c.len, off.out[i]?.h, off.out[i]?.len]).filter((x) => x[0] !== x[2] || x[1] !== x[3]).slice(0, 5));
+  check('אף כרטיס פרויקט לא נפתח כבית של הפיילוט', on.out.every((c) => !c.home));
+  check('אין שגיאות JavaScript בשתי המפות', on.errors.length === 0 && off.errors.length === 0, [on.errors, off.errors]);
 }
 
 await browser.close(); srv.close();

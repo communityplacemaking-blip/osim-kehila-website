@@ -31,12 +31,30 @@
   border:2px dashed rgba(226,194,122,.9);box-shadow:0 0 0 6px rgba(255,249,245,.12)}
 .pl-ring img{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);width:94%;height:auto}
 .pl-fig figcaption{font:500 14px Rubik,Heebo,sans-serif;color:var(--gold-2)}
-.pl-hero{height:min(34vh,300px)}
+.pl-hero{height:min(30vh,230px)}
 .pl-hero .ttl{right:max(22px,calc(50% - 380px));left:max(170px,calc(50% - 380px + 160px))}
 .pl-fig{left:max(22px,calc(50% - 380px));top:auto;bottom:18px}
-.pl-kicker{font-size:11px;letter-spacing:.18em;color:var(--gold-2);font-weight:500;margin-bottom:4px}
+.pl-brand{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;font-size:12px;letter-spacing:.06em;color:var(--gold-2);font-weight:500}
+.pl-wm{font:500 17px Rubik,Heebo,sans-serif;letter-spacing:.01em;color:#fff;text-transform:lowercase}
 .pl-hero h2{font-size:30px;text-wrap:balance}
 .pl-hero h2:focus{outline:none}
+
+/* מתחת לכותרת: ההבטחה, ואז אריחים לכל מה שיש בבית. כך התועלת גלויה כבר במסך הראשון */
+.pl-promise{background:#112626;color:#EAF1EF;padding:0 22px 16px}
+.pl-promise p,.pl-promise span{max-width:760px;margin:0 auto;display:block}
+.pl-promise p{font-size:15.5px;line-height:1.55}
+.pl-promise span{font-size:12.5px;color:var(--gold-2);margin-top:6px}
+.pl-top{background:linear-gradient(#112626 0 38px,var(--cream) 38px)}
+.pl-tiles{list-style:none;margin:0 auto;padding:0 14px 14px;max-width:760px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pl-tiles button{width:100%;height:100%;display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:right;background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:12px;cursor:pointer;color:var(--teal);font:inherit;box-shadow:0 4px 14px rgba(22,49,49,.08);min-height:96px}
+.pl-tiles button:hover{border-color:var(--gold)}
+.pl-ti{width:34px;height:34px;border-radius:50%;background:var(--cream-2);display:grid;place-items:center;flex:none}
+.pl-ti svg{width:19px;height:19px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pl-tiles [data-ask] .pl-ti{background:var(--gold)}
+.pl-tt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pl-tt b{font:500 15px Rubik,Heebo,sans-serif}
+.pl-tt small{font-size:12.5px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
 /* לשוניות: נצמדות למעלה בזמן גלילה, עם כפתור חזרה למפה תמיד בהישג יד */
 .pl-tabs{position:sticky;top:0;z-index:5;background:rgba(255,249,245,.97);border-bottom:1px solid var(--line);box-shadow:0 4px 12px rgba(22,49,49,.06)}
@@ -143,10 +161,15 @@
   .pilot-demo :is(.snd,.giv){top:calc(var(--bar) + var(--plb) + 10px)}
   .pilot-demo .panel.up{height:calc(100dvh - var(--plb))}
   .pl-banner{font-size:12.5px}
-  .pl-hero{height:290px}
-  .pl-fig{left:50%;top:44px;bottom:auto;transform:translateX(-50%)}
-  .pl-ring{width:104px;height:104px}
-  .pl-fig figcaption{font-size:17px}
+  .pl-hero{height:200px}
+  .pl-fig{left:16px;top:12px;bottom:auto;transform:none}
+  .pl-ring{width:76px;height:76px}
+  .pl-fig figcaption{display:none}
+  .pl-promise{padding:0 18px 14px}
+  .pl-promise p{font-size:14.5px}
+  .pl-tiles{grid-template-columns:repeat(2,minmax(0,1fr));padding:0 12px 12px}
+  .pl-tiles button{min-height:0;flex-direction:row;align-items:center;padding:10px}
+  .pl-tt b{font-size:14px}
   .pl-tabs .pl-back2 span{display:none}
   .pl-hero .ttl{left:18px;right:18px}
   .pl-hero h2{font-size:26px}
