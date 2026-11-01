@@ -328,12 +328,12 @@ async function cards(url) {
   await pg.evaluate(() => { const c = [...document.querySelectorAll('#filters .chip')].find((b) => b.textContent.includes('מאוכלסים')); if (c && !c.classList.contains('on')) c.click(); });
   await pg.waitForTimeout(800);
   // המפה בונה מחדש את התוויות אחרי זום, ולכן כל סמן נמצא מחדש לפי המזהה שלו (data-p לפרויקט, data-a לעוגן)
-  const keys = await pg.evaluate(() => [...new Set([...document.querySelectorAll('.leaflet-marker-icon :is(.plab,.bld)[data-p]')].map((e) => 'p' + e.dataset.p)
+  const keys = await pg.evaluate(() => [...new Set([...document.querySelectorAll('.leaflet-marker-icon :is(.plab,.plab-none,.bld)[data-p]')].map((e) => 'p' + e.dataset.p)
     .concat([...document.querySelectorAll('.leaflet-marker-icon .anc[data-a]')].map((e) => 'a' + e.dataset.a)))]);
   const n = keys.length, out = [];
   for (const k of keys) {
     const r = await pg.evaluate((k) => { const d = document.getElementById('detail');
-      const e = document.querySelector(k[0] === 'p' ? `.leaflet-marker-icon :is(.plab,.bld)[data-p="${k.slice(1)}"]` : `.leaflet-marker-icon .anc[data-a="${k.slice(1)}"]`);
+      const e = document.querySelector(k[0] === 'p' ? `.leaflet-marker-icon :is(.plab,.plab-none,.bld)[data-p="${k.slice(1)}"]` : `.leaflet-marker-icon .anc[data-a="${k.slice(1)}"]`);
       if (!e) return { k, missing: true };
       e.closest('.leaflet-marker-icon').dispatchEvent(new MouseEvent('click', { bubbles: true }));
       return d.classList.contains('open') ? { k, h: d.querySelector('h2')?.textContent || '', len: d.textContent.length, home: d.classList.contains('pl-home') } : { k, closed: true }; }, k);

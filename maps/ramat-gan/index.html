@@ -2750,6 +2750,72 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .rg-orbit-btn.rg-3d-toggle { padding: 0 8px; gap: 4px; }
 }
 
+/* מבט ברחוב (1.11.2026): כפתור קטן ליד "שיתוף" בכרטיס מקום, נפתח ב-Google Street View מחוץ למפה */
+.rg-sv-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 14px; border-radius: 999px;
+  border: 1.5px solid currentColor; color: #1f3a5f; background: transparent; font: inherit; font-size: 14px; font-weight: 600; text-decoration: none; }
+.rg-sv-btn:hover { background: rgba(31,58,95,0.07); }
+.rg-sv-btn:focus-visible { outline: 3px solid rgba(31,107,208,0.5); outline-offset: 2px; }
+.rg-sv-btn .rg-icon { width: 16px; height: 16px; }
+
+/* ---- 1.11.2026 (בעל הפרויקט: "תקטין לסטנדרט את הפונטים, אני לא בעד העמסה בעין"): טקסט וסמלים בגודל רגיל, המפה במרכז.
+   סינון עבר לשורת השכבות, עם אייקון והמילה "סינון". מבט ברחוב ליד כפתור התלת-ממד. אזורי הלחיצה נשארים 44px ---- */
+.rg-title { font-size: 18px; }
+.rg-tagline { font-size: 12px; }
+.rg-proto { font-size: 10px; }
+.rg-head { padding: 5px 12px 6px; border-radius: 16px; }
+.rg-tool-btn { width: 44px; height: 44px; }
+.rg-tool-btn .rg-icon { width: 19px; height: 19px; }
+.rg-style-toggle button { min-height: 44px; min-width: 58px; padding: 2px 10px; font-size: 12.5px; }
+.rg-layer { min-height: 44px; }
+.rg-layer-short { font-size: 12.5px !important; }
+.rg-layer-dot { width: 28px !important; height: 28px !important; }
+.rg-layer-dot .rg-icon { width: 16px !important; height: 16px !important; }
+.rg-share-title { font-size: 13px !important; }
+.rg-share-plus { width: 32px !important; height: 32px !important; }
+.rg-share { min-height: 44px !important; }
+.rg-give-pick { min-height: 44px !important; }
+.rg-give-select { font-size: 12.5px !important; }
+.rg-legend-i { width: 22px !important; height: 22px !important; font-size: 12px !important; }
+.rg-hint { font-size: 12.5px; padding: 5px 12px; }
+.rg-orbit-btn.rg-3d-toggle, .rg-orbit-btn.rg-sv-pick { width: auto; gap: 5px; padding: 0 10px 0 8px; font: inherit; font-size: 12.5px; font-weight: 600; }
+.rg-orbit-btn .rg-icon { width: 19px; height: 19px; }
+.rg-orbit-btn.is-on { background: var(--rg-navy); color: #fff; }
+.rg-stage.is-sv-pick .rg-leaflet, .rg-stage.is-sv-pick .leaflet-container { cursor: crosshair; }
+.rg-hint.is-sv { background: var(--rg-navy); color: #fff; }
+/* מפת התוויות על המפה עצמה: קטנות יותר */
+.rg-pt-label { font-size: 11.5px; padding: 2px 8px; }
+.rg-hood-label span, .rg-style-art .rg-hood-label span { font-size: 11px; }
+.rg-style-memory .rg-landmark-cap { font-size: 11.5px; }
+.rg-road-label span { font-size: 11px; padding: 0 8px; border-width: 1.5px; }
+/* מצפן בתלת-ממד: טבעת עם צ' שמסתובבת עם העיר */
+.rg-north { width: 44px; height: 44px; background: none; border-radius: 50%; }
+.rg-north-arrow svg { width: 40px; height: 40px; }
+.rg-north-n { display: none; }
+/* סינון בשורת השכבות */
+.rg-filter-btn { position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 3px 12px 3px 4px; border-radius: 999px; border: 1.5px solid transparent; background: #eef1f6; font: inherit; font-size: 12.5px; font-weight: 700; color: var(--rg-navy); cursor: pointer; }
+.rg-filter-btn .rg-layer-dot { background: var(--rg-navy); }
+.rg-filter-btn.is-on { border-color: var(--rg-navy); }
+.rg-filter-btn:focus-visible { outline: 3px solid var(--rg-navy); outline-offset: 2px; }
+.rg-filter-btn .rg-filter-count { position: absolute; top: -5px; left: -5px; min-width: 18px; height: 18px; font-size: 11px; }
+@media (max-width: 760px) {
+  .rg-title { font-size: 15px; }
+  .rg-style-toggle button { min-width: 50px; font-size: 12px; }
+  .rg-share { width: 46px !important; height: 46px !important; }
+  .rg-sv-label { display: none; }
+  .rg-orbit-btn.rg-sv-pick { padding: 0; width: 44px; }
+}
+/* פס "מה קורה" ותוויות הנקודות, קטנים יותר */
+.rg-events-title { font-size: 15px; }
+.rg-events .rg-tab { min-height: 36px; font-size: 12.5px; }
+.rg-events .rg-showall { min-height: 36px; font-size: 12.5px; }
+.rg-events .rg-ev-title { font-size: 12.5px; }
+.rg-events .rg-ev-when, .rg-events .rg-ev-place { font-size: 11.5px; }
+@media (max-width: 760px) {
+  .rg-pt-label { font-size: 10.5px; padding: 1px 6px; }
+  .rg-hood-label span, .rg-style-art .rg-hood-label span { font-size: 10px; }
+  .rg-style-memory .rg-landmark-cap { font-size: 10.5px; }
+}
+
 /* כפתור "שתפו" לנקודה אחת (map-share.js) - רמת גן וגבעתיים */
 .osh { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .osh-btn, .osh-net { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 6px 16px; border-radius: 999px;
@@ -6072,6 +6138,7 @@ const RG_ICON_PATHS = {
   cube: 'M12 3.5l7.5 4.2v8.6L12 20.5l-7.5-4.2V7.7z M4.5 7.7L12 12l7.5-4.3 M12 12v8.5',
   turnLeft: 'M9 7H5V3 M5.4 7A8 8 0 1 1 4 12',
   turnRight: 'M15 7h4V3 M18.6 7A8 8 0 1 0 20 12',
+  walker: 'M13 4.5a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6z M10 21l2-6 2.5 2.5V21 M8 11l3-3.5h3l2 3.5 2.5 1 M12 15l-1-6',
 };
 function RgIcon({ name, className }) {
   return h('svg', { className: 'rg-icon ' + (className || ''), viewBox: '0 0 24 24', 'aria-hidden': 'true', focusable: 'false' },
@@ -6233,6 +6300,23 @@ function useLabelLayout(stageRef, deps) {
   }, deps);
 }
 
+/* ---------- מבט ברחוב (1.11.2026, בקשת בעל הפרויקט: "להתחבר לגוגל סטריט"): קישור ישיר בלי מפתח API ----------
+   פותח את Google Street View (באפליקציה בטלפון, בלשונית חדשה במחשב) בנקודה של המקום. בלי הטמעה, בלי עוגיות ובלי עלות.
+   רק למקום שהמיקום שלו אומת (OpenStreetMap). מיקום לדוגמה או משוער היה מראה רחוב אחר, ופריטי נתינה הם לפעמים ליד בית של תושב */
+function rgStreetViewUrl(item) {
+  if (!item || !item.location || item.location.source !== 'osm' || !isFinite(item.lat) || !isFinite(item.lng)) return null;
+  return 'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + (+item.lat).toFixed(6) + ',' + (+item.lng).toFixed(6);
+}
+function rgStreetViewAt(lat, lng) {
+  return 'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + (+lat).toFixed(6) + ',' + (+lng).toFixed(6);
+}
+function RgStreetView({ item }) {
+  const url = rgStreetViewUrl(item);
+  if (!url) return null;
+  return h('a', { className: 'rg-sv-btn', href: url, target: '_blank', rel: 'noopener noreferrer', 'data-action': 'street-view',
+    title: 'נפתח ב-Google Street View, מחוץ למפה' }, h(RgIcon, { name: 'pin' }), 'מבט ברחוב');
+}
+
 /* ---------- כרטיסים ---------- */
 function RgSheet({ label, onClose, children }) {
   return h('div', { className: 'am-scrim am-creators-scrim rg-scrim', onClick: onClose },
@@ -6285,7 +6369,8 @@ function PlaceCard({ cfg, point, layer, events, today, onShare, onOpenEvent, onO
       here.map((e) => h('button', { key: e.id, type: 'button', className: 'rg-mini-event', onClick: () => onOpenEvent(e) },
         e.title, ' · ', h('bdi', { dir: 'ltr' }, rgTimeLabel(e) || ''), ' · ', rgDateLabel(e, today), ' ', h(NowDemoBadge, { item: e })))) : null,
     h('div', { className: 'rg-card-actions' },
-      h(RgShare, { title: point.label, hash: 'place/' + point.entityId })),
+      h(RgShare, { title: point.label, hash: 'place/' + point.entityId }),
+      h(RgStreetView, { item: point })),
     h('button', { type: 'button', className: 'rg-card-share', onClick: onShare }, 'יש לי משהו להציע על המקום'),
     h(DemoNote, { text: cfg.demoNote }));
 }
@@ -6640,7 +6725,10 @@ function RamatGanApp() {
   const focusRef = useRef(null); // נקודה שנבחרה בחיפוש או ב"הצג במפה": המפה טסה אליה ולא לכל השכבה
   // תלת-ממד: המפה נפתחת בתלת-ממד (בעל הפרויקט, 31.10.2026: "שהמסך הראשון יפתח עם מפת התלת-ממד").
   // "מפה שטוחה" ליד הזום, או ?view=flat בכתובת, פותחים את המפה השטוחה. לביקור הזה בלבד
-  const [solid, setSolid] = useState(() => !/[?&](view=flat|tilt=0)(&|$)/.test(window.location.search));
+  // 1.11.2026 (בעל הפרויקט): המפה הדו-ממדית חוזרת להיות הבסיס שהתושב פוגש; תלת-ממד בכפתור או ב-?view=3d / ?tilt=1
+  const [solid, setSolid] = useState(() => /[?&](tilt=1|view=3d)(&|$)/.test(window.location.search));
+  // מבט ברחוב: לוחצים על הכפתור ואז על מקום במפה, ו-Google Street View נפתח שם
+  const [streetPick, setStreetPick] = useState(false);
   const solidRef = useRef(null);
   const cityRef = useRef(null);
   const orbitRef = useRef({ tilt: 0, spin: 0 });
@@ -6702,31 +6790,54 @@ function RamatGanApp() {
   useEffect(() => {
     const st = stageRef.current;
     if (!solid || !st) return undefined;
-    let drag = null;
+    let drag = null, raf = 0, glide = null;
     const pointers = new Set();
+    const goal = { spin: orbitRef.current.spin, tilt: orbitRef.current.tilt };
+    // כל פריים: העיר מתקרבת ליעד (ואחרי שעוזבים - ממשיכה מעט באותה תנופה ונעצרת בעדינות)
+    const frame = () => {
+      raf = 0;
+      const o = orbitRef.current;
+      if (glide && !drag) {
+        goal.spin += glide.spin * 16; goal.tilt = Math.min(RG_ORBIT.maxTilt, Math.max(RG_ORBIT.minTilt, goal.tilt + glide.tilt * 16));
+        glide.spin *= 0.9; glide.tilt *= 0.9;
+        if (Math.abs(glide.spin) < 0.002 && Math.abs(glide.tilt) < 0.002) glide = null;
+      }
+      const k = rgReducedMotion() ? 1 : 0.35;
+      o.spin += (goal.spin - o.spin) * k; o.tilt += (goal.tilt - o.tilt) * k;
+      applyOrbit(false);
+      if (glide || Math.abs(goal.spin - o.spin) > 0.05 || Math.abs(goal.tilt - o.tilt) > 0.05) kick();
+      else { o.spin = goal.spin; o.tilt = goal.tilt; applyOrbit(false); if (!drag) { st.classList.remove('is-orbiting'); setOrbitTick((t) => t + 1); } }
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
     const down = (e) => {
       pointers.add(e.pointerId);
       if (pointers.size > 1) { if (drag && drag.moved) { st.classList.remove('is-orbiting'); setOrbitTick((t) => t + 1); } drag = null; return; }
       if (e.button > 0 || e.target.closest('.rg-pt, .leaflet-control-container, .rg-orbit, .rg-sheet, button, a, input')) return;
       const o = orbitRef.current;
+      glide = null; goal.spin = o.spin; goal.tilt = o.tilt;
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, tilt: o.tilt, spin: o.spin, moved: false };
     };
     const move = (e) => {
       if (!drag || e.pointerId !== drag.id) return;
       const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-      if (!drag.moved && Math.hypot(dx, dy) < 5) return;
+      if (!drag.moved && Math.hypot(dx, dy) < 4) return;
       if (!drag.moved) { drag.moved = true; st.classList.add('is-orbiting'); setEventsDock(false); }
       e.preventDefault();
-      const o = orbitRef.current;
-      o.spin = drag.spin - dx * 0.35;
-      o.tilt = Math.min(RG_ORBIT.maxTilt, Math.max(RG_ORBIT.minTilt, drag.tilt - dy * 0.3));
-      applyOrbit(false);
+      // תנועה רכה (1.11.2026, "לא זורם עם העכבר"): הגרירה קובעת יעד, והעיר מתקרבת אליו בכל פריים
+      const now = performance.now(), dt = Math.max(1, now - (drag.t || now - 16));
+      const spin = drag.spin - dx * 0.3, tilt = Math.min(RG_ORBIT.maxTilt, Math.max(RG_ORBIT.minTilt, drag.tilt - dy * 0.25));
+      drag.v = { spin: (spin - goal.spin) / dt, tilt: (tilt - goal.tilt) / dt };
+      drag.t = now;
+      goal.spin = spin; goal.tilt = tilt;
+      if (rgReducedMotion()) frame(); else kick();
     };
     const up = (e) => {
       pointers.delete(e.pointerId);
       if (!drag || e.pointerId !== drag.id) return;
-      if (drag.moved) { st.classList.remove('is-orbiting'); setOrbitTick((t) => t + 1); }
+      const moved = drag.moved, v = drag.v, fresh = drag.t && performance.now() - drag.t < 80;
       drag = null;
+      if (moved && v && fresh && !rgReducedMotion()) { glide = { spin: v.spin * 0.6, tilt: v.tilt * 0.6 }; kick(); }
+      else if (moved) kick();
     };
     st.addEventListener('pointerdown', down, true);
     window.addEventListener('pointermove', move);
@@ -6737,9 +6848,24 @@ function RamatGanApp() {
       window.removeEventListener('pointermove', move);
       window.removeEventListener('pointerup', up);
       window.removeEventListener('pointercancel', up);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, [solid, !!cfg]);
   useEffect(() => { if (styleRef.current) { styleRef.current(mapStyle); setView((v) => v + 1); } }, [mapStyle]);
+  // מבט ברחוב: הלחיצה הבאה על המפה פותחת את Google Street View במקום האמיתי.
+  // במפה המאוירת המיקומים מוזזים (rgMakeWarp), ולכן מחזירים את הנקודה למקומה האמיתי בכמה צעדי תיקון
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!streetPick || !map) return undefined;
+    const pick = (e) => {
+      const at = [e.latlng.lat, e.latlng.lng], real = [at[0], at[1]];
+      for (let i = 0; i < 12; i++) { const w = placeRef.current(real[0], real[1]); real[0] += at[0] - w[0]; real[1] += at[1] - w[1]; }
+      setStreetPick(false);
+      window.open(rgStreetViewAt(real[0], real[1]), '_blank', 'noopener');
+    };
+    map.once('click', pick);
+    return () => map.off('click', pick);
+  }, [streetPick, !!mapRef.current]);
 
   // "עכשיו" מתעדכן כל דקה, כך שאירוע שהסתיים יורד מהרשימה בלי רענון
   useEffect(() => { const t = setInterval(() => setNowTick(Date.now()), 60000); return () => clearInterval(t); }, []);
@@ -6970,10 +7096,6 @@ function RamatGanApp() {
     h('button', { type: 'button', className: 'rg-tool-btn rg-search-btn' + (searchShown ? ' is-on' : ''), 'aria-label': 'חיפוש', title: 'חיפוש מקום או פעילות',
       'aria-expanded': searchShown, 'aria-controls': 'rg-search', onMouseDown: (e) => e.preventDefault(), onClick: () => { if (searchShown) { setQuery(''); setSearchOpen(false); } else setSearchOpen(true); } },
       h(RgIcon, { name: 'search' })),
-    h('button', { type: 'button', className: 'rg-tool-btn rg-filter-btn' + (interests.length ? ' is-on' : ''), onClick: () => setFilterOpen(true), 'aria-haspopup': 'dialog',
-      'aria-label': 'סינון והתאמה אישית', title: 'סינון והתאמה אישית' },
-      h(RgIcon, { name: 'sliders' }),
-      interests.length ? h('span', { className: 'rg-filter-count' }, interests.length) : null),
     searchShown ? h('div', { className: 'rg-search' },
       h(RgIcon, { name: 'search', className: 'rg-search-icon' }),
       h('input', { type: 'search', id: 'rg-search', className: 'rg-search-input', placeholder: 'חיפוש מקום או פעילות...', value: query, autoFocus: true,
@@ -6996,7 +7118,7 @@ function RamatGanApp() {
   const shareOn = shareAvailable || inbox;
   return h('main', { className: 'rg-app' },
     h('figure', { className: 'rg-figure' },
-      h('div', { className: 'rg-stage' + (moving ? ' is-moving' : '') + (activeLayer ? ' has-layer' : '') + (solid ? ' is-3d' : ''), ref: stageRef, 'data-layer': activeLayer || '', 'data-fit': fitted },
+      h('div', { className: 'rg-stage' + (streetPick ? ' is-sv-pick' : '') + (moving ? ' is-moving' : '') + (activeLayer ? ' has-layer' : '') + (solid ? ' is-3d' : ''), ref: stageRef, 'data-layer': activeLayer || '', 'data-fit': fitted },
         // המפה והנקודות על אותה "במה", שבתלת-ממד מוטה ומסתובבת כיחידה אחת
         h('div', { className: 'rg-world' },
           h('div', { className: 'rg-leaflet', ref: mapElRef, dir: 'ltr', role: 'region', 'aria-label': 'מפת רמת גן עם השכונות' }),
@@ -7006,20 +7128,27 @@ function RamatGanApp() {
               : null)),
         // תלת-ממד: מתג ליד הזום (לא סגנון נוסף, כך שאפשר לסובב גם את המאוירת וגם את המפורטת), ובזמן התלת-ממד גם כפתורי סיבוב
         h('div', { className: 'rg-orbit' + (solid ? ' is-on' : ''), role: 'group', 'aria-label': 'תלת-ממד' },
-          // חץ צפון תמיד גלוי; בתלת-ממד הוא מסתובב עם העיר, ולחיצה עליו מחזירה את הצפון למעלה
-          h('button', { type: 'button', className: 'rg-north', 'data-orbit': 'north', 'aria-label': 'צפון' + (solid ? ': להחזיר את הצפון למעלה' : ''), title: solid ? 'להחזיר את הצפון למעלה' : 'צפון',
-            onClick: () => { if (solid) turn(Math.round(orbitRef.current.spin / 360) * 360, orbitRef.current.tilt); } },
-            h('span', { className: 'rg-north-arrow', 'aria-hidden': 'true' }, h('svg', { viewBox: '0 0 24 24', width: 24, height: 24 },
-              h('path', { d: 'M12 2.5l5 9.5h-10z', fill: '#c2412d' }), h('path', { d: 'M12 21.5l-5-9.5h10z', fill: '#9aa6b5' }))),
-            h('span', { className: 'rg-north-n', 'aria-hidden': 'true' }, 'צ')),
+          // מצפן בתלת-ממד (1.11.2026: "ההצפנה לא ברורה"): טבעת עם האות צ' בקצה החץ, שתיהן מסתובבות יחד עם העיר.
+          // לחיצה מחזירה את הצפון למעלה
+          solid ? h('button', { type: 'button', className: 'rg-north', 'data-orbit': 'north', 'aria-label': 'מצפן: להחזיר את הצפון למעלה', title: 'צפון. לחיצה מחזירה את הצפון למעלה',
+            onClick: () => turn(Math.round(orbitRef.current.spin / 360) * 360, orbitRef.current.tilt) },
+            h('span', { className: 'rg-north-arrow', 'aria-hidden': 'true' }, h('svg', { viewBox: '0 0 40 40', width: 40, height: 40 },
+              h('circle', { cx: 20, cy: 20, r: 18, fill: '#fffdf8', stroke: '#c9d1dc', strokeWidth: 1.5 }),
+              h('path', { d: 'M20 9.5l5 11h-10z', fill: '#c2412d' }), h('path', { d: 'M20 31.5l-5-11h10z', fill: '#aab4c2' }),
+              h('text', { x: 20, y: 8.2, textAnchor: 'middle', fontSize: 8.5, fontWeight: 800, fill: '#c2412d' }, 'צ')))) : null,
           solid ? h('button', { type: 'button', className: 'rg-orbit-btn', 'data-orbit': 'right', 'aria-label': 'לסובב ימינה', title: 'לסובב ימינה',
             onClick: () => turn(orbitRef.current.spin - 45, orbitRef.current.tilt) }, h(RgIcon, { name: 'turnRight' })) : null,
           solid ? h('button', { type: 'button', className: 'rg-orbit-btn', 'data-orbit': 'left', 'aria-label': 'לסובב שמאלה', title: 'לסובב שמאלה',
             onClick: () => turn(orbitRef.current.spin + 45, orbitRef.current.tilt) }, h(RgIcon, { name: 'turnLeft' })) : null,
+          // מבט ברחוב (1.11.2026): לוחצים ואז בוחרים מקום במפה; Google Street View נפתח שם, מחוץ למפה
+          h('button', { type: 'button', className: 'rg-orbit-btn rg-sv-pick' + (streetPick ? ' is-on' : ''), 'data-orbit': 'street', 'aria-pressed': streetPick,
+            title: 'מבט ברחוב: בחרו מקום במפה ו-Google Street View ייפתח שם', onClick: () => { if (solid) setSolid(false); setEventsDock(false); setSelected(null); setStreetPick((v) => !v); } },
+            h(RgIcon, { name: 'walker' }), h('span', { className: 'rg-sv-label' }, 'מבט רחוב')),
           h('button', { type: 'button', className: 'rg-orbit-btn rg-3d-toggle', 'data-orbit': 'toggle', 'aria-pressed': solid,
-            title: solid ? 'חזרה למפה שטוחה' : 'העיר כגוש בתלת-ממד: גוררים כדי לסובב ולהטות', onClick: () => setSolid((v) => !v) },
+            title: solid ? 'חזרה למפה שטוחה' : 'העיר כגוש בתלת-ממד: גוררים כדי לסובב ולהטות', onClick: () => { setStreetPick(false); setSolid((v) => !v); } },
             h(RgIcon, { name: 'cube' }), h('span', { className: 'rg-3d-long' }, solid ? 'מפה שטוחה' : 'תלת-ממד'), h('span', { className: 'rg-3d-short', 'aria-hidden': 'true' }, solid ? '2D' : '3D'))),
         !geo || !ill ? h('div', { className: 'rg-hint' }, 'טוען את המפה...')
+          : streetPick ? h('div', { className: 'rg-hint is-sv', role: 'status' }, 'הקישו על מקום במפה כדי לראות אותו ברחוב')
           : !activeLayer ? h('div', { className: 'rg-hint' }, solid ? 'גררו כדי לסובב ולהטות את העיר' : 'בחרו שכבה כדי לראות מה יש במפה')
             : !points.length ? h('div', { className: 'rg-hint' }, 'אין נקודות שמתאימות לבחירה') : null)),
 
@@ -7061,6 +7190,12 @@ function RamatGanApp() {
         },
           h('span', { className: 'rg-layer-dot', 'aria-hidden': 'true' }, h(RgIcon, { name: l.key })),
           h('span', { className: 'rg-layer-text' }, h('span', { className: 'rg-layer-label' }, l.label), l.short ? h('span', { className: 'rg-layer-short', 'aria-hidden': 'true' }, l.short) : null, h('span', { className: 'rg-layer-sub' }, l.sub))))))),
+      // סינון ליד השכבות (1.11.2026, בעל הפרויקט: "סימן הסינון צריך להיות בקרבת השכבות... וכתוב סינון")
+      h('button', { type: 'button', className: 'rg-filter-btn' + (interests.length ? ' is-on' : ''), onClick: () => setFilterOpen(true), 'aria-haspopup': 'dialog',
+        'aria-label': 'סינון והתאמה אישית', title: 'סינון והתאמה אישית', style: { '--c': '#10294a' } },
+        h('span', { className: 'rg-layer-dot rg-filter-dot', 'aria-hidden': 'true' }, h(RgIcon, { name: 'sliders' })),
+        h('span', { className: 'rg-filter-word' }, 'סינון'),
+        interests.length ? h('span', { className: 'rg-filter-count' }, interests.length) : null),
       // "על המפה": הערת המפה, העיקרון המנחה והקישור לשירותי העירייה, מקופלים כברירת מחדל
       h('button', { type: 'button', className: 'rg-legend-toggle', 'aria-expanded': legendOpen, 'aria-controls': 'rg-about', 'aria-label': 'על המפה', onClick: () => setLegendOpen((o) => !o) },
         h('span', { className: 'rg-legend-title' }, 'על המפה'), h('span', { className: 'rg-legend-i', 'aria-hidden': 'true' }, 'i'), h('span', { className: 'rg-legend-chev', 'aria-hidden': 'true' }, legendOpen ? '⌃' : '⌄')),
