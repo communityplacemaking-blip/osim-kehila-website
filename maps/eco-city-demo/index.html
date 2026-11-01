@@ -390,8 +390,9 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .th-mustard .paper{opacity:.22}
 .th-mustard .v3 .gloss,.th-mustard.v3 .gloss{background:none}
 /* עוגן "מרחף": התמונה בלי מסגרת עגולה, עם קצוות רכים, עומדת על בסיס כחול כהה שמרחף מעל העמוד */
-.anc-float.v3 .anc .disc{width:calc(var(--d)*1.18)!important;height:calc(var(--d)*.92)!important;border:0;border-radius:0;background:transparent;box-shadow:none;transform-origin:50% 100%}
-.anc-float.v3 .anc .disc img{border-radius:14px;-webkit-mask-image:radial-gradient(ellipse 70% 72% at 50% 46%,#000 62%,rgba(0,0,0,0) 100%);mask-image:radial-gradient(ellipse 70% 72% at 50% 46%,#000 62%,rgba(0,0,0,0) 100%);filter:drop-shadow(0 6px 6px rgba(14,26,51,.35))}
+.anc-float.v3 .anc .disc{width:calc(var(--d)*1.05)!important;height:calc(var(--d)*1.05)!important;border:0;border-radius:0;background:transparent;box-shadow:none;transform-origin:50% 100%}
+/* עגול בלי מסגרת (Tm, 1.11.2026) */
+.anc-float.v3 .anc .disc img{border-radius:50%;-webkit-mask-image:radial-gradient(circle closest-side,#000 82%,rgba(0,0,0,0) 100%);mask-image:radial-gradient(circle closest-side,#000 82%,rgba(0,0,0,0) 100%);filter:drop-shadow(0 6px 6px rgba(14,26,51,.35))}
 .anc-float.v3 .anc .disc>svg{width:58%;height:58%;stroke:#1B2F55}
 .anc-float.v3 .anc .disc.has>svg,.anc-float.v3 .anc .bdg{display:none}
 .anc-float.v3 .anc .disc::after{content:"";position:absolute;left:-6%;right:-6%;bottom:-9px;height:18px;border-radius:50%;z-index:-1;
