@@ -324,16 +324,16 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .th-neo.v3 .plab:hover,.th-neo.v3 .plab.on{background:#F2C04B;color:#06173A;border-color:#fff;box-shadow:0 0 16px rgba(242,192,75,.8)}
 .th-neo.v3 .plab.dim{opacity:.55}
 /* עוגנים: אייקון תלת ממדי מבריק (התמונה נפתחת במעבר עכבר ובכרטיס) */
-.v3 .anc .disc{border-radius:30%;border:0;background:linear-gradient(155deg,#8BF0FF 0,#2F93E8 38%,#1450B4 70%,#0A2C78 100%);
+.anc-tile.v3 .anc .disc{border-radius:30%;border:0;background:linear-gradient(155deg,#8BF0FF 0,#2F93E8 38%,#1450B4 70%,#0A2C78 100%);
   box-shadow:inset 0 2px 1px rgba(255,255,255,.75),inset 0 -6px 10px rgba(0,10,40,.45),0 5px 0 #0A2A6A,0 6px 0 #061B48,0 14px 22px rgba(0,0,0,.55),0 0 18px rgba(95,227,255,.35)}
-.v3 .anc .disc>svg,.v3 .anc .disc.has>svg{display:block;width:56%;height:56%;stroke:#fff;stroke-width:1.7;filter:drop-shadow(0 1px 1px rgba(0,20,60,.6))}
-.v3 .anc .disc img{display:none;border-radius:30%}
-.v3 .anc .bdg{display:none}
-.v3 .anc:hover .disc{transform:scale(1.9)}
-.v3 .anc:hover .disc img{display:block}
+.anc-tile.v3 .anc .disc>svg,.anc-tile.v3 .anc .disc.has>svg{display:block;width:56%;height:56%;stroke:#fff;stroke-width:1.7;filter:drop-shadow(0 1px 1px rgba(0,20,60,.6))}
+.anc-tile.v3 .anc .disc img{display:none;border-radius:30%}
+.anc-tile.v3 .anc .bdg{display:none}
+.anc-tile.v3 .anc:hover .disc{transform:scale(1.9)}
+.anc-tile.v3 .anc:hover .disc img{display:block}
 .v3 .zlow .anc:hover .disc{transform:scale(1.5)}
 .th-neo.v3 .anc .an{background:rgba(6,23,58,.85);color:#BFF3FF;border:1px solid rgba(95,227,255,.45);box-shadow:none;font-weight:500}
-.v3 .anc .disc::after{content:"";position:absolute;left:8%;right:8%;top:5%;height:38%;border-radius:40% 40% 50% 50%/60% 60% 40% 40%;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
+.anc-tile.v3 .anc .disc::after{content:"";position:absolute;left:8%;right:8%;top:5%;height:38%;border-radius:40% 40% 50% 50%/60% 60% 40% 40%;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
 /* קווי עצבים: קשת זוהרת וזרם אור לאורכה */
 .nerve{stroke-dasharray:3 10;animation:nflow .9s linear infinite}
 @keyframes nflow{to{stroke-dashoffset:-26}}
@@ -345,6 +345,42 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .orb button:active{background:#1450B4}
 .th-neo .v3btn,.th-neo .leaflet-bar a{background:rgba(6,23,58,.85);color:#BFF3FF;border-color:rgba(95,227,255,.5)}
 @media (max-width:820px){.orb{left:10px;bottom:132px;grid-template-columns:repeat(4,30px)}.orb button{width:30px;height:30px;font-size:15px}}
+
+/* ===== אפור־שמנת וכחול כהה ===== */
+.th-stone{--mapbg:#E6E2DA;--navy:#1B2F55}
+.th-stone #map,.th-stone .leaflet-container{background:var(--mapbg)}
+.th-stone .hood{color:#1B2F55;opacity:.5;font-family:Rubik,Heebo,sans-serif;font-weight:500;font-size:14px;letter-spacing:.14em;text-shadow:0 0 3px #F4F1EA}
+.th-stone .street{color:#1B2F55;text-shadow:0 0 3px #F4F1EA,0 0 3px #F4F1EA}
+.th-stone .city{color:#1B2F55;opacity:.07}
+.th-stone .hd{background:radial-gradient(circle at 34% 30%,#fff 0,#DCE6F7 12%,#6F8CC4 32%,#24407A 62%,#0B1734 100%);box-shadow:0 0 0 1px rgba(255,255,255,.6),0 4px 7px rgba(14,26,51,.45)}
+.th-stone .bb>.stem{background:linear-gradient(to top,rgba(27,47,85,.15),#1B2F55 45%,#3D5580)}
+.th-stone .gs{background:radial-gradient(closest-side,rgba(14,26,51,.45),rgba(14,26,51,0))}
+.th-stone .plab{background:#fff;color:#1B2F55;border:1px solid rgba(27,47,85,.35);box-shadow:0 2px 6px rgba(14,26,51,.18)}
+.th-stone .plab:hover,.th-stone .plab.on{background:#1B2F55;color:#fff;border-color:#1B2F55}
+.th-stone .plab:hover~.hd,.th-stone .plab.on~.hd{background:radial-gradient(circle at 34% 30%,#fff 0,#FFF1C9 14%,#E2B24A 40%,#9A6A10 78%,#4D3300 100%);box-shadow:0 0 0 1px #fff,0 0 14px 3px rgba(226,178,74,.75)}
+.th-stone .ld{background:rgba(27,47,85,.55)}
+.th-stone .anc .an{background:#fff;color:#1B2F55;border:1px solid rgba(27,47,85,.3);box-shadow:0 1px 4px rgba(14,26,51,.15);font-weight:500}
+.th-stone .orb button,.th-stone .v3btn,.th-stone .leaflet-bar a{background:#fff;color:#1B2F55;border:1px solid rgba(27,47,85,.35);box-shadow:0 2px 6px rgba(14,26,51,.15)}
+.th-stone .orb button:active{background:#DCE4F2}
+.th-stone .nerve-core{opacity:.12}
+.th-stone .v3 .gloss,.th-stone.v3 .gloss{background:radial-gradient(140% 100% at 50% 120%,rgba(0,0,0,0) 60%,rgba(40,50,70,.18))}
+.th-stone .anc-tile .anc .disc,.th-stone.anc-tile .anc .disc{background:linear-gradient(155deg,#6F8CC4 0,#2A4783 45%,#15284F 100%);box-shadow:inset 0 2px 1px rgba(255,255,255,.6),inset 0 -6px 10px rgba(0,10,40,.4),0 5px 0 #0E1A33,0 12px 18px rgba(14,26,51,.35)}
+/* עוגן כטיפה (סיכת מיקום) כחולה כהה עם אייקון לבן */
+.anc-pin.v3 .anc .disc{border:0;border-radius:50% 50% 50% 6%;transform:rotate(-45deg);transform-origin:50% 50%;
+  background:radial-gradient(circle at 30% 28%,#7F9AD0 0,#2E4C8A 38%,#162B57 72%,#0C1835 100%);
+  box-shadow:inset 0 2px 2px rgba(255,255,255,.45),inset 0 -5px 9px rgba(0,8,30,.45),-3px 5px 10px rgba(14,26,51,.35)}
+.anc-pin.v3 .anc .disc>svg,.anc-pin.v3 .anc .disc.has>svg{display:block;width:50%;height:50%;stroke:#fff;stroke-width:1.8;transform:rotate(45deg)}
+.anc-pin.v3 .anc .disc::before{content:"";position:absolute;inset:17%;border-radius:50%;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+.anc-pin.v3 .anc .disc img{display:none;border-radius:50%;inset:6%;width:88%;height:88%;transform:rotate(45deg)}
+.anc-pin.v3 .anc .bdg{display:none}
+.anc-pin.v3 .anc .an{margin-top:12px}
+.anc-pin.v3 .anc:hover .disc{transform:rotate(-45deg) scale(1.8)}
+.anc-pin.v3 .anc:hover .disc img{display:block}
+.anc-pin.v3 .anc:hover .disc::before{display:none}
+.anc-pin.v3 .zlow .anc:hover .disc{transform:rotate(-45deg) scale(1.4)}
+.anc-pin.v3 .zlow .anc .disc{transform:rotate(-45deg) scale(.72)}
+.anc-photo.th-stone .anc .disc{box-shadow:0 0 0 1.5px #1B2F55,0 6px 14px rgba(14,26,51,.3)}
+.th-stone .anc .bdg{background:#1B2F55}.th-stone .anc .bdg svg{stroke:#fff}
 </style>
 </head>
 <body>
@@ -570,14 +606,20 @@ var THEMES={
     tones:['#15427A','#123B6E','#184880','#113766','#164476'],
     ST:{M:{c:'#7CC6F0',k:'#2D6FA8'},A:{c:'#3A80BE',k:'#1B4E84'},B:{c:'#1F5590',k:'#15406E'},C:{c:'#1A4C84',k:'#143C68'}}},
   /* כחול "פלסטי" עם צירים ראשיים זוהרים: ברירת המחדל מ-1.11.2026 (בקשת Tm). ‎?theme=green הירוק הקודם */
+  /* אפור־שמנת עם כל מה שעל המפה בכחול כהה: ברירת המחדל (Tm, 1.11.2026). ‎?theme=neo הכחול הכהה, ‎?theme=green הירוק */
+  stone:{sea:'#C3CED6',city:'#EEEAE2',ctx:'#E3DFD7',line:'#1B2F55',park:'#D5DDCB',river:'#B3C4D1',wave:'#FFFFFF',st:1,
+    tones:['#EFEBE3','#E9E5DC','#F2EEE7','#E6E2D9','#EDE9E0'],
+    ST:{M:{c:'#2B4677',k:'#14244A'},A:{c:'#566C93',k:'#2A3F66'},B:{c:'#FFFFFF',k:'#C9C5BC'},C:{c:'#FBF9F5',k:'#D8D4CB'}}},
   neo:{sea:'#040E24',city:'#0F2C5C',ctx:'#0A1F45',line:'#58D2FF',park:'#0F5466',river:'#38B8F2',wave:'#7FE3FF',st:1,
     tones:['#12336A','#0F2E62','#153A74','#10305F','#13376D'],
     ST:{M:{c:'#62D6F5',k:'#1A6CB8'},A:{c:'#3A8FD6',k:'#17508F'},B:{c:'#1D4C8C',k:'#15396C'},C:{c:'#1A447F',k:'#133464'}}},
   green:{sea:'#0B2A33',city:'#1E3F3F',ctx:'#173333',line:'#E2C27A',park:'#2E5B3E',river:'#4E8C93',wave:'#E2C27A',st:.8,
     tones:['#22484A','#1E4243','#264D4C','#1C3D3E','#244A47'],
     ST:{M:{c:'#C59A3C',k:'#7A5E22'},A:{c:'#9C7E3E',k:'#5F4C24'},B:{c:'#3C625F',k:'#2A4A48'},C:{c:'#335754',k:'#264442'}}}};
-var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='neo';var TH=THEMES[THN];
-if(THN!=='light')document.documentElement.classList.add('th-dark','th-'+THN);
+var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='stone';var TH=THEMES[THN];
+if(THN!=='light')document.documentElement.classList.add(THN==='stone'?'th-light':'th-dark','th-'+THN);
+/* צורת העוגנים בתלת מימד: ‎?anc=pin (ברירת מחדל, טיפה כחולה עם אייקון), ‎?anc=tile (אריח מבריק), ‎?anc=photo (העיגולים עם התמונות) */
+var ANC=(location.search.match(/[?&]anc=(pin|tile|photo)/)||[])[1]||'pin';document.documentElement.classList.add('anc-'+ANC);
 var TONES=TH.tones;
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
 map.createPane('motif');map.getPane('motif').style.zIndex=380;map.getPane('motif').style.pointerEvents='none';
@@ -757,7 +799,7 @@ function arc(p,q){
 }
 
 /* "אקופונקטורה": כל פרויקט מפעיל רשת של עצבים אל המקומות שסביבו. קשתות זוהרות עם זרם אור, עבות יותר ככל שהמקום קרוב */
-var NERVE=THN==='neo'?'#5FE3FF':GOLD;
+var NERVE=THN==='neo'?'#5FE3FF':THN==='stone'?'#1E3A78':GOLD;
 function nerves(p,grp){
   var l=A.concat(Q).map(function(a){return {a:a,m:meters(a,p)};}).sort(function(x,y){return x.m-y.m;}),
       pick=l.filter(function(x){return x.m<=2400;}).slice(0,9);
