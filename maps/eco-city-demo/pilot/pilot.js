@@ -1,4 +1,4 @@
-/* הבית הדיגיטלי של פרויקט: פיילוט קשרי דיירים של אקו סיטי.
+/* הבית של הפרויקט: פיילוט קשרי דיירים של אקו סיטי.
    נטען מ-index.html רק כשבכתובת יש ?pilot=<שם>, וקורא את התוכן מ-pilot/<שם>.json.
    כל טקסט מהקובץ עובר ניקוי, קישורים רק ב-https, ותמונות רק מהתיקיות של המפה.
    אין כאן שליחה של טופס, שמירת נתונים או מדידה: "שאלה לצוות" היא קישור לערוץ מאושר, תצוגה בלבד, או כבויה. */
@@ -41,7 +41,7 @@ function clean(c){
     /* מפגש מוצג רק כשהוא מאושר ועוד לא עבר */
     meetings:arr(c.meetings).map(function(m){m=m||{};return {raw:m.date,date:day(m.date),time:txt(m.time,20),title:txt(m.title,120),where:txt(m.place,120),
       url:link(m.registration),ok:m.approved===true};}).filter(function(m){return m.ok&&m.title&&m.date&&m.raw>=today();}).slice(0,4),
-    ask:{mode:mode,url:link(inq.url),label:txt(inq.label,60)}
+    ask:{mode:mode,url:link(inq.url),label:txt(inq.label,60),note:txt(inq.note,200)}
   };
 }
 function cleanLink(l){l=l||{};var u=link(l.url),t=txt(l.label,60);return u&&t?{url:u,label:t}:null;}
@@ -89,9 +89,10 @@ function render(){
       return '<li class="'+(cur===i?'now':cur!=null&&i<cur?'done':'')+'"'+(cur===i?' aria-current="step"':'')+'><i></i><span>'+h(s)+'</span></li>';}).join('')+'</ol>'+
       (C.stages.note?'<p class="pl-note">'+h(C.stages.note)+'</p>':'')+'</div>';}
   if(C.ask.mode!=='off'){
-    ov+='<div class="pl-ask"><div class="pl-ask-t"><span class="pl-ask-i">'+ic('chat')+'</span><div><b>יש לכם שאלה?</b><span>אפשר לשאול את צוות הפרויקט ישירות מכאן.</span></div></div>'+
-      (C.ask.mode==='link'?'<a class="btn pri" href="'+h(C.ask.url)+'" target="_blank" rel="noopener">'+h(C.ask.label||'שאלה לצוות הפרויקט')+'</a>'
-        :'<button class="btn pri" type="button" data-ask>שאלה לצוות הפרויקט</button><small class="pl-ask-n">באב־טיפוס: תצוגה בלבד, שום דבר לא נשלח</small>')+'</div>';}
+    /* בשלב הראשון שאלה עוברת לערוץ שכבר קיים אצל אקו סיטי. טופס פנייה פרטי הוא שלב נפרד, ומוצג רק כהמחשה */
+    ov+='<div class="pl-ask"><div class="pl-ask-t"><span class="pl-ask-i">'+ic('chat')+'</span><div><b>יש לכם שאלה?</b><span>השאלה עוברת לצוות קשרי הדיירים של אקו סיטי, בערוץ שכבר קיים אצלם.</span></div></div>'+
+      (C.ask.mode==='link'?'<a class="btn pri" href="'+h(C.ask.url)+'" target="_blank" rel="noopener">'+h(C.ask.label||'יש לי שאלה')+'</a>'+(C.ask.note?'<small class="pl-ask-n">'+h(C.ask.note)+'</small>':'')
+        :'<button class="btn pri" type="button" data-ask>יש לי שאלה</button><small class="pl-ask-n">בהדגמה: הכפתור מסביר איך זה יעבוד. שום דבר לא נשלח</small>')+'</div>';}
   out+=sec('pl-overview','על הפרויקט',ov+stg);tabs.push(['pl-overview','סקירה']);
   /* מה חדש */
   if(C.updates.length){
@@ -127,15 +128,16 @@ function render(){
   if(lu)tl.push(['pl-updates','news','עדכונים',(lu.date?lu.date+' · ':'')+lu.title]);
   if(C.meetings.length)tl.push(['pl-meetings','cal','מפגש קרוב',C.meetings[0].date+' · '+C.meetings[0].title]);
   if(C.faq.length)tl.push(['pl-faq','help','תשובות לשאלות',C.faq.length+' שאלות נפוצות']);
-  if(C.ask.mode!=='off')tl.push(['','chat','שאלה לצוות','פנייה ישירה לצוות הפרויקט']);
+  if(C.ask.mode==='link')tl.push(['pl-overview','chat','יש לי שאלה','דרך הערוץ הקיים של אקו סיטי']);
+  else if(C.ask.mode!=='off')tl.push(['','chat','יש לי שאלה','דרך הערוץ הקיים של אקו סיטי']);
   else if(C.contacts.length||C.links.length)tl.push(['pl-contact','user','קשר עם הצוות','אנשי קשר ומידע רשמי']);
   var tiles='<ul class="pl-tiles" aria-label="מה יש כאן">'+tl.map(function(t){return '<li><button type="button" '+(t[0]?'data-go="'+t[0]+'"':'data-ask')+'><span class="pl-ti">'+ic(t[1])+'</span>'+
     '<span class="pl-tt"><b>'+h(t[2])+'</b><small>'+h(t[3])+'</small></span></button></li>';}).join('')+'</ul>';
 
   var hero='<div class="gal ill pl-hero">'+(C.hero.img?'<figure class="pl-fig"><span class="pl-ring"><img src="'+h(C.hero.img)+'" alt=""></span>'+(C.hero.cap?'<figcaption>'+h(C.hero.cap)+'</figcaption>':'')+'</figure>':'')+
-    '<button class="back" type="button">→ חזרה למפה</button><div class="ttl"><div class="pl-brand"><span class="pl-wm" lang="en">ecocity</span><span>הבית הדיגיטלי של הפרויקט</span></div><h2 class="serif">'+h(C.name)+'</h2>'+
+    '<button class="back" type="button">→ חזרה למפה</button><div class="ttl"><div class="pl-brand"><span class="pl-wm" lang="en">ecocity</span><span>הבית של הפרויקט</span></div><h2 class="serif">'+h(C.name)+'</h2>'+
     '<div class="c">'+h([C.city,C.place].filter(Boolean).join(' · '))+'</div></div></div>'+
-    '<div class="pl-promise"><p>כל מה שבעלי הדירות והדיירים צריכים לדעת על הפרויקט: מידע מאושר, עדכונים, תשובות וקשר עם הצוות.</p>'+
+    '<div class="pl-promise"><p><b>מקום אחד, ברור ועדכני, לכל מה שקורה בפרויקט ובשכונה סביבו.</b> מידע מאושר, עדכונים, תשובות וקשר עם הצוות.</p>'+
     (C.updated?'<span>עודכן לאחרונה: '+h(C.updated)+'</span>':'')+'</div>';
   var nav='<nav class="pl-tabs" aria-label="חלקי העמוד"><div class="pl-tabs-in">'+tabs.map(function(t,i){return '<button type="button" data-go="'+t[0]+'"'+(i?'':' aria-current="true"')+'>'+t[1]+'</button>';}).join('')+
     '<button type="button" class="pl-back2" data-hood aria-label="חזרה למפה, עם השכונה">'+ic('map')+'<span>מפה</span></button></div></nav>';
@@ -167,20 +169,22 @@ function open(){
 /* חזרה למפה עם הקווים לשכונה, כדי לראות איפה הבית ביחס למקומות סביבו */
 function toHood(){E.closeD();var anchors=drawHood();E.fly(PP,anchors);if(pin)pin.classList.add('on');}
 
-/* "שאלה לצוות": תצוגה של הטופס בלבד. השדות כבויים, אין form ואין שליחה */
+/* "יש לי שאלה" בהדגמה: מסביר שבשלב הראשון השאלה עוברת לערוץ קיים של אקו סיטי,
+   ומראה איך עשוי להיראות טופס פנייה בשלב שני, אם יאושר. השדות כבויים, אין form ואין שליחה */
 function askOpen(){
   askClose();
   var s=document.createElement('div');s.className='pl-sheet';s.setAttribute('role','dialog');s.setAttribute('aria-modal','true');s.setAttribute('aria-labelledby','pl-sheet-h');
-  s.innerHTML='<div class="pl-sheet-in"><div class="pl-sheet-top"><h3 id="pl-sheet-h">שאלה לצוות הפרויקט</h3><button type="button" class="pl-x" aria-label="סגירה">✕</button></div>'+
-    '<p class="pl-warn">'+ic('lock')+'<span>זו תצוגה של הטופס. באב־הטיפוס השליחה כבויה, ושום פרט לא נשמר או נשלח.</span></p>'+
+  s.innerHTML='<div class="pl-sheet-in"><div class="pl-sheet-top"><h3 id="pl-sheet-h">יש לי שאלה</h3><button type="button" class="pl-x" aria-label="סגירה">✕</button></div>'+
+    '<div class="pl-now"><b>בשלב הראשון</b><p>הכפתור מפנה לערוץ שצוות קשרי הדיירים של אקו סיטי כבר עובד איתו, למשל טלפון, מייל או וואטסאפ, עם משפט קצר על מה קורה אחרי הפנייה. אקו סיטי קובעת את הערוץ ואת הנוסח.</p></div>'+
+    '<div class="pl-later"><b>שלב שני, אם יאושר: טופס פנייה פרטי</b>'+
+    '<p class="pl-warn">'+ic('lock')+'<span>כך עשוי להיראות טופס הפנייה בשלב השני, אם יאושר. הוא עדיין לא נבנה, וכרגע שום דבר לא נשלח או נשמר.</span></p>'+
     '<div class="pl-fields" aria-disabled="true">'+
       '<label>שם<input type="text" disabled placeholder="השם שלך"></label>'+
       '<label>טלפון או מייל לחזרה<input type="text" disabled placeholder="איך לחזור אליך"></label>'+
       '<label>הקשר שלי לפרויקט<select disabled><option>בעל/ת דירה</option><option>שוכר/ת</option><option>אחר</option></select></label>'+
       '<label>השאלה<textarea disabled rows="3" placeholder="מה תרצו לשאול?"></textarea></label>'+
     '</div>'+
-    '<div class="pl-next"><b>בגרסה הפעילה</b><ul><li>השאלה מגיעה רק לצוות קשרי הדיירים, ולא מתפרסמת בשום מקום.</li><li>מקבלים מספר פנייה ואישור שהיא התקבלה.</li><li>אוספים רק את מה שצריך כדי לחזור אליכם.</li></ul></div>'+
-    '<button type="button" class="btn pri" disabled>שליחה (כבויה באב־טיפוס)</button></div>';
+    '<button type="button" class="btn pri" disabled>שליחה (שלב שני, לא פעיל)</button></div></div>';
   s.addEventListener('click',function(e){if(e.target===s||e.target.closest('.pl-x'))askClose();});
   det.appendChild(s);var x=s.querySelector('.pl-x');if(x)x.focus();
 }

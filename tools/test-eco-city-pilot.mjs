@@ -1,4 +1,4 @@
-// בדיקות לבית הדיגיטלי של הפיילוט במפת אקו סיטי (maps/eco-city-demo/pilot/).
+// בדיקות ל"הבית של הפרויקט", הפיילוט במפת אקו סיטי (maps/eco-city-demo/pilot/).
 // הרצה משורש המאגר: node tools/test-eco-city-pilot.mjs
 // צריך Playwright עם Chromium. אין כאן CI, אז מריצים מקומית לפני כל PR שנוגע בפיילוט.
 // משתני סביבה (לא חובה):
@@ -169,9 +169,9 @@ for (const w of [390, 1280]) {
   await pg.click('[data-ask]'); await pg.waitForTimeout(400);
   const ask = await pg.evaluate(() => {
     const s = document.querySelector('.pl-sheet');
-    return s && { fields: s.querySelectorAll('input,select,textarea').length, enabled: s.querySelectorAll('input:not([disabled]),select:not([disabled]),textarea:not([disabled]),.btn:not([disabled])').length, forms: document.querySelectorAll('form').length, warn: s.querySelector('.pl-warn')?.textContent };
+    return s && { fields: s.querySelectorAll('input,select,textarea').length, enabled: s.querySelectorAll('input:not([disabled]),select:not([disabled]),textarea:not([disabled]),.btn:not([disabled])').length, forms: document.querySelectorAll('form').length, warn: s.querySelector('.pl-warn')?.textContent, now: s.querySelector('.pl-now')?.textContent || '' };
   });
-  check(`${w}px: "שאלה לצוות" פותח תצוגה עם שדות כבויים ובלי טופס`, ask && ask.fields === 4 && ask.enabled === 0 && ask.forms === 0 && /השליחה כבויה/.test(ask.warn), ask);
+  check(`${w}px: "יש לי שאלה" מסביר שבשלב הראשון השאלה עוברת לערוץ קיים, והטופס הכבוי מסומן כשלב שני שעדיין לא נבנה`, ask && /ערוץ/.test(ask.now) && ask.fields === 4 && ask.enabled === 0 && ask.forms === 0 && /שלב השני, אם יאושר/.test(ask.warn) && /לא נבנה/.test(ask.warn), ask);
   await shot(pg, `ask-${w}`);
   await pg.keyboard.press('Escape'); await pg.waitForTimeout(300);
   check(`${w}px: Esc סוגר רק את חלון השאלה`, await pg.evaluate(() => !document.querySelector('.pl-sheet') && document.getElementById('detail').classList.contains('open')));
@@ -279,8 +279,8 @@ for (const w of [390, 1280]) {
       promise: d.querySelector('.pl-promise p')?.textContent || '', text: d.textContent, banner: !!document.querySelector('.pl-banner') };
   });
   check(`${w}px: ?pilot=demo&home=1 פותח את הבית מיד`, r.open, r.open);
-  check(`${w}px: אריחי התועלת (פרויקט, עדכונים, תשובות, שאלה לצוות) גלויים במסך הראשון`, JSON.stringify(r.tiles.map((t) => t.t)) === JSON.stringify(['על הפרויקט', 'עדכונים', 'תשובות לשאלות', 'שאלה לצוות']) && r.tiles.every((t) => t.seen), r.tiles);
-  check(`${w}px: שורת התועלת מתחת לכותרת, ומיתוג ecocity`, r.brand === 'ecocity' && ['מידע', 'עדכונים', 'תשובות', 'קשר'].every((k) => r.promise.includes(k)), { b: r.brand, p: r.promise });
+  check(`${w}px: אריחי התועלת (פרויקט, עדכונים, תשובות, יש לי שאלה) גלויים במסך הראשון`, JSON.stringify(r.tiles.map((t) => t.t)) === JSON.stringify(['על הפרויקט', 'עדכונים', 'תשובות לשאלות', 'יש לי שאלה']) && r.tiles.every((t) => t.seen), r.tiles);
+  check(`${w}px: שורת התועלת מתחת לכותרת, ומיתוג ecocity`, r.brand === 'ecocity' && ['מקום אחד, ברור ועדכני, לכל מה שקורה בפרויקט ובשכונה סביבו', 'מידע', 'עדכונים', 'תשובות', 'קשר'].every((k) => r.promise.includes(k)), { b: r.brand, p: r.promise });
   check(`${w}px: רק מסלול בעלי הדירות: אין מסלול לרוכשים או ללקוחות`, !/רוכש|לקוחות קיימים|לאחר האכלוס/.test(r.text) , r.text.match(/רוכש|לקוחות קיימים/));
   check(`${w}px: פס האב־טיפוס גלוי גם בכניסה ישירה`, r.banner);
   if (w === 390) await shot(pg, 'direct-390');
@@ -293,7 +293,7 @@ for (const w of [390, 1280]) {
   }
   await pg.evaluate(() => document.getElementById('detail').scrollTo(0, 0));
   await pg.click('.pl-tiles [data-ask]'); await pg.waitForTimeout(400);
-  check(`${w}px: האריח "שאלה לצוות" פותח את התצוגה (בלי טופס ובלי שליחה)`, await pg.evaluate(() => !!document.querySelector('.pl-sheet') && !document.querySelector('form')) && pg.writes.length === 0, pg.writes);
+  check(`${w}px: האריח "יש לי שאלה" פותח את התצוגה (בלי טופס ובלי שליחה)`, await pg.evaluate(() => !!document.querySelector('.pl-sheet') && !document.querySelector('form')) && pg.writes.length === 0, pg.writes);
   await pg.keyboard.press('Escape'); await pg.waitForTimeout(300); await pg.keyboard.press('Escape'); await pg.waitForTimeout(700);
   check(`${w}px: אחרי סגירה המפה זמינה כרגיל`, await pg.evaluate(() => !document.getElementById('detail').classList.contains('open') && document.querySelectorAll('.plab').length > 0));
   check(`${w}px: אין שגיאות JavaScript`, pg.errors.length === 0, pg.errors);
@@ -311,7 +311,7 @@ console.log('7. עמוד השיתוף הייעודי של הפרויקט');
   check('home/demo/ פותח ישר את הבית של הפרויקט', r.url === '/maps/eco-city-demo/?pilot=demo&home=1&src=share' && r.open, r);
   const html = await readFile(join(ROOT, 'maps/eco-city-demo/home/demo/index.html'), 'utf8');
   const og = (p) => (html.match(new RegExp(`property="og:${p}" content="([^"]*)"`)) || [])[1];
-  check('התגיות של עמוד הפרויקט: כותרת, תיאור, כתובת ותמונה משלו', og('title') === 'Eco City · הבית הדיגיטלי של פרויקט ההדגמה' && !!og('description') &&
+  check('התגיות של עמוד הפרויקט: כותרת, תיאור, כתובת ותמונה משלו', og('title') === 'Eco City · הבית של הפרויקט' && /מקום אחד, ברור ועדכני/.test(og('description') || '') && !!og('description') &&
     og('url') === 'https://osimkehila.co.il/maps/eco-city-demo/home/demo/' && og('image') === 'https://osimkehila.co.il/maps/eco-city-demo/home/demo/preview.jpg', { t: og('title'), u: og('url'), i: og('image') });
   let size = 0; try { size = (await readFile(join(ROOT, new URL(og('image')).pathname))).length; } catch {}
   check('התמונה קיימת וקטנה מ-300KB', size > 0 && size < 300 * 1024, size);
