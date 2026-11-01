@@ -132,7 +132,7 @@ function render(){
   var tiles='<ul class="pl-tiles" aria-label="מה יש כאן">'+tl.map(function(t){return '<li><button type="button" '+(t[0]?'data-go="'+t[0]+'"':'data-ask')+'><span class="pl-ti">'+ic(t[1])+'</span>'+
     '<span class="pl-tt"><b>'+h(t[2])+'</b><small>'+h(t[3])+'</small></span></button></li>';}).join('')+'</ul>';
 
-  var hero='<div class="gal ill pl-hero">'+(C.hero.img?'<figure class="pl-fig"><span class="pl-ring"><img src="'+h(C.hero.img)+'" alt=""></span>'+(C.hero.cap?'<figcaption>'+h(C.hero.cap)+'</figcaption>':'')+'</figure>':E.svg('home'))+
+  var hero='<div class="gal ill pl-hero">'+(C.hero.img?'<figure class="pl-fig"><span class="pl-ring"><img src="'+h(C.hero.img)+'" alt=""></span>'+(C.hero.cap?'<figcaption>'+h(C.hero.cap)+'</figcaption>':'')+'</figure>':'')+
     '<button class="back" type="button">→ חזרה למפה</button><div class="ttl"><div class="pl-brand"><span class="pl-wm" lang="en">ecocity</span><span>הבית הדיגיטלי של הפרויקט</span></div><h2 class="serif">'+h(C.name)+'</h2>'+
     '<div class="c">'+h([C.city,C.place].filter(Boolean).join(' · '))+'</div></div></div>'+
     '<div class="pl-promise"><p>כל מה שבעלי הדירות והדיירים צריכים לדעת על הפרויקט: מידע מאושר, עדכונים, תשובות וקשר עם הצוות.</p>'+

@@ -32,6 +32,7 @@
 .pl-ring img{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);width:94%;height:auto}
 .pl-fig figcaption{font:500 14px Rubik,Heebo,sans-serif;color:var(--gold-2)}
 .pl-hero{height:min(30vh,230px)}
+.pl-hero:not(:has(.pl-fig)){height:150px}
 .pl-hero .ttl{right:max(22px,calc(50% - 380px));left:max(170px,calc(50% - 380px + 160px))}
 .pl-fig{left:max(22px,calc(50% - 380px));top:auto;bottom:18px}
 .pl-brand{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;font-size:12px;letter-spacing:.06em;color:var(--gold-2);font-weight:500}
@@ -162,6 +163,7 @@
   .pilot-demo .panel.up{height:calc(100dvh - var(--plb))}
   .pl-banner{font-size:12.5px}
   .pl-hero{height:200px}
+  .pl-hero:not(:has(.pl-fig)){height:150px}
   .pl-fig{left:16px;top:12px;bottom:auto;transform:none}
   .pl-ring{width:76px;height:76px}
   .pl-fig figcaption{display:none}

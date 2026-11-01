@@ -98,9 +98,9 @@ for (const w of [390, 1280]) {
   if (before) check(`${w}px: פרויקטים, עוגנים וכותרת כמו במפה בלי הפיילוט`, st.labels === before.labels && st.anchors === before.anchors && st.title === before.title && st.head === before.head, { before, st });
   check(`${w}px: אין שגיאות JavaScript`, pg.errors.length === 0, pg.errors);
   await shot(pg, `regular-${w}`);
-  const cta = await pg.evaluate(() => { const mc = document.querySelector('.motif .mc'); return { exists: !!document.querySelector('.pl-cta'), mcFont: mc ? getComputedStyle(mc).fontFamily : '' }; });
+  const cta = await pg.evaluate(() => ({ exists: !!document.querySelector('.pl-cta'), motifs: document.querySelectorAll('.motif').length }));
   check(`${w}px: אין כפתור צף מעל המפה, הכניסה היא מהפס למטה`, cta && !cta.exists, cta);
-  check(`${w}px: שמות האיורים בגופן של שאר הכותרות (Rubik)`, cta && /^Rubik/.test(cta.mcFont), cta && cta.mcFont);
+  check(`${w}px: אין איורי אווירה במפה, ואין בקשה לקובצי האיורים`, cta.motifs === 0 && !pg.requests.some((u) => u.includes('/characters/')), { m: cta.motifs, r: pg.requests.filter((u) => u.includes('/characters/')) });
   await pg.click('.pl-chip'); await pg.waitForTimeout(900);
   check(`${w}px: לחיצה על הכפתור במפה הרגילה פותחת את הבית`, await pg.evaluate(() => document.getElementById('detail').classList.contains('pl-home') && document.getElementById('detail').classList.contains('open')));
   await pg.context().close();
@@ -141,7 +141,7 @@ for (const w of [390, 1280]) {
       tabs: [...q('.pl-tabs [data-go]')].map((b) => b.textContent), updates: q('.pl-upd-l li').length, pending: q('.pl-upd-l li.pend .pl-st.pend').length,
       faq: q('.pl-faq details').length, status: d.querySelector('.pl-tag')?.textContent, dir: getComputedStyle(d).direction,
       overflow: d.scrollWidth > d.clientWidth + 1, docOverflow: document.documentElement.scrollWidth > innerWidth + 1,
-      heroImg: d.querySelector('.pl-ring img')?.naturalWidth > 0,
+      heroImg: !!d.querySelector('.pl-hero img'),
     };
   });
   check(`${w}px: לחיצה על הכפתור פותחת את הבית של הפרויקט`, r.open && r.home && r.title === 'פרויקט הדגמה בצפון הישן', r);
@@ -150,7 +150,7 @@ for (const w of [390, 1280]) {
   check(`${w}px: 3 עדכונים, אחד מהם "כפוף לאישור"`, r.updates === 3 && r.pending === 1, r);
   check(`${w}px: 5 שאלות נפוצות ותווית "תוכן לדוגמה"`, r.faq === 5 && r.status === 'סטטוס המידע: תוכן לדוגמה', r);
   check(`${w}px: כיוון RTL ובלי גלילה לרוחב`, r.dir === 'rtl' && !r.overflow && !r.docOverflow, r);
-  check(`${w}px: איור הפתיחה נטען`, r.heroImg);
+  check(`${w}px: אין איור אווירה בראש הבית`, !r.heroImg);
   await shot(pg, `home-${w}`);
   // גלילה וצילום של אמצע הדף
   await pg.click('.pl-tabs [data-go="pl-updates"]'); await pg.waitForTimeout(700);
