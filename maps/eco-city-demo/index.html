@@ -418,6 +418,11 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .th-mustard .anc .bdg{background:#1E3F3F}
 .anc-float.th-mustard .anc .disc>svg{stroke:#1E3F3F}
 .anc-float.th-mustard.v3 .anc:hover .disc img{border-color:#1E3F3F;box-shadow:0 14px 16px -4px rgba(15,38,38,.45),0 4px 6px rgba(15,38,38,.25)}
+/* אור שקיעה רך מצד הים (מערב, משמאל) */
+.sunset{position:absolute;inset:0;pointer-events:none;z-index:450;
+  background:radial-gradient(70% 85% at -8% 48%,rgba(255,168,92,.34) 0,rgba(255,196,120,.16) 38%,rgba(255,210,150,0) 70%),
+             linear-gradient(90deg,rgba(255,150,90,.10),rgba(255,150,90,0) 40%)}
+.th-mustard .wave{opacity:.85}
 </style>
 </head>
 <body>
@@ -646,7 +651,7 @@ var THEMES={
   /* אפור־שמנת עם כל מה שעל המפה בכחול כהה: ברירת המחדל (Tm, 1.11.2026). ‎?theme=neo הכחול הכהה, ‎?theme=green הירוק */
   /* חרדל עם פרויקטים ושמות רחובות בכחול כהה: ברירת המחדל (Tm, 1.11.2026 בערב). ‎?theme=stone אפור־שמנת */
   /* 1.11.2026 לילה: הכחול הוחלף בירוק של אקו סיטי (#1E3F3F), כך שהמפה בצבעי המותג: חרדל וירוק */
-  mustard:{sea:'#1E3F3F',city:'#D9B456',ctx:'#C9A14A',line:'#1E3F3F',park:'#A9A653',river:'#2E5A55',wave:'#CFE0D6',st:1,bg:'#EEE9DF',
+  mustard:{sea:'#6E9F9B',city:'#D9B456',ctx:'#C9A14A',line:'#1E3F3F',park:'#A9A653',river:'#2E5A55',wave:'#FFE4B8',st:1,bg:'#EEE9DF',
     tones:['#D8B254','#D3AC4C','#DCB85E','#D5AF50','#DAB559'],
     ST:{M:{c:'#1E3F3F',k:'#0F2626'},A:{c:'#3D6A62',k:'#1E3F3F'},B:{c:'#F3E2B0',k:'#B89136'},C:{c:'#EDD7A0',k:'#BF9A42'}}},
   stone:{sea:'#C3CED6',city:'#EEEAE2',ctx:'#E3DFD7',line:'#1B2F55',park:'#D5DDCB',river:'#B3C4D1',wave:'#FFFFFF',st:1,
@@ -783,7 +788,7 @@ function layout(force){
   function hit(r){return boxes.some(function(q){return r.x0<q.x1+gap&&r.x1+gap>q.x0&&r.y0<q.y1+gap&&r.y1+gap>q.y0;});}
   if(on.mot)MOT.forEach(function(m){var c=prj(m[0],z),d=m[1]*(low?.72:1)*SM,t=d+(low?14:24);boxes.push(V3?{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-LIFT.motif-t,y1:c.y}:{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-d/2,y1:c.y+d/2+(low?14:24)});});
   if(on.anc)A.forEach(function(an){var c=prj([an.lat,an.lng],z),d=(34+an.w*7)*(low?.72:1)*SM;boxes.push(V3?{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-LIFT.anc-d,y1:c.y}:{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-d/2,y1:c.y+d/2+(low?0:22)});});
-  var items=S.filter(function(p){return !BOARD||BOARD.contains([p.lat,p.lng]);}).map(function(p){return {p:p,pt:prj([p.lat,p.lng],z)};});
+  var items=S.filter(function(p){return !BOARD||BOARD.has([p.lat,p.lng]);}).map(function(p){return {p:p,pt:prj([p.lat,p.lng],z)};});
   P.forEach(function(q){if(q.s!=='sale'&&on.live){var c=prj([q.lat,q.lng],z);boxes.push({x0:c.x-9,x1:c.x+9,y0:c.y-9,y1:c.y+9});}});
   items.forEach(function(it){boxes.push({x0:it.pt.x-6,x1:it.pt.x+6,y0:it.pt.y-6-(V3?LIFT.plab:0),y1:it.pt.y+6});});
   items.forEach(function(it){it.n=items.filter(function(o){return o!==it&&o.pt.distanceTo(it.pt)<120;}).length;});
@@ -864,18 +869,17 @@ function nerves(p,grp){
 var BOARD=null;
 /* מה שמחוץ לגוש לא מוצג בתלת מימד: שמות רחובות ושכונות, וסיכות שנופלות מחוץ לו */
 function offBoard(){if(!BOARD)return;
-  [streetLabels,streetLabelsMinor,hoodLabels,layers.sale,layers.live,layers.anc].forEach(function(gr){gr.eachLayer(function(l){if(l.getLatLng&&!BOARD.contains(l.getLatLng()))gr.removeLayer(l);});});}
+  [streetLabels,streetLabelsMinor,hoodLabels,layers.sale,layers.live,layers.anc].forEach(function(gr){gr.eachLayer(function(l){if(l.getLatLng&&!BOARD.has(l.getLatLng()))gr.removeLayer(l);});});}
 function slab(by){
-  /* הגוש הוא רק האזור שבו יש פרויקטים ומקומות: מרכז תל אביב והצפון הישן, עד הירקון, וגבעתיים. הדרום והצפון שמעבר לירקון נחתכים (Tm, 1.11.2026) */
-  var feats=by('city').features,b=L.latLngBounds([]);
-  A.concat(S).forEach(function(p){if((p.rlat||p.lat)<32.104)b.extend([p.lat,p.lng]);});
-  b=L.latLngBounds([b.getSouth()-.006,b.getWest()-.02],[b.getNorth()+.007,b.getEast()+.006]);BOARD=b;
-  /* צורת הגוש היא צורת העיר, חתוכה למלבן העבודה */
-  var Z=14,rb=L.bounds(map.project(b.getNorthWest(),Z),map.project(b.getSouthEast(),Z)),shapes=[];
-  feats.forEach(function(f){var outer=L.GeoJSON.coordsToLatLngs(f.geometry.coordinates,1)[0];
-    {var cl=L.PolyUtil.clipPolygon(outer.map(function(ll){return map.project(ll,Z);}),rb);if(cl.length<3)return;
-      outer=cl.map(function(pt){return map.unproject(pt,Z);});}
-    shapes.push([outer]);});
+  /* הגוש הוא דיסקה עגולה סביב האזור שבו יש פרויקטים ומקומות: מרכז תל אביב, הצפון הישן עד הירקון, גבעתיים וקצה רמת גן.
+     בצד מערב הדיסקה כוללת רצועת ים, עם אור שקיעה רך (Tm, 1.11.2026 לילה) */
+  var Z=14,pts=[];
+  A.concat(S).forEach(function(p){if((p.rlat||p.lat)<32.104)pts.push(map.project([p.lat,p.lng],Z));});
+  var cx=0,cy=0;pts.forEach(function(q){cx+=q.x;cy+=q.y;});var c0=L.point(cx/pts.length,cy/pts.length),R=0;
+  pts.forEach(function(q){R=Math.max(R,q.distanceTo(c0));});R=R*1.12+60;
+  var ring=[];for(var i=0;i<120;i++){var an=i/120*Math.PI*2;ring.push(map.unproject(L.point(c0.x+Math.cos(an)*R,c0.y+Math.sin(an)*R),Z));}
+  var b=L.latLngBounds(ring);BOARD={b:b,has:function(ll){return map.project(ll,Z).distanceTo(c0)<=R;}};
+  var shapes=[[ring]];
   map.createPane('slab');map.getPane('slab').style.zIndex=300;map.getPane('slab').style.pointerEvents='none';
   var rend=L.svg({pane:'slab',padding:1.5}),bg=TH.bg||'#EEE9DF',NS='http://www.w3.org/2000/svg',o={renderer:rend,interactive:false};
   L.polygon([[[-80,-179],[-80,179],[85,179],[85,-179]]].concat(shapes.map(function(s){return s[0];})),L.extend({stroke:false,fillColor:bg,fillOpacity:1},o)).addTo(map);
@@ -894,6 +898,7 @@ function slab(by){
     shade._path.setAttribute('transform','translate('+(gx*T*2.6+6).toFixed(1)+','+(gy*T*2.6).toFixed(1)+')');}
   sides();ORBH.push(sides);
   offBoard();
+  if(THN==='mustard'){var sn=document.createElement('div');sn.className='sunset';map.getContainer().appendChild(sn);}
   map.setMaxBounds(b.pad(.7));
   /* פותחים על הגוש כולו, כשהוא תלוי במרכז המסך */
   map.fitBounds(b,{padding:innerWidth<=820?[10,10]:[40,40],animate:false});
