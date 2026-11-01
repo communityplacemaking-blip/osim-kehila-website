@@ -844,27 +844,32 @@ function nerves(p,grp){
    מחוץ לו רק רקע, ולגוש יש דפנות עבות וצל שמתעדכנים לפי זווית המבט */
 var BOARD=null;
 function slab(by){
-  var b=L.latLngBounds([]);
-  by('city').features.forEach(function(f){if(!f.properties.context)b.extend(L.geoJSON(f).getBounds());});
+  var feats=by('city').features,b=L.latLngBounds([]);
+  feats.forEach(function(f){if(!f.properties.context)b.extend(L.geoJSON(f).getBounds());});
   b=L.latLngBounds([b.getSouth()-.002,b.getWest()-.004],[b.getNorth()+.002,b.getEast()+.013]);BOARD=b;
+  /* צורת הגוש היא צורת העיר: תל אביב וגבעתיים, ורמת גן רק עד קצה המלבן */
+  var Z=14,rb=L.bounds(map.project(b.getNorthWest(),Z),map.project(b.getSouthEast(),Z)),shapes=[];
+  feats.forEach(function(f){var outer=L.GeoJSON.coordsToLatLngs(f.geometry.coordinates,1)[0];
+    if(f.properties.context){var cl=L.PolyUtil.clipPolygon(outer.map(function(ll){return map.project(ll,Z);}),rb);if(cl.length<3)return;
+      outer=cl.map(function(pt){return map.unproject(pt,Z);});}
+    shapes.push([outer]);});
   map.createPane('slab');map.getPane('slab').style.zIndex=300;map.getPane('slab').style.pointerEvents='none';
-  var rend=L.svg({pane:'slab',padding:1.5}),bg=TH.bg||'#EEE9DF',
-      cn=function(){return [b.getNorthWest(),b.getNorthEast(),b.getSouthEast(),b.getSouthWest()];};
-  L.polygon([[[-80,-179],[-80,179],[85,179],[85,-179]],cn()],{renderer:rend,stroke:false,fillColor:bg,fillOpacity:1,interactive:false}).addTo(map);
-  map.createPane('slabtop');map.getPane('slabtop').style.zIndex=240;
-  L.rectangle(b,{pane:'slabtop',stroke:false,fillColor:TH.ctx,fillOpacity:1,interactive:false}).addTo(map);
-  var shade=[0].map(function(i){return L.polygon(cn(),{renderer:rend,stroke:false,fillColor:'#2A2414',fillOpacity:.09,interactive:false}).addTo(map);}),
-      side=[0,1,2,3].map(function(){return L.polygon(cn(),{renderer:rend,weight:1,color:'#6E5113',opacity:.5,fillOpacity:1,interactive:false}).addTo(map);});
-  L.rectangle(b,{renderer:rend,fill:false,color:'#FFF6DC',weight:1.5,opacity:.9,interactive:false}).addTo(map);
-  var T=30,EDGE=[[0,1,[0,-1]],[1,2,[1,0]],[2,3,[0,1]],[3,0,[-1,0]]];
-  function sides(){var g=[Math.sin(ORB.s),Math.cos(ORB.s)],c=cn().map(function(x){return map.latLngToLayerPoint(x);}),
-      back=function(p){return map.layerPointToLatLng(p);};
-    shade.forEach(function(sh,i){var k=T*2.4;sh.setLatLngs(c.map(function(p){return back(p.add([g[0]*k,g[1]*k]));}));});
-    EDGE.forEach(function(e,i){var d=e[2][0]*g[0]+e[2][1]*g[1],p=c[e[0]],q=c[e[1]],v=L.point(g[0]*T,g[1]*T);
-      if(d<=.01){side[i].setStyle({opacity:0,fillOpacity:0});return;}
-      side[i].setLatLngs([back(p),back(q),back(q.add(v)),back(p.add(v))]);
-      side[i].setStyle({opacity:.5,fillOpacity:1,fillColor:d>.7?'#8C6619':'#A57B24'});});}
-  sides();map.on('zoomend viewreset',sides);ORBH.push(sides);
+  var rend=L.svg({pane:'slab',padding:1.5}),bg=TH.bg||'#EEE9DF',NS='http://www.w3.org/2000/svg',o={renderer:rend,interactive:false};
+  L.polygon([[[-80,-179],[-80,179],[85,179],[85,-179]]].concat(shapes.map(function(s){return s[0];})),L.extend({stroke:false,fillColor:bg,fillOpacity:1},o)).addTo(map);
+  /* הדפנות: שכבות דקות של צורת העיר, מוזזות כלפי מטה במסך, שרואים רק מחוץ לעיר (מסכה) */
+  var svgEl=rend._container,mk=document.createElementNS(NS,'mask'),rc=document.createElementNS(NS,'rect'),g=document.createElementNS(NS,'g');
+  mk.id='ecoHole';mk.setAttribute('maskUnits','userSpaceOnUse');['x','y'].forEach(function(k){mk.setAttribute(k,-2e5);rc.setAttribute(k,-2e5);});
+  ['width','height'].forEach(function(k){mk.setAttribute(k,4e5);rc.setAttribute(k,4e5);});rc.setAttribute('fill','#fff');mk.appendChild(rc);svgEl.insertBefore(mk,svgEl.firstChild);
+  var hole=L.polygon(shapes,L.extend({stroke:false,fillColor:'#000',fillOpacity:1},o)).addTo(map);mk.appendChild(hole._path);
+  g.setAttribute('mask','url(#ecoHole)');rend._rootGroup.appendChild(g);
+  var N=12,T=34,shade=L.polygon(shapes,L.extend({stroke:false,fillColor:'#2A2414',fillOpacity:.12},o)).addTo(map),lay=[];g.appendChild(shade._path);
+  for(var k=N;k>=1;k--){var u=k/N,c='rgb('+Math.round(165-55*u)+','+Math.round(123-42*u)+','+Math.round(36-17*u)+')';
+    var l=L.polygon(shapes,L.extend({stroke:k===N,color:'#4D3A0E',weight:1,fillColor:c,fillOpacity:1},o)).addTo(map);l._k=u;g.appendChild(l._path);lay.push(l);}
+  L.polygon(shapes,L.extend({fill:false,color:'#FFF3CF',weight:1.6,opacity:.95},o)).addTo(map);
+  function sides(){var gx=Math.sin(ORB.s),gy=Math.cos(ORB.s);
+    lay.forEach(function(l){l._path.setAttribute('transform','translate('+(gx*T*l._k).toFixed(1)+','+(gy*T*l._k).toFixed(1)+')');});
+    shade._path.setAttribute('transform','translate('+(gx*T*2.6+6).toFixed(1)+','+(gy*T*2.6).toFixed(1)+')');}
+  sides();ORBH.push(sides);
   [streetLabels,streetLabelsMinor,hoodLabels].forEach(function(gr){gr.eachLayer(function(l){if(!b.contains(l.getLatLng()))gr.removeLayer(l);});});
   map.setMaxBounds(b.pad(.7));
   /* פותחים על הגוש כולו, כשהוא תלוי במרכז המסך */
