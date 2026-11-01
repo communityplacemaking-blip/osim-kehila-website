@@ -389,18 +389,35 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .th-mustard .city{display:none}
 .th-mustard .paper{opacity:.22}
 .th-mustard .v3 .gloss,.th-mustard.v3 .gloss{background:none}
-/* עוגן "מרחף": התמונה בלי מסגרת עגולה, עם קצוות רכים, עומדת על בסיס כחול כהה שמרחף מעל העמוד */
-.anc-float.v3 .anc .disc{width:calc(var(--d)*1.05)!important;height:calc(var(--d)*1.05)!important;border:0;border-radius:0;background:transparent;box-shadow:none;transform-origin:50% 100%}
-/* עגול בלי מסגרת (Tm, 1.11.2026) */
-.anc-float.v3 .anc .disc img{border-radius:50%;-webkit-mask-image:radial-gradient(circle closest-side,#000 82%,rgba(0,0,0,0) 100%);mask-image:radial-gradient(circle closest-side,#000 82%,rgba(0,0,0,0) 100%);filter:drop-shadow(0 6px 6px rgba(14,26,51,.35))}
+/* עוגן "מרחף" (Tm, 1.11.2026 ערב): תמונה עגולה קטנה בלי בסיס; במעבר עכבר היא גדלה, מקבלת מסגרת כחולה דקיקה וצל, ומתרוממת */
+.anc-float.v3 .anc .disc{width:calc(var(--d)*.78)!important;height:calc(var(--d)*.78)!important;border:0;border-radius:50%;background:transparent;box-shadow:none;transform-origin:50% 100%;transition:transform .25s ease}
+.anc-float.v3 .anc .disc img{border-radius:50%;box-sizing:border-box;border:1.5px solid transparent;-webkit-mask-image:radial-gradient(circle closest-side,#000 86%,rgba(0,0,0,0) 100%);mask-image:radial-gradient(circle closest-side,#000 86%,rgba(0,0,0,0) 100%);transition:box-shadow .25s ease,border-color .25s ease}
 .anc-float.v3 .anc .disc>svg{width:58%;height:58%;stroke:#1B2F55}
 .anc-float.v3 .anc .disc.has>svg,.anc-float.v3 .anc .bdg{display:none}
-.anc-float.v3 .anc .disc::after{content:"";position:absolute;left:-6%;right:-6%;bottom:-9px;height:18px;border-radius:50%;z-index:-1;
-  background:radial-gradient(ellipse at 50% 35%,#4A64A0 0,#22396C 55%,#14244A 100%);box-shadow:0 5px 0 #0E1A33,0 12px 14px rgba(14,26,51,.35),inset 0 1px 0 rgba(255,255,255,.4)}
-.anc-float.v3 .anc .an{margin-top:14px}
-.anc-float.v3 .anc:hover .disc{transform:scale(1.9)}
+.anc-float.v3 .anc .disc::after{display:none}
+.anc-float.v3 .anc .an{margin-top:6px}
+.anc-float.v3 .leaflet-marker-icon:hover{z-index:99999!important}
+.anc-float.v3 .anc:hover .disc{transform:translateY(-14px) scale(1.7)}
+.anc-float.v3 .anc:hover .disc img{-webkit-mask-image:none;mask-image:none;border-color:#1B2F55;box-shadow:0 14px 16px -4px rgba(14,26,51,.45),0 4px 6px rgba(14,26,51,.25)}
 .anc-float.v3 .zlow .anc .disc{transform:scale(.6)}
-.anc-float.v3 .zlow .anc:hover .disc{transform:scale(1.5)}
+.anc-float.v3 .zlow .anc:hover .disc{transform:translateY(-10px) scale(1.4)}
+/* חרדל + ירוק אקו סיטי: כל מה שהיה כחול כהה עובר לירוק. הסיכות: פלסטיק ירוק כהה מלא ומבריק, בלי נקודת ברק לבנה */
+.th-mustard{--navy:#1E3F3F}
+.th-mustard .street{color:#1E3F3F}
+.th-mustard .hood{color:#1E3F3F}
+.th-mustard .v3 .hd,.th-mustard.v3 .hd{background:radial-gradient(circle at 38% 32%,#4A7A70 0,#2A5650 30%,#1E3F3F 58%,#102828 100%);box-shadow:inset 0 -2px 3px rgba(0,0,0,.35),0 3px 6px rgba(15,38,38,.45)}
+.th-mustard .plab:hover~.hd,.th-mustard .plab.on~.hd{background:radial-gradient(circle at 38% 32%,#E9C46A 0,#C99A35 45%,#8A6416 100%);box-shadow:inset 0 -2px 3px rgba(0,0,0,.3),0 0 12px 3px rgba(226,178,74,.7)}
+.th-mustard .bb>.stem{background:linear-gradient(to top,rgba(30,63,63,.15),#1E3F3F 45%,#2E5A55)}
+.th-mustard .gs{background:radial-gradient(closest-side,rgba(15,38,38,.45),rgba(15,38,38,0))}
+.th-mustard .plab{color:#1E3F3F;border-color:rgba(30,63,63,.35)}
+.th-mustard .plab:hover,.th-mustard .plab.on{background:#1E3F3F;color:#fff;border-color:#1E3F3F}
+.th-mustard .ld{background:rgba(30,63,63,.55)}
+.th-mustard .anc .an{color:#1E3F3F;border-color:rgba(30,63,63,.3)}
+.th-mustard .orb button,.th-mustard .v3btn,.th-mustard .leaflet-bar a{color:#1E3F3F;border-color:rgba(30,63,63,.35)}
+.th-mustard .orb button:active{background:#DCE9E3}
+.th-mustard .anc .bdg{background:#1E3F3F}
+.anc-float.th-mustard .anc .disc>svg{stroke:#1E3F3F}
+.anc-float.th-mustard.v3 .anc:hover .disc img{border-color:#1E3F3F;box-shadow:0 14px 16px -4px rgba(15,38,38,.45),0 4px 6px rgba(15,38,38,.25)}
 </style>
 </head>
 <body>
@@ -628,9 +645,10 @@ var THEMES={
   /* כחול "פלסטי" עם צירים ראשיים זוהרים: ברירת המחדל מ-1.11.2026 (בקשת Tm). ‎?theme=green הירוק הקודם */
   /* אפור־שמנת עם כל מה שעל המפה בכחול כהה: ברירת המחדל (Tm, 1.11.2026). ‎?theme=neo הכחול הכהה, ‎?theme=green הירוק */
   /* חרדל עם פרויקטים ושמות רחובות בכחול כהה: ברירת המחדל (Tm, 1.11.2026 בערב). ‎?theme=stone אפור־שמנת */
-  mustard:{sea:'#21396A',city:'#D9B456',ctx:'#C9A14A',line:'#1B2F55',park:'#AFA552',river:'#2B4677',wave:'#C9D6F0',st:1,bg:'#EEE9DF',
+  /* 1.11.2026 לילה: הכחול הוחלף בירוק של אקו סיטי (#1E3F3F), כך שהמפה בצבעי המותג: חרדל וירוק */
+  mustard:{sea:'#1E3F3F',city:'#D9B456',ctx:'#C9A14A',line:'#1E3F3F',park:'#A9A653',river:'#2E5A55',wave:'#CFE0D6',st:1,bg:'#EEE9DF',
     tones:['#D8B254','#D3AC4C','#DCB85E','#D5AF50','#DAB559'],
-    ST:{M:{c:'#1B2F55',k:'#0E1A33'},A:{c:'#3B5384',k:'#1B2F55'},B:{c:'#F3E2B0',k:'#B89136'},C:{c:'#EDD7A0',k:'#BF9A42'}}},
+    ST:{M:{c:'#1E3F3F',k:'#0F2626'},A:{c:'#3D6A62',k:'#1E3F3F'},B:{c:'#F3E2B0',k:'#B89136'},C:{c:'#EDD7A0',k:'#BF9A42'}}},
   stone:{sea:'#C3CED6',city:'#EEEAE2',ctx:'#E3DFD7',line:'#1B2F55',park:'#D5DDCB',river:'#B3C4D1',wave:'#FFFFFF',st:1,
     tones:['#EFEBE3','#E9E5DC','#F2EEE7','#E6E2D9','#EDE9E0'],
     ST:{M:{c:'#2B4677',k:'#14244A'},A:{c:'#566C93',k:'#2A3F66'},B:{c:'#FFFFFF',k:'#C9C5BC'},C:{c:'#FBF9F5',k:'#D8D4CB'}}},
@@ -663,6 +681,7 @@ fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
   by('hood').features.forEach(function(f){var c=warp(f.properties.center[0],f.properties.center[1]);
     L.marker(c,{interactive:false,keyboard:false,zIndexOffset:-3000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="hood">'+esc(f.properties.name)+'</div>'})}).addTo(hoodLabels);});
   hoods();
+  if(V3)offBoard();
 });
 /* רחובות ראשיים, כמו במפה מצוירת: פס לבן רחב עם שוליים. התוואי סכמטי (נקודות ציון ידועות לאורך הרחוב) */
 /* רחובות אמיתיים מ-Overture Maps (נגזר מ-OpenStreetMap, ODbL), נבנה ב-build-streets.py. גם הם עוברים את מתיחת העוגנים */
@@ -764,7 +783,7 @@ function layout(force){
   function hit(r){return boxes.some(function(q){return r.x0<q.x1+gap&&r.x1+gap>q.x0&&r.y0<q.y1+gap&&r.y1+gap>q.y0;});}
   if(on.mot)MOT.forEach(function(m){var c=prj(m[0],z),d=m[1]*(low?.72:1)*SM,t=d+(low?14:24);boxes.push(V3?{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-LIFT.motif-t,y1:c.y}:{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-d/2,y1:c.y+d/2+(low?14:24)});});
   if(on.anc)A.forEach(function(an){var c=prj([an.lat,an.lng],z),d=(34+an.w*7)*(low?.72:1)*SM;boxes.push(V3?{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-LIFT.anc-d,y1:c.y}:{x0:c.x-d/2,x1:c.x+d/2,y0:c.y-d/2,y1:c.y+d/2+(low?0:22)});});
-  var items=S.map(function(p){return {p:p,pt:prj([p.lat,p.lng],z)};});
+  var items=S.filter(function(p){return !BOARD||BOARD.contains([p.lat,p.lng]);}).map(function(p){return {p:p,pt:prj([p.lat,p.lng],z)};});
   P.forEach(function(q){if(q.s!=='sale'&&on.live){var c=prj([q.lat,q.lng],z);boxes.push({x0:c.x-9,x1:c.x+9,y0:c.y-9,y1:c.y+9});}});
   items.forEach(function(it){boxes.push({x0:it.pt.x-6,x1:it.pt.x+6,y0:it.pt.y-6-(V3?LIFT.plab:0),y1:it.pt.y+6});});
   items.forEach(function(it){it.n=items.filter(function(o){return o!==it&&o.pt.distanceTo(it.pt)<120;}).length;});
@@ -824,7 +843,7 @@ function arc(p,q){
 }
 
 /* "אקופונקטורה": כל פרויקט מפעיל רשת של עצבים אל המקומות שסביבו. קשתות זוהרות עם זרם אור, עבות יותר ככל שהמקום קרוב */
-var NERVE=THN==='neo'?'#5FE3FF':THN==='stone'||THN==='mustard'?'#1E3A78':GOLD;
+var NERVE=THN==='neo'?'#5FE3FF':THN==='mustard'?'#1E3F3F':THN==='stone'?'#1E3A78':GOLD;
 function nerves(p,grp){
   var l=A.concat(Q).map(function(a){return {a:a,m:meters(a,p)};}).sort(function(x,y){return x.m-y.m;}),
       pick=l.filter(function(x){return x.m<=2400;}).slice(0,9);
@@ -843,14 +862,18 @@ function nerves(p,grp){
 /* בתלת מימד אזור העבודה של אקו סיטי (תל אביב, גבעתיים וקצה רמת גן) הוא גוש שתלוי באוויר במרכז המסך, כמו במפות רמת גן וגבעתיים:
    מחוץ לו רק רקע, ולגוש יש דפנות עבות וצל שמתעדכנים לפי זווית המבט */
 var BOARD=null;
+/* מה שמחוץ לגוש לא מוצג בתלת מימד: שמות רחובות ושכונות, וסיכות שנופלות מחוץ לו */
+function offBoard(){if(!BOARD)return;
+  [streetLabels,streetLabelsMinor,hoodLabels,layers.sale,layers.live,layers.anc].forEach(function(gr){gr.eachLayer(function(l){if(l.getLatLng&&!BOARD.contains(l.getLatLng()))gr.removeLayer(l);});});}
 function slab(by){
+  /* הגוש הוא רק האזור שבו יש פרויקטים ומקומות: מרכז תל אביב והצפון הישן, עד הירקון, וגבעתיים. הדרום והצפון שמעבר לירקון נחתכים (Tm, 1.11.2026) */
   var feats=by('city').features,b=L.latLngBounds([]);
-  feats.forEach(function(f){if(!f.properties.context)b.extend(L.geoJSON(f).getBounds());});
-  b=L.latLngBounds([b.getSouth()-.002,b.getWest()-.004],[b.getNorth()+.002,b.getEast()+.013]);BOARD=b;
-  /* צורת הגוש היא צורת העיר: תל אביב וגבעתיים, ורמת גן רק עד קצה המלבן */
+  A.concat(S).forEach(function(p){if((p.rlat||p.lat)<32.104)b.extend([p.lat,p.lng]);});
+  b=L.latLngBounds([b.getSouth()-.006,b.getWest()-.02],[b.getNorth()+.007,b.getEast()+.006]);BOARD=b;
+  /* צורת הגוש היא צורת העיר, חתוכה למלבן העבודה */
   var Z=14,rb=L.bounds(map.project(b.getNorthWest(),Z),map.project(b.getSouthEast(),Z)),shapes=[];
   feats.forEach(function(f){var outer=L.GeoJSON.coordsToLatLngs(f.geometry.coordinates,1)[0];
-    if(f.properties.context){var cl=L.PolyUtil.clipPolygon(outer.map(function(ll){return map.project(ll,Z);}),rb);if(cl.length<3)return;
+    {var cl=L.PolyUtil.clipPolygon(outer.map(function(ll){return map.project(ll,Z);}),rb);if(cl.length<3)return;
       outer=cl.map(function(pt){return map.unproject(pt,Z);});}
     shapes.push([outer]);});
   map.createPane('slab');map.getPane('slab').style.zIndex=300;map.getPane('slab').style.pointerEvents='none';
@@ -870,7 +893,7 @@ function slab(by){
     lay.forEach(function(l){l._path.setAttribute('transform','translate('+(gx*T*l._k).toFixed(1)+','+(gy*T*l._k).toFixed(1)+')');});
     shade._path.setAttribute('transform','translate('+(gx*T*2.6+6).toFixed(1)+','+(gy*T*2.6).toFixed(1)+')');}
   sides();ORBH.push(sides);
-  [streetLabels,streetLabelsMinor,hoodLabels].forEach(function(gr){gr.eachLayer(function(l){if(!b.contains(l.getLatLng()))gr.removeLayer(l);});});
+  offBoard();
   map.setMaxBounds(b.pad(.7));
   /* פותחים על הגוש כולו, כשהוא תלוי במרכז המסך */
   map.fitBounds(b,{padding:innerWidth<=820?[10,10]:[40,40],animate:false});
