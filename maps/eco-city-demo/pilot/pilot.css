@@ -1,4 +1,4 @@
-/* הבית הדיגיטלי של פרויקט (פיילוט). נטען רק עם ?pilot=. משתמש בצבעים ובגופנים של המפה */
+/* הבית של הפרויקט (פיילוט). נטען רק עם ?pilot=. משתמש בצבעים ובגופנים של המפה */
 :root{--plb:30px;--ok:#2F6B45;--ok-bg:#E2F0E5;--pend:#8A5A00;--pend-bg:#FBEFD5}
 
 /* פס "אב־טיפוס להמחשה" קבוע בראש המסך, מעל הכול. שאר העמוד יורד מתחתיו */
@@ -32,6 +32,7 @@
 .pl-ring img{position:absolute;left:50%;bottom:6%;transform:translateX(-50%);width:94%;height:auto}
 .pl-fig figcaption{font:500 14px Rubik,Heebo,sans-serif;color:var(--gold-2)}
 .pl-hero{height:min(30vh,230px)}
+.pl-hero:not(:has(.pl-fig)){height:150px}
 .pl-hero .ttl{right:max(22px,calc(50% - 380px));left:max(170px,calc(50% - 380px + 160px))}
 .pl-fig{left:max(22px,calc(50% - 380px));top:auto;bottom:18px}
 .pl-brand{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;font-size:12px;letter-spacing:.06em;color:var(--gold-2);font-weight:500}
@@ -148,6 +149,9 @@
 .pl-fields{display:flex;flex-direction:column;gap:10px}
 .pl-fields label{display:flex;flex-direction:column;gap:4px;font-size:13.5px;color:var(--teal);font-weight:500}
 .pl-fields :is(input,select,textarea){font:inherit;font-size:15px;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#F1ECE4;color:var(--muted)}
+.pl-now{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px;line-height:1.6}
+.pl-now b,.pl-later>b{color:var(--teal);font-size:15px}.pl-now p{margin:4px 0 0}
+.pl-later{display:flex;flex-direction:column;gap:10px;border:1px dashed var(--gold);border-radius:12px;padding:12px 14px;background:#FFFCF5}
 .pl-next{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--ink)}
 .pl-next b{color:var(--teal)}.pl-next ul{margin:6px 0 0;padding-inline-start:18px;line-height:1.6}
 .pl-sheet .btn[disabled]{opacity:.55;cursor:not-allowed}
@@ -162,6 +166,7 @@
   .pilot-demo .panel.up{height:calc(100dvh - var(--plb))}
   .pl-banner{font-size:12.5px}
   .pl-hero{height:200px}
+  .pl-hero:not(:has(.pl-fig)){height:150px}
   .pl-fig{left:16px;top:12px;bottom:auto;transform:none}
   .pl-ring{width:76px;height:76px}
   .pl-fig figcaption{display:none}
