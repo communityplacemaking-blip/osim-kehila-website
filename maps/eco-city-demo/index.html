@@ -381,6 +381,25 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .anc-pin.v3 .zlow .anc .disc{transform:rotate(-45deg) scale(.72)}
 .anc-photo.th-stone .anc .disc{box-shadow:0 0 0 1.5px #1B2F55,0 6px 14px rgba(14,26,51,.3)}
 .th-stone .anc .bdg{background:#1B2F55}.th-stone .anc .bdg svg{stroke:#fff}
+
+/* ===== חרדל: בסיס המפה חרדל, הפרויקטים ושמות הרחובות בכחול כהה ===== */
+.th-mustard{--mapbg:#EEE9DF}
+.th-mustard .street{color:#14244A;font-weight:600;text-shadow:0 0 3px #F3DFA6,0 0 3px #F3DFA6,0 0 6px #F3DFA6}
+.th-mustard .hood{color:#14244A;opacity:.55;text-shadow:0 0 3px #E8CB7E}
+.th-mustard .city{display:none}
+.th-mustard .paper{opacity:.22}
+.th-mustard .v3 .gloss,.th-mustard.v3 .gloss{background:none}
+/* עוגן "מרחף": התמונה בלי מסגרת עגולה, עם קצוות רכים, עומדת על בסיס כחול כהה שמרחף מעל העמוד */
+.anc-float.v3 .anc .disc{width:calc(var(--d)*1.18)!important;height:calc(var(--d)*.92)!important;border:0;border-radius:0;background:transparent;box-shadow:none;transform-origin:50% 100%}
+.anc-float.v3 .anc .disc img{border-radius:14px;-webkit-mask-image:radial-gradient(ellipse 70% 72% at 50% 46%,#000 62%,rgba(0,0,0,0) 100%);mask-image:radial-gradient(ellipse 70% 72% at 50% 46%,#000 62%,rgba(0,0,0,0) 100%);filter:drop-shadow(0 6px 6px rgba(14,26,51,.35))}
+.anc-float.v3 .anc .disc>svg{width:58%;height:58%;stroke:#1B2F55}
+.anc-float.v3 .anc .disc.has>svg,.anc-float.v3 .anc .bdg{display:none}
+.anc-float.v3 .anc .disc::after{content:"";position:absolute;left:-6%;right:-6%;bottom:-9px;height:18px;border-radius:50%;z-index:-1;
+  background:radial-gradient(ellipse at 50% 35%,#4A64A0 0,#22396C 55%,#14244A 100%);box-shadow:0 5px 0 #0E1A33,0 12px 14px rgba(14,26,51,.35),inset 0 1px 0 rgba(255,255,255,.4)}
+.anc-float.v3 .anc .an{margin-top:14px}
+.anc-float.v3 .anc:hover .disc{transform:scale(1.9)}
+.anc-float.v3 .zlow .anc .disc{transform:scale(.6)}
+.anc-float.v3 .zlow .anc:hover .disc{transform:scale(1.5)}
 </style>
 </head>
 <body>
@@ -502,10 +521,10 @@ if(V3){
     return !n&&io&&io._stand&&this._map&&this._map.getPane('stand')||gp.call(this,n);};
 }
 /* מפה */
-var map=L.map('map',{zoomControl:false,zoomSnap:.25,minZoom:12,maxZoom:16.5});
+var map=L.map('map',{zoomControl:false,zoomSnap:.25,minZoom:V3?11:12,maxZoom:16.5});
 L.control.zoom({position:'bottomleft'}).addTo(map);
 /* זווית התלת מימד: הטיה (ORB.t) וסיבוב (ORB.s), ברדיאנים. משחקים בהן בגרירה עם הכפתור הימני / Shift, או בלחצני הזווית */
-var ORB={t:TILT*Math.PI/180,s:0},orbit=function(){};
+var ORB={t:TILT*Math.PI/180,s:0},orbit=function(){},ORBH=[];
 if(V3){(function(){
   var ct=map.getContainer(),mp=map.getPane('mapPane'),tw=L.DomUtil.create('div','tilt');ct.insertBefore(tw,mp);tw.appendChild(mp);
   L.DomUtil.create('div','gloss',ct);L.DomUtil.create('div','sky',ct);
@@ -514,7 +533,7 @@ if(V3){(function(){
   var ov=L.DomUtil.create('div','stand',ct),sp=map.createPane('stand',ov),tp=map.getPane('tooltipPane');ov.appendChild(tp);
   var C,S,CS,SS,W=0,H=0;
   function trig(){C=Math.cos(ORB.t);S=Math.sin(ORB.t);CS=Math.cos(ORB.s);SS=Math.sin(ORB.s);
-    tw.style.transform='rotateX('+(ORB.t*180/Math.PI).toFixed(2)+'deg) rotateZ('+(ORB.s*180/Math.PI).toFixed(2)+'deg)';}
+    tw.style.transform='rotateX('+(ORB.t*180/Math.PI).toFixed(2)+'deg) rotateZ('+(ORB.s*180/Math.PI).toFixed(2)+'deg)';ORBH.forEach(function(f){f();});}
   function persp(){var z=map.getSize();W=z.x;H=z.y;PSP=Math.round(Math.max(z.x,z.y*1.3)*1.15);ct.style.perspective=PSP+'px';}
   trig();persp();map.on('resize',function(){persp();all();});
   /* קרקע -> מסך: סיבוב סביב מרכז המפה, הטיה לאחור ופרספקטיבה */
@@ -607,6 +626,10 @@ var THEMES={
     ST:{M:{c:'#7CC6F0',k:'#2D6FA8'},A:{c:'#3A80BE',k:'#1B4E84'},B:{c:'#1F5590',k:'#15406E'},C:{c:'#1A4C84',k:'#143C68'}}},
   /* כחול "פלסטי" עם צירים ראשיים זוהרים: ברירת המחדל מ-1.11.2026 (בקשת Tm). ‎?theme=green הירוק הקודם */
   /* אפור־שמנת עם כל מה שעל המפה בכחול כהה: ברירת המחדל (Tm, 1.11.2026). ‎?theme=neo הכחול הכהה, ‎?theme=green הירוק */
+  /* חרדל עם פרויקטים ושמות רחובות בכחול כהה: ברירת המחדל (Tm, 1.11.2026 בערב). ‎?theme=stone אפור־שמנת */
+  mustard:{sea:'#21396A',city:'#D9B456',ctx:'#C9A14A',line:'#1B2F55',park:'#AFA552',river:'#2B4677',wave:'#C9D6F0',st:1,bg:'#EEE9DF',
+    tones:['#D8B254','#D3AC4C','#DCB85E','#D5AF50','#DAB559'],
+    ST:{M:{c:'#1B2F55',k:'#0E1A33'},A:{c:'#3B5384',k:'#1B2F55'},B:{c:'#F3E2B0',k:'#B89136'},C:{c:'#EDD7A0',k:'#BF9A42'}}},
   stone:{sea:'#C3CED6',city:'#EEEAE2',ctx:'#E3DFD7',line:'#1B2F55',park:'#D5DDCB',river:'#B3C4D1',wave:'#FFFFFF',st:1,
     tones:['#EFEBE3','#E9E5DC','#F2EEE7','#E6E2D9','#EDE9E0'],
     ST:{M:{c:'#2B4677',k:'#14244A'},A:{c:'#566C93',k:'#2A3F66'},B:{c:'#FFFFFF',k:'#C9C5BC'},C:{c:'#FBF9F5',k:'#D8D4CB'}}},
@@ -616,10 +639,10 @@ var THEMES={
   green:{sea:'#0B2A33',city:'#1E3F3F',ctx:'#173333',line:'#E2C27A',park:'#2E5B3E',river:'#4E8C93',wave:'#E2C27A',st:.8,
     tones:['#22484A','#1E4243','#264D4C','#1C3D3E','#244A47'],
     ST:{M:{c:'#C59A3C',k:'#7A5E22'},A:{c:'#9C7E3E',k:'#5F4C24'},B:{c:'#3C625F',k:'#2A4A48'},C:{c:'#335754',k:'#264442'}}}};
-var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='stone';var TH=THEMES[THN];
-if(THN!=='light')document.documentElement.classList.add(THN==='stone'?'th-light':'th-dark','th-'+THN);
-/* צורת העוגנים בתלת מימד: ‎?anc=pin (ברירת מחדל, טיפה כחולה עם אייקון), ‎?anc=tile (אריח מבריק), ‎?anc=photo (העיגולים עם התמונות) */
-var ANC=(location.search.match(/[?&]anc=(pin|tile|photo)/)||[])[1]||'pin';document.documentElement.classList.add('anc-'+ANC);
+var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='mustard';var TH=THEMES[THN];
+if(THN!=='light')document.documentElement.classList.add(THN==='stone'||THN==='mustard'?'th-light':'th-dark','th-'+THN);if(THN==='mustard')document.documentElement.classList.add('th-stone');
+/* צורת העוגנים בתלת מימד: ‎?anc=float (ברירת מחדל: התמונה על בסיס מרחף), ‎?anc=pin (טיפה כחולה), ‎?anc=tile (אריח מבריק), ‎?anc=photo (העיגולים) */
+var ANC=(location.search.match(/[?&]anc=(float|pin|tile|photo)/)||[])[1]||'float';document.documentElement.classList.add('anc-'+ANC);
 var TONES=TH.tones;
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
 map.createPane('motif');map.getPane('motif').style.zIndex=380;map.getPane('motif').style.pointerEvents='none';
@@ -635,6 +658,7 @@ fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
   L.geoJSON(by('river'),{pane:'geo',interactive:false,style:{color:TH.river,weight:7,opacity:1,lineCap:'round'}}).addTo(map);
   waves(by('sea'));
   streets();
+  if(V3)slab(by);
   by('hood').features.forEach(function(f){var c=warp(f.properties.center[0],f.properties.center[1]);
     L.marker(c,{interactive:false,keyboard:false,zIndexOffset:-3000,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="hood">'+esc(f.properties.name)+'</div>'})}).addTo(hoodLabels);});
   hoods();
@@ -799,7 +823,7 @@ function arc(p,q){
 }
 
 /* "אקופונקטורה": כל פרויקט מפעיל רשת של עצבים אל המקומות שסביבו. קשתות זוהרות עם זרם אור, עבות יותר ככל שהמקום קרוב */
-var NERVE=THN==='neo'?'#5FE3FF':THN==='stone'?'#1E3A78':GOLD;
+var NERVE=THN==='neo'?'#5FE3FF':THN==='stone'||THN==='mustard'?'#1E3A78':GOLD;
 function nerves(p,grp){
   var l=A.concat(Q).map(function(a){return {a:a,m:meters(a,p)};}).sort(function(x,y){return x.m-y.m;}),
       pick=l.filter(function(x){return x.m<=2400;}).slice(0,9);
@@ -815,6 +839,37 @@ function nerves(p,grp){
   return pick;
 }
 
+/* בתלת מימד אזור העבודה של אקו סיטי (תל אביב, גבעתיים וקצה רמת גן) הוא גוש שתלוי באוויר במרכז המסך, כמו במפות רמת גן וגבעתיים:
+   מחוץ לו רק רקע, ולגוש יש דפנות עבות וצל שמתעדכנים לפי זווית המבט */
+var BOARD=null;
+function slab(by){
+  var b=L.latLngBounds([]);
+  by('city').features.forEach(function(f){if(!f.properties.context)b.extend(L.geoJSON(f).getBounds());});
+  b=L.latLngBounds([b.getSouth()-.002,b.getWest()-.004],[b.getNorth()+.002,b.getEast()+.013]);BOARD=b;
+  map.createPane('slab');map.getPane('slab').style.zIndex=300;map.getPane('slab').style.pointerEvents='none';
+  var rend=L.svg({pane:'slab',padding:1.5}),bg=TH.bg||'#EEE9DF',
+      cn=function(){return [b.getNorthWest(),b.getNorthEast(),b.getSouthEast(),b.getSouthWest()];};
+  L.polygon([[[-80,-179],[-80,179],[85,179],[85,-179]],cn()],{renderer:rend,stroke:false,fillColor:bg,fillOpacity:1,interactive:false}).addTo(map);
+  map.createPane('slabtop');map.getPane('slabtop').style.zIndex=240;
+  L.rectangle(b,{pane:'slabtop',stroke:false,fillColor:TH.ctx,fillOpacity:1,interactive:false}).addTo(map);
+  var shade=[0].map(function(i){return L.polygon(cn(),{renderer:rend,stroke:false,fillColor:'#2A2414',fillOpacity:.09,interactive:false}).addTo(map);}),
+      side=[0,1,2,3].map(function(){return L.polygon(cn(),{renderer:rend,weight:1,color:'#6E5113',opacity:.5,fillOpacity:1,interactive:false}).addTo(map);});
+  L.rectangle(b,{renderer:rend,fill:false,color:'#FFF6DC',weight:1.5,opacity:.9,interactive:false}).addTo(map);
+  var T=30,EDGE=[[0,1,[0,-1]],[1,2,[1,0]],[2,3,[0,1]],[3,0,[-1,0]]];
+  function sides(){var g=[Math.sin(ORB.s),Math.cos(ORB.s)],c=cn().map(function(x){return map.latLngToLayerPoint(x);}),
+      back=function(p){return map.layerPointToLatLng(p);};
+    shade.forEach(function(sh,i){var k=T*2.4;sh.setLatLngs(c.map(function(p){return back(p.add([g[0]*k,g[1]*k]));}));});
+    EDGE.forEach(function(e,i){var d=e[2][0]*g[0]+e[2][1]*g[1],p=c[e[0]],q=c[e[1]],v=L.point(g[0]*T,g[1]*T);
+      if(d<=.01){side[i].setStyle({opacity:0,fillOpacity:0});return;}
+      side[i].setLatLngs([back(p),back(q),back(q.add(v)),back(p.add(v))]);
+      side[i].setStyle({opacity:.5,fillOpacity:1,fillColor:d>.7?'#8C6619':'#A57B24'});});}
+  sides();map.on('zoomend viewreset',sides);ORBH.push(sides);
+  [streetLabels,streetLabelsMinor,hoodLabels].forEach(function(gr){gr.eachLayer(function(l){if(!b.contains(l.getLatLng()))gr.removeLayer(l);});});
+  map.setMaxBounds(b.pad(.7));
+  /* פותחים על הגוש כולו, כשהוא תלוי במרכז המסך */
+  map.fitBounds(b,{padding:innerWidth<=820?[10,10]:[40,40],animate:false});
+  map.panBy([0,Math.round(map.getSize().y*(innerWidth<=820?.14:.08))],{animate:false});
+}
 /* הדמויות המאוירות תמיד על המפה; הקולות נדלקים מהכפתור שלהם */
 var on={sale:true,live:false,anc:true,mot:!V3};
 var cur=null;
