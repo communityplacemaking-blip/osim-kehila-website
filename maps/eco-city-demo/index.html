@@ -297,6 +297,54 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
 .v3 .sky{position:absolute;left:0;right:0;top:0;height:30%;z-index:396;pointer-events:none;background:linear-gradient(var(--mapbg,#ECE6DC),rgba(0,0,0,0))}
 .v3btn{position:absolute;left:14px;bottom:calc(var(--dbar) + 92px);z-index:700;width:34px;height:34px;border-radius:8px;border:2px solid rgba(0,0,0,.2);background:#fff;color:var(--teal);font:700 12px Rubik,Heebo,sans-serif;cursor:pointer;background-clip:padding-box}
 @media (max-width:820px){.v3btn{bottom:92px;left:10px}}
+
+/* ===== מראה "הייטק": כחול פלסטי, סיכות מבריקות, עוגנים כאייקונים, קווי עצבים חיים ===== */
+.th-neo{--mapbg:#06173A;--glow:#5FE3FF}
+.th-neo .hood{color:#9FE6FF;font-family:Rubik,Heebo,sans-serif;font-weight:500;font-size:15px;letter-spacing:.12em;text-shadow:0 0 8px rgba(80,200,255,.55)}
+.th-neo .street{color:#DDF6FF;text-shadow:0 0 4px rgba(0,30,80,.9)}
+.th-neo .city{color:#7FE3FF;opacity:.12}
+.v3 .gloss{position:absolute;inset:0;z-index:395;pointer-events:none;
+  background:radial-gradient(120% 70% at 25% 0%,rgba(255,255,255,.10),rgba(255,255,255,0) 55%),radial-gradient(140% 100% at 50% 120%,rgba(0,0,0,0) 55%,rgba(0,6,24,.55))}
+.v3 .sky{height:34%}
+.th-neo .paper{display:none}
+/* בלי המשפט על המאוכלסים (Tm, 1.11.2026) */
+#hint{display:none!important}
+/* פרויקט ההדגמה מהבהב */
+.pl-dot::before{content:"";position:absolute;inset:-9px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,224,130,.95),rgba(255,214,102,0));animation:plblink 1.3s ease-in-out infinite;pointer-events:none}
+@keyframes plblink{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:1;transform:scale(1.25)}}
+/* סיכות: ראש כדורי מבריק על מחט */
+.v3 .hd{left:-8px;top:-8px;width:16px;height:16px;border:0;
+  background:radial-gradient(circle at 34% 30%,#fff 0,#FFF4C8 14%,#F2C04B 34%,#B07A12 68%,#5E3D00 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.35),0 0 12px 2px rgba(255,200,80,.55),0 4px 8px rgba(0,0,0,.5)}
+.v3 .zlow .hd{left:-6px;top:-6px;width:12px;height:12px}
+.v3 .bb>.stem{width:2px;left:-1px;background:linear-gradient(to top,rgba(200,230,255,.15),#E8F4FF 40%,#9DB4C8)}
+.v3 .gs{background:radial-gradient(closest-side,rgba(95,227,255,.55),rgba(95,227,255,0))}
+.v3 .plab:hover~.hd,.v3 .plab.on~.hd{background:radial-gradient(circle at 34% 30%,#fff 0,#D9FBFF 16%,#5FE3FF 40%,#1477C9 75%,#05306B 100%);box-shadow:0 0 0 1px #fff,0 0 18px 4px rgba(95,227,255,.85)}
+.th-neo.v3 .plab{background:rgba(6,23,58,.82);color:#EAF8FF;border:1px solid rgba(95,227,255,.55);box-shadow:0 0 12px rgba(95,227,255,.25);backdrop-filter:blur(3px)}
+.th-neo.v3 .plab:hover,.th-neo.v3 .plab.on{background:#F2C04B;color:#06173A;border-color:#fff;box-shadow:0 0 16px rgba(242,192,75,.8)}
+.th-neo.v3 .plab.dim{opacity:.55}
+/* עוגנים: אייקון תלת ממדי מבריק (התמונה נפתחת במעבר עכבר ובכרטיס) */
+.v3 .anc .disc{border-radius:30%;border:0;background:linear-gradient(155deg,#8BF0FF 0,#2F93E8 38%,#1450B4 70%,#0A2C78 100%);
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.75),inset 0 -6px 10px rgba(0,10,40,.45),0 5px 0 #0A2A6A,0 6px 0 #061B48,0 14px 22px rgba(0,0,0,.55),0 0 18px rgba(95,227,255,.35)}
+.v3 .anc .disc>svg,.v3 .anc .disc.has>svg{display:block;width:56%;height:56%;stroke:#fff;stroke-width:1.7;filter:drop-shadow(0 1px 1px rgba(0,20,60,.6))}
+.v3 .anc .disc img{display:none;border-radius:30%}
+.v3 .anc .bdg{display:none}
+.v3 .anc:hover .disc{transform:scale(1.9)}
+.v3 .anc:hover .disc img{display:block}
+.v3 .zlow .anc:hover .disc{transform:scale(1.5)}
+.th-neo.v3 .anc .an{background:rgba(6,23,58,.85);color:#BFF3FF;border:1px solid rgba(95,227,255,.45);box-shadow:none;font-weight:500}
+.v3 .anc .disc::after{content:"";position:absolute;left:8%;right:8%;top:5%;height:38%;border-radius:40% 40% 50% 50%/60% 60% 40% 40%;background:linear-gradient(rgba(255,255,255,.55),rgba(255,255,255,0));pointer-events:none}
+/* קווי עצבים: קשת זוהרת וזרם אור לאורכה */
+.nerve{stroke-dasharray:3 10;animation:nflow .9s linear infinite}
+@keyframes nflow{to{stroke-dashoffset:-26}}
+.nhit{animation:pingk 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:reduce){.nerve,.nhit,.pl-dot::before{animation:none}}
+/* לחצני הזווית */
+.orb{position:absolute;left:14px;bottom:calc(var(--dbar) + 132px);z-index:700;display:grid;grid-template-columns:34px 34px;gap:4px}
+.orb button{width:34px;height:34px;border-radius:10px;border:1px solid rgba(95,227,255,.5);background:rgba(6,23,58,.85);color:#BFF3FF;font:600 17px/1 Rubik,sans-serif;cursor:pointer;box-shadow:0 0 10px rgba(95,227,255,.2)}
+.orb button:active{background:#1450B4}
+.th-neo .v3btn,.th-neo .leaflet-bar a{background:rgba(6,23,58,.85);color:#BFF3FF;border-color:rgba(95,227,255,.5)}
+@media (max-width:820px){.orb{left:10px;bottom:132px;grid-template-columns:repeat(4,30px)}.orb button{width:30px;height:30px;font-size:15px}}
 </style>
 </head>
 <body>
@@ -401,12 +449,12 @@ P.forEach(function(p,i){p.id=i;});
 
 /* תצוגת תלת מימד: העיר נוטה לאחור כאילו מרחפים מעליה, והעוגנים, הדמויות והפרויקטים עומדים מעל הקרקע.
    ‎?view=2d מחזיר את המפה השטוחה. העמודים נבנים כאן לכל אייקון שמסומן כעומד, בלי לשנות את הקוד שיוצר אותו */
-var V3=!/[?&]view=2d/.test(location.search),TILT=45,TR=TILT*Math.PI/180,PSP=1000;
+var V3=!/[?&]view=2d/.test(location.search),TILT=innerWidth<=820?50:52,PSP=1000;
 var LIFT={anc:30,motif:20,plab:30,'plab-none':24,bld:16,poi:16,'pl-pin':22};
 if(V3){
-  document.documentElement.classList.add('v3');document.documentElement.style.setProperty('--tilt',TILT+'deg');
+  document.documentElement.classList.add('v3');
   /* הקרקע שמעבר לקצה העליון נראית עכשיו, אז מציירים שכבות גם מחוץ למסגרת */
-  L.SVG.prototype.options.padding=.7;L.Canvas.prototype.options.padding=.7;
+  L.SVG.prototype.options.padding=1;L.Canvas.prototype.options.padding=innerWidth<=820?.55:.8;
   var STAND=/class="(anc|motif|plab-none|plab|bld|poi|pl-pin)[" ]/,_di=L.divIcon;
   L.divIcon=function(o){var m=o&&o.html&&STAND.exec(o.html);if(m){var k=m[1],sz=o.iconSize||[0,0],h=LIFT[k],
       dd=k==='anc'?sz[0]*.9:k==='motif'?60:16;
@@ -420,32 +468,65 @@ if(V3){
 /* מפה */
 var map=L.map('map',{zoomControl:false,zoomSnap:.25,minZoom:12,maxZoom:16.5});
 L.control.zoom({position:'bottomleft'}).addTo(map);
+/* זווית התלת מימד: הטיה (ORB.t) וסיבוב (ORB.s), ברדיאנים. משחקים בהן בגרירה עם הכפתור הימני / Shift, או בלחצני הזווית */
+var ORB={t:TILT*Math.PI/180,s:0},orbit=function(){};
 if(V3){(function(){
   var ct=map.getContainer(),mp=map.getPane('mapPane'),tw=L.DomUtil.create('div','tilt');ct.insertBefore(tw,mp);tw.appendChild(mp);
-  tw.style.transform='rotateX('+TILT+'deg)';
-  L.DomUtil.create('div','sky',ct);
+  L.DomUtil.create('div','gloss',ct);L.DomUtil.create('div','sky',ct);
   /* מה שעומד לא נוטה עם הקרקע: הוא בשכבה שטוחה מעליה, וכל אייקון מוצב בנקודה שבה הכתובת שלו נראית על הקרקע הנוטה,
      וקטן מעט ככל שהוא רחוק יותר. כך הוא תמיד זקוף ופונה אלינו */
   var ov=L.DomUtil.create('div','stand',ct),sp=map.createPane('stand',ov),tp=map.getPane('tooltipPane');ov.appendChild(tp);
-  var C=Math.cos(TR),S=Math.sin(TR),W=0,H=0;
+  var C,S,CS,SS,W=0,H=0;
+  function trig(){C=Math.cos(ORB.t);S=Math.sin(ORB.t);CS=Math.cos(ORB.s);SS=Math.sin(ORB.s);
+    tw.style.transform='rotateX('+(ORB.t*180/Math.PI).toFixed(2)+'deg) rotateZ('+(ORB.s*180/Math.PI).toFixed(2)+'deg)';}
   function persp(){var z=map.getSize();W=z.x;H=z.y;PSP=Math.round(Math.max(z.x,z.y*1.3)*1.15);ct.style.perspective=PSP+'px';}
-  persp();map.on('resize',function(){persp();all();});
-  function place(el){var p=el._leaflet_pos;if(!p)return;var o=mp._leaflet_pos||{x:0,y:0},x=p.x+o.x-W/2,y=p.y+o.y-H/2,k=PSP/(PSP-y*S),
-      t='translate3d('+(x*k+W/2).toFixed(1)+'px,'+(y*C*k+H/2).toFixed(1)+'px,0) scale('+Math.min(1.04,Math.pow(k,.55)).toFixed(3)+')';
+  trig();persp();map.on('resize',function(){persp();all();});
+  /* קרקע -> מסך: סיבוב סביב מרכז המפה, הטיה לאחור ופרספקטיבה */
+  function proj(x,y){var x1=x*CS-y*SS,y1=x*SS+y*CS,k=PSP/(PSP-y1*S);return {x:x1*k,y:y1*C*k,k:k};}
+  function place(el){var p=el._leaflet_pos;if(!p)return;var o=mp._leaflet_pos||{x:0,y:0},q=proj(p.x+o.x-W/2,p.y+o.y-H/2),
+      t='translate3d('+(q.x+W/2).toFixed(1)+'px,'+(q.y+H/2).toFixed(1)+'px,0) scale('+Math.min(1.04,Math.pow(q.k,.55)).toFixed(3)+')';
     if(el.style.transform!==el._v3t){el.style.transform=t;el._v3t=el.style.transform;}}
   function all(){[sp,tp].forEach(function(pn){for(var e=pn.firstChild;e;e=e.nextSibling){e._v3t=null;place(e);}});}
   new MutationObserver(function(ms){var pan=false;ms.forEach(function(m){if(m.target===mp)pan=true;else if(m.type==='attributes')place(m.target);
       else m.addedNodes.forEach(function(n){if(n.nodeType===1)place(n);});});if(pan)all();})
     .observe(ov,{subtree:true,childList:true,attributes:true,attributeFilter:['style']});
   new MutationObserver(all).observe(mp,{attributes:true,attributeFilter:['style']});
-  /* נקודה על המסך -> נקודה על הקרקע הנוטה (הפוך מההטלה), כדי שגרירה, גלגלת וצביטה יתנהגו כמו במפה שטוחה */
+  /* נקודה על המסך -> נקודה על הקרקע (הפוך מההטלה), כדי שגרירה, גלגלת וצביטה יתנהגו כמו במפה שטוחה */
   function ground(cx,cy){var r=ct.getBoundingClientRect(),sx=cx-r.left-r.width/2,sy=cy-r.top-r.height/2,
-    y=sy*PSP/(C*PSP+sy*S),x=sx*(PSP-y*S)/PSP;return L.point(x+r.width/2,y+r.height/2);}
+    y1=sy*PSP/(C*PSP+sy*S),x1=sx*(PSP-y1*S)/PSP;return L.point(x1*CS+y1*SS+r.width/2,-x1*SS+y1*CS+r.height/2);}
   map.mouseEventToContainerPoint=function(e){return ground(e.clientX,e.clientY);};
   var dr=map.dragging._draggable,om=dr._onMove;
   dr._onMove=function(e){om.call(this,e);if(!this._moving||!this._startPoint||(e.touches&&e.touches.length>1))return;
     var f=e.touches&&e.touches.length===1?e.touches[0]:e;
     this._newPos=this._startPos.add(ground(f.clientX,f.clientY).subtract(ground(this._startPoint.x,this._startPoint.y)));};
+  /* שינוי זווית: מעדכן את הקרקע ואת כל מה שעומד עליה, ובסוף מסדר מחדש את שמות הפרויקטים */
+  var relayT=null,anim=null;
+  orbit=function(t,s,ms){var lo=8*Math.PI/180,hi=62*Math.PI/180;t=Math.max(lo,Math.min(hi,t));
+    cancelAnimationFrame(anim);
+    if(!ms){ORB.t=t;ORB.s=s;trig();all();clearTimeout(relayT);relayT=setTimeout(function(){layout(true);},180);return;}
+    var t0=ORB.t,s0=ORB.s,st=performance.now();
+    (function step(now){var u=Math.min(1,(now-st)/ms),e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+      ORB.t=t0+(t-t0)*e;ORB.s=s0+(s-s0)*e;trig();all();if(u<1)anim=requestAnimationFrame(step);else layout(true);})(st);};
+  /* גרירה עם הכפתור הימני, או עם Shift: ימינה ושמאלה מסובבת, למעלה ולמטה מטה */
+  var od=null;
+  ct.addEventListener('contextmenu',function(e){e.preventDefault();});
+  ct.addEventListener('pointerdown',function(e){if(e.button!==2&&!(e.button===0&&e.shiftKey))return;
+    od={x:e.clientX,y:e.clientY,t:ORB.t,s:ORB.s};e.preventDefault();e.stopPropagation();map.dragging.disable();},true);
+  addEventListener('pointermove',function(e){if(!od)return;orbit(od.t-(e.clientY-od.y)*.005,od.s+(e.clientX-od.x)*.006);});
+  addEventListener('pointerup',function(){if(!od)return;od=null;map.dragging.enable();});
+  /* שתי אצבעות בטלפון: סיבוב האצבעות מסובב את העיר (הצביטה נשארת זום) */
+  var tw0=null;
+  ct.addEventListener('touchstart',function(e){if(e.touches.length===2){var a=e.touches[0],b=e.touches[1];tw0={a:Math.atan2(b.clientY-a.clientY,b.clientX-a.clientX),s:ORB.s,y:(a.clientY+b.clientY)/2,t:ORB.t};}},{passive:true});
+  ct.addEventListener('touchmove',function(e){if(!tw0||e.touches.length!==2)return;var a=e.touches[0],b=e.touches[1],an=Math.atan2(b.clientY-a.clientY,b.clientX-a.clientX);
+    orbit(tw0.t-((a.clientY+b.clientY)/2-tw0.y)*.006,tw0.s+(an-tw0.a));},{passive:true});
+  ct.addEventListener('touchend',function(e){if(e.touches.length<2)tw0=null;},{passive:true});
+  /* לחצני זווית ליד הזום */
+  var pad=L.DomUtil.create('div','orb',ct);
+  pad.innerHTML='<button data-o="up" title="יותר זווית">⤒</button><button data-o="l" title="סיבוב">⟲</button><button data-o="r" title="סיבוב">⟳</button><button data-o="dn" title="פחות זווית">⤓</button>';
+  L.DomEvent.disableClickPropagation(pad);
+  pad.onclick=function(e){var o=e.target.dataset&&e.target.dataset.o,d=Math.PI/180;if(!o)return;
+    if(o==='up')orbit(ORB.t+10*d,ORB.s,350);if(o==='dn')orbit(ORB.t-10*d,ORB.s,350);if(o==='l')orbit(ORB.t,ORB.s-22.5*d,450);if(o==='r')orbit(ORB.t,ORB.s+22.5*d,450);};
+  window.ECO_ORBIT=function(t,s){orbit(t*Math.PI/180,s*Math.PI/180);};
 })();}
 (function(){var b=document.createElement('button');b.className='v3btn';b.textContent=V3?'2D':'3D';b.title=V3?'מפה שטוחה':'מפה בזווית, בתלת מימד';
   b.onclick=function(e){e.stopPropagation();var q=location.search.replace(/[?&]view=\w+/,'').replace(/^&/,'?');location.search=(q?q+'&':'?')+'view='+(V3?'2d':'3d');};
@@ -488,10 +569,14 @@ var THEMES={
   blue:{sea:'#0B2D57',city:'#123A6B',ctx:'#0E2C52',line:'#8FD3FF',park:'#1D5A6E',river:'#5CC2F2',wave:'#9BDCFF',st:.8,
     tones:['#15427A','#123B6E','#184880','#113766','#164476'],
     ST:{M:{c:'#7CC6F0',k:'#2D6FA8'},A:{c:'#3A80BE',k:'#1B4E84'},B:{c:'#1F5590',k:'#15406E'},C:{c:'#1A4C84',k:'#143C68'}}},
+  /* כחול "פלסטי" עם צירים ראשיים זוהרים: ברירת המחדל מ-1.11.2026 (בקשת Tm). ‎?theme=green הירוק הקודם */
+  neo:{sea:'#040E24',city:'#0F2C5C',ctx:'#0A1F45',line:'#58D2FF',park:'#0F5466',river:'#38B8F2',wave:'#7FE3FF',st:1,
+    tones:['#12336A','#0F2E62','#153A74','#10305F','#13376D'],
+    ST:{M:{c:'#62D6F5',k:'#1A6CB8'},A:{c:'#3A8FD6',k:'#17508F'},B:{c:'#1D4C8C',k:'#15396C'},C:{c:'#1A447F',k:'#133464'}}},
   green:{sea:'#0B2A33',city:'#1E3F3F',ctx:'#173333',line:'#E2C27A',park:'#2E5B3E',river:'#4E8C93',wave:'#E2C27A',st:.8,
     tones:['#22484A','#1E4243','#264D4C','#1C3D3E','#244A47'],
     ST:{M:{c:'#C59A3C',k:'#7A5E22'},A:{c:'#9C7E3E',k:'#5F4C24'},B:{c:'#3C625F',k:'#2A4A48'},C:{c:'#335754',k:'#264442'}}}};
-var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='green';var TH=THEMES[THN];
+var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='neo';var TH=THEMES[THN];
 if(THN!=='light')document.documentElement.classList.add('th-dark','th-'+THN);
 var TONES=TH.tones;
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
@@ -520,7 +605,7 @@ function streets(){
   map.createPane('streets');map.getPane('streets').style.zIndex=270;
   /* רשת הרחובות ברקע, מעומעמת כדי שהפרויקטים יבלטו */
   map.getPane('streets').style.opacity=TH.st;
-  var rend=L.canvas({pane:'streets',padding:V3?.7:.3});
+  var rend=L.canvas({pane:'streets',padding:V3?(innerWidth<=820?.55:.8):.3});
   fetch('streets.json').then(function(r){return r.json();}).then(function(d){
     function wl(c){return wring(c).map(function(p){return [p[1],p[0]];});}
     ['C','B','A','M'].forEach(function(k){
@@ -601,7 +686,7 @@ function textW(t,fs){_mc.font='500 '+fs+'px Rubik, Heebo, sans-serif';return _mc
 var lastZ=null,lastW=0,labBoxes=[],labZ=0;
 /* בתלת מימד הקרקע נדחסת לגובה (לפי זווית ההטיה) והתוויות עומדות ישרות, אז מחשבים התנגשויות במרחב הדחוס */
 var SM=V3&&innerWidth<=820?.68:1;
-function prj(ll,z){var c=map.project(ll,z);if(V3)c.y*=Math.cos(TR);return c;}
+function prj(ll,z){var c=map.project(ll,z);if(V3){var cs=Math.cos(ORB.s),sn=Math.sin(ORB.s);c=L.point(c.x*cs-c.y*sn,(c.x*sn+c.y*cs)*Math.cos(ORB.t));}return c;}
 function labCls(id){if(!cur||cur[0]==null)return '';return id===cur[0]?' on':(cur[1]&&cur[1].indexOf(id)>=0?'':' dim');}
 function layout(force){
   var z=map.getZoom();
@@ -640,7 +725,7 @@ function layout(force){
     if(best.far){var ex=Math.max(best.box.x0,Math.min(best.box.x1,it.pt.x))-it.pt.x,ey=Math.max(best.box.y0,Math.min(best.box.y1,hy))-hy;
       ld='<i class="ld" style="width:'+Math.hypot(ex,ey).toFixed(1)+'px;transform:rotate('+Math.atan2(ey,ex).toFixed(3)+'rad)"></i>';}
     p.m=L.marker([p.lat,p.lng],{riseOnHover:true,zIndexOffset:900,icon:L.divIcon({className:'',iconSize:[0,0],html:ld+'<div class="plab'+labCls(p.id)+'" data-p="'+p.id+'" style="left:'+dx+'px;top:'+dy+'px;font-size:'+fs+'px">'+esc(p.n)+'</div>'})})
-      .on('click',function(){showP(p);}).addTo(leaders);
+      .on('click',function(){showP(p);}).on('mouseover',function(){if(!det.classList.contains('open'))nerves(p,fx);}).on('mouseout',function(){fx.clearLayers();}).addTo(leaders);
   });
 }
 function pinEl(p){var m=p.s==='sale'&&p.stack?p.stack:p.m,e=m&&m.getElement&&m.getElement();return e&&(e.querySelector&&e.querySelector('.pin,.bld,.plab')||e);}
@@ -669,6 +754,23 @@ function arc(p,q){
   var pts=[],cx=(p.lat+q.lat)/2-(q.lng-p.lng)*.22,cy=(p.lng+q.lng)/2+(q.lat-p.lat)*.22;
   for(var t=0;t<=1.0001;t+=.05){var u=1-t;pts.push([u*u*p.lat+2*u*t*cx+t*t*q.lat,u*u*p.lng+2*u*t*cy+t*t*q.lng]);}
   return L.polyline(pts,{color:GOLD,weight:2.4,opacity:.95,className:'thread',interactive:false});
+}
+
+/* "אקופונקטורה": כל פרויקט מפעיל רשת של עצבים אל המקומות שסביבו. קשתות זוהרות עם זרם אור, עבות יותר ככל שהמקום קרוב */
+var NERVE=THN==='neo'?'#5FE3FF':GOLD;
+function nerves(p,grp){
+  var l=A.concat(Q).map(function(a){return {a:a,m:meters(a,p)};}).sort(function(x,y){return x.m-y.m;}),
+      pick=l.filter(function(x){return x.m<=2400;}).slice(0,9);
+  if(pick.length<5)pick=l.slice(0,5);
+  pick.forEach(function(n,i){var q=n.a,pts=[],dx=q.lng-p.lng,dy=q.lat-p.lat,b=(i%2?-1:1)*(.16+.05*(i%3)),
+      cx=(p.lat+q.lat)/2-dx*b,cy=(p.lng+q.lng)/2+dy*b,w=Math.max(1.4,3.4-n.m/900);
+    for(var t=0;t<=1.0001;t+=.05){var u=1-t;pts.push([u*u*p.lat+2*u*t*cx+t*t*q.lat,u*u*p.lng+2*u*t*cy+t*t*q.lng]);}
+    L.polyline(pts,{pane:'fxp',color:NERVE,weight:w+3,opacity:.16,className:'nerve-core',interactive:false}).addTo(grp);
+    var f=L.polyline(pts,{pane:'fxp',color:i<3?'#FFFFFF':NERVE,weight:w,opacity:.95,lineCap:'round',className:'nerve',interactive:false}).addTo(grp);
+    var e=f.getElement&&f.getElement();if(e)e.style.animationDelay=(-i*.13).toFixed(2)+'s';
+    L.circleMarker([q.lat,q.lng],{pane:'fxp',radius:9,color:NERVE,weight:2,fill:false,className:'nhit',interactive:false}).addTo(grp);
+  });
+  return pick;
 }
 
 /* הדמויות המאוירות תמיד על המפה; הקולות נדלקים מהכפתור שלהם */
@@ -745,7 +847,8 @@ function facts(list){list=list.filter(function(f){return f[0]!=null&&f[0]!=='';}
 
 function showP(p){listOff();
   var near=nearA(p,5),sale=p.s==='sale';
-  var lines=pickLines(p,near);threads.clearLayers();lines.forEach(function(n){thread(p,n.a).addTo(threads);
+  var lines=pickLines(p,near);threads.clearLayers();fx.clearLayers();
+  nerves(p,threads).forEach(function(n){
     if(Q.indexOf(n.a)>=0||!on.anc)L.marker([n.a.lat,n.a.lng],{interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="poi" title="'+esc(n.a.n)+'"><span>'+svg(n.a.k)+'</span></div>'})}).addTo(threads);});
   mark(p.id);
   det.innerHTML=gallery(sale?p.images:[])+'<button class="back">→ '+'חזרה למפה'+'</button><div class="ttl"><h2 class="serif">'+esc(p.n)+'</h2><div class="c">'+esc(p.c)+'</div></div></div>'+
@@ -767,8 +870,8 @@ map.createPane('fxp');map.getPane('fxp').style.zIndex=450;map.getPane('fxp').sty
 var fx=L.layerGroup().addTo(map);
 function ripple(a){fx.clearLayers();
   var near=nearP(a,4).filter(function(n){return n.m<=1500;});
-  near.forEach(function(n,i){L.polyline([[a.lat,a.lng],[n.p.lat,n.p.lng]],{pane:'fxp',color:GOLD,weight:3,opacity:1,dashArray:'1 7',lineCap:'round',className:'pepper',interactive:false}).addTo(fx);
-    L.circleMarker([n.p.lat,n.p.lng],{pane:'fxp',radius:11,color:GOLD,weight:2.5,fill:false,className:'ping',interactive:false}).addTo(fx);});
+  near.forEach(function(n,i){L.polyline([[a.lat,a.lng],[n.p.lat,n.p.lng]],{pane:'fxp',color:NERVE,weight:3,opacity:1,dashArray:'1 7',lineCap:'round',className:'pepper',interactive:false}).addTo(fx);
+    L.circleMarker([n.p.lat,n.p.lng],{pane:'fxp',radius:11,color:NERVE,weight:2.5,fill:false,className:'ping',interactive:false}).addTo(fx);});
   L.marker([a.lat,a.lng],{pane:'fxp',interactive:false,keyboard:false,icon:L.divIcon({className:'',iconSize:[0,0],html:'<div class="rip"><i></i><i></i><i></i></div>'})}).addTo(fx);
 }
 function showA(a){listOff();
@@ -815,6 +918,8 @@ var giv=S.filter(function(p){return p.c==='גבעתיים';})[0];
 if(giv){var gb=document.createElement('button');gb.className='giv';gb.innerHTML='<span>גם בגבעתיים</span><b>'+esc(giv.n)+'</b><i>←</i>';
   gb.onclick=function(e){e.stopPropagation();showP(giv);};document.getElementById('map').appendChild(gb);}
 map.fitBounds(L.latLngBounds(core.map(function(p){return [p.lat,p.lng];})),innerWidth<=820?{paddingTopLeft:[55,80],paddingBottomRight:[55,100]}:{paddingTopLeft:[90,70],paddingBottomRight:[90,60]});
+/* בתלת מימד המפה נפתחת שטוחה ו"נוחתת" לזווית, כמו במפת רמת גן */
+if(V3){var rmo=matchMedia('(prefers-reduced-motion: reduce)').matches;if(!rmo){orbit(.14,-.35);setTimeout(function(){orbit(TILT*Math.PI/180,0,1500);},450);}}
 /* גלים: קווי קצף מקבילים לקו החוף, בכמה מרחקים לתוך הים, שמופיעים בזה אחר זה מבחוץ פנימה */
 var coast=[];
 function waves(sea){
