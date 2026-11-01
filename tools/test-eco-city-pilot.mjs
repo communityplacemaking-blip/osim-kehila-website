@@ -98,9 +98,10 @@ for (const w of [390, 1280]) {
   if (before) check(`${w}px: פרויקטים, עוגנים וכותרת כמו במפה בלי הפיילוט`, st.labels === before.labels && st.anchors === before.anchors && st.title === before.title && st.head === before.head, { before, st });
   check(`${w}px: אין שגיאות JavaScript`, pg.errors.length === 0, pg.errors);
   await shot(pg, `regular-${w}`);
-  const cta = await pg.evaluate(() => { const mc = document.querySelector('.motif .mc'); return { exists: !!document.querySelector('.pl-cta'), mcFont: mc ? getComputedStyle(mc).fontFamily : '' }; });
+  const cta = await pg.evaluate(() => { const mc = document.querySelector('.motif .mc'); return { exists: !!document.querySelector('.pl-cta'), mcFont: mc ? getComputedStyle(mc).fontFamily : '', v3: document.documentElement.classList.contains('v3') }; });
   check(`${w}px: אין כפתור צף מעל המפה, הכניסה היא מהפס למטה`, cta && !cta.exists, cta);
-  check(`${w}px: שמות האיורים בגופן של שאר הכותרות (Rubik)`, cta && /^Rubik/.test(cta.mcFont), cta && cta.mcFont);
+  /* בתצוגת התלת מימד אין איורי אווירה; בשטוחה השמות שלהם ב-Rubik */
+  check(`${w}px: שמות האיורים בגופן של שאר הכותרות (Rubik), ובתלת מימד בלי איורים`, cta && (cta.v3 ? cta.mcFont === '' : /^Rubik/.test(cta.mcFont)), cta && cta.mcFont);
   await pg.click('.pl-chip'); await pg.waitForTimeout(900);
   check(`${w}px: לחיצה על הכפתור במפה הרגילה פותחת את הבית`, await pg.evaluate(() => document.getElementById('detail').classList.contains('pl-home') && document.getElementById('detail').classList.contains('open')));
   await pg.context().close();
