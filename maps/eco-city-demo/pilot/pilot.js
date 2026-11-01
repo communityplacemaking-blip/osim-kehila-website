@@ -52,7 +52,10 @@ var IC={
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
   link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
   map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/>',
-  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'
+  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  info:'<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/>',
+  news:'<path d="M5 5h11v14H7a2 2 0 0 1-2-2z"/><path d="M16 9h3v8a2 2 0 0 1-2 2"/><path d="M8 9h5M8 12h5M8 15h3"/>',
+  help:'<circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17h.01"/>'
 };
 function ic(k){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+IC[k]+'</svg>';}
 
@@ -78,7 +81,7 @@ function render(){
   var tabs=[],out='';
   /* סקירה */
   var ov='<div class="pl-meta">'+(C.status?'<span class="pl-tag'+(C.demo?' demo':'')+'">סטטוס המידע: '+h(C.status)+'</span>':'')+
-    (C.updated?'<span class="pl-upd">עודכן לאחרונה: '+h(C.updated)+'</span>':'')+'</div>'+
+'</div>'+
     (C.desc?'<p class="lead pl-lead">'+h(C.desc)+'</p>':'');
   var stg='';
   if(C.stages.items.length){var cur=C.stages.current;
@@ -118,20 +121,33 @@ function render(){
       '<button class="btn sec pl-tomap" type="button" data-hood>'+ic('map')+'לראות את השכונה על המפה</button>');
     tabs.push(['pl-hood','השכונה']);}
 
+  /* מה יש כאן: התועלת לבעלי הדירות כבר במסך הראשון, וכל אריח מוביל ישר לחלק שלו */
+  var tl=[],lu=C.updates[0];
+  tl.push(['pl-overview','info','על הפרויקט',C.stages.items.length&&C.stages.current!=null?'השלב עכשיו: '+C.stages.items[C.stages.current]:(C.status?'סטטוס המידע: '+C.status:'מה מתוכנן ומה הצעד הבא')]);
+  if(lu)tl.push(['pl-updates','news','עדכונים',(lu.date?lu.date+' · ':'')+lu.title]);
+  if(C.meetings.length)tl.push(['pl-meetings','cal','מפגש קרוב',C.meetings[0].date+' · '+C.meetings[0].title]);
+  if(C.faq.length)tl.push(['pl-faq','help','תשובות לשאלות',C.faq.length+' שאלות נפוצות']);
+  if(C.ask.mode!=='off')tl.push(['','chat','שאלה לצוות','פנייה ישירה לצוות הפרויקט']);
+  else if(C.contacts.length||C.links.length)tl.push(['pl-contact','user','קשר עם הצוות','אנשי קשר ומידע רשמי']);
+  var tiles='<ul class="pl-tiles" aria-label="מה יש כאן">'+tl.map(function(t){return '<li><button type="button" '+(t[0]?'data-go="'+t[0]+'"':'data-ask')+'><span class="pl-ti">'+ic(t[1])+'</span>'+
+    '<span class="pl-tt"><b>'+h(t[2])+'</b><small>'+h(t[3])+'</small></span></button></li>';}).join('')+'</ul>';
+
   var hero='<div class="gal ill pl-hero">'+(C.hero.img?'<figure class="pl-fig"><span class="pl-ring"><img src="'+h(C.hero.img)+'" alt=""></span>'+(C.hero.cap?'<figcaption>'+h(C.hero.cap)+'</figcaption>':'')+'</figure>':E.svg('home'))+
-    '<button class="back" type="button">→ חזרה למפה</button><div class="ttl"><div class="pl-kicker">ECO CITY · הבית הדיגיטלי של הפרויקט</div><h2 class="serif">'+h(C.name)+'</h2>'+
-    '<div class="c">'+h([C.city,C.place].filter(Boolean).join(' · '))+'</div></div></div>';
+    '<button class="back" type="button">→ חזרה למפה</button><div class="ttl"><div class="pl-brand"><span class="pl-wm" lang="en">ecocity</span><span>הבית הדיגיטלי של הפרויקט</span></div><h2 class="serif">'+h(C.name)+'</h2>'+
+    '<div class="c">'+h([C.city,C.place].filter(Boolean).join(' · '))+'</div></div></div>'+
+    '<div class="pl-promise"><p>כל מה שבעלי הדירות והדיירים צריכים לדעת על הפרויקט: מידע מאושר, עדכונים, תשובות וקשר עם הצוות.</p>'+
+    (C.updated?'<span>עודכן לאחרונה: '+h(C.updated)+'</span>':'')+'</div>';
   var nav='<nav class="pl-tabs" aria-label="חלקי העמוד"><div class="pl-tabs-in">'+tabs.map(function(t,i){return '<button type="button" data-go="'+t[0]+'"'+(i?'':' aria-current="true"')+'>'+t[1]+'</button>';}).join('')+
     '<button type="button" class="pl-back2" data-hood aria-label="חזרה למפה, עם השכונה">'+ic('map')+'<span>מפה</span></button></div></nav>';
-  var foot='<p class="src pl-src">'+(C.demo?'כל התוכן בעמוד הזה הוא לדוגמה, כדי להמחיש את השירות. אין כאן מידע על פרויקט אמיתי, ושום דבר לא נשלח או נשמר. ':'')+'זמני ההליכה בקירוב.</p>';
-  return hero+nav+'<div class="dbody pl-body">'+out+foot+'</div>';
+  var foot='<p class="src pl-src">'+(C.demo?'כל התוכן בעמוד הזה הוא לדוגמה, כדי להמחיש את השירות. אין כאן מידע על פרויקט אמיתי, ושום דבר לא נשלח או נשמר. ':'שירות של אקו סיטי לבעלי הדירות והדיירים בפרויקט. ')+'זמני ההליכה בקירוב.</p>';
+  return hero+'<div class="pl-top">'+tiles+'</div>'+nav+'<div class="dbody pl-body">'+out+foot+'</div>';
 }
 
 function bind(){
   det.querySelectorAll('[data-go]').forEach(function(b){b.onclick=function(){var s=document.getElementById(b.dataset.go),t=det.querySelector('.pl-tabs');
     if(s)det.scrollTo({top:s.offsetTop-(t?t.offsetHeight:0)-8,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};});
   det.querySelectorAll('[data-hood]').forEach(function(b){b.onclick=toHood;});
-  var a=det.querySelector('[data-ask]');if(a)a.onclick=askOpen;
+  det.querySelectorAll('[data-ask]').forEach(function(a){a.onclick=askOpen;});
   det.onscroll=spy;
 }
 /* הלשונית של החלק שגוללים בו מסומנת */
@@ -187,12 +203,9 @@ function start(cfg){
   var b=document.createElement('button');b.type='button';b.className='chip pl-chip';b.innerHTML='<i class="pl-chip-dot"></i>'+h(C.demo?'פרויקט ההדגמה':C.name);
   b.onclick=function(e){e.stopPropagation();open();};
   var f=document.getElementById('filters');if(f)f.insertBefore(b,f.firstChild);
-  var cta=document.createElement('button');cta.type='button';cta.className='pl-cta';
-  cta.innerHTML='<span class="pl-cta-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></span>'+
-    '<span class="pl-cta-t"><b>'+h(C.demo?'הבית הדיגיטלי של הפרויקט':C.name)+'</b><small>'+(C.demo?'לחצו לצפייה בהדגמה':'לחצו למידע ועדכונים')+'</small></span>';
-  cta.onclick=function(e){e.stopPropagation();open();};
-  document.body.appendChild(cta);
-  /* המפה נפתחת בתצוגה הרגילה שלה. הבית של הפרויקט נפתח רק בלחיצה על הסמן או על הכפתור בפס, לא מעצמו */
+  /* המפה נפתחת בתצוגה הרגילה שלה, והבית נפתח בלחיצה על הסמן או על הכפתור בפס.
+     קישור ישיר לבית (&home=1, למשל מעמוד השיתוף של הפרויקט) פותח אותו מיד, בלי לחייב לעבור דרך המפה */
+  if(E.home)open();
 }
 fetch('pilot/'+E.slug+'.json',{cache:'no-cache'}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(start)
   .catch(function(e){console.warn('pilot: '+E.slug+' לא נטען ('+e.message+')');document.documentElement.classList.remove('pilot');});
