@@ -2621,12 +2621,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .rg-ia-slot .ia { flex-direction: column; align-items: stretch; }
 }
 
-/* ---- נתינה מקומית (30.10.2026): שלושה סוגים בצבעים של הרכיב המשותף - נותנים, מחפשים, אוכל לאיסוף ---- */
-.rg-give-kinds { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: rgba(255,253,248,0.97); border: 1px solid var(--rg-line); border-radius: 22px; box-shadow: 0 3px 12px rgba(16,41,74,0.1); }
-.rg-give-kind { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 4px 14px; border-radius: 999px; border: 1.5px solid transparent; background: none; font: inherit; font-size: 14px; color: var(--rg-ink); cursor: pointer; }
-.rg-give-kind:hover { background: rgba(16,41,74,0.05); }
-.rg-give-kind.is-on { border-color: var(--c); background: color-mix(in srgb, var(--c) 12%, #fff); font-weight: 700; }
-.rg-give-kind:focus-visible { outline: 3px solid var(--rg-navy); outline-offset: 2px; }
+/* ---- נתינה מקומית (30.10.2026): כותרת אחת שנפתחת לבחירה - הכל / נותנים / מחפשים / אוכל לאיסוף (31.10.2026) ---- */
+.rg-give-pick { position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 12px; border-radius: 999px; border: 1.5px solid var(--c); background: rgba(255,253,248,0.97); box-shadow: 0 3px 12px rgba(16,41,74,0.1); }
+.rg-give-pick:focus-within { outline: 3px solid var(--rg-navy); outline-offset: 2px; }
+.rg-give-select { appearance: none; -webkit-appearance: none; border: 0; background: none; font: inherit; font-size: 14.5px; font-weight: 700; color: var(--rg-ink); padding: 0 0 0 16px; min-height: 44px; cursor: pointer; outline: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: 4px 55%, 9px 55%; background-size: 5px 5px; background-repeat: no-repeat; }
 .rg-give-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--c); flex: none; }
 .rg-give-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 10px; font-size: 13px; color: var(--rg-ink-soft); }
 .rg-give-status { font-weight: 700; color: var(--rg-ink); }
@@ -2638,9 +2637,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .rg-food-row dt { font-weight: 600; color: var(--rg-ink-soft); }
 .rg-food-row dd { margin: 0; }
 .rg-food-safety { margin: 8px 0 0; font-size: 12.5px; color: #7a4a1c; line-height: 1.5; }
-@media (max-width: 760px) {
-  .rg-give-kinds { flex: 1 1 100%; flex-wrap: nowrap; overflow-x: auto; padding: 4px; }
-  .rg-give-kind { flex: none; padding: 4px 11px; font-size: 13.5px; }
 }
 /* ---- תלת-ממד (30.10.2026): העיר כגוש על לוח מרובע, שהתושב מסובב ומטה בגרירה ----
    .rg-world (המפה והנקודות) מוטה ומסתובבת סביב מרכז העיר (--ox, --oy). preserve-3d לאורך כל השרשרת עד העוגנים
@@ -2683,6 +2679,76 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .rg-stage.is-3d .rg-landmark-box { transform-origin: 50% 100%; transform: translate(calc(-50% + var(--dx)), calc(-100% + var(--dy))) translateY(calc(-1 * var(--lift))) scale(0.72); }
 }
 @media (prefers-reduced-motion: reduce) { .rg-stage.is-3d.is-orbit-anim .rg-world { transition: none; } }
+
+/* ---- טלפון, 31.10.2026 (בעל הפרויקט: "תצמצם את הכל בשורה אחת למטה, שהמפה תהיה עיקר העניין"):
+   השכבות, כותרת הנתינה ו"יש לי משהו להציע" בשורה אחת. "להציע" הוא כפתור עגול; פס האירועים וקישור היוזמות צפים מעל השורה ---- */
+@media (max-width: 760px) {
+  .rg-side { flex-direction: row; align-items: center; gap: 6px; }
+  .rg-panel { flex: 1 1 auto; min-width: 0; }
+  .rg-dock { flex: none; }
+  .rg-dock-row { flex-wrap: nowrap; }
+  .rg-share { flex: none; width: 52px; height: 52px; min-height: 52px; padding: 0; justify-content: center; border-radius: 50%; }
+  .rg-share-plus { width: 36px; height: 36px; }
+  .rg-share-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .rg-give-pick { flex: none; min-height: 52px; padding: 0 8px; gap: 5px; }
+  .rg-give-select { font-size: 13px; max-width: 112px; text-overflow: ellipsis; }
+  .rg-dock-row > .rg-chip.rg-dir-link { position: fixed; left: 8px; right: 8px; bottom: calc(max(8px, env(safe-area-inset-bottom)) + 64px); width: auto; }
+  .rg-events { position: fixed; left: 8px; right: 8px; bottom: calc(max(8px, env(safe-area-inset-bottom)) + 64px); width: auto; }
+  .rg-about { bottom: 72px; }
+  .rg-hint { bottom: 76px; }
+  /* הזום ופקדי התלת-ממד עולים לפינה העליונה, מתחת ל"שיתוף" ו"הורדה": התחתית נשארת לשורה ולפס האירועים */
+  .rg-stage .leaflet-bottom.leaflet-right { bottom: 66px; }
+  .rg-stage .leaflet-bottom.leaflet-left { bottom: auto; top: calc(env(safe-area-inset-top) + 142px); }
+  .rg-orbit { bottom: auto; top: calc(env(safe-area-inset-top) + 82px); }
+}
+/* שמות השכונות בתלת-ממד (31.10.2026): גם כשהעיר רחוקה, קטנים יותר, ופונים לצופה */
+.rg-stage.is-3d .rg-leaflet.rg-z-far .rg-hood-label, .rg-stage.is-3d .rg-leaflet.rg-z-xfar .rg-hood-label { display: block; }
+.rg-stage.is-3d .rg-hood-label span { font-size: 11px; background: rgba(255,253,248,0.82); border-radius: 6px; padding: 0 4px; }
+
+/* ---- חץ צפון (1.11.2026, בעל הפרויקט: "אם הכנסנו תלת-ממד צריך להראות צפון"): תמיד גלוי, מסתובב עם העיר ---- */
+.rg-north { position: relative; width: 44px; height: 44px; flex: none; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: radial-gradient(circle, #fff 58%, #eef1f5 60%); cursor: pointer; color: var(--rg-ink); }
+.rg-north-arrow svg { width: 30px; height: 30px; }
+.rg-3d-short { display: none; }
+.rg-north:focus-visible { outline: 2px solid var(--rg-navy); outline-offset: 1px; }
+.rg-north-arrow { display: flex; transform: rotate(var(--rg-north, 0deg)); transition: transform 0.6s ease; }
+.rg-stage.is-orbiting .rg-north-arrow { transition: none; }
+.rg-north-n { position: absolute; top: -3px; inset-inline-end: -2px; min-width: 16px; height: 16px; border-radius: 8px; background: #c2412d; color: #fff; font-size: 10px; font-weight: 800; line-height: 16px; text-align: center; }
+.rg-orbit:not(.is-on) .rg-north { cursor: default; }
+
+/* ---- המפה היא העיקר, גם במחשב (1.11.2026, בעל הפרויקט: "המפה העיקר וצריך לצמצם את המקראות"):
+   במקום עמודה רחבה מימין - הכותרת והחיפוש בכרטיס קטן למעלה, והשכבות ו"יש לי משהו להציע" בשורה אחת קטנה למטה.
+   "על המפה", פס האירועים וקישור היוזמות נפתחים מעל השורה רק כשצריך ---- */
+@media (min-width: 761px) {
+  .rg-side { top: auto; right: 12px; left: auto; bottom: 12px; width: auto; max-width: calc(100% - 24px); flex-direction: row; align-items: center; gap: 8px; }
+  .rg-top { position: fixed; top: 12px; right: 12px; width: 330px; }
+  .rg-panel { flex: 0 1 auto; min-width: 0; flex-direction: row; align-items: center; gap: 6px; padding: 4px; border-radius: 28px; overflow-x: auto; overflow-y: hidden; }
+  .rg-layers, .rg-group { flex-direction: row; align-items: center; gap: 4px; flex: none; }
+  .rg-group + .rg-group { margin: 0; padding: 0; padding-inline-start: 5px; border-top: 0; border-inline-start: 1px solid var(--rg-line); }
+  .rg-group-head, .rg-layer-sub { display: none; }
+  .rg-layer { width: auto; flex: none; min-height: 46px; padding: 3px 4px; padding-inline-end: 14px; gap: 7px; }
+  .rg-layer-dot { width: 36px; height: 36px; }
+  .rg-layer-dot .rg-icon { width: 19px; height: 19px; }
+  .rg-layer-label { display: none; }
+  .rg-layer-short { display: inline; font-size: 14.5px; font-weight: 700; white-space: nowrap; }
+  .rg-legend-toggle { flex: none; width: 44px; min-height: 44px; padding: 0; justify-content: center; border-top: 0; }
+  .rg-legend-title, .rg-legend-chev { display: none; }
+  .rg-legend-i { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 14px; font-weight: 700; font-style: italic; font-family: Georgia, serif; }
+  .rg-about { position: fixed; right: 12px; bottom: 80px; z-index: 30; width: 360px; max-height: 50vh; overflow-y: auto; padding: 10px 12px; background: var(--rg-card); border-radius: 16px; box-shadow: 0 10px 28px rgba(16,41,74,0.22); }
+  .rg-dock { flex: none; }
+  .rg-dock-row { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 8px; }
+  .rg-share { width: auto; min-height: 54px; padding: 4px 6px 4px 16px; }
+  .rg-share-sub { display: none; }
+  .rg-share-plus { width: 40px; height: 40px; }
+  .rg-give-pick { flex: none; min-height: 54px; }
+  .rg-events, .rg-dock-row > .rg-chip.rg-dir-link { position: fixed; right: 12px; bottom: 80px; width: min(560px, calc(100% - 24px)); }
+  .rg-hint { left: 50%; top: 16px; bottom: auto; }
+}
+@media (max-width: 760px) {
+  /* בטלפון פקדי התלת-ממד בשורה קצרה של אייקונים: צפון, סיבוב, 2D/3D */
+  .rg-3d-long { display: none; }
+  .rg-3d-short { display: inline; font-weight: 800; }
+  .rg-orbit-btn.rg-3d-toggle { padding: 0 8px; gap: 4px; }
+}
 
 /* כפתור "שתפו" לנקודה אחת (map-share.js) - רמת גן וגבעתיים */
 .osh { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -5648,9 +5714,14 @@ const rgCityFit = (el) => (el.clientWidth < 520
 const rgSolidFit = (el) => {
   const side = document.querySelector('.rg-side');
   const r = side ? side.getBoundingClientRect() : null;
-  return el.clientWidth <= 760
-    ? { paddingTopLeft: [34, 200], paddingBottomRight: [34, Math.max(220, r ? Math.round(window.innerHeight - r.top) + 90 : 220)] }
-    : { paddingTopLeft: [190, 80], paddingBottomRight: [(r ? Math.round(r.width) : 330) + 250, 120] };
+  const phone = el.clientWidth <= 760;
+  // טלפון (בעל הפרויקט, 1.11.2026: "בנייד אני רוצה מקסימום מסך"): העיר עצמה ממלאת את הרוחב, והלוח יכול לצאת מהקצוות.
+  // מחשב: גם כאן העיר עצמה, גדולה ככל האפשר, והפקדים בשורה קטנה למטה
+  const side0 = phone ? 34 : 90, top = phone ? 150 : 100;
+  const bottom = phone ? (r ? Math.round(window.innerHeight - r.top) + 40 : 110) : Math.max(130, r ? Math.round(window.innerHeight - r.top) + 50 : 130);
+  // ההטיה מכווצת את העיר לגובה, ולכן הגובה הפנוי "גדל" פי 1/cos(הטיה): בלי זה העיר יוצאת קטנה במסך רחב
+  const extra = Math.max(0, window.innerHeight - top - bottom) * (1 / Math.cos((RG_ORBIT.tilt * Math.PI) / 180) - 1);
+  return { paddingTopLeft: [side0, Math.round(top - extra / 2)], paddingBottomRight: [side0, Math.round(bottom - extra / 2)] };
 };
 // מי שביקש פחות תנועה: המפה קופצת ליעד בלי טיסה ובלי אנימציית זום
 const rgReducedMotion = () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -5661,7 +5732,8 @@ const rgReducedMotion = () => !!(window.matchMedia && window.matchMedia('(prefer
    "מפורטת": המפה כמו שהיא, עם גבולות השכונות כפי שמופו ב-OSM (קו מקווקו; שכונה שמופתה רק כנקודה - שם בלבד).
    בשני הסגנונות מחוץ לעיר המפה מעומעמת, ושמות השכונות לא מוצגים בזום רחוק, כדי שלא יעמיסו. */
 // הזווית שבה נפתח התלת-ממד, וההטיה המרבית (כמעט מהצד)
-const RG_ORBIT = { tilt: 52, spin: -20, maxTilt: 72 };
+// minTilt: גם כשמטים עד הסוף העיר נשארת גוש בתלת-ממד ולא נראית כמו המפה השטוחה
+const RG_ORBIT = { tilt: 52, spin: -20, maxTilt: 72, minTilt: 20 };
 const RG_PIECE_TONES = ['#f6e4c1', '#dfeccf', '#f6d9c9', '#dbe8f0', '#ece0ef'];
 
 /* "כמו שזוכרים" (ברירת המחדל): מפה קוגניטיבית, כמו שילד מצייר את מקום ילדותו. אותה מפה מאוירת, אבל כל עוגן
@@ -5905,7 +5977,9 @@ function createRgMap(el, mapCfg, geo, ill) {
   const tileOpacity = () => tiles.setOpacity(solidOn || current === 'memory' ? 0 : current === 'art' ? 0.45 : 1);
   const cityBounds = () => (current === 'memory' ? memoryBounds : bounds);
   // בתלת-ממד מתאימים את הלוח כולו (ולא רק את העיר) לחלק הפנוי של המסך
-  const fitCity = () => fit(solidOn ? L.latLngBounds(boardOf(shapeOf())) : cityBounds(), { ...(solidOn ? rgSolidFit(el) : rgCityFit(el)), animate: false });
+  let cityZoom = Infinity; // הזום של כל העיר (או כל הגוש בתלת-ממד), אחרי ההתאמה האחרונה
+  // בטלפון בתלת-ממד ההתאמה ברבעי זום, כדי שהעיר תהיה גדולה ככל האפשר בלי לצאת מהמסך
+  const fitCity = () => { const snap = map.options.zoomSnap; if (solidOn) map.options.zoomSnap = 0.25; fit(cityBounds(), { ...(solidOn ? rgSolidFit(el) : rgCityFit(el)), animate: false }); map.options.zoomSnap = snap; cityZoom = map.getZoom(); };
 
   /* ---- תלת-ממד (בקשת בעל הפרויקט, 30.10.2026: "העיר כמרובע תלת-ממד שהתושב צופה בו ומשחק איתו") ----
      כמו הניסוי של גבעתיים (?tilt=1), ההטיה נעשית ב-CSS: הבמה (.rg-world, המפה והנקודות יחד) מוטה ומסתובבת לפי
@@ -5979,7 +6053,7 @@ function createRgMap(el, mapCfg, geo, ill) {
     pivot();
     declutter();
   };
-  return { map, setStyle, declutter, place, fit, set3d };
+  return { map, setStyle, declutter, place, fit, set3d, fitCity, cityZoom: () => cityZoom };
 }
 
 /* אייקונים קטנים (קו לבן) לכרטיסי השכבות, לשיתוף ולפס האירועים */
@@ -6564,16 +6638,19 @@ function RamatGanApp() {
   const [moving, setMoving] = useState(false); // בזמן אנימציית זום הנקודות מוסתרות ומופיעות במקומן בסופה
   const [fitted, setFitted] = useState(''); // השכבה שהמפה סיימה להתמקד בה (data-fit, גם לבדיקות)
   const focusRef = useRef(null); // נקודה שנבחרה בחיפוש או ב"הצג במפה": המפה טסה אליה ולא לכל השכבה
-  // תלת-ממד: כפתור ליד סגנון המפה, או ישר מהכתובת (?tilt=1 כמו בגבעתיים, או ?view=3d). לביקור הזה בלבד
-  const [solid, setSolid] = useState(() => /[?&](tilt=1|view=3d)(&|$)/.test(window.location.search));
+  // תלת-ממד: המפה נפתחת בתלת-ממד (בעל הפרויקט, 31.10.2026: "שהמסך הראשון יפתח עם מפת התלת-ממד").
+  // "מפה שטוחה" ליד הזום, או ?view=flat בכתובת, פותחים את המפה השטוחה. לביקור הזה בלבד
+  const [solid, setSolid] = useState(() => !/[?&](view=flat|tilt=0)(&|$)/.test(window.location.search));
   const solidRef = useRef(null);
+  const cityRef = useRef(null);
   const orbitRef = useRef({ tilt: 0, spin: 0 });
   const [orbitTick, setOrbitTick] = useState(0); // עולה בסוף כל סיבוב, כדי לסדר מחדש את התוויות
 
   useEffect(() => {
     if (!cfg || !geo || !ill || !mapElRef.current || mapRef.current) return undefined;
-    const { map, setStyle, declutter, place, fit, set3d } = createRgMap(mapElRef.current, cfg.map, geo, ill);
+    const { map, setStyle, declutter, place, fit, set3d, fitCity, cityZoom } = createRgMap(mapElRef.current, cfg.map, geo, ill);
     mapRef.current = map;
+    cityRef.current = { fitCity, cityZoom };
     fitRef.current = fit;
     solidRef.current = set3d;
     placeRef.current = place;
@@ -6598,6 +6675,9 @@ function RamatGanApp() {
     st.classList.toggle('is-orbit-anim', !!animate && !rgReducedMotion());
     st.style.setProperty('--rg-tilt', o.tilt.toFixed(1) + 'deg');
     st.style.setProperty('--rg-spin', o.spin.toFixed(1) + 'deg');
+    // חץ הצפון (בעל הפרויקט, 1.11.2026: "אם הכנסנו תלת-ממד צריך להראות צפון"): הכיוון של הצפון על המסך אחרי הסיבוב וההטיה
+    const s = (o.spin * Math.PI) / 180, t = (o.tilt * Math.PI) / 180;
+    st.style.setProperty('--rg-north', ((Math.atan2(Math.sin(s), Math.cos(s) * Math.cos(t)) * 180) / Math.PI).toFixed(1) + 'deg');
   };
   const turn = (spin, tilt) => {
     const o = orbitRef.current;
@@ -6639,7 +6719,7 @@ function RamatGanApp() {
       e.preventDefault();
       const o = orbitRef.current;
       o.spin = drag.spin - dx * 0.35;
-      o.tilt = Math.min(RG_ORBIT.maxTilt, Math.max(0, drag.tilt - dy * 0.3));
+      o.tilt = Math.min(RG_ORBIT.maxTilt, Math.max(RG_ORBIT.minTilt, drag.tilt - dy * 0.3));
       applyOrbit(false);
     };
     const up = (e) => {
@@ -6708,6 +6788,8 @@ function RamatGanApp() {
     const focus = focusRef.current;
     focusRef.current = null;
     // בתלת-ממד כל הגוש כבר על המסך: בוחרים שכבה בלי להזיז אותו (רק נקודה אחת מחיפוש או מקישור מטיסה אליה)
+    // ואם קודם התקרבו לנקודה (קישור ישיר), חוזרים לכל הגוש כדי שכל נקודות השכבה יהיו על המסך
+    if (!focus && solid && cityRef.current && map.getZoom() > cityRef.current.cityZoom() + 0.25) { cityRef.current.fitCity(); setFitted(activeLayer); return undefined; }
     if (!focus && (!points.length || solid)) { setFitted(activeLayer); return undefined; }
     let done = false;
     const finish = () => { if (!done) { done = true; setFitted(activeLayer); } };
@@ -6726,12 +6808,11 @@ function RamatGanApp() {
       // הנקודות לא מתחבאות מתחת לעמודת הפקדים מימין (מסך רחב) או מתחת לשורות שלמטה (טלפון)
       const side = document.querySelector('.rg-side');
       const r = side ? side.getBoundingClientRect() : null;
-      const opts = !r ? base : wide
-        ? { ...base, paddingTopLeft: [Math.round(r.width) + 36, base.paddingTopLeft[1] - 70] }
-        : { ...base, paddingBottomRight: [base.paddingBottomRight[0], Math.max(base.paddingBottomRight[1], Math.round(window.innerHeight - r.top) + 16)] };
+      // בכל רוחב הפקדים בשורה אחת למטה (1.11.2026: "המפה היא העיקר")
+      const opts = !r ? base : { ...base, paddingBottomRight: [base.paddingBottomRight[0], Math.max(base.paddingBottomRight[1], Math.round(window.innerHeight - r.top) + 16)] };
       // החלק הפנוי של המפה: בלי עמודת הפקדים מימין (מסך רחב) או בלי השורות שלמטה (טלפון)
       const size = map.getSize();
-      const box = { left: 16, top: 16, right: size.x - (r && wide ? Math.round(r.width) + 28 : 16), bottom: r && !wide ? Math.round(r.top) - 12 : size.y - 16 };
+      const box = { left: 16, top: wide ? 16 : 110, right: size.x - 16, bottom: r ? Math.round(r.top) - 12 : size.y - 16 };
       const inView = points.every((p) => {
         const px = map.latLngToContainerPoint(placeRef.current(p.lat, p.lng));
         return px.x >= box.left && px.x <= box.right && px.y >= box.top && px.y <= box.bottom;
@@ -6925,13 +7006,19 @@ function RamatGanApp() {
               : null)),
         // תלת-ממד: מתג ליד הזום (לא סגנון נוסף, כך שאפשר לסובב גם את המאוירת וגם את המפורטת), ובזמן התלת-ממד גם כפתורי סיבוב
         h('div', { className: 'rg-orbit' + (solid ? ' is-on' : ''), role: 'group', 'aria-label': 'תלת-ממד' },
+          // חץ צפון תמיד גלוי; בתלת-ממד הוא מסתובב עם העיר, ולחיצה עליו מחזירה את הצפון למעלה
+          h('button', { type: 'button', className: 'rg-north', 'data-orbit': 'north', 'aria-label': 'צפון' + (solid ? ': להחזיר את הצפון למעלה' : ''), title: solid ? 'להחזיר את הצפון למעלה' : 'צפון',
+            onClick: () => { if (solid) turn(Math.round(orbitRef.current.spin / 360) * 360, orbitRef.current.tilt); } },
+            h('span', { className: 'rg-north-arrow', 'aria-hidden': 'true' }, h('svg', { viewBox: '0 0 24 24', width: 24, height: 24 },
+              h('path', { d: 'M12 2.5l5 9.5h-10z', fill: '#c2412d' }), h('path', { d: 'M12 21.5l-5-9.5h10z', fill: '#9aa6b5' }))),
+            h('span', { className: 'rg-north-n', 'aria-hidden': 'true' }, 'צ')),
           solid ? h('button', { type: 'button', className: 'rg-orbit-btn', 'data-orbit': 'right', 'aria-label': 'לסובב ימינה', title: 'לסובב ימינה',
             onClick: () => turn(orbitRef.current.spin - 45, orbitRef.current.tilt) }, h(RgIcon, { name: 'turnRight' })) : null,
           solid ? h('button', { type: 'button', className: 'rg-orbit-btn', 'data-orbit': 'left', 'aria-label': 'לסובב שמאלה', title: 'לסובב שמאלה',
             onClick: () => turn(orbitRef.current.spin + 45, orbitRef.current.tilt) }, h(RgIcon, { name: 'turnLeft' })) : null,
           h('button', { type: 'button', className: 'rg-orbit-btn rg-3d-toggle', 'data-orbit': 'toggle', 'aria-pressed': solid,
             title: solid ? 'חזרה למפה שטוחה' : 'העיר כגוש בתלת-ממד: גוררים כדי לסובב ולהטות', onClick: () => setSolid((v) => !v) },
-            h(RgIcon, { name: 'cube' }), h('span', null, solid ? 'מפה שטוחה' : 'תלת-ממד'))),
+            h(RgIcon, { name: 'cube' }), h('span', { className: 'rg-3d-long' }, solid ? 'מפה שטוחה' : 'תלת-ממד'), h('span', { className: 'rg-3d-short', 'aria-hidden': 'true' }, solid ? '2D' : '3D'))),
         !geo || !ill ? h('div', { className: 'rg-hint' }, 'טוען את המפה...')
           : !activeLayer ? h('div', { className: 'rg-hint' }, solid ? 'גררו כדי לסובב ולהטות את העיר' : 'בחרו שכבה כדי לראות מה יש במפה')
             : !points.length ? h('div', { className: 'rg-hint' }, 'אין נקודות שמתאימות לבחירה') : null)),
@@ -6993,13 +7080,14 @@ function RamatGanApp() {
         activeLayer === 'community'
           ? h('button', { type: 'button', className: 'rg-chip rg-dir-link', 'data-action': 'community', onClick: () => setCommunityOpen(true) }, 'יוזמות ורעיונות שאפשר להצטרף אליהם')
           : null,
-        // נתינה מקומית: שלושה סוגים בצבעים שלהם, כמו במקרא של הרכיב המשותף. אוכל לאיסוף = הצלת אוכל
+        // נתינה מקומית: כותרת אחת שנפתחת לבחירה (בעל הפרויקט, 31.10.2026: "תצמצם את נתינה לכותרת אחת"),
+        // בשלושה הסוגים של הרכיב המשותף. אוכל לאיסוף = הצלת אוכל
         activeLayer === 'giving'
-          ? h('div', { className: 'rg-give-kinds', role: 'group', 'aria-label': 'מה להציג בנתינה מקומית' },
-              [['all', 'הכל', '#2c7a7b'], ...Object.entries(RG_GIVE_KIND).map(([k, v]) => [k, v.short, v.color])].map(([k, t, c]) => h('button', {
-                key: k, type: 'button', className: 'rg-give-kind' + (giveKind === k ? ' is-on' : ''), 'data-kind': k, 'aria-pressed': giveKind === k, style: { '--c': c },
-                onClick: () => { setSelected(null); setGiveKind(k); },
-              }, k !== 'all' ? h('span', { className: 'rg-give-dot', 'aria-hidden': 'true' }) : null, t)))
+          ? h('label', { className: 'rg-give-pick', style: { '--c': giveKind === 'all' ? '#2c7a7b' : RG_GIVE_KIND[giveKind].color } },
+              h('span', { className: 'rg-give-dot', 'aria-hidden': 'true' }),
+              h('select', { className: 'rg-give-select', value: giveKind, 'aria-label': 'מה להציג בנתינה מקומית',
+                onChange: (e) => { setSelected(null); setGiveKind(e.target.value); } },
+                [['all', 'נתינה: הכל'], ...Object.entries(RG_GIVE_KIND).map(([k, v]) => [k, v.short])].map(([k, t]) => h('option', { key: k, value: k }, t))))
           : null,
         // הפעולה המרכזית נשארת בולטת תמיד, בתחתית העמודה; כשהשיתוף לא זמין (אין מפעיל, או תצוגה מקדימה) היא מסבירה למה
         h('button', { type: 'button', className: 'rg-share' + (shareOn ? '' : ' is-unavailable'), onClick: () => setShareOpen(true), 'aria-haspopup': 'dialog' },
