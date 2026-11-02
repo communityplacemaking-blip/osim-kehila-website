@@ -14,7 +14,8 @@ const txt = (v, max) => (typeof v === 'string' && v.trim() ? v.trim().slice(0, m
 
 function page(slug, s, demo) {
   const url = `${SITE}home/${slug}/`, img = `${url}${s.image}`;
-  const go = `../../?pilot=${slug}&home=1&src=share`;
+  // המפה נפתחת בתצוגה הרגילה שלה, והבית של הפרויקט נפתח רק בלחיצה (בקשה של Tm, אותו כלל כמו בכתובת השיתוף הכללית)
+  const go = `../../?pilot=${slug}&src=share`;
   return `<!doctype html>
 <html lang="he" dir="rtl">
 <head>
@@ -22,7 +23,7 @@ function page(slug, s, demo) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <!-- נוצר על ידי tools/build-pilot-share.mjs מתוך pilot/${slug}.json. לא לערוך ביד.
-     התגיות כאן הן מה שוואטסאפ מציג. דפדפן רגיל עובר מיד לבית של הפרויקט, בלי לעבור דרך המפה. -->
+     התגיות כאן הן מה שוואטסאפ מציג. דפדפן רגיל עובר למפה עם הפרויקט, והבית נפתח בלחיצה. -->
 <title>${h(s.title)}${demo ? ' (אב־טיפוס)' : ''}</title>
 <meta name="description" content="${h(s.description)}">
 <meta property="og:type" content="website">
@@ -41,7 +42,7 @@ function page(slug, s, demo) {
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#1E3F3F;color:#FFF9F5;font:16px Heebo,Arial,sans-serif;text-align:center}a{color:#E2C27A}</style>
 </head>
 <body>
-<p>פותחים את הבית של הפרויקט…<br><a href="${h(go)}">אם זה לא קורה, לחצו כאן</a></p>
+<p>פותחים את המפה של אקו סיטי…<br><a href="${h(go)}">אם זה לא קורה, לחצו כאן</a></p>
 </body>
 </html>
 `;

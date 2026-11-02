@@ -95,6 +95,8 @@ for (const w of [390, 1280]) {
   const st = await mapState(pg);
   check(`${w}px: בכתובת הרגילה יש כפתור "פרויקט ההדגמה" ופס אב־טיפוס`, st.chips[0] === 'פרויקט ההדגמה' && st.banner, st.chips);
   check(`${w}px: בכתובת הרגילה הבית לא נפתח מעצמו`, !st.detailOpen);
+  await pg.waitForTimeout(4500);
+  check(`${w}px: גם אחרי 6 שניות: הבית סגור והסמן של ההדגמה לא נבחר`, await pg.evaluate(() => !document.getElementById('detail').classList.contains('open') && !document.querySelector('.pl-pin.on')));
   if (before) check(`${w}px: פרויקטים, עוגנים וכותרת כמו במפה בלי הפיילוט`, st.labels === before.labels && st.anchors === before.anchors && st.title === before.title && st.head === before.head, { before, st });
   check(`${w}px: אין שגיאות JavaScript`, pg.errors.length === 0, pg.errors);
   await shot(pg, `regular-${w}`);
@@ -308,7 +310,7 @@ console.log('7. עמוד השיתוף הייעודי של הפרויקט');
   await pg.goto(base + MAP + 'home/demo/', { waitUntil: 'load' });
   await pg.waitForTimeout(3000);
   const r = await pg.evaluate(() => ({ url: location.pathname + location.search, open: document.getElementById('detail')?.classList.contains('pl-home') }));
-  check('home/demo/ פותח ישר את הבית של הפרויקט', r.url === '/maps/eco-city-demo/?pilot=demo&home=1&src=share' && r.open, r);
+  check('home/demo/ מעביר למפה עם הפרויקט, והמפה נשארת בלי לפתוח את הבית', r.url === '/maps/eco-city-demo/?pilot=demo&src=share' && !r.open, r);
   const html = await readFile(join(ROOT, 'maps/eco-city-demo/home/demo/index.html'), 'utf8');
   const og = (p) => (html.match(new RegExp(`property="og:${p}" content="([^"]*)"`)) || [])[1];
   check('התגיות של עמוד הפרויקט: כותרת, תיאור, כתובת ותמונה משלו', og('title') === 'Eco City · הבית של הפרויקט' && /מקום אחד, ברור ועדכני/.test(og('description') || '') && !!og('description') &&
