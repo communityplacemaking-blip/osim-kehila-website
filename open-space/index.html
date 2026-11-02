@@ -42,8 +42,18 @@ nav.main{display:flex;flex-wrap:wrap;gap:4px 26px;font-weight:400;font-size:16px
 nav.main a{color:var(--navy);text-decoration:none;padding:8px 0}
 nav.main a:hover{box-shadow:inset 0 -2px 0 var(--must)}
 nav.main a.cta{background:var(--navy);color:#fff;padding:9px 22px;border-radius:999px}
-nav.main a.theory{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;padding:3px 0}
-nav.main a.theory small{font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--muted)}
+nav.main .nav-dd{position:relative}
+nav.main .nav-dd summary{list-style:none;cursor:pointer;color:var(--navy);padding:8px 0;display:flex;align-items:center;gap:6px}
+nav.main .nav-dd summary::-webkit-details-marker{display:none}
+nav.main .nav-dd summary::after{content:"";width:6px;height:6px;border:solid var(--navy);border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+nav.main .nav-dd[open] summary::after{transform:translateY(1px) rotate(-135deg)}
+nav.main .nav-dd summary:hover,nav.main .nav-dd[open] summary{box-shadow:inset 0 -2px 0 var(--must)}
+nav.main .nav-dd .dd{position:absolute;top:calc(100% + 8px);inset-inline-start:-14px;z-index:60;width:300px;max-width:calc(100vw - 32px);background:#fff;border:1px solid var(--grey);border-radius:14px;box-shadow:0 12px 32px rgba(15,45,74,.12);padding:8px;display:flex;flex-direction:column;gap:2px}
+nav.main .nav-dd .dd a{display:flex;flex-direction:column;gap:3px;padding:10px 12px;border-radius:10px;line-height:1.3}
+nav.main .nav-dd .dd a:hover,nav.main .nav-dd .dd a:focus-visible{background:var(--cream);box-shadow:none}
+nav.main .nav-dd .dd b{font-weight:500}
+nav.main .nav-dd .dd small{font-size:13px;color:var(--muted)}
+@media (max-width:520px){nav.main .nav-dd .dd{inset-inline-start:-4px;width:calc(100vw - 32px)}}
 .btn{display:inline-flex;align-items:center;gap:8px;font-weight:400;text-decoration:none;padding:12px 26px;border-radius:999px;font-size:17px}
 .btn.solid{background:var(--navy);color:#fff}
 .btn.line{border:1px solid var(--navy);color:var(--navy)}
@@ -248,7 +258,7 @@ document.addEventListener('DOMContentLoaded',function(){
 <a class="skip" href="#main">דלג לתוכן הראשי</a>
 <header><div class="wrap">
 <a class="logo" href="/" aria-label="עושים קהילה, לדף הבית"><svg width="46" height="46" viewBox="0 0 124 124" aria-hidden="true"><g stroke="#0F2D4A" stroke-width="2.2" stroke-linecap="round" fill="none"><line x1="22" y1="40" x2="80" y2="16"></line><line x1="22" y1="40" x2="108" y2="62"></line><line x1="22" y1="40" x2="52" y2="104"></line><line x1="80" y1="16" x2="108" y2="62"></line><line x1="80" y1="16" x2="52" y2="104"></line><line x1="108" y1="62" x2="96" y2="104"></line><line x1="52" y1="104" x2="96" y2="104"></line></g><circle cx="22" cy="40" r="7" fill="#0F2D4A"></circle><circle cx="80" cy="16" r="9" fill="#D4A72C"></circle><circle cx="108" cy="62" r="10" fill="#EADFC4"></circle><circle cx="52" cy="104" r="11" fill="#D4A72C"></circle><circle cx="96" cy="104" r="5" fill="#0F2D4A"></circle></svg><span><b>עושים קהילה</b><small dir="ltr">COMMUNITY MAKING</small></span></a>
-<nav class="main" aria-label="ניווט ראשי"><a href="/#examples">דוגמאות</a><a href="/#design">עצבו לעצמכם</a><a href="/#how">הגישה שלנו</a><a class="theory" href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/method/"><small>רקע תיאורטי</small>המשוטט האקוסיסטמי</a><a href="/#system">המערכת הדיגיטלית</a><a class="cta" href="#contact">בואו נעשה קהילה</a></nav>
+<nav class="main" aria-label="ניווט ראשי"><a href="/#examples">דוגמאות</a><a href="/#design">עצבו לעצמכם</a><a href="/#how">הגישה שלנו</a><details class="nav-dd"><summary>שוטטות</summary><div class="dd"><a href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/the-wanderer/"><b>המשוטט האקוסיסטמי</b><small>הדמות, ההגות והעולם של המשוטט</small></a><a href="https://communityplacemaking-blip.github.io/ecosystemic-flaneur/journey/"><b>שוטטות השתתפותית</b><small>להיכנס למנגנון ולעצב מסע אישי או תהליך קהילתי</small></a></div></details><a href="/#system">המערכת הדיגיטלית</a><a class="cta" href="#contact">בואו נעשה קהילה</a></nav>
 </div></header>
 <main id="main" tabindex="-1">
 <section class="mhero"><svg class="bgnet" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" style="display:block;overflow:visible">
@@ -798,5 +808,6 @@ document.addEventListener('DOMContentLoaded',function(){
 <footer><div class="wrap"><span>עושים קהילה · Community Making</span>
 <nav aria-label="קישורים בתחתית העמוד" style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px"><span class="socs"><a class="soc" href="https://www.facebook.com/osimkehilanet" target="_blank" rel="noopener" aria-label="פייסבוק" title="פייסבוק"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21z"/></svg></a><a class="soc" href="https://www.instagram.com/osimkehilanet" target="_blank" rel="noopener" aria-label="אינסטגרם" title="אינסטגרם"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.7" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="16.9" cy="7.1" r="1.1"/></svg></a><a class="soc" href="https://www.linkedin.com/company/osimkehila/" target="_blank" rel="noopener" aria-label="לינקדאין" title="לינקדאין"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M5.2 9.3h3v9.7h-3zM6.7 4.6a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5zM10.1 9.3H13v1.3h.04c.4-.76 1.38-1.56 2.85-1.56 3.05 0 3.6 2 3.6 4.6V19h-3v-4.7c0-1.12-.02-2.56-1.56-2.56-1.56 0-1.8 1.22-1.8 2.48V19h-3z"/></svg></a></span><a href="mailto:osimkehilanet@gmail.com">osimkehilanet@gmail.com</a><a href="/cafe-olam/">קפה עולם</a><a href="/participatory-leadership/">מנהיגות השתתפותית</a><a href="/open-space/">מרחב פתוח</a><a href="/placemaking/">פלייסמייקינג</a><a href="/accessibility.html">הצהרת נגישות</a></nav>
 </div></footer>
+<script>document.addEventListener("click",function(e){document.querySelectorAll("details.nav-dd[open]").forEach(function(d){if(!d.contains(e.target))d.removeAttribute("open")})});document.addEventListener("keydown",function(e){if(e.key==="Escape")document.querySelectorAll("details.nav-dd[open]").forEach(function(d){d.removeAttribute("open");d.querySelector("summary").focus()})});</script>
 </body>
 </html>
