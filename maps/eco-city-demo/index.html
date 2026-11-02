@@ -415,6 +415,42 @@ a.btn{display:flex;align-items:center;justify-content:center;text-decoration:non
              linear-gradient(90deg,rgba(255,150,90,.10),rgba(255,150,90,0) 40%)}
 .th-mustard .wave{opacity:.85}
 
+
+/* ===== בסיס כחול ותבליט שמנת (Tm, 2.11.2026) ===== */
+.th-cobalt{--mapbg:#EEE9DF;--cream:#FFF6DE}
+.th-cobalt #map,.th-cobalt .leaflet-container{background:#EEE9DF}
+.th-cobalt .street{color:#FFF6DE;font-weight:600;text-shadow:0 0 3px #1D4479,0 0 3px #1D4479,0 0 6px #24508A}
+.th-cobalt .hood{color:#FFF6DE;opacity:.5;text-shadow:0 0 4px #24508A}
+.th-cobalt .city{display:none}
+.th-cobalt .paper{opacity:.12}
+.th-cobalt .v3 .gloss,.th-cobalt.v3 .gloss{background:none}
+/* סיכות: פנינה בצבע שמנת על מחט; במעבר עכבר ובבחירה זהב */
+.th-cobalt .v3 .hd,.th-cobalt.v3 .hd{background:radial-gradient(circle at 36% 30%,#FFFFFF 0,#FFF8E6 22%,#EADBB4 55%,#B59C68 88%,#8A7140 100%);box-shadow:0 0 0 1px rgba(22,51,92,.5),0 3px 6px rgba(14,30,60,.45)}
+.th-cobalt .plab:hover~.hd,.th-cobalt .plab.on~.hd{background:radial-gradient(circle at 36% 30%,#fff 0,#FFF1C9 14%,#E9B84A 42%,#9A6A10 82%,#4D3300 100%);box-shadow:0 0 0 1px #fff,0 0 14px 3px rgba(233,184,74,.8)}
+.th-cobalt .v3 .bb>.stem,.th-cobalt.v3 .bb>.stem{background:linear-gradient(to top,rgba(255,246,222,.2),#FFF6DE 45%,#E8DCBC)}
+.th-cobalt .gs{background:radial-gradient(closest-side,rgba(10,26,56,.45),rgba(10,26,56,0))}
+.th-cobalt.v3 .plab{background:#FFF6DE;color:#16335C;border:1px solid rgba(22,51,92,.35)}
+.th-cobalt.v3 .plab:hover,.th-cobalt.v3 .plab.on{background:#16335C;color:#FFF6DE;border-color:#FFF6DE}
+/* פרויקט ההדגמה: הסיכה הגדולה במפה, זהב מואר עם טבעות שמנת סביב הבסיס */
+.th-cobalt.v3 .leaflet-marker-icon:has(.pl-pin){z-index:99000!important}
+.th-cobalt.v3 .leaflet-marker-icon:has(.pl-pin) .gs{width:110px!important;height:110px!important;background:radial-gradient(closest-side,rgba(255,236,180,.6),rgba(255,236,180,.12) 55%,rgba(255,236,180,0))}
+.th-cobalt.v3 .leaflet-marker-icon:has(.pl-pin) .gs::before,.th-cobalt.v3 .leaflet-marker-icon:has(.pl-pin) .gs::after{content:"";position:absolute;inset:18%;border-radius:50%;border:2px solid rgba(255,246,222,.95);animation:energy 2.6s ease-out infinite}
+.th-cobalt.v3 .leaflet-marker-icon:has(.pl-pin) .gs::after{animation-delay:1.3s}
+.th-cobalt.v3 .leaflet-marker-icon:has(.pl-pin) .stem{height:52px!important;width:3px!important;left:-1.5px!important;background:linear-gradient(to top,rgba(255,246,222,.3),#FFF6DE 50%,#fff)!important}
+.th-cobalt.v3 .leaflet-marker-icon:has(.pl-pin) .up{transform:translateY(-30px)}
+.th-cobalt.v3 .pl-dot{left:-15px;top:-15px;width:30px;height:30px;border:2px solid #fff;background:radial-gradient(circle at 35% 30%,#fff 0,#FFF1C9 14%,#E9B84A 44%,#A87410 82%,#5A3A00 100%);box-shadow:0 0 0 2px #16335C,0 0 18px 6px rgba(255,214,120,.7)}
+.th-cobalt.v3 .pl-dot::after{border-color:#FFF6DE;inset:-14px}
+.th-cobalt.v3 .pl-lab{bottom:24px;background:#16335C;color:#FFF6DE;border:1.5px solid #FFF6DE;font-weight:600}
+.th-cobalt.v3 .pl-lab::after{border-top-color:#16335C}
+/* עוגנים: ציוני דרך בצבע שמנת; הצורה לפי הסוג, האייקון בכחול כהה */
+.th-cobalt.anc-mark.v3 .anc .disc{--c1:#FFFFFF!important;--c2:#F6ECD4!important;--c3:#BFA97C!important;box-shadow:inset 0 2px 1px rgba(255,255,255,.9),inset 0 -5px 8px rgba(120,96,50,.25),0 4px 0 #B79F70,0 5px 0 rgba(14,30,60,.45),0 12px 16px rgba(14,30,60,.4)}
+.th-cobalt.anc-mark.v3 .anc .disc>svg,.th-cobalt.anc-mark.v3 .anc .disc.has>svg{stroke:#16335C;filter:none}
+.th-cobalt.anc-mark.v3 .anc:hover .disc img{box-shadow:0 0 0 2px #FFF6DE}
+.th-cobalt.anc-mark.v3 .anc:hover .disc{box-shadow:0 0 0 2px #FFF6DE,0 14px 16px -4px rgba(14,30,60,.5)}
+.th-cobalt.v3 .anc .an{background:#FFF6DE;color:#16335C;border:1px solid rgba(22,51,92,.3)}
+.th-cobalt.v3 .leaflet-marker-icon:has(.anc) .gs{opacity:.6}
+.th-cobalt .wave{opacity:.9}
+@media (prefers-reduced-motion:reduce){.th-cobalt .gs::before,.th-cobalt .gs::after{animation:none}}
 /* ===== לילה עירוני־עתידני (Tm, 2.11.2026) ===== */
 .th-night{--mapbg:#061230;--glow:#5FE3FF;--tq:#2CF2E0}
 .th-night #map,.th-night .leaflet-container{background:#061230}
@@ -697,6 +733,11 @@ var THEMES={
   /* כחול "פלסטי" עם צירים ראשיים זוהרים: ברירת המחדל מ-1.11.2026 (בקשת Tm). ‎?theme=green הירוק הקודם */
   /* אפור־שמנת עם כל מה שעל המפה בכחול כהה: ברירת המחדל (Tm, 1.11.2026). ‎?theme=neo הכחול הכהה, ‎?theme=green הירוק */
   /* חרדל עם פרויקטים ושמות רחובות בכחול כהה: ברירת המחדל (Tm, 1.11.2026 בערב). ‎?theme=stone אפור־שמנת */
+  /* בסיס כחול ותבליט שמנת, עם הים והשקיעה משמאל: ברירת המחדל מ-2.11.2026 (Tm). ‎?theme=night הלילה, ‎?theme=mustard החרדל והירוק */
+  cobalt:{sea:'#86B9CC',city:'#3A6CA6',ctx:'#33619A',line:'#F6ECD4',park:'#4F8C9C',river:'#BFE2F0',wave:'#FFE9C6',st:1,bg:'#EEE9DF',
+    tones:['#3B6EA9','#386AA3','#3E72AD','#36679F','#3C70AB'],
+    side:{a:[58,104,160],b:[22,48,92],edge:'#16335C',rim:'#FFF6DE',shade:'#14243F'},
+    ST:{M:{c:'#FFF6DE',k:'#1D4479'},A:{c:'#F3E7C9',k:'#24508A'},B:{c:'#DCD2B6',k:'#33639E'},C:{c:'#B9BFC0',k:'#3768A3'}}},
   /* לילה עירוני־עתידני: נייבי עמוק, כחול פלסטי, אפור־כחלחל וטורקיז חשמלי. ברירת המחדל מ-2.11.2026 (Tm). ‎?theme=mustard החרדל והירוק */
   night:{sea:'#061230',city:'#12284D',ctx:'#0E2042',line:'#5FD8F2',park:'#0F3A48',river:'#1A4A78',wave:'#2E8FC2',st:1,bg:'#061230',
     tones:['#152D55','#132A50','#17315B','#12274C','#162F58'],
@@ -715,10 +756,10 @@ var THEMES={
   green:{sea:'#0B2A33',city:'#1E3F3F',ctx:'#173333',line:'#E2C27A',park:'#2E5B3E',river:'#4E8C93',wave:'#E2C27A',st:.8,
     tones:['#22484A','#1E4243','#264D4C','#1C3D3E','#244A47'],
     ST:{M:{c:'#C59A3C',k:'#7A5E22'},A:{c:'#9C7E3E',k:'#5F4C24'},B:{c:'#3C625F',k:'#2A4A48'},C:{c:'#335754',k:'#264442'}}}};
-var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='night';var TH=THEMES[THN];
-if(THN!=='light')document.documentElement.classList.add(THN==='stone'||THN==='mustard'?'th-light':'th-dark','th-'+THN);if(THN==='night')document.documentElement.classList.add('th-neo');if(THN==='mustard')document.documentElement.classList.add('th-stone');
+var THN=(location.search.match(/theme=(\w+)/)||[])[1];if(!THEMES[THN])THN='cobalt';var TH=THEMES[THN];
+if(THN!=='light')document.documentElement.classList.add(THN==='stone'||THN==='mustard'||THN==='cobalt'?'th-light':'th-dark','th-'+THN);if(THN==='night')document.documentElement.classList.add('th-neo');if(THN==='mustard'||THN==='cobalt')document.documentElement.classList.add('th-stone');
 /* צורת העוגנים בתלת מימד: ‎?anc=float (ברירת מחדל: התמונה על בסיס מרחף), ‎?anc=pin (טיפה כחולה), ‎?anc=tile (אריח מבריק), ‎?anc=photo (העיגולים) */
-var ANC=(location.search.match(/[?&]anc=(float|pin|tile|photo|mark)/)||[])[1]||(THN==='night'?'mark':'float');document.documentElement.classList.add('anc-'+ANC);
+var ANC=(location.search.match(/[?&]anc=(float|pin|tile|photo|mark)/)||[])[1]||(THN==='night'||THN==='cobalt'?'mark':'float');document.documentElement.classList.add('anc-'+ANC);
 var TONES=TH.tones;
 map.createPane('geo');map.getPane('geo').style.zIndex=250;
 var hoodLayer=null,hoodLabels=L.layerGroup();
@@ -743,6 +784,7 @@ fetch('geo.json').then(function(r){return r.json();}).then(function(gj){
 /* רחובות אמיתיים מ-Overture Maps (נגזר מ-OpenStreetMap, ODbL), נבנה ב-build-streets.py. גם הם עוברים את מתיחת העוגנים */
 var ST={M:{c:TH.ST.M.c,k:TH.ST.M.k,w:6.5},A:{c:TH.ST.A.c,k:TH.ST.A.k,w:5.2},B:{c:TH.ST.B.c,k:TH.ST.B.k,w:3.6},C:{c:TH.ST.C.c,k:TH.ST.C.k,w:1.7}};
 /* בלילה: הצירים הראשיים קו בהיר דק עם הילה, והמשניים כמעט נבלעים ברקע */
+if(THN==='cobalt'){ST.M.w=5;ST.A.w=3.6;ST.B.w=2.6;ST.C.w=1.2;}
 if(THN==='night'){ST.M.w=3.4;ST.A.w=2.4;ST.B.w=2.4;ST.C.w=1.2;}
 var streetLayers=[],streetLabels=L.layerGroup(),streetLabelsMinor=L.layerGroup();
 function streets(){
@@ -891,7 +933,7 @@ function arc(p,q){
 }
 
 /* "אקופונקטורה": כל פרויקט מפעיל רשת של עצבים אל המקומות שסביבו. קשתות זוהרות עם זרם אור, עבות יותר ככל שהמקום קרוב */
-var NERVE=THN==='neo'||THN==='night'?'#5FE3FF':THN==='mustard'?'#1E3F3F':THN==='stone'?'#1E3A78':GOLD;
+var NERVE=THN==='neo'||THN==='night'?'#5FE3FF':THN==='mustard'?'#1E3F3F':THN==='cobalt'?'#FFF2D2':THN==='stone'?'#1E3A78':GOLD;
 function nerves(p,grp){
   var l=A.concat(Q).map(function(a){return {a:a,m:meters(a,p)};}).sort(function(x,y){return x.m-y.m;}),
       pick=l.filter(function(x){return x.m<=2400;}).slice(0,9);
@@ -942,7 +984,7 @@ function slab(by){
     shade._path.setAttribute('transform','translate('+(gx*T*2.6+6).toFixed(1)+','+(gy*T*2.6).toFixed(1)+')');}
   sides();ORBH.push(sides);
   offBoard();
-  if(THN==='mustard'){var sn=document.createElement('div');sn.className='sunset';map.getContainer().appendChild(sn);}
+  if(THN==='mustard'||THN==='cobalt'){var sn=document.createElement('div');sn.className='sunset';map.getContainer().appendChild(sn);}
   map.setMaxBounds(b.pad(.7));
   /* פותחים על הגוש כולו, כשהוא תלוי במרכז המסך */
   map.fitBounds(b,{padding:innerWidth<=820?[10,10]:[40,40],animate:false});
